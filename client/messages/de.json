@@ -1,0 +1,1973 @@
+{
+  "LocaleSwitcher": {
+    "label": "Sprache ändern",
+    "locale": "{locale, select, en {EN} tr {TR} ru {RU} de {DE} other {Unbekannt}}"
+  },
+
+  "Header": {
+    "contact": "Kontakt",
+    "booknow": "Jetzt Buchen",
+    "accommodation": "Unterkunft",
+    "restaurants": "Restaurants",
+    "beachPools": "Strand & Pools",
+    "experiences": "Erlebnisse",
+    "kids": "Kinder",
+    "spa": "Spa & Wellness",
+    "special": "Spezial",
+    "gallery": "Galerie",
+    "barsandcafes": "Bars und Cafés",
+    "ourhotel": "Unser Hotel",
+    "allrooms": "Alle Zimmer",
+    "superior": "Superior Zimmer",
+    "family": "Familienzimmer",
+    "swimup": "Swim-up Zimmer",
+    "familyswimup": "Familien Swim-up Zimmer",
+    "duplex": "Duplex Familienzimmer",
+    "tinyvilla": "Kleine Villa",
+    "disableroom": "Behindertenzimmer",
+    "letuscallyou": "Lassen Sie sich von uns anrufen"
+  },
+  "Reservation": {
+    "text": "Buchen Sie Ihren Traumaufenthalt",
+    "checkin": "Check-in",
+    "checkout": "Check-out",
+    "guests": "Gäste",
+    "search": "Suchen",
+    "adult":"Erwachsene",
+    "kid":"Kind(er)"
+  },
+  "HomePage": {
+    "subtitle": "Erleben Sie Komfort, Qualität und tadellosen Service",
+    "title": "Willkommen im Lago Hotel",
+    "text": "Unsere Zimmer sind so gestaltet, dass sie unterschiedlichen Geschmäckern und Bedürfnissen gerecht werden. Sie bieten ein entspannendes Urlaubserlebnis, in dem Komfort auf Eleganz trifft und Sie sich wie zu Hause fühlen. Genießen Sie eine erfrischende Abkühlung in unseren Pools verschiedener Größen in der tiefblauen Welt von LAGO. Im LAGO ist alles möglich.",
+    "discovermore": "Mehr Entdecken",
+    "EmblaCarousel": {
+      "accommodation": "Unterkunft",
+      "restaurants": "Restaurants",
+      "beachPools": "Strand & Pools",
+      "experiences": "Erlebnisse",
+      "kids": "Kinder",
+        "spa": "Spa ve Wellness",
+  "special": "Özel", 
+"bars": "Bars und Cafés"
+    },
+    "TwoAnimationSection": {
+      "subtitle": "Die Gelassenheit von Blau und Grün",
+      "title": "Lassen Sie sich von LAGO verzaubern",
+      "text": "Mit goldenen Stränden und tiefblauem Wasser vereint LAGO die Schönheit der Natur perfekt mit luxuriösem Komfort.",
+      "text2": " Erfrischen Sie sich in Pools verschiedener Größen und beleben Sie Ihre Sinne inmitten üppiger Vegetation. Mit beheizten Innenpools, einem Außenpool und ruhigen Entspannungsbereichen verspricht LAGO das ganze Jahr über unvergessliche Urlaubserlebnisse.",
+      "buttonText": "Zur Galerie"
+    },
+    "Accommodation": {
+      "subtitle": "Wählen Sie Ihre ideale Unterkunft",
+      "title": "Luxuriöses Aufenthaltserlebnis",
+      "roomname1": "Familien Swim-up Zimmer",
+      "roomname2": "Swim-up Zimmer",
+      "roomname3": "Superior Zimmer",
+      "roomtext1": "Dieses großzügige Familien Swim-up Zimmer im Hauptgebäude, 50-55 m² groß, bietet entweder Land- oder Meerblick. Es verfügt über zwei separate Schlafzimmer mit Verbindungstür, ein Doppelbett (für zwei Erwachsene), ein luxuriöses Schlafsofa (für zwei Erwachsene), ein Badezimmer und einen gemütlichen Sitzbereich. Zusätzlich bieten die Zimmer direkten Poolzugang von der privaten Terrasse, was ein exklusives Swim-up-Erlebnis garantiert.",
+      "roomtext2": "Dieser stilvolle Zimmertyp im Hauptgebäude, 40-43 m² groß, bietet entweder Land- oder Meerblick. Er verfügt über ein Doppelbett und ein Einzelbett sowie ein gemütliches Sofa oder einen Sitzbereich. Sowohl Zimmer mit Meer- als auch mit Landblick bieten direkten Poolzugang und eine Terrasse, während Swim-up Zimmer mit Meerblick zusätzlich einen privaten Pool haben.",
+      "roomtext3": "Dieses elegante Zimmer im Hauptgebäude misst 30-32 m² und bietet Land- oder Meerblick. Es verfügt über ein Doppelbett, ein Einzelbett und ein komfortables Sofa. Zudem beinhalten die Zimmer einen Balkon, Zugang per Chip-Schlüsselarmband, eine täglich aufgefüllte Minibar, hochwertige Badezimmereinrichtungen und ein Tee-Kaffee-Set.",
+      "m1": "50-55 m²",
+      "view1": "Land-/Meerblick",
+      "buttonText1": "Erkunden",
+      "m2": "40-43 m²",
+      "view2": "Land-/Meerblick",
+      "buttonText2": "Erkunden",
+      "m3": "30-32 m²",
+      "view3": "Land-/Meerblick",
+      "buttonText3": "Erkunden"
+    },
+    "Essentials": {
+      "subtitle": "Entdecken Sie unsere außergewöhnlichen Services",
+      "title": "Alles, was Sie für ultimativen Komfort brauchen",
+      "title1": "Privatstrand & Pavillons",
+      "text1": " Entspannen Sie sich an unserem 350 Meter langen Privatstrand oder genießen Sie unseren exklusiven Steg mit privaten Lodges und bequemen Liegestühlen.",
+      "title2": "Pools für jeden Moment",
+      "text2": " Genießen Sie unsere Außenpools, den beheizten Innenpool und den Aqua-Park mit 9 Rutschen sowie spezielle Kinderpools mit 5 Rutschen.",
+      "title3": "Gastronomie der Spitzenklasse",
+      "text3": "Genießen Sie unsere Ultra All-Inclusive Buffets und À-la-carte-Restaurants mit türkischer und internationaler Küche.",
+      "title4": "Kinderparadies",
+      "text4": "Der Bamboo Kids Club (4-12 Jahre) bietet Spielplätze, Spielzimmer und ein spezielles Kinderbuffet im Magna Kids Restaurant.",
+      "title5": "Unterhaltung & Aktivitäten",
+      "text5": " Von Live-Shows über Pool-Spiele bis hin zu Strandaktivitäten – hier ist für jeden etwas dabei. Genießen Sie Tischtennis und Volleyball!",
+      "title6": "Spa & Wellness",
+      "text6": " Entspannen Sie sich mit unseren Spa-Angeboten, einschließlich Hamam, Sauna, Dampfbad und Massagen. Ein Fitnesscenter steht ebenfalls zur Verfügung.",
+      "buttonText": "Mehr entdecken"
+    },
+    "Banner": {
+      "subtitle": "Ihr Tor zum mediterranen Blau",
+      "title": "Unvergessliche Momente in Blau und Grün",
+      "text": "Tauchen Sie ein in die zauberhafte Welt der LAGO Hotels. Mit üppiger Natur, endlosen Meerblicken und tadellosem Service versprechen wir Ihnen ein unvergessliches Urlaubserlebnis.",
+      "discovermore": "Mehr Entdecken"
+    }
+  },
+  "ContactSection": {
+    "subtitle": "Folgen Sie uns für mehr",
+    "title": "@LagoHotels",
+    "text": "Bei LAGO Hotels vereinen sich Komfort und Luxus! Unvergessliche Urlaubserlebnisse erwarten Sie mit atemberaubenden Aussichten, großzügigen Zimmern, köstlichen Speiseangeboten und unterhaltsamen Aktivitäten. Buchen Sie jetzt!",
+    "buttonText": "Jetzt buchen"
+  },
+  "Footer": {
+    "category1": "Unterkunft",
+    "superior": "Superior Zimmer",
+    "family": "Familienzimmer",
+    "swimup": "Swim-up Zimmer",
+    "familyswimup": "Familien Swim-up Zimmer",
+    "duplex": "Duplex Familienzimmer",
+    "tinyvilla": "Kleine Villa",
+    "category2": "Küche",
+    "mainrestaurant": "Hauptrestaurant",
+    "gusto": "Gusto Restaurant",
+    "barcafes": "Bars und Cafés",
+    "maldiva": "Maldiva Bar",
+    "cafedelago": "Cafe de Lago",
+    "category3": "Aktivitäten",
+    "spor": "Sport & Fitness",
+    "kidsclub": "Kinderclub",
+    "stageshow": "Bühnenshow",
+    "spa": "Spa",
+    "special": "Spezial",
+   "contact":"Kontakt",
+    "home": "Startseite",
+    "service": "Service",
+    "portfolio": "Portfolio",
+    "product": "Produkt",
+    "blog": "Blog",
+    "faq": "FAQ",
+  
+    "policy": "Datenschutzerklärung",
+    "bookings": "Buchungen & Stornierungen",
+    "terms": "Webseitenbedingungen",
+    "ourpolicies":"Unsere Richtlinien",
+    "aboutcompany": "Über das Unternehmen",
+    "phone": "Telefon: +90 242 756 99 00",
+    "email": "E-Mail: info@lagohotels.com",
+    "address": "Adresse: Titreyengöl Mevkii Sorgun Manavgat/ Antalya / TR",
+    "termsuse": "Nutzungsbedingungen",
+    "notice": "Datenschutzhinweis",
+    "sustainability": "Nachhaltigkeit",
+    "accommodation": "Unterkunft",
+    "experiences": "Erlebnisse"
+  },
+
+
+  "Accommodation": {
+    "header": "Zimmertypen",
+    "buttonText1": "Superior Zimmer",
+    "buttonText2": "Familienzimmer",
+    "buttonText3": "Swim-up Zimmer",
+    "buttonText4": "Familien Swim-up Zimmer",
+    "buttonText5": "Duplex Familienzimmer",
+    "buttonText6": "Kleine Villa",
+    "buttonText7":"Barrierefreies Zimmer",
+    "subtitle": "Ein komfortabler Aufenthalt für Sie und Ihre Familie",
+    "title": "Entdecken Sie unsere eleganten Unterkünfte und finden Sie Ihren perfekten Aufenthalt.",
+    "text": " Im Lago Hotel bieten wir komfortable Zimmer mit atemberaubendem Meer- oder Landschaftsblick. Wählen Sie zwischen stilvollen Swim-up Zimmern und geräumigen Familiensuiten, die all Ihren Bedürfnissen gerecht werden. Mit modernem Design und luxuriösem Komfort ist das Lago Hotel der perfekte Ort für einen unvergesslichen Urlaub.",
+    "checkin": "CHECK-IN: 14:00 Uhr",
+    "checkout": "CHECK-OUT: 12:00 Uhr",
+    "RoomSection1": {
+      "title": "Superior Zimmer",
+      "subtitle": "Dieses elegante Zimmer im Hauptgebäude misst 30-32 m² und bietet Land- oder Meerblick. Es verfügt über ein Doppelbett, ein Einzelbett und ein komfortables Sofa. Zudem beinhalten die Zimmer einen Balkon, Zugang per Chip-Schlüsselarmband, eine täglich aufgefüllte Minibar, hochwertige Badezimmereinrichtungen und ein Tee-Kaffee-Set.",
+      "m": "30-32 m²",
+      "view": "Land-/Meerblick",
+      "buttonText": "Erkunden",
+      "link": "/en/"
+    },
+    "RoomSection2": {
+      "title": "Familienzimmer",
+      "subtitle": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür (ein Doppelbett, zwei Einzelbetten), ein Badezimmer und einen Balkon. Maximale Kapazität: 4 Erwachsene + 1 Kind.",
+      "m": "38-41 m²",
+      "view": "Land-/Meerblick",
+      "buttonText": "Erkunden"
+    },
+    "RoomSection3": {
+      "title": "Swim-up Zimmer",
+      "subtitle": "Dieser stilvolle Zimmertyp im Hauptgebäude, 40-43 m² groß, bietet entweder Land- oder Meerblick. Er verfügt über ein Doppelbett, ein Einzelbett und ein komfortables Sofa oder einen Sitzbereich. Sowohl Zimmer mit Meer- als auch mit Landblick bieten direkten Poolzugang und eine Terrasse, während Swim-up Zimmer mit Meerblick zusätzlich einen privaten Pool haben.",
+      "m": "40-43 m²",
+      "view": "Land-/Meerblick",
+      "buttonText": "Erkunden"
+    },
+    "RoomSection4": {
+      "title": "Familien Swim-up Zimmer",
+      "subtitle": "Dieses großzügige Familien Swim-up Zimmer im Hauptgebäude, 50-55 m² groß, bietet entweder Land- oder Meerblick. Es verfügt über zwei separate Schlafzimmer mit Verbindungstür, ein Doppelbett (für zwei Erwachsene), ein luxuriöses Schlafsofa (für zwei Erwachsene), ein Badezimmer und einen gemütlichen Sitzbereich. Zudem bieten die Zimmer direkten Poolzugang von der privaten Terrasse und garantieren ein exklusives Swim-up-Erlebnis.",
+      "m": "50-55 m²",
+      "view": "Land-/Meerblick",
+      "buttonText": "Erkunden"
+    },
+    "RoomSection5": {
+      "title": "Duplex Familienzimmer",
+      "subtitle": "Dieses Duplex Familienzimmer, 45-49 m² groß, erstreckt sich über zwei Etagen. Im Erdgeschoss befinden sich zwei Einzelbetten, ein Sofa, ein Badezimmer und ein Balkon, während im Obergeschoss ein Doppelbett, ein weiteres Badezimmer und ein Balkon vorhanden sind. Maximale Kapazität: 4 Erwachsene + 1 Kind.",
+      "m": "45-49 m²",
+      "view": "Land-/Meerblick",
+      "buttonText": "Erkunden"
+    },
+    "RoomSection6": {
+      "title": "Tiny Villa",
+      "subtitle": "Unsere Tiny Villa (100 m²), im Garten gelegen, verfügt über zwei Schlafzimmer mit Verbindungstür (ein Doppelbett, zwei Einzelbetten), zwei Badezimmer und eine Terrasse. Maximale Kapazität: 4 Erwachsene + 1 Kind.",
+      "m": "50 m²",
+      "view": "Land-/Meerblick",
+      "buttonText": "Erkunden"
+    },
+    "RoomSection7": {
+      "title": "Barrierefreies Zimmer",
+      "subtitle": "Unsere barrierefreien Zimmer sind mit großzügigen Innenräumen und 112 cm breiten Türen für Rollstuhlfahrer ausgestattet. Die Zimmer verfügen über speziell gestaltete Bäder, zentrale Klimaanlage, LED-TV, kostenfreies WLAN und einen Balkon.",
+      "m": "30–32 m²",
+      "view": "Landschaftsblick",
+      "buttonText": "Entdecken"
+    }
+  },
+  "RoomsParallax": {
+    "subtitle": "Wesentliche Zimmerausstattung",
+    "title": "Unsere Zimmer bieten alle Wesentliche für einen komfortablen Aufenthalt.",
+    "text": "Genießen Sie einen reibungslosen Aufenthalt mit allen wichtigen Annehmlichkeiten stets griffbereit. Von der täglichen Minibar-Auffüllung und hochwertigen Badeartikeln bis hin zum sicheren Zimmerzugang, LED-TV und 24-Stunden-WLAN – wir sorgen für Ihren Komfort zu jeder Zeit.",
+    "feature1": "Minibar",
+    "desc1": "Tägliche Auffüllungen beinhalten Wasser, Softdrinks, Bier, Milch mit Fruchtgeschmack, Schokolade und Cracker.",
+    "feature2": "Kosmetikartikel",
+    "desc2": "Zur wesentlichen Badausstattung gehören Shampoo, Haarspülung, Duschgel, Seife, Badeschwamm und Körpercreme.",
+    "feature3": " Zugang mit Chipkarte",
+    "desc3": " Alle Zimmertüren verfügen über ein sicheres und praktisches Chip-Armband-System für ein komfortisches.",
+    "feature4": "WLAN & LED-TV",
+    "desc4": "LED-TV mit nationalen und internationalen Satellitenkanälen, Radio und 24-Stunden-WLAN-eingang-benutzung."
+  },
+  "ContactSection2": {
+    "subtitle": "KONTAKTIEREN SIE UNS FÜR MEHR",
+    "title": "@LagoHotels",
+    "address": "Titreyengöl Mevkii Sorgun Manavgat/ Antalya / TR",
+    "phone": "Telefon: +90 242 756 99 00",
+    "callcenter": "Callcenter: +90 242 524 57 87",
+    "email": "E-Mail: info@lagohotel.com",
+    "buttonText": "JETZT BUCHEN"
+  },
+
+  "Restaurants": {
+    "subtitle": "Sorgfältig ausgewählte kulinarische Erlebnisse",
+    "title": "Restaurants",
+    "text": "Genießen Sie eine vielfältige Auswahl an Restaurants mit Köstlichkeiten aus aller Welt.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine-Dining-Erlebnisse",
+      "title": "Kulinarische Kunst im LAGO",
+      "text1": "Im LAGO genießen Sie Ihren Urlaub mit internationaler Küche in unseren À-la-carte-Restaurants, in denen köstliche Gerichte serviert werden, sowie an unserem endlosen Buffet, das einzigartige Spezialitäten der türkischen Küche und frische Geschmäcker aus dem Mittelmeerraum bietet.",
+      "text2": "Hauptrestaurant: Frühstück, Mittag- und Abendessen",
+      "text3": "Bistro Restaurant: Service von 23:00 bis 07:00 Uhr",
+      "text4": "Snack-Restaurants: Täglich geöffnet (zu festgelegten Zeiten)"
+    },
+    "MainRestaurantSection": {
+      "subtitle": "EIN EINZIGARTIGES GESCHMACKSERLEBNIS",
+      "title": "Hauptrestaurant Magna",
+      "text": "Zum Frühstück, Mittag- und Abendessen bieten wir ein umfangreiches Buffet, in dem Sie authentische türkische Aromen und saisonale Köstlichkeiten genießen können.",
+      "list1": "Frühstück: 07:00 - 10:30",
+      "list2": "Mittagessen: 12:30 - 14:00",
+      "list3": "Abendessen: 18:30 - 21:00",
+      "buttonText": "Mehr entdecken"
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Weltküchen im LAGO",
+      "text": "In unseren À-la-carte-Restaurants erwarten Sie exquisite Gerichte der internationalen Küche, meisterhaft zubereitet von unseren preisgekrönten Köchen. Während Ihres Urlaubs laden wir Sie herzlich zu einem wunderbaren kulinarischen Abenteuer in unseren einzigartigen À-la-carte-Restaurants ein!",
+      "cuisines1subtitle": "KÜCHE: International",
+      "cuisines1title": "Anatolia",
+      "cuisines1text": "Erleben Sie im Anatolien-Restaurant authentische türkische Aromen und kulinarische Traditionen. Im LAGO erfüllen wir stolz Ihre kulinarischen Träume mit unvergesslichen Spezialitäten aus der türkischen Küche",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "KÜCHE: Italienisch",
+      "cuisines2title": "Gusto",
+      "cuisines2text": "Erleben Sie ein authentisches italienisches Festmahl, zubereitet von unseren Meisterköchen im Gusto, unserem italienischen À-la-carte-Restaurant. Genießen Sie die charakteristischen Aromen Italiens und verwöhnen Sie sich mit einem unvergesslichen kulinarischen Erlebnis.",
+      "cuisines3subtitle": "KÜCHE: Meeresfrüchte und Fisch",
+      "cuisines3title": "Despina",
+      "cuisines3text": "Meeresfrüchte- und Fischgerichte, sorgfältig zubereitet von unseren preisgekrönten Küchenchefs, bieten ein Erlebnis, das sowohl Ihren Gaumen als auch Ihre Augen erfreut. Spezielle Rezepte erwarten Sie im À-la-carte-Restaurant Despina und versprechen ein unvergessliches kulinarisches Erlebnis."
+    },
+    "ClinaryReverseSection": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Bistro Restaurant",
+      "text1": "Im Bistro Restaurant von LAGO können Sie sich entspannen, denn köstliche Speisen stehen Ihnen rund um die Uhr zur Verfügung. Genießen Sie eine Vielfalt an verlockenden Gerichten wie Gourmet-Burger, frische Pasta, Sandwiches, knusprige Hähnchen-Gerichte und köstliche Desserts, begleitet von erfrischenden Getränken. Egal, ob Sie spät nachts einen Snack oder eine entspannte Mahlzeit wünschen – das Bistro Restaurant heißt Sie jederzeit herzlich willkommen.",
+      "text2": "Inspiriert vom gemütlichen Charme traditioneller europäischer Bistros bietet unser Bistro Restaurant schnelle, aber qualitativ hochwertige Speisen in einer angenehmen Atmosphäre und ist somit der perfekte Ort für eine ungezwungene Mahlzeit zu jeder Tageszeit."
+    },
+    "CuisinesCarousel2": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Weltküchen im LAGO",
+      "text": "Exquisite internationale Geschmacksrichtungen erwarten Sie in unseren À-la-carte-Restaurants, sorgfältig zubereitet von unseren preisgekrönten Köchen. Wir freuen uns, Sie während Ihres Urlaubs im LAGO auf eine wunderbare kulinarische Reise einzuladen.",
+      "cuisines1subtitle": "KÜCHE: Teppanyaki (Japanisch)",
+      "cuisines1title": "Wasabi",
+      "cuisines1text": "In unserem Teppanyaki À-la-carte-Restaurant genießen Sie authentische japanische Küche, meisterhaft von unseren Chefköchen auf traditionellen Teppanyaki-Grills zubereitet. Erleben Sie einzigartige Aromen des Fernen Ostens, kreativ interpretiert von unseren Küchenmeistern.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "KÜCHE: Asien",
+      "cuisines2title": "Fuego",
+      "cuisines2text": "Unser asiatisches À-la-carte-Restaurant Fuego ist darauf ausgelegt, Ihnen ein einzigartiges kulinarisches Erlebnis mit authentischen Aromen der asiatischen Küche zu bieten. Sie können diese exquisiten Gerichte jeden Abend von 18:30 bis 21:00 Uhr genießen.",
+      "cuisines3subtitle": "KÜCHE: Spanisch",
+      "cuisines3title": "Tapaz",
+      "cuisines3text": "Unser Tapaz À-la-carte-Restaurant lädt Sie ein, die authentische spanische Küche mit einem köstlichen Tapas-Menü zu genießen, sorgfältig zubereitet von unseren Köchen."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES GESCHMACKSERLEBNIS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails zu Live-Musik oder gönnen Sie sich eine erfrischende Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+    
+  "BarAndCafes": {
+    "subtitle": "Entspannende Momente den ganzen Tag über",
+    "title": "Bars und Cafés",
+    "text": "An den Bars und Cafés im LAGO genießen Sie den ganzen Tag über köstliche Getränke, erfrischende Cocktails und leckere Snacks. Ob Sie eine entspannte Kaffeepause einlegen oder lebhafte Momente mit Abendcocktails zu Live-Musik erleben möchten – unsere einladenden Locations versprechen unvergessliche Erlebnisse.",
+    "ClinaryInfoSection": {
+      "subtitle": "ENTSPANNENDE MOMENTE BEI LAGO",
+      "title": "Bars und Cafés",
+      "text1": "Entdecke köstliche Getränke, erfrischende Cocktails und leckere Snacks in den stilvollen Bars und Cafés des LAGO. Ob bei einer entspannenden Kaffeepause, beim Genießen kreativer Cocktails am Pool oder beim Ausklingenlassen des Abends mit Live-Musik – jeder Moment verspricht Erholung und Genuss.",
+      "text2": "",
+      "text3": "",
+      "text4": ""
+    },
+    "BarImageSection": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Abkühlen und Entspannen",
+      "text": "In den Bars und Cafés des LAGO können Sie sich den ganzen Tag über mit köstlichen Getränken, kunstvoll gemixten Cocktails und leckeren Snacks erfrischen. Entspannen Sie am Pool, gönnen Sie sich eine wohltuende Kaffeepause oder verbringen Sie lebhafte Abende mit großartiger Musik. Jeder Moment in unseren Bars und Cafés ist auf Ihr Vergnügen und Ihre Entspannung ausgerichtet.",
+      "buttonText": "Mehr entdecken"
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, sich bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks zu entspannen. Ob Sie eine ruhige Kaffeepause einlegen, am Pool relaxen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 18:00",
+      "cuisines1title": "Mignon Bar",
+      "cuisines1text": " In der Mignon Bar können Sie sich den ganzen Tag über mit köstlichen Getränken, frisch zubereiteten Cocktails und leckeren Snacks erfrischen. Genießen Sie eine entspannte Auszeit in unserer einladenden Atmosphäre, die sich perfekt zum Abschalten am Pool eignet",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 10:00 - 18:00 / 23:00",
+      "cuisines2title": "Joie Bar",
+      "cuisines2text": "Die Joie Bar empfängt Sie von morgens bis abends mit köstlichen Getränken, Spezialitätenkaffees, erfrischenden Cocktails und leckeren Snacks. Genießen Sie entspannte Momente und lebhafte Abende in der einladenden Atmosphäre der Joie Bar.",
+      "cuisines3subtitle": "Öffnungszeiten: 10:00 - 18:00 / 23:00",
+      "cuisines3title": "Maldiva Bar",
+      "cuisines3text": "Entspannen Sie an der Maldiva Bar mit erfrischenden Getränken, tropischen Cocktails und köstlichen Snacks, die in einer friedlichen Atmosphäre am Pool serviert werden. Genießen Sie Ihren Tag mit einer Portion Erfrischung und Entspannung in der Maldiva Bar.",
+      "cuisines4subtitle": "Öffnungszeiten: 10:00 - 18:00 / 24 Stunden",
+      "cuisines4title": "Vago Bar",
+      "cuisines4text": "Die Vago Bar bietet Ihnen jederzeit erfrischende Getränke, Signature-Cocktails und köstliche Snacks. Ob Sie sich nach einem erfrischenden Getränk in der späten Nacht oder einem frühen Morgenkaffee sehnen, die Vago Bar ist stets bereit, Sie zu empfangen."
+    },
+    "BarImageSection2": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Lobby Bars und Cafés",
+      "text1": "In den Lobby-Bars und Cafés des LAGO sind Sie zu jeder Tageszeit eingeladen, sich bei köstlichen Getränken, Spezialitätenkaffees, verführerischen Cocktails und leckeren Snacks zu entspannen. Erleben Sie Momente der Ruhe und des Genusses in unseren eleganten Lobby-Bereichen.",
+      "buttonText": "Mehr entdecken"
+    },
+    "CuisinesCarousel2": {
+      "subtitle": "Entspannende Momente erwarten Sie",
+      "title": "Lobby-Bars und Cafés des LAGO",
+      "text": "Entspannen Sie sich und tanken Sie neue Energie in den Lobby-Bars und Cafés des LAGO, wo Ihnen in einer eleganten und entspannten Atmosphäre köstliche Getränke, Spezialitätenkaffees und leckere Snacks serviert werden. Ob Sie sich mit Freunden treffen oder eine ruhige Auszeit allein genießen möchten – unsere Lobby-Bereiche bieten für jeden Anlass das perfekte Ambiente.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 00:00 / 24 ",
+      "cuisines1title": "Piano Bar",
+      "cuisines1text": "Entspannen Sie in der eleganten Atmosphäre der Piano Bar, in der kunstvoll gemixte Cocktails, Premium-Getränke und köstliche Snacks von beruhigender Live-Klaviermusik begleitet werden. Die Piano Bar ist der perfekte Ort, um nach einem wunderbaren Tag im LAGO abzuschalten.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 14:00 - 23:00",
+      "cuisines2title": "Patisserie ABELLA",
+      "cuisines2text": "Besuchen Sie die Patisserie ABELLA, um sich mit frisch gebackenen Gebäckstücken, köstlichen Desserts und aromatischem Kaffee zu verwöhnen. Genießen Sie süße Leckereien und Gourmet-Spezialitäten in einer charmanten und entspannten Atmosphäre bei ABELLA.",
+      "cuisines3subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines3title": "Cafe de Lago",
+      "cuisines3text": "Das Cafe de Lago lädt Sie ein, in einer gemütlichen und freundlichen Atmosphäre zu entspannen und köstlichen Kaffee, leckere Getränke, verführerische Desserts und frisch zubereitete Snacks zu genießen. Es ist der perfekte Ort, um neue Energie zu tanken und ruhige Momente während des Tages zu genießen.",
+      "cuisines4subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines4title": "Cafe de House",
+      "cuisines4text": "Cafe de House heißt Sie den ganzen Tag über willkommen, um frisch gebrühten Kaffee, erfrischende Getränke, verführerische Desserts und leckere Snacks zu genießen. Entspannen Sie in unserer gemütlichen Atmosphäre, die sich perfekt für eine ruhige Auszeit oder ein Treffen mit Freunden eignet."
+    },
+    "DiscoverBackground": {
+      "subtitle": "Ein Fest der Aromen",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés von Lago Hotel erleben Sie eine Symphonie aus köstlichen Getränken, leichten Snacks und entspannten Momenten, die Ihren Aufenthalt zu einem unvergesslichen Erlebnis machen.",
+      "buttonText": "Mehr entdecken"
+    },
+    "BarCarousel":{
+        "subtitle":"Köstliche Momente erwarten Sie",
+        "title":"Hungrig auf mehr?",
+        "text":"Entdecken Sie Snackspot, unser geräumiges Snack-Restaurant, in dem köstliche Getränke und herrliche Aromen der türkischen und internationalen Küche serviert werden. Täglich von 11:00 bis 18:00 geöffnet, ist Snackspot der ideale Ort, um während Ihres Urlaubs genussvolle Pausen zu verbringen.",
+        "buttonText":"Mehr entdecken"
+      }
+  },
+  "JoieBar": {
+    "subtitle": "FRISCHE GETRÄNKE UND MUSIK",
+    "title": "Joie Bar",
+    "text": "Genießen Sie erfrischende Getränke, Spezialcocktails und leckere Snacks in der Joie Bar, begleitet von entspannender Musik in einer gemütlichen und einladenden Atmosphäre.",
+    "ClinaryInfoSection": {
+      "subtitle": "Relax & Refresh at Joie Bar",
+      "title": "Frische Getränke am Pool",
+      "text1": "Genießen Sie erfrischende Getränke, kunstvoll gemixte Cocktails und köstliche Snacks an der Poolbar in der Joie Bar. Erleben Sie entspannte und fröhliche Momente in der einladenden Atmosphäre unserer Poolbar während Ihres gesamten Aufenthalts.",
+      "text2": "In der Zeit vom 28. März bis zum 30. April und vom 1. Oktober bis zum 7. November bieten wir unseren Service von 10:00 bis 18:00 Uhr an, während in den übrigen Monaten unsere Servicezeiten von 10:00 bis 23:00 Uhr gelten."
+    },
+    "RoomTour": {
+      "subtitle": "Erkunden Sie LAGO virtuell",
+      "title": "Unsere Restaurants und Bars erwarten Sie",
+      "text": "Machen Sie eine 360-Grad-Tour und entdecken Sie das einzigartige Ambiente unserer Restaurants, Bars und Highlights – planen Sie Ihren Traumurlaub im Voraus."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 18:00",
+      "cuisines1title": "Mignon Bar",
+      "cuisines1text": "In der Mignon Bar erwarten Sie den ganzen Tag über leckere Getränke, frisch zubereitete Cocktails und leichte Snacks in einer entspannenden Atmosphäre am Pool.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 10:00 - 18:00 / 23:00",
+      "cuisines2title": "Joie Bar",
+      "cuisines2text": "Die Joie Bar bietet Ihnen von morgens bis abends köstliche Getränke, ausgewählte Kaffees, erfrischende Cocktails und delikate Snacks in einem warmen, einladenden Ambiente.",
+      "cuisines3subtitle": "Öffnungszeiten: 10:00 - 18:00 / 23:00",
+      "cuisines3title": "Maldiva Bar",
+      "cuisines3text": "In der Maldiva Bar können Sie am Pool entspannen, tropische Cocktails genießen und leichte Snacks zu sich nehmen – ideal, um den Tag entspannt ausklingen zu lassen.",
+      "cuisines4subtitle": "Öffnungszeiten: 10:00 - 18:00 / 24 Stunden",
+      "cuisines4title": "Vago Bar",
+      "cuisines4text": "Die Vago Bar bietet Ihnen rund um die Uhr erfrischende Getränke, kreative Cocktails und schmackhafte Snacks – egal ob spätabends oder früh am Morgen."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+  "MaldivaBar": {
+    "subtitle": "FRISCHE GETRÄNKE UND MUSIK",
+    "title": "Maldiva Bar",
+    "text": "Entspannen Sie an der Maldiva Bar mit erfrischenden Getränken, tropischen Cocktails und leckeren Snacks in einer ruhigen Umgebung. Erholen Sie sich am Pool, begleitet von angenehmer Musik den ganzen Tag über.",
+    "ClinaryInfoSection": {
+      "subtitle": "Frische Getränke am Pool",
+      "title": "Frische Getränke am Pool",
+      "text1": "Entspannen und erfrischen Sie sich in der Maldiva Bar, die sich bequem am Pool befindet. Genießen Sie den ganzen Tag über köstliche Getränke, tropische Cocktails und leckere Snacks in einer ruhigen und einladenden Atmosphäre.",
+      "text2": "In der Zeit vom 28. März bis zum 30. April und vom 1. Oktober bis zum 7. November bieten wir unseren Service von 10:00 bis 18:00 Uhr an, während in den übrigen Monaten unsere Servicezeiten von 10:00 bis 23:00 Uhr gelten."
+    },
+    "RoomTour": {
+      "subtitle": "Erkunden Sie LAGO virtuell",
+      "title": "Unsere Restaurants und Bars erwarten Sie",
+      "text": "Entdecken Sie das einzigartige Ambiente des Lago Hotels mit einer 360-Grad-Tour durch unsere Restaurants, Bars und Highlights – planen Sie Ihren Traumurlaub im Voraus."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 18:00",
+      "cuisines1title": "Mignon Bar",
+      "cuisines1text": "Die Mignon Bar bietet Ihnen den ganzen Tag über leckere Getränke, frisch zubereitete Cocktails und leichte Snacks in entspannter Atmosphäre am Pool.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 10:00 - 18:00 / 23:00",
+      "cuisines2title": "Joie Bar",
+      "cuisines2text": "Die Joie Bar bietet Ihnen von morgens bis abends köstliche Getränke, ausgewählte Kaffees, erfrischende Cocktails und delikate Snacks in einem warmen, einladenden Ambiente.",
+      "cuisines3subtitle": "Öffnungszeiten: 10:00 - 18:00 / 23:00",
+      "cuisines3title": "Maldiva Bar",
+      "cuisines3text": "In der Maldiva Bar können Sie sich am Pool entspannen und tropische Cocktails sowie leichte Snacks genießen – ideal, um den Tag stilvoll ausklingen zu lassen.",
+      "cuisines4subtitle": "Öffnungszeiten: 10:00 - 18:00 / 24 Stunden",
+      "cuisines4title": "Vago Bar",
+      "cuisines4text": "Die Vago Bar ist rund um die Uhr für Sie da und bietet erfrischende Getränke, kreative Cocktails und schmackhafte Snacks – ob spätabends oder früh am Morgen."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "MignonBar": {
+    "subtitle": " FRISCHE GETRÄNKE UND MUSIK",
+    "title": "Mignon Bar",
+    "text": " Genießen Sie in der Mignon Bar eine Vielfalt an erfrischenden Getränken, Spezialcocktails und leckeren Snacks in einer entspannten Atmosphäre, begleitet von angenehmer Musik.",
+    "ClinaryInfoSection": {
+      "subtitle": "  FRISCHE GETRÄNKE AM POOL",
+      "title": " Frische Getränke am Pool",
+      "text1": "   Entspannen und erfrischen Sie sich an der Mignon Bar, die eine Vielzahl an erfrischenden Getränken, Spezialcocktails und leckeren Snacks direkt am Pool serviert. Genießen Sie den perfekten Mix aus Erholung und Erfrischung den ganzen Tag über.",
+      "text2": "Unsere Dienstleistungen stehen Ihnen jährlich vom 1. Juni bis zum 30. September zur Verfügung."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": " Schauen Sie sich um",
+      "text": "Sind Sie bereit, die einzigartige Atmosphäre von LAGO zu erkunden? Erleben Sie unsere Restaurants, Bars und besondere Bereiche mit einer 360-Grad-Virtual-Tour, die es Ihnen ermöglicht, jedes Detail Ihres Urlaubs vor Ihrem Besuch visuell zu entdecken."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 18:00",
+      "cuisines1title": "Mignon Bar",
+      "cuisines1text": "Erleben wir gemeinsam die Freude daran, die unverwechselbaren Aromen und kulinarischen Traditionen der türkischen Küche auf dem Teller zu bewahren. LAGO hat die Ehre, Ihre Träume mit dem einzigartigen Geschmack des Mittelmeers zu verbinden.",
+      "buttonText": "Mehr erkunden",
+      "cuisines2subtitle": "Öffnungszeiten: 10:00 - 18.00 / 23:00",
+      "cuisines2title": "Joie Bar",
+      "cuisines2text": "Die italienische Küche wurde von unseren Experten für Sie als kulinarisches Fest kreiert. In unserem Hauptrestaurant ist unser italienisches À-la-carte-Restaurant bereit, Ihnen die unverwechselbaren Aromen der italienischen Küche zu servieren. Lorem Ipsum, die unverwechselbaren Aromen...",
+      "cuisines3subtitle": "Öffnungszeiten: 10:00 - 18.00 / 23:00",
+      "cuisines3title": "Maldiva Bar",
+      "cuisines3text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: ",
+      "cuisines4subtitle": "Öffnungszeiten: 10.00 - 18:00 / 24 Stunden",
+      "cuisines4title": "Vago Bar",
+      "cuisines4text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: "
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "PianoBar": {
+    "subtitle": " FRISCHE GETRÄNKE UND MUSIK",
+    "title": "Piano Bar",
+    "text": "  Entspannen Sie und genießen Sie frisch zubereitete Cocktails, Premium-Getränke und köstliche Snacks in der Piano Bar, begleitet von sanfter Live-Klaviermusik. Hier finden Sie den idealen Rahmen für entspannte Abende und unvergessliche Momente.",
+    "ClinaryInfoSection": {
+      "subtitle": "Entspannte Abende & Premium-Getränke",
+      "title": "Frische Getränke am Pool",
+      "text1": "Gönnen Sie sich frisch zubereitete Cocktails, Premium-Getränke und köstliche Snacks in der Piano Bar, während Sie den beruhigenden Klängen der Live-Klaviermusik lauschen. Das elegante und entspannende Ambiente bietet den perfekten Rahmen für unvergessliche Abende.",
+      "text2": "Unser Service steht Ihnen vom 28. März bis zum 7. November zur Verfügung. In der Zeit vom 28. März bis zum 30. April sowie vom 1. Oktober bis zum 7. November bieten wir einen 24-Stunden-Service an, während wir in den übrigen Monaten von 10:00 Uhr bis Mitternacht für Sie da sind."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": " Schauen Sie sich um",
+      "text": "Sind Sie bereit, die einzigartige Atmosphäre von LAGO zu erkunden? Erleben Sie unsere Restaurants, Bars und besondere Bereiche mit einer 360-Grad-Virtual-Tour, die es Ihnen ermöglicht, jedes Detail Ihres Urlaubs vor Ihrem Besuch visuell zu entdecken."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 18:00",
+      "cuisines1title": "Mignon Bar",
+      "cuisines1text": "Erleben wir gemeinsam die Freude daran, die unverwechselbaren Aromen und kulinarischen Traditionen der türkischen Küche auf dem Teller zu bewahren. LAGO hat die Ehre, Ihre Träume mit dem einzigartigen Geschmack des Mittelmeers zu verbinden.",
+      "buttonText": "Mehr erkunden",
+      "cuisines2subtitle": "Öffnungszeiten: 10:00 - 18.00 / 23:00",
+      "cuisines2title": "Joie Bar",
+      "cuisines2text": "Die italienische Küche wurde von unseren Experten für Sie als kulinarisches Fest kreiert. In unserem Hauptrestaurant ist unser italienisches À-la-carte-Restaurant bereit, Ihnen die unverwechselbaren Aromen der italienischen Küche zu servieren. Lorem Ipsum, die unverwechselbaren Aromen...",
+      "cuisines3subtitle": "Öffnungszeiten: 10:00 - 18.00 / 23:00",
+      "cuisines3title": "Maldiva Bar",
+      "cuisines3text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: ",
+      "cuisines4subtitle": "Öffnungszeiten: 10.00 - 18:00 / 24 Stunden",
+      "cuisines4title": "Vago Bar",
+      "cuisines4text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: "
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "VagoBar": {
+    "subtitle": " FRISCHE GETRÄNKE UND MUSIK",
+    "title": "Vago Bar",
+    "text": "  Die Vago Bar lädt Sie ein, zu jeder Tageszeit erfrischende Getränke, Spezialcocktails und leckere Snacks zu genießen. Entspannen Sie bei großartiger Musik und lehnen Sie sich in der einladenden Atmosphäre der Vago Bar zurück.",
+    "ClinaryInfoSection": {
+      "subtitle": "Erfrischen & Entspannen in der Vago Bar",
+      "title": "Frische Getränke, zu jeder Zeit",
+      "text1": "Die Vago Bar lädt Sie ein, zu jeder gewünschten Zeit erfrischende Getränke, kunstvoll gemixte Cocktails und köstliche Snacks zu genießen. Entspannen Sie in unserer einladenden Atmosphäre, die sowohl für lebhafte Abende als auch für ruhige Momente während Ihres Aufenthalts perfekt geeignet ist.",
+      "text2": "In der Zeit vom 28. März bis zum 30. April und vom 1. Oktober bis zum 7. November sind wir von 10:00 bis 18:00 Uhr für Sie da. In den restlichen Monaten haben wir rund um die Uhr geöffnet."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": " Schauen Sie sich um",
+      "text": "Sind Sie bereit, die einzigartige Atmosphäre von LAGO zu erkunden? Erleben Sie unsere Restaurants, Bars und besondere Bereiche mit einer 360-Grad-Virtual-Tour, die es Ihnen ermöglicht, jedes Detail Ihres Urlaubs vor Ihrem Besuch visuell zu entdecken."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 18:00",
+      "cuisines1title": "Mignon Bar",
+      "cuisines1text": "Erleben wir gemeinsam die Freude daran, die unverwechselbaren Aromen und kulinarischen Traditionen der türkischen Küche auf dem Teller zu bewahren. LAGO hat die Ehre, Ihre Träume mit dem einzigartigen Geschmack des Mittelmeers zu verbinden.",
+      "buttonText": "Mehr erkunden",
+      "cuisines2subtitle": "Öffnungszeiten: 10:00 - 18.00 / 23:00",
+      "cuisines2title": "Joie Bar",
+      "cuisines2text": "Die italienische Küche wurde von unseren Experten für Sie als kulinarisches Fest kreiert. In unserem Hauptrestaurant ist unser italienisches À-la-carte-Restaurant bereit, Ihnen die unverwechselbaren Aromen der italienischen Küche zu servieren. Lorem Ipsum, die unverwechselbaren Aromen...",
+      "cuisines3subtitle": "Öffnungszeiten: 10:00 - 18.00 / 23:00",
+      "cuisines3title": "Maldiva Bar",
+      "cuisines3text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: ",
+      "cuisines4subtitle": "Öffnungszeiten: 10.00 - 18:00 / 24 Stunden",
+      "cuisines4title": "Vago Bar",
+      "cuisines4text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: "
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "Abellapatisserie": {
+    "subtitle": "Süße Momente erwarten Sie",
+    "title": "Abella Patisserie",
+    "text": "Verwöhnen Sie sich mit frisch gebackenen Backwaren, verführerischen Desserts und aromatischem Kaffee in der Abella Patisserie. Genießen Sie süße Leckereien in unserem gemütlichen und einladenden Ambiente.",
+    "ClinaryInfoSection": {
+      "subtitle": "Zarte Genussmomente in Abella Patisserie",
+      "title": "Frisch gebackene Köstlichkeiten",
+      "text1": "Erleben Sie den unwiderstehlichen Duft frisch gebackener Backwaren, verführerischer Desserts und erstklassigem Kaffee in der Abella Patisserie. Gönnen Sie sich eine süße Pause in unserem behaglichen Ambiente.",
+      "text2": "Geöffnet von 28. März bis 7. November."
+    },
+    "RoomTour": {
+      "subtitle": "Entdecken Sie LAGO Virtuell",
+      "title": "Erkunden Sie unsere Restaurants & Bars",
+      "text": "Sind Sie bereit, die einzigartige Atmosphäre von LAGO zu erleben? Mit unserer 360‑Grad‑Tour entdecken Sie jedes Detail unserer exquisiten Restaurants, Bars und Veranstaltungsorte."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 00:00 / 7/24",
+      "cuisines1title": "Piano Bar",
+      "cuisines1text": "Entspannen Sie in der Piano Bar, wo kunstvoll kreierte Cocktails, Premium-Getränke und köstliche Snacks durch Live-Pianomusik abgerundet werden.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 14:00 - 23:00",
+      "cuisines2title": "Patisserie ABELLA",
+      "cuisines2text": "Lassen Sie sich in Patisserie ABELLA von frisch gebackenen Köstlichkeiten, verführerischen Desserts und aromatischem Kaffee verwöhnen.",
+      "cuisines3subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines3title": "Cafe de Lago",
+      "cuisines3text": "Im Cafe de Lago genießen Sie entspannte Momente bei köstlichem Kaffee, leckeren Getränken und frischen Snacks in angenehmer Atmosphäre.",
+      "cuisines4subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines4title": "Cafe de House",
+      "cuisines4text": "Cafe de House heißt Sie willkommen mit frisch gebrühtem Kaffee, erfrischenden Getränken, köstlichen Desserts und leichten Snacks – perfekt für eine Pause oder ein Treffen mit Freunden."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+ "Cafedehouse": {
+    "subtitle": "SÜSSE MOMENTE ERWARTEN SIE",
+    "title": "Cafe de House",
+    "text": "Entspannen Sie im Cafe de House bei köstlichem Kaffee, erfrischenden Getränken, leckeren Desserts und schmackhaften Snacks. Genießen Sie das gemütliche Ambiente, das sich perfekt für erfrischende Pausen und ruhige Momente über den Tag hinweg eignet.",
+    "ClinaryInfoSection": {
+      "subtitle": "Süße Momente & Gemütliche Atmosphäre",
+      "title": "Cafe de House",
+      "text1": "Das Cafe de House lädt Sie ein, köstlichen Kaffee, erfrischende Getränke, verführerische Desserts und frisch zubereitete Snacks zu genießen. Unsere warme und einladende Atmosphäre bietet den perfekten Rahmen für entspannende Pausen und angenehme Momente über den ganzen Tag hinweg.",
+      "text2": "Geöffnet von 28. März bis 7. November, mit einer Kapazität von 200 Personen."
+    },
+    "RoomTour": {
+      "subtitle": "Entdecken Sie LAGO Virtuell",
+      "title": "Erkunden Sie unsere Restaurants & Bars",
+      "text": "Sind Sie bereit, die einzigartige Atmosphäre von LAGO zu erleben? Mit unserer 360‑Grad‑Tour entdecken Sie jedes Detail unserer exquisiten Restaurants, Bars und besonderen Veranstaltungsorte. Stellen Sie sich Ihren Traumurlaub vor, bevor Sie anreisen."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 00:00 / 7/24",
+      "cuisines1title": "Piano Bar",
+      "cuisines1text": "Genießen Sie in der Piano Bar kunstvoll kreierte Cocktails, Premium-Getränke und schmackhafte Snacks, begleitet von Live-Pianomusik – der perfekte Ort, um nach einem erlebnisreichen Tag abzuschalten.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 14:00 - 23:00",
+      "cuisines2title": "Patisserie ABELLA",
+      "cuisines2text": "Besuchen Sie Patisserie ABELLA und genießen Sie täglich frisch gebackene Backwaren, verführerische Desserts und aromatischen Kaffee in einem charmanten Ambiente.",
+      "cuisines3subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines3title": "Cafe de Lago",
+      "cuisines3text": "Im Cafe de Lago erwartet Sie eine Auswahl besonderer Kaffees, erfrischender Getränke, köstlicher Desserts und frisch zubereiteter Snacks – der ideale Ort, um Energie zu tanken.",
+      "cuisines4subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines4title": "Cafe de House",
+      "cuisines4text": "Im Cafe de House genießen Sie frisch gebrühten Kaffee, erfrischende Getränke, leckere Desserts und leichte Snacks in einem gemütlichen Ambiente – ideal für eine entspannte Pause oder ein Treffen mit Freunden."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "Cafedelago": {
+    "subtitle": " SÜSSE MOMENTE ERWARTEN SIE",
+    "title": "Cafe de Lago",
+    "text": "  Entspannen Sie sich und genießen Sie köstlichen Kaffee, frische Getränke, verführerische Desserts und leckere Snacks im Cafe de Lago. Gönnen Sie sich eine Auszeit in unserer gemütlichen Atmosphäre und erleben Sie entspannte Momente im Laufe des Tages.",
+    "ClinaryInfoSection": {
+      "subtitle": "Entspannende Momente & Köstliche Genüsse",
+      "title": "Cafe de Lago",
+      "text1": "Gönnen Sie sich eine entspannende Auszeit im Cafe de Lago, wo Sie köstlichen Kaffee, erfrischende Getränke, verführerische Desserts und leckere Snacks genießen können. Die gemütliche und einladende Atmosphäre macht diesen Ort zum perfekten Rückzugsort, um neue Energie zu tanken und angenehme Momente während des Tages zu erleben.",
+      "text2": "Es ist vom 15. Mai bis zum 30. September geöffnet und bietet Platz für 143 Personen."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": " Schauen Sie sich um",
+      "text": "Sind Sie bereit, die einzigartige Atmosphäre von LAGO zu erkunden? Erleben Sie unsere Restaurants, Bars und besondere Bereiche mit einer 360-Grad-Virtual-Tour, die es Ihnen ermöglicht, jedes Detail Ihres Urlaubs vor Ihrem Besuch visuell zu entdecken."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Entspannen & Erfrischen im LAGO",
+      "title": "Bars und Cafés",
+      "text": "Unsere Bars und Cafés laden Sie den ganzen Tag über ein, bei kunstvoll gemixten Cocktails, köstlichen Getränken und leckeren Snacks abzuschalten. Ob Sie eine ruhige Kaffeepause genießen, am Pool entspannen oder lebhafte Abende mit Live-Unterhaltung verbringen – jeder Moment in den Bars und Cafés des LAGO verspricht Entspannung und Genuss.",
+      "cuisines1subtitle": "Öffnungszeiten: 10:00 - 19:00",
+      "cuisines1title": "Piano Bar",
+      "cuisines1text": "Erleben wir gemeinsam die Freude, die unverwechselbaren Aromen und kulinarischen Traditionen der türkischen Küche auf dem Teller zu bewahren. LAGO ist geehrt, Ihre Träume mit den einzigartigen Geschmäckern des Mittelmeers zu verbinden.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Öffnungszeiten: 08:00 - 23:00",
+      "cuisines2title": "Abella Patisserie",
+      "cuisines2text": "Die italienische Küche wurde von unseren Experten für Sie als kulinarisches Fest kreiert. In unserem Hauptrestaurant ist unser italienisches À-la-carte-Restaurant bereit, Ihnen die unverwechselbaren Aromen der italienischen Küche zu servieren, und bringt authentische Geschmäcker sowie unvergessliche kulinarische Erlebnisse direkt an Ihren Tisch.",
+      "cuisines3subtitle": "Öffnungszeiten: 09:00 - 18:00",
+      "cuisines3title": "Cafe de Lago",
+      "cuisines3text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: ",
+      "cuisines4subtitle": "Öffnungszeiten: 09:00 - 18:00",
+      "cuisines4title": "Cafe de House",
+      "cuisines4text": "Die von unseren preisgekrönten Köchen für Sie zubereiteten Fischmenüs sprechen sowohl Ihren Appetit als auch Ihren Blick an. Spezielle Rezepte erwarten Sie in unserem Fisch-à-la-carte-Restaurant. Unser Fisch-à-la-carte-Restaurant serviert zu den folgenden Zeiten: "
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "GustoRestaurants": {
+    "subtitle": "ITALIENISCHE KÜCHE IN VOLLENDUNG",
+    "title": "Gusto Restaurant",
+    "text": "Genießen Sie authentische italienische Aromen, die von unseren talentierten Köchen im Gusto Restaurant sorgfältig zubereitet werden. Lassen Sie sich von einer köstlichen Auswahl an italienischen Gerichten verwöhnen – von leckeren Pastas bis hin zu erlesenen Spezialitäten – und erleben Sie Italien von seiner besten Seite.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Erlesene italienische Aromen",
+      "text1": "Im Gusto À-la-carte-Restaurant erleben Sie die erlesenen Geschmäcker Italiens, die von unseren erfahrenen Köchen zubereitet werden.",
+      "text2": "Verwöhnen Sie Ihre Sinne mit authentischen italienischen Gerichten – von handgemachter Pasta bis hin zu außergewöhnlichen italienischen Spezialitäten – und genießen Sie eine unvergessliche kulinarische Reise."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Schauen Sie sich um",
+      "text": "Im Gusto À-la-carte-Restaurant erwarten Sie die exquisiten Aromen Italiens, meisterhaft zubereitet von unseren Experten. Lassen Sie sich von authentischen italienischen Gerichten verwöhnen und erleben Sie eine unvergessliche kulinarische Reise."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": "In unseren À-la-carte-Restaurants erwarten Sie erlesene Aromen der internationalen Küche, kreiert von den meisterhaften Händen unserer preisgekrönten Köche. Während Ihres Urlaubs laden wir Sie herzlich ein, in unseren unverwechselbaren À-la-carte-Restaurants ein wunderbares kulinarisches Abenteuer zu erleben!",
+      "cuisines1subtitle": "Küche: Teppanyaki (Japanisch)",
+      "cuisines1title": "Wasabi",
+      "cuisines1text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Fuego",
+      "cuisines2text": "Wir haben unser asiatisches À-la-carte-Restaurant so konzipiert, dass Sie im Urlaub die köstlichen Aromen der asiatischen Küche erleben können. Zwischen 18:30 und 21:00 Uhr genießen Sie asiatische Gerichte, zubereitet von unseren talentierten, preisgekrönten Küchenchefs.",
+      "cuisines3subtitle": "Küche: Spanisch",
+      "cuisines3title": "Tapaz",
+      "cuisines3text": "Fischmenüs, die von unseren preisgekrönten Küchenchefs für Sie zubereitet werden, sprechen sowohl Ihren Gaumen als auch Ihre Augen an. Besondere Rezepte erwarten Sie in unserem Fish À-la-carte-Restaurant. Unser Fish À-la-carte-Restaurant bietet ein exklusives Erlebnis und lädt Sie ein, frische, meisterhaft zubereitete Fischgerichte in einer einladenden Atmosphäre zu genießen."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "AnatoliaRestaurants": {
+    "subtitle": "Traditionelle türkische Küche in ihrer besten Form",
+    "title": "Anatolia Restaurant",
+    "text": "Genießen Sie authentische türkische Gerichte und traditionelle Aromen im Anatolia Restaurant, wo unsere Köche mit großer Sorgfalt köstliche Rezepte zubereiten, um Ihnen ein unvergessliches kulinarisches Erlebnis zu bieten.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine-Dining-Erlebnisse",
+      "title": "Anatolia Restaurant",
+      "text1": "Erleben Sie authentische türkische Küche mit erlesenen Aromen, die von unseren erfahrenen Köchen im Anatolia Restaurant sorgfältig zubereitet werden.",
+      "text2": "Gönnen Sie sich traditionelle türkische Gerichte und genießen Sie ein unvergessliches Fine-Dining-Erlebnis."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Schauen Sie sich um",
+      "text": "Entdecken Sie im Lago Hotel einen unvergesslichen Restaurantbesuch mit raffiniert zubereiteten Speisen und einer eleganten Atmosphäre, die Ihre Sinne verwöhnt."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": "In unseren À-la-carte-Restaurants warten die erlesenen Aromen der internationalen Küche darauf, von Ihnen entdeckt zu werden – kreiert von den meisterhaften Händen unserer preisgekrönten Köche. Während Ihres Urlaubs laden wir Sie herzlich zu einem wunderbaren kulinarischen Abenteuer in unseren außergewöhnlichen À-la-carte-Restaurants ein!",
+    "cuisines1subtitle": "KÜCHE: International",
+      "cuisines1title": "Anatolia",
+      "cuisines1text": "Erleben Sie im Anatolien-Restaurant authentische türkische Aromen und kulinarische Traditionen. Im LAGO erfüllen wir stolz Ihre kulinarischen Träume mit unvergesslichen Spezialitäten aus der türkischen Küche",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Wasabi",
+      "cuisines2text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "cuisines3subtitle": "KÜCHE: Meeresfrüchte und Fisch",
+      "cuisines3title": "Despina",
+      "cuisines3text": "Meeresfrüchte- und Fischgerichte, sorgfältig zubereitet von unseren preisgekrönten Küchenchefs, bieten ein Erlebnis, das sowohl Ihren Gaumen als auch Ihre Augen erfreut. Spezielle Rezepte erwarten Sie im À-la-carte-Restaurant Despina und versprechen ein unvergessliches kulinarisches Erlebnis."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+  "DespinaRestaurants": {
+    "subtitle": "Meeresfrüchteküche in Perfektion",
+    "title": "Despina Restaurant",
+    "text": "Entdecken Sie die feinsten Meeresfrüchte und Fischgerichte im Despina Restaurant, meisterhaft zubereitet von unseren Experten. Lassen Sie sich von frischen, aromatischen Spezialitäten verführen.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Exquisite Meeresfrüchte Aromen",
+      "text1": "Im Despina À-la-carte-Restaurant genießen Sie herausragende Meeresfrüchte, liebevoll zubereitet von unseren preisgekrönten Küchenchefs.",
+      "text2": "Frische Aromen, inspiriert vom Meer, bieten ein unvergessliches kulinarisches Erlebnis."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Schauen Sie sich um",
+      "text": "Genießen Sie im Lago Hotel ein unvergessliches kulinarisches Erlebnis, bei dem liebevoll zubereitete Speisen und eine elegante Atmosphäre Ihre Sinne verzaubern."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": "Erleben Sie die exquisite Vielfalt internationaler Küche in unseren À-la-carte-Restaurants, kreiert von unseren preisgekrönten Küchenchefs. Lassen Sie sich während Ihres Aufenthalts in LAGO auf ein wunderbares kulinarisches Abenteuer einladen!",
+      "cuisines1subtitle": "KÜCHE: International",
+      "cuisines1title": "Anatolia",
+      "cuisines1text": "Erleben Sie im Anatolien-Restaurant authentische türkische Aromen und kulinarische Traditionen. Im LAGO erfüllen wir stolz Ihre kulinarischen Träume mit unvergesslichen Spezialitäten aus der türkischen Küche",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Wasabi",
+      "cuisines2text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "cuisines3subtitle": "KÜCHE: Meeresfrüchte und Fisch",
+      "cuisines3title": "Despina",
+      "cuisines3text": "Meeresfrüchte- und Fischgerichte, sorgfältig zubereitet von unseren preisgekrönten Küchenchefs, bieten ein Erlebnis, das sowohl Ihren Gaumen als auch Ihre Augen erfreut. Spezielle Rezepte erwarten Sie im À-la-carte-Restaurant Despina und versprechen ein unvergessliches kulinarisches Erlebnis."
+     
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+ "FuegoRestaurants": {
+    "subtitle": "ASIATISCHE KÜCHE IN VOLLENDUNG",
+    "title": "Fuego Restaurant",
+    "text": "Erleben Sie die lebhaften Aromen Asiens im Fuego À-la-carte-Restaurant, wo unsere Köche authentische asiatische Gerichte mit meisterhafter Fertigkeit zubereiten. Genießen Sie eine köstliche kulinarische Reise durch sorgfältig kreierte Spezialitäten aus den vielfältigen asiatischen Kochtraditionen.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Erlesene asiatische Aromen",
+      "text1": "Im Fuego À-la-carte-Restaurant erwartet Sie eine außergewöhnliche kulinarische Reise durch authentische asiatische Gerichte, die von unseren talentierten Köchen mit größter Sorgfalt zubereitet werden.",
+      "text2": "Lassen Sie sich von unverwechselbaren Geschmacksrichtungen inspirieren, die auf verschiedenen asiatischen Traditionen basieren, und erleben Sie ein unvergessliches Dinner-Erlebnis."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Schauen Sie sich um",
+      "text": "Erkunden Sie das Fuego Restaurant im Lago Hotel, wo raffinierte Speisen und eine stilvolle Atmosphäre ein unvergessliches kulinarisches Erlebnis garantieren."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": "In unseren À-la-carte-Restaurants erwarten Sie erlesene Aromen der internationalen Küche, kreiert von den meisterhaften Händen unserer preisgekrönten Köche. Während Ihres Urlaubs laden wir Sie herzlich zu einem wunderbaren kulinarischen Abenteuer in unseren unverwechselbaren À-la-carte-Restaurants ein!",
+      "cuisines1subtitle": "KÜCHE: International",
+      "cuisines1title": "Anatolia",
+      "cuisines1text": "Erleben Sie im Anatolien-Restaurant authentische türkische Aromen und kulinarische Traditionen. Im LAGO erfüllen wir stolz Ihre kulinarischen Träume mit unvergesslichen Spezialitäten aus der türkischen Küche",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Wasabi",
+      "cuisines2text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "cuisines3subtitle": "KÜCHE: Meeresfrüchte und Fisch",
+      "cuisines3title": "Despina",
+      "cuisines3text": "Meeresfrüchte- und Fischgerichte, sorgfältig zubereitet von unseren preisgekrönten Küchenchefs, bieten ein Erlebnis, das sowohl Ihren Gaumen als auch Ihre Augen erfreut. Spezielle Rezepte erwarten Sie im À-la-carte-Restaurant Despina und versprechen ein unvergessliches kulinarisches Erlebnis."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+  "MainRestaurants": {
+    "subtitle": "Internationale Küche in Perfektion",
+    "title": "Hauptrestaurant",
+    "text": "Erleben Sie eine Vielzahl kulinarischer Angebote aus aller Welt.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text1": "In unseren À-la-carte-Restaurants erwarten Sie exquisite internationale Aromen, meisterhaft zubereitet von unseren preisgekrönten Küchenchefs. Lassen Sie sich in ein unvergessliches kulinarisches Abenteuer entführen.",
+      "text2": "Inspiriert vom gemütlichen Charme traditioneller europäischer Bistros bietet unser Hauptrestaurant schnelle, aber qualitativ hochwertige Gerichte in entspannter Atmosphäre."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Schauen Sie sich um",
+      "text": "Erkunden Sie das Hauptrestaurant im Lago Hotel und erleben Sie eine harmonische Verbindung von eleganter Atmosphäre und köstlich zubereiteten Speisen."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": "Unsere À-la-carte-Restaurants präsentieren Ihnen exquisite Aromen internationaler Küche, kreiert von unseren preisgekrönten Küchenchefs. Lassen Sie sich während Ihres Aufenthalts in LAGO in ein kulinarisches Abenteuer entführen!",
+     "cuisines1subtitle": "KÜCHE: International",
+      "cuisines1title": "Anatolia",
+      "cuisines1text": "Erleben Sie im Anatolien-Restaurant authentische türkische Aromen und kulinarische Traditionen. Im LAGO erfüllen wir stolz Ihre kulinarischen Träume mit unvergesslichen Spezialitäten aus der türkischen Küche",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Wasabi",
+      "cuisines2text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "cuisines3subtitle": "KÜCHE: Meeresfrüchte und Fisch",
+      "cuisines3title": "Despina",
+      "cuisines3text": "Meeresfrüchte- und Fischgerichte, sorgfältig zubereitet von unseren preisgekrönten Küchenchefs, bieten ein Erlebnis, das sowohl Ihren Gaumen als auch Ihre Augen erfreut. Spezielle Rezepte erwarten Sie im À-la-carte-Restaurant Despina und versprechen ein unvergessliches kulinarisches Erlebnis."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+ "TapazRestaurants": {
+    "subtitle": "SPANISCHE TAPAS IN VOLLENDUNG",
+    "title": "Tapaz Restaurant",
+    "text": "Genießen Sie im Tapaz Restaurant die authentischen Aromen spanischer Tapas, die von unseren talentierten Köchen mit viel Sorgfalt zubereitet werden. Freuen Sie sich auf eine Auswahl köstlicher Kleinigkeiten, die die lebhafte kulinarische Tradition Spaniens direkt auf Ihren Tisch bringen und für ein unvergessliches Dinner-Erlebnis sorgen.",
+    "ClinaryInfoSection": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Erlesene spanische Tapas",
+      "text1": "Das Tapaz À-la-carte-Restaurant lädt Sie ein, die erlesene Welt der spanischen Tapas zu entdecken, die von unseren talentierten Köchen sorgfältig zubereitet werden.",
+      "text2": "Lassen Sie sich von einer köstlichen Auswahl authentischer spanischer Gerichte verwöhnen, bei denen jedes einzelne Gericht die lebendigen Aromen und den wahren Geist der spanischen Küche direkt auf Ihren Tisch bringt."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "Schauen Sie sich um",
+      "text": "Erleben Sie im Lago Hotel einen unvergesslichen Restaurantbesuch mit stilvoll zubereiteten Speisen und einer angenehmen Atmosphäre, die Sie begeistern wird."
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Perfekte Fine Dining Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": "In unseren À-la-carte-Restaurants erwarten Sie erlesene Aromen internationaler Küche, kreiert von den meisterhaften Händen unserer preisgekrönten Köche. Während Ihres Urlaubs laden wir Sie herzlich zu einem wunderbaren kulinarischen Abenteuer in unseren unverwechselbaren À-la-carte-Restaurants ein!",
+     "cuisines1subtitle": "KÜCHE: International",
+      "cuisines1title": "Anatolia",
+      "cuisines1text": "Erleben Sie im Anatolien-Restaurant authentische türkische Aromen und kulinarische Traditionen. Im LAGO erfüllen wir stolz Ihre kulinarischen Träume mit unvergesslichen Spezialitäten aus der türkischen Küche",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Wasabi",
+      "cuisines2text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "cuisines3subtitle": "KÜCHE: Meeresfrüchte und Fisch",
+      "cuisines3title": "Despina",
+      "cuisines3text": "Meeresfrüchte- und Fischgerichte, sorgfältig zubereitet von unseren preisgekrönten Küchenchefs, bieten ein Erlebnis, das sowohl Ihren Gaumen als auch Ihre Augen erfreut. Spezielle Rezepte erwarten Sie im À-la-carte-Restaurant Despina und versprechen ein unvergessliches kulinarisches Erlebnis."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "WasabiRestaurants": {
+    "subtitle": "TEPPANYAKI-KÜCHE IN VOLLENDUNG",
+    "title": "Wasabi Restaurant",
+    "text": "Genießen Sie ein authentisches Teppanyaki-Dining-Erlebnis im Wasabi Restaurant, bei dem exquisite japanische Aromen direkt vor Ihren Augen von unseren talentierten Köchen kunstvoll zubereitet werden. Lassen Sie sich von der Kunst der Teppanyaki-Küche verwöhnen und erleben Sie einen unvergesslichen kulinarischen Abend.",
+    "ClinaryInfoSection": {
+      "subtitle": " Perfekte Gourmet-Erlebnisse",
+      "title": "Erlesene internationale Aromen",
+      "text1": " Im Wasabi À-la-carte-Restaurant entdecken Sie die authentische und faszinierende Welt der Teppanyaki-Küche. Erleben Sie eine einzigartige kulinarische Performance, während unsere talentierten Köche köstliche japanische Gerichte direkt vor Ihren Augen auf traditionellen Teppanyaki-Grills zubereiten.",
+      "text2": "Durch die Kombination aus frischen Zutaten, kulinarischem Fachwissen und interaktiver Präsentation bietet Wasabi nicht nur ein Fest für Ihren Gaumen, sondern auch ein unvergessliches visuelles Erlebnis. Tauchen Sie ein in die vielfältigen Aromen und dynamischen Kochstile Japans im Wasabi."
+    },
+    "RoomTour": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": " Schauen Sie sich um",
+      "text": "Im Lago Hotel genießen Sie ein unvergessliches kulinarisches Erlebnis mit sorgfältig zubereiteten Gerichten und einer eleganten Atmosphäre. Verwöhnen Sie Ihren Gaumen mit von unseren Meisterköchen kreierten und stilvoll präsentierten Geschmäckern."
+    },
+    "CuisinesCarousel": {
+      "subtitle": " Perfekte Gourmet-Erlebnisse",
+      "title": "LAGO’s Weltküchen",
+      "text": " In unseren À-la-carte-Restaurants erwarten Sie erlesene Aromen internationaler Küche, kreiert von den meisterhaften Händen unserer preisgekrönten Köche. Während Ihres Urlaubs laden wir Sie herzlich zu einem wunderbaren kulinarischen Abenteuer in unseren einzigartigen À-la-carte-Restaurants ein!",
+     "cuisines1subtitle": "Küche: Teppanyaki (Japanisch)",
+      "cuisines1title": "Wasabi",
+      "cuisines1text": "In unserem Teppanyaki À-la-carte-Restaurant können Sie authentische japanische Küche genießen, die von unseren Meisterköchen auf traditionellen Teppanyaki-Grills kunstvoll zubereitet wird. Erleben Sie die markanten Aromen des Fernen Ostens durch die kreativen Interpretationen unserer Köche.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Küche: Asien",
+      "cuisines2title": "Fuego",
+      "cuisines2text": "Wir haben unser asiatisches À-la-carte-Restaurant so konzipiert, dass Sie im Urlaub die köstlichen Aromen der asiatischen Küche erleben können. Zwischen 18:30 und 21:00 Uhr genießen Sie asiatische Gerichte, zubereitet von unseren talentierten, preisgekrönten Küchenchefs.",
+      "cuisines3subtitle": "Küche: Spanisch",
+      "cuisines3title": "Tapaz",
+      "cuisines3text": "Fischmenüs, die von unseren preisgekrönten Küchenchefs für Sie zubereitet werden, sprechen sowohl Ihren Gaumen als auch Ihre Augen an. Besondere Rezepte erwarten Sie in unserem Fish À-la-carte-Restaurant. Unser Fish À-la-carte-Restaurant bietet ein exklusives Erlebnis und lädt Sie ein, frische, meisterhaft zubereitete Fischgerichte in einer einladenden Atmosphäre zu genießen."
+    },
+    "DiscoverBackground": {
+      "subtitle": "EIN EINZIGARTIGES FEST DES GESCHMACKS",
+      "title": "Entdecken Sie unsere Bars und Cafés",
+      "text": "In den Bars und Cafés des Lago Hotels genießen Sie den ganzen Tag über köstliche Getränke, leckere Snacks und entspannende Momente. Schlürfen Sie Ihre Lieblingscocktails bei Live-Musik oder gönnen Sie sich eine Kaffeepause, um Ihren Tag aufzuhellen.",
+      "buttonText": "Mehr entdecken"
+    }
+  },
+
+  "BeachPools": {
+    "subtitle": " WILLKOMMEN IM LAGO HOTEL",
+    "title": "Tauchen Sie ein in das tiefblaue Wasser",
+    "mobileTitle":" Strand und Pools",
+    "text": "Unsere Zimmer wurden sorgfältig gestaltet, um vielfältigen Geschmäckern und Bedürfnissen gerecht zu werden und verbinden Komfort harmonisch mit beeindruckendem Stil, damit Sie sich wie zu Hause fühlen. Genießen Sie erfrischende Momente in unserem Pools verschiedener Größen in der tiefblauen Welt von LAGO. Kommen Sie zu LAGO, wo alle Ihre Träume Wirklichkeit werden.",
+    "buttonText": "MEHR ENTDECKEN",
+
+    "ClinaryInfoSection": {
+      "subtitle": "ERLEBEN SIE PURE ENTSPANNUNG",
+      "title": "Entdecken Sie Ruhe an unserem Strand",
+      "text1": "Entdecken Sie Ruhe am Privatstrand von LAGO, wo kristallklares Mittelmeerwasser auf weichen, goldenen Sand trifft. Entspannen Sie sich mit erfrischenden Getränken und speziell zubereiteten Köstlichkeiten in unseren exklusiven Strandbars, um jeden Moment unvergesslich zu machen.",
+      "text2": "Besondere Merkmale",
+      "text3": "Kostenfreie Sonnenliegen, Sonnenschirme & Handtücher",
+      "text4": "Strandbars mit erfrischenden Getränken & leckeren Snacks",
+      "text5": "Kristallklares, ruhiges Wasser – ideal zum Schwimmen und für Wassersport"
+    },
+    "ImageBackground": {
+      "subtitle": "Exklusives Cabana- & Pavillon-Erlebnis",
+      "title": "Entspannen Sie in luxuriöser Strandatmosphäre",
+      "text1": "Entspannen Sie in unserem exklusiven Cabanas und Pavillons, die gegen Gebühr verfügbar sind und unvergleichliche Privatsphäre sowie Komfort direkt am Strand bieten. Gäste der Swim-up Zimmer erhalten 15 % Rabatt auf Pavillon-Buchungen, was Ihr Stranderlebnis noch luxuriöser macht.",
+      "text2": "Exklusive Ausstattung für Pavillons und Cabanas verfügbar",
+      "text3": "Geburtstagsfeier",
+      "text4": "Dekorationen",
+      "buttonText": "MEHR ENTDECKEN"
+    },
+    "Carousel": {
+      "subtitle": "ENTSPANNEN UND ABSCHALTEN",
+      "title": "Strandaktivitäten",
+      "text": "Ein entspannender und unterhaltsamer Urlaub erwartet Sie am wunderschönen Privatstrand von LAGO. Genießen Sie tägliche Aktivitäten wie Wassersport und Beachvolleyball oder entspannen Sie sich einfach in der Sonne und am Meer.",
+      "activities1": "Schwimmen & Entspannen",
+      "activities1Text": "den ganzen Tag",
+      "activities2": "Erfrischung an der Strandbar",
+      "activities2Text": "Cocktails & Snacks",
+      "activities3": "Wassersport",
+      "activities3Text": "den ganzen Tag über",
+      "activities4": "Feiern am Strand",
+      "activities4Text": "Besondere Momente"
+    },
+    "PoolSection": {
+      "subtitle": "Pools für jeden Moment ",
+      "title": "Entspannen Sie sich beim Treibenlassen",
+      "text": "Verbringen Sie Ihre Tage mit Abkühlung und Entspannung in den Pools von LAGO, die sorgfältig für jede Stimmung und jeden Moment gestaltet wurden. Ob Sie fröhlichen Spaß oder ruhige Erholung suchen – unsere Pools versprechen Erlebnisse, die Ihren Urlaub wirklich unvergesslich machen."
+    },
+    "PoolList": {
+      "subtitle": "Entdecken Sie unsere exklusive Pool-Landschaft",
+      "title": "Entdecken Sie alle unsere Pools",
+      "text": "Entdecken Sie die einzigartigen Poolmöglichkeiten von LAGO, gestaltet, um jeden Moment Ihres Urlaubs zu erfrischen und zu bereichern. Ob Sie in Ruhe entspannen oder unterhaltsame Aktivitäten genießen – unsere Pools versprechen unvergessliche Erlebnisse.",
+      "poolSubTitle1": "Hauptpool – Spaß für alle",
+      "poolTitle1": "Hauptpool",
+      "poolText1": "Unser großzügiger, 2000 m² großer Hauptpool ist perfekt für die ganze Familie und sorgt für einen fröhlichen und lebendigen Tag.",
+      "poolSubTitle2": "Ruhige Umgebung zur Entspannung",
+      "poolTitle2": "Relax-Pool ",
+      "poolText2": "Unser 900 m² großer Relax-Pool bietet eine ruhige und entspannte Atmosphäre und ist der ideale Ort für Gäste, die Erholung suchen.",
+      "poolSubTitle3": "Serenity Pool nur für Erwachsene (+16)",
+      "poolTitle3": "Maldiva Pool",
+      "poolText3": "Der 820 m² große Maldiva Pool nur für Erwachsene (+16) bietet eine ruhige Atmosphäre für ultimative Entspannung.",
+      "poolSubTitle4": " Entspannen mit malerischer Aussicht",
+      "poolTitle4": "Infinity Pool",
+      "poolText4": "Mit atemberaubender Aussicht und einzigartigem Design bietet er außergewöhnlichen Schwimmspaß und entspannende Momente.",
+      "poolSubTitle5": "Perfekt zum entspannten Schwimmen",
+      "poolTitle5": "Maldiva Kinderpool",
+      "poolText5": "Der speziell gestaltete, 85 m² große Maldiva Kinderpool bietet Kindern ein sicheres und spaßiges Badeerlebnis",
+      "poolSubTitle6": "Ruhige und entspannende Atmosphäre",
+      "poolTitle6": "Innenpools",
+      "poolText6": "Unsere beheizten Innenpools, die ganzjährig zur Verfügung stehen, bieten einen friedlichen und entspannenden Rückzugsort.",
+      "poolSubTitle7": "Perfekt für Spaß und Abenteuer",
+      "poolTitle7": "Aquapark-Pool",
+      "poolText7": "Genießen Sie Ihren Urlaub an unserem Aquapark-Pool mit aufregenden Wasserrutschen und lebendigen Aktivitäten.",
+      "poolSubTitle8": "Wasserspaß & strahlende Gesichter im Kinder-Aquapark",
+      "poolTitle8": "Kinder-Aquapark-Pool",
+      "poolText8": "Unser Kinder-Aquapark-Pool mit 5 Rutschen bietet sicheren Spaß und unvergessliche Erinnerungen.",
+      "poolSubTitle9": "Spaß & Spannung für alle!",
+      "poolTitle9": "Mega-Aquapark-Pool",
+      "poolText9": "Unser Mega-Aquapark-Pool bietet aufregende Rutschen und sorgt für endlosen Spaß und Unterhaltung für jedes Alter."
+    }
+  },
+  "Spa": {
+    "subtitle": "ENTSPANNEN SIE SICH IN UNSEREM LAGO WELLNESS-CENTER",
+    "title": "Spa & Wellness",
+    "mobileTitle": "Entspannen und regenerieren Sie sich in unserem Wellness-Center. Genießen Sie luxuriöse, professionelle Massagen und individuell abgestimmte Behandlungen, die darauf ausgerichtet sind, Ihrem Körper und Geist wieder Harmonie zu schenken, sodass Sie sich vollkommen erfrischt und revitalisiert fühlen.",
+    "text": "Entspannen und regenerieren Sie sich in unserem Wellness-Center. Genießen Sie luxuriöse, professionelle Massagen und individuell abgestimmte Behandlungen, die darauf ausgerichtet sind, Ihrem Körper und Geist wieder Harmonie zu schenken, sodass Sie sich vollkommen erfrischt und revitalisiert fühlen.",
+    "InfoSection": {
+      "subtitle": "Erfrischen & Verjüngen",
+      "title": "Wellness im LAGO Hotel",
+      "text": "Erleben Sie vollkommene Entspannung und Erholung in unserem Spa- & Wellness-Center. Gönnen Sie sich professionelle Massagen, genießen Sie die wohltuende Wärme in unserem traditionellen Türkischen Bad oder beleben Sie Ihre Sinne in unserer Finnischen Sauna. Ihre Reise zur Ruhe beginnt hier.",
+      "subtitle2": "Körperliche und geistige Erneuerung",
+      "title2": "Sauna & Türkisches Bad",
+      "text2": "Öffnungszeiten: 08:00 - 20:00",
+      "subtitle3": "SPA & WELLNESS",
+      "title3": "Spa-Behandlungen",
+      "text3": "Öffnungszeiten: 09:00 - 18:00",
+      "list1": "16 Massageräume",
+      "list2": "2 VIP Massageräume",
+      "list3": "Türkisches Bad und Schaummassage-Räume",
+      "list4": "Dampfbad",
+      "list5": "Sauna"
+    },
+    "SpaGallery": {
+      "subtitle": "Ultimative Entspannung erwartet Sie",
+      "title": "Erfrischen Sie Ihre Sinne im LAGO",
+      "text": "Entdecken Sie eine Welt der Entspannung und Gelassenheit im LAGO Wellness Center. Gönnen Sie sich exklusive Spa-Behandlungen und wohltuende Massagen, die darauf ausgerichtet sind, Körper, Geist und Seele zu erfrischen."
+    },
+    "Carousel": {
+      "subtitle": "Entspannen & Abschalten",
+      "title": "Massage-Erlebnisse im LAGO",
+      "text": "Bereichern Sie Ihren Urlaub mit unserer umfangreichen Auswahl an Massagen, die von professionellen Therapeuten individuell auf die Bedürfnisse von Körper und Geist abgestimmt werden. Im LAGO erwartet Sie das perfekte Massageerlebnis, das all Ihre Wünsche erfüllt.",
+      "massage1": "Aromatherapie-Massage",
+      "massageText1": "DAUER: 60 MIN",
+      "massage2": "Orientalische Massage",
+      "massageText2": "DAUER: 60 MIN",
+      "massage3": "Klassische Massage",
+      "massageText3": "DAUER: 60 MIN",
+      "massage4": "Gesichts-Spezialmassage",
+      "massageText4": "DAUER: 60 MIN"
+    },
+    "SpaType": {
+      "subtitle": "ÖFFNUNGSZEITEN: 9:00 - 20:00",
+      "buttonText": "MEHR ERFAHREN",
+      "title": "Innenpool",
+      "text": "Genießen Sie ganzjähriges Schwimmvergnügen in unserem Innenpool, der in jeder Saison verfügbar ist. Erfrischen Sie sich in einer komfortablen und ruhigen Umgebung und erleben Sie unvergessliche Momente in der stilvollen und modernen Atmosphäre des LAGO.",
+      "subtitle2": "Erleben Sie traditionelle Kultur",
+      "title2": "Türkischer Hammam",
+      "text2": "Erfrischen und verwöhnen Sie sich in der einzigartigen Atmosphäre unseres traditionellen Türkischen Hammams. Erleben Sie die ikonische Entspannungskultur mit den professionellen Therapeuten von LAGO und erneuern Sie Körper und Geist."
+    }
+  },
+
+  "DisabledRoom": {
+    "subtitle": "Komfort für Jeden Gast",
+    "title": "Barrierefreies Zimmer",
+    "text1": "Leichter Zugang",
+    "text2": "1-2 Erwachsene",
+    "text3": "Geräumiges Interieur",
+    "RoomInfo": {
+      "subtitle": "Jedes Detail für barrierefreien Urlaub bedacht",
+      "title": "Barrierefreies Zimmer",
+      "text": "Unsere barrierefreien Zimmer bieten großzügige Innenräume und 112 cm breite Türen, geeignet für Rollstuhlfahrer. Die Zimmer verfügen über speziell gestaltete Badezimmer, zentrale Klimaanlage, LED-TV, kostenloses WLAN und einen Balkon.",
+      "title2": "Ausstattung barrierefreies Zimmer",
+      "list1": "----",
+      "list2": "2 Einzelbetten",
+      "list3": "Zusätzliches Babybett",
+      "title3": "Zimmermerkmale",
+      "text2": "Jedes Detail ist auf Komfort ausgelegt und bietet breite Türen für einfachen Zugang, speziell gestaltete Badezimmer, täglich aufgefüllte Minibar, LED-TV und kostenloses WLAN.",
+      "madde1": "----",
+      "madde2": "Geräumiges Interieur",
+      "madde3": "112 cm Türbreite",
+      "madde4": "Nichtraucher",
+      "madde5": "Mini Bar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Privates Badezimmer",
+      "madde9": "Tee & Kaffee Set",
+      "madde10": "LED TV & WiFi",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+
+    "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+    "RoomTour": {
+      "subtitle": "Wählen Sie das beste Zimmer für sich",
+      "title": "Schauen Sie sich um",
+      "text": "Entdecken Sie unsere Zimmer mit einem beeindruckenden 360°-Virtuellen Rundgang. Sehen Sie sich jedes Detail genau an, finden Sie Ihre perfekte Unterkunft und starten Sie hier Ihren Traumurlaub."
+    },
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür (ein Doppelbett, zwei Einzelbetten), ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp im Hauptgebäude misst 40-43 m² und bietet Land- oder Meerblick. Er verfügt über ein Doppelbett und ein Einzelbett sowie ein komfortables Sofa oder einen Sitzbereich. Beide Varianten bieten direkten Poolzugang und eine Terrasse, während Swim-up Zimmer mit Meerblick zusätzlich einen privaten Pool haben.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Im Hauptgebäude gelegen, misst dieser elegante Zimmertyp 30-32 m² und bietet Land- oder Meerblick. Jedes Zimmer verfügt über ein Doppelbett, ein Einzelbett und ein komfortables Sofa. Zudem sind die Zimmer mit einem Balkon, einem Chip-Schlüsselarmband, einer täglich aufgefüllten Minibar, hochwertiger Badezimmereinrichtung und einem Tee-Kaffee-Set ausgestattet."
+    }
+  },
+
+  "SuperiorRoom": {
+    "subtitle": "Exklusiver und komfortabler Aufenthalt",
+    "title": "Superior Zimmer",
+    "text1": "Land-/Meerblick",
+    "text2": "1-3 Erwachsene + 1-2 Kinder",
+    "text3": "1 Schlafzimmer / 2 Betten",
+    "RoomInfo": {
+      "subtitle": "Entspannen Sie in superiorem Komfort",
+      "title": "Superior Zimmer",
+      "text": " Unsere stilvollen Superior Zimmer befinden sich im Hauptgebäude, sind 30–32 m² groß und bieten einen atemberaubenden Blick auf das Meer oder die Landschaft. Jedes Zimmer verfügt über ein Doppelbett, ein Einzelbett, ein Sofa, einen Balkon, LED-TV mit Satellitenempfang, tägliche Minibar-Auffüllung, kostenloses WLAN, hochwertige Badezimmerartikel sowie Tee- und Kaffeezubehör. Zugang per Chip-Armband sorgt für sicheren und einfachen Zutritt. Maximale Belegung: 3 Erwachsene + 1 Kind.",
+      "title2": "Ausstattung Superior Zimmer ",
+      "list1": " ----",
+      "list2": " 1 Doppelbett",
+      "list3": " Zusätzliches Babybett",
+      "title3": "Zimmerausstattung",
+      "text2": " Alle Superior Zimmer bieten sicheren und bequemen Zugang durch ein Chip-Armband-System. Genießen Sie die tägliche Auffüllung Ihrer Minibar mit erfrischenden Getränken und Snacks. Unsere Zimmer verfügen zudem über hochwertige Badezimmerartikel sowie kostenfreie Tee- und Kaffeezubereitungsmöglichkeiten. Darüber hinaus ist jedes Zimmer mit einem LED-TV mit nationalen und internationalen Kanälen, einem Balkon mit atemberaubendem Meer- oder Landschaftsblick und kostenlosem 24-Stunden-WLAN ausgestattet, um Ihnen einen rundum angenehmen Aufenthalt zu ermöglichen.",
+      "madde1": "----",
+      "madde2": "30-32 m²",
+      "madde3": "Schminktisch",
+      "madde4": "Nichtraucher",
+      "madde5": "Minibar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Badeartikel",
+      "madde9": " Tee- und Kaffeezubereitung",
+      "madde10": "LED-TV & WLAN",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+    "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+    "RoomTour": {
+      "subtitle": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title": "Werfen Sie einen Blick – Landblick",
+      "text": "Entdecken Sie unsere Zimmer mit Landblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume.",
+      "subtitle2": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title2": "Werfen Sie einen Blick – Meerblick",
+      "text2": "Entdecken Sie unsere Zimmer mit Meerblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume."
+    },
+
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür (ein Doppelbett, zwei Einzelbetten), ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp im Hauptgebäude misst 40-43 m² und bietet Land- oder Meerblick. Er verfügt über ein Doppelbett und ein Einzelbett sowie ein komfortables Sofa oder einen Sitzbereich. Beide Varianten bieten direkten Poolzugang und eine Terrasse, während Swim-up Zimmer mit Meerblick zusätzlich einen privaten Pool haben.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Im Hauptgebäude gelegen, misst dieser elegante Zimmertyp 30-32 m² und bietet Land- oder Meerblick. Jedes Zimmer verfügt über ein Doppelbett, ein Einzelbett und ein komfortables Sofa. Zudem sind die Zimmer mit einem Balkon, einem Chip-Schlüsselarmband, einer täglich aufgefüllten Minibar, hochwertiger Badezimmereinrichtung und einem Tee-Kaffee-Set ausgestattet."
+    }
+  },
+
+  "FamilyRoom": {
+    "subtitle": "Exklusiver und komfortabler Familienaufenthalt",
+    "title": "Familienzimmer",
+    "text1": "Land-/Meerblick",
+    "text2": "1-4 Erwachsene + 1-3 Kinder",
+    "text3": "2 Schlafzimmer / 3 Betten",
+    "RoomInfo": {
+      "subtitle": "SPASS FÜR ALLE ALTERSGRUPPEN",
+      "title": "Familienzimmer",
+      "text": "Die Familienzimmer befinden sich im Hauptgebäude, sind 38–41 m² groß und bieten Meer- oder Landblick. Sie bestehen aus zwei separaten Schlafzimmern mit Verbindungstür: Ein Schlafzimmer verfügt über ein Doppelbett für 2 Erwachsene, das andere über zwei Einzelbetten für 2 Erwachsene. Es gibt ein gemeinsames Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene.",
+      "title2": "Ausstattung Familienzimmer",
+      "list1": "----",
+      "list2": "1 Zusätzliches Babybett",
+      "list3": "2 Einzelbetten",
+      "title3": "Zimmerausstattung",
+      "text2": "Alle Familienzimmer bieten sicheren und bequemen Zugang durch ein Chip-Armband-System. Genießen Sie die tägliche Auffüllung Ihrer Minibar mit erfrischenden Getränken und Snacks. Unsere Zimmer verfügen zudem über hochwertige Badezimmerartikel sowie kostenfreie Tee- und Kaffeezubereitungsmöglichkeiten. Darüber hinaus ist jedes Zimmer mit einem LED-TV mit nationalen und internationalen Kanälen, einem Balkon mit atemberaubendem Meer- oder Landblick und kostenlosem 24-Stunden-WLAN ausgestattet, um Ihnen einen rundum angenehmen Aufenthalt zu ermöglichen.",
+      "madde1": "----",
+      "madde2": "38-41 m²",
+      "madde3": "Schminktisch",
+      "madde4": "Nichtraucher",
+      "madde5": "Minibar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Badezimmerutensilien",
+      "madde9": "Tee- & Kaffeeausstattung",
+      "madde10": "LED-TV & WLAN",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+    "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+      "RoomTour": {
+    "subtitle": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+    "title": "Werfen Sie einen Blick – Landblick",
+    "text": "Entdecken Sie unsere Zimmer mit Landblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume.",
+    "subtitle2": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+    "title2": "Werfen Sie einen Blick – Meerblick",
+    "text2": "Entdecken Sie unsere Zimmer mit Meerblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume."
+  },
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür, ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp im Hauptgebäude bietet direkten Poolzugang und eine Terrasse, bei Meerblick zusätzlich mit privatem Pool.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Ein eleganter Zimmertyp mit Balkon, Chip-Schlüsselarmband, täglich aufgefülltem Mini-Bar, hochwertigen Badezimmereinrichtungen und Tee-Kaffee-Set."
+    }
+  },
+
+  "SwimupRoom": {
+    "subtitle": "Exklusiver Aufenthalt mit direktem Poolzugang",
+    "title": "Swim-up Zimmer",
+    "text1": "Land-/Meerblick",
+    "text2": "1–3 Erwachsene + 1–2 Kinder",
+    "text3": "1 Schlafzimmer / 2 Betten",
+    "RoomInfo": {
+      "subtitle": "Swim-Up Komfort & Luxus",
+      "title": "Swim-up Zimmer",
+      "text": "Die Swim-up Zimmer befinden sich im Hauptgebäude, haben eine Größe von 40–43 m² und bieten Meer- oder Landblick. Diese Zimmer verfügen über ein Doppelbett, ein Einzelbett und ein Sofa. Von jeder privaten Terrasse mit Sitzbereich besteht direkter Zugang zu einem gemeinsamen Pool.",
+      "title2": "Ausstattung Swim-up Zimmer",
+      "list1": "Privater Pool",
+      "list2": "1 Zusätzliches Babybett",
+      "list3": "2 Einzelbetten",
+      "title3": "Zimmerausstattung",
+      "text2": "Alle Swim-up-Zimmer verfügen über Zugang per Chip-Armband, tägliche Minibar-Auffüllung, hochwertige Badezimmerartikel sowie Tee- und Kaffeezubereitungsmöglichkeiten. Bitte beachten Sie, dass die Pools der Swim-up-Zimmer nicht beheizt sind. Unsere Swim-up-Zimmer mit Meerblick verfügen über einen privaten Pool, während bei Zimmern mit Landblick der Pool gemeinsam genutzt wird.",
+      "madde1": "Privater Pool",
+      "madde2": "40-43 m²",
+      "madde3": "Schminktisch",
+      "madde4": "Nichtraucher",
+      "madde5": "Minibar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Badeartikel",
+      "madde9": "Tee- & Kaffeeausstattung",
+      "madde10": "LED-TV & WLAN",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+
+    "BackgroundSection": {
+      "subtitle": "EXKLUSIVE Vorteile",
+      "title": "Exklusive Vorteile Swim-up Zimmer",
+      "text1": "Gäste der Swim-up Zimmer werden mit einem speziellen VIP-Arrangement begrüßt, bestehend aus einem sorgfältig zubereiteten Obstteller und köstlichen Macarons bei der Ankunft.",
+      "text2": "À-la-carte-Restaurants: Genießen Sie einen kostenlosen Besuch bei einem Aufenthalt von 7 Nächten oder mehr.",
+      "text3": "Pavillon-Rabatt: Erhalten Sie 15 % Rabatt auf unsere exklusiven Pavillon-Services."
+    },
+
+  "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+    "RoomTour": {
+      "subtitle": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title": "Werfen Sie einen Blick – Landblick",
+      "text": "Entdecken Sie unsere Zimmer mit Landblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume.",
+      "subtitle2": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title2": "Werfen Sie einen Blick – Meerblick",
+      "text2": "Entdecken Sie unsere Zimmer mit Meerblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume."
+    },
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür, ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp bietet direkten Poolzugang und eine Terrasse, bei Meerblick zusätzlich mit privatem Pool.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Ein eleganter Zimmertyp mit Balkon, Chip-Schlüsselarmband, täglich aufgefülltem Mini-Bar, hochwertigen Badezimmereinrichtungen und Tee-Kaffee-Set."
+    }
+  },
+
+  "FamilySwimupRoom": {
+    "subtitle": "Exklusiver Familienaufenthalt mit privatem Pool",
+    "title": "Familien Swim-up Zimmer",
+    "text1": "Land-/Meerblick",
+    "text2": "1–4 Erwachsene + 1–3 Kinder",
+    "text3": "2 Schlafzimmer / 4 Betten",
+    "RoomInfo": {
+      "subtitle": "SPASS FÜR ALLE ALTERSGRUPPEN",
+      "title": "Familien Swim-up Zimmer",
+      "text": "In unserem Hauptgebäude messen unsere Family Swim-Up Zimmer 50-55 m² und bieten entweder einen Blick auf das Meer oder auf das Land. Sie verfügen über zwei separate Schlafzimmer, die durch eine Verbindungstür miteinander verbunden sind (ein Schlafzimmer mit einem Doppelbett und ein luxuriöses Sofa, das in zwei Einzelbetten umgewandelt werden kann), ein gemeinsames Badezimmer und eine Terrasse mit direktem Poolzugang und Sitzbereich. Maximale Belegung: 4 Erwachsene + 1 Kind. Family Swim-Up Zimmer mit Landblick teilen sich einen verbundenen Pool mit anderen Swim-Up Zimmern, während Family Swim-Up Zimmer mit Meerblick über einen eigenen, unabhängigen Pool verfügen.",
+      "title2": "Ausstattung Familien Swim-up Zimmer",
+      "list1": "Privater Pool",
+      "list2": "2 Einzelbetten",
+      "list3": "Zusätzliches Babybett",
+      "title3": "Zimmerausstattung",
+      "text2": "Alle Familien Swim-up Zimmer bieten sicheren und bequemen Zugang durch ein Chip-Armband-System. Genießen Sie die tägliche Auffüllung Ihrer Minibar mit erfrischenden Getränken und Snacks. Unsere Zimmer verfügen zudem über hochwertige Badezimmerartikel sowie kostenfreie Tee- und Kaffeezubereitungsmöglichkeiten. Darüber hinaus ist jedes Zimmer mit einem LED-TV mit nationalen und internationalen Kanälen, einer Terrasse mit herrlichem Meer- oder Landschaftsblick und kostenlosem 24-Stunden-WLAN ausgestattet, um Ihnen einen rundum angenehmen Aufenthalt zu ermöglichen. Bitte beachten Sie, dass die Pools in den Swim-up Zimmern nicht beheizt sind. Bei Swim-up Zimmern mit Meerblick verfügen Sie über einen privaten Pool, während Zimmer mit Landblick einen gemeinsamen Pool bieten.",
+      "madde1": "Privater Pool",
+      "madde2": "50-55 m²",
+      "madde3": "Schminktisch",
+      "madde4": "Nichtraucher",
+      "madde5": "Minibar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Badeartikel",
+      "madde9": "Tee- & Kaffeeausstattung",
+      "madde10": "LED-TV & WLAN",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+    "BackgroundSection": {
+      "subtitle": "EXKLUSIVE Vorteile",
+      "title": "Exklusive Vorteile Familien Swim-up Zimmer",
+      "text1": "Gäste der Familien Swim-up Zimmer werden mit einem speziellen VIP-Arrangement begrüßt, bestehend aus einem sorgfältig zubereiteten Obstteller und köstlichen Macarons bei der Ankunft.",
+      "text2": "À-la-carte-Restaurants: Genießen Sie einen kostenlosen Besuch bei einem Aufenthalt von 7 Nächten oder mehr.",
+      "text3": "Pavillon-Rabatt: Erhalten Sie 15 % Rabatt auf unsere exklusiven Pavillon-Services."
+    },
+
+ "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+    "RoomTour": {
+      "subtitle": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title": "Werfen Sie einen Blick – Landblick",
+      "text": "Entdecken Sie unsere Zimmer mit Landblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume.",
+      "subtitle2": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title2": "Werfen Sie einen Blick – Meerblick",
+      "text2": "Entdecken Sie unsere Zimmer mit Meerblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume."
+    },
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür, ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp bietet direkten Poolzugang und eine Terrasse, bei Meerblick zusätzlich mit privatem Pool.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Ein eleganter Zimmertyp mit Balkon, Chip-Schlüsselarmband, täglich aufgefülltem Mini-Bar, hochwertigen Badezimmereinrichtungen und Tee-Kaffee-Set."
+    }
+  },
+
+  "DuplexFamilyRoom": {
+  "subtitle": "Geräumiger Duplex-Komfort für Familien",
+    "title": "Duplex Familienzimmer",
+    "text1": "Land-/Meerblick",
+    "text2": "1–4 Erwachsene + 1–3 Kinder",
+    "text3": "2 Schlafzimmer / 3 Betten",
+    "RoomInfo": {
+      "subtitle": "Geräumiger Komfort für Familien",
+      "title": "Duplex Familienzimmer",
+      "text": "Unsere Dublex Family Zimmer im Hauptgebäude messen 45-49 m² und erstrecken sich über zwei Etagen. Für den Komfort der Familie konzipiert, verfügt eine Etage über ein Doppelbett, ein eigenes Badezimmer und einen Balkon, während die andere Etage ein Einzelbett, ein luxuriöses Sofa, das in ein Doppelbett umgewandelt werden kann, ein separates Badezimmer und einen Balkon.",
+      "title2": "Familienfreundliche Ausstattung",
+      "list1": "----",
+      "list2": "2 Einzelbetten",
+      "list3": "Zusätzliches Babybett",
+      "title3": "Zimmerausstattung",
+      "text2": "Duplex Familienzimmer bieten Zugang per Chip-Armband, tägliche Minibar-Auffüllung, hochwertige Badezimmerartikel, kostenfreie Tee- und Kaffeezubereitungsmöglichkeiten, LED-TV mit Satellitenkanälen, kostenloses WLAN, zentrale Klimaanlage, Safe, Schminktisch und Spiegel.",
+      "madde1": "----",
+      "madde2": "45-49 m²",
+      "madde3": "Schminktisch",
+      "madde4": "Nichtraucher",
+      "madde5": "Minibar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Badeartikel",
+      "madde9": "Tee- & Kaffeeausstattung",
+      "madde10": "LED-TV & WLAN",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+    "BackgroundSection": {
+      "subtitle": "EXKLUSIVE Vorteile",
+      "title": "Exklusive Vorteile Duplex Familienzimmer",
+      "text1": "Gäste der Duplex Familienzimmer werden mit einem speziellen VIP-Arrangement begrüßt, bestehend aus einem sorgfältig zubereiteten Obstteller und köstlichen Macarons bei der Ankunft",
+      "text2": "À-la-carte-Restaurants: Genießen Sie einen kostenlosen Besuch bei einem Aufenthalt von 7 Nächten oder mehr.",
+      "text3": "Pavillon-Rabatt: Erhalten Sie 15 % Rabatt auf unsere exklusiven Pavillon-Services."
+    },
+
+    "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+    "RoomTour": {
+      "subtitle": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title": "Werfen Sie einen Blick – Landblick",
+      "text": "Entdecken Sie unsere Zimmer mit Landblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume.",
+      "subtitle2": "WÄHLEN SIE DAS BESTE ZIMMER FÜR SIE",
+      "title2": "Werfen Sie einen Blick – Meerblick",
+      "text2": "Entdecken Sie unsere Zimmer mit Meerblick in einer beeindruckenden 360°-Virtuellen Tour. Untersuchen Sie jedes Detail aus der Nähe, finden Sie Ihren perfekten Aufenthalt und starten Sie hier den Urlaub Ihrer Träume."
+    },
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür, ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp bietet direkten Poolzugang und eine Terrasse, bei Meerblick zusätzlich mit privatem Pool.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Ein eleganter Zimmertyp mit Balkon, Chip-Schlüsselarmband, täglich aufgefülltem Mini-Bar, hochwertigen Badezimmereinrichtungen und Tee-Kaffee-Set."
+    }
+  },
+
+  "TinyVilla": {
+    "subtitle": "Kompakter Luxus im Garten",
+    "title": "Tiny Villa",
+    "text1": "Land-/Meerblick",
+    "text2": "4 Erwachsene + 1 Kind",
+    "text3": "2 Schlafzimmer / 3 Betten",
+    "RoomInfo": {
+      "subtitle": "Genießen Sie Ihren privaten Rückzugsort",
+      "title": "Tiny Villa",
+      "text": "Unsere Tiny Villa, mit einer Fläche von 90 m², befindet sich im Gartenbereich und verfügt über zwei Schlafzimmern mit Verbindungstür, bestehend aus einem Doppelbett und zwei Einzelbetten, zwei Badezimmern und eine Terrasse. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "title2": "Ausstattung der Tiny Villa",
+      "list1": "----",
+      "list2": "1 Doppelbett",
+      "list3": "2 Einzelbetten",
+      "title3": "Zimmermerkmale",
+      "text2": "Erleben Sie privaten, kompakten Luxus mit allen notwendigen Annehmlichkeiten, einschließlich einer Terrasse, täglich aufgefüllter Minibar, LED-TV, kostenlosem WLAN und hochwertigen Badezimmereinrichtungen.",
+      "madde1": "----",
+      "madde2": "90 m²",
+      "madde3": "Schminktisch",
+      "madde4": "Nichtraucher",
+      "madde5": "Minibar",
+      "madde6": "Safe",
+      "madde7": "Haartrockner",
+      "madde8": "Badeartikel",
+      "madde9": "Tee- & Kaffeeausstattung",
+      "madde10": "LED-TV & WLAN",
+      "madde11": "Balkon",
+      "madde12": "Dusche"
+    },
+    "BackgroundSection": {
+      "subtitle": "EXKLUSIVE Vorteile",
+      "title": "Exklusive Vorteile Swim-up Zimmer",
+      "text1": "Gäste der Swim-up Zimmer werden mit einem speziellen VIP-Arrangement begrüßt, bestehend aus einem sorgfältig zubereiteten Obstteller und köstlichen Macarons bei der Ankunft.",
+      "text2": "À-la-carte-Restaurants: Genießen Sie einen kostenlosen Besuch bei einem Aufenthalt von 7 Nächten oder mehr.",
+      "text3": "Pavillon-Rabatt: Erhalten Sie 15 % Rabatt auf unsere exklusiven Pavillon-Services."
+    },
+
+    "ReservationWidget": {
+      "title": "Reservierungsdaten",
+      "text": "Wählen Sie die Daten für Ihren Aufenthalt",
+      "checkin": "Check-in",
+      "checkout": "Check-out",
+      "adult": "Erwachsene",
+      "kids": "Kinder",
+      "booknow": "JETZT BUCHEN",
+      "contact": "Kontaktieren Sie uns jetzt",
+      "phone": "+90 242 524 57 87"
+    },
+  "RoomTour": {
+      "subtitle": "Wählen Sie das beste Zimmer für sich",
+      "title": "Schauen Sie sich um",
+      "text": "Entdecken Sie unsere Zimmer mit einem beeindruckenden 360°-Virtuellen Rundgang. Sehen Sie sich jedes Detail genau an, finden Sie Ihre perfekte Unterkunft und starten Sie hier Ihren Traumurlaub."
+    },
+    "OtherOptions": {
+      "span": "Wählen Sie das beste Zimmer für sich",
+      "title": "Weitere Optionen",
+      "subtitle1": "Zimmer für die ganze Familie",
+      "title1": "Familienzimmer",
+      "m1": "38-41 m²",
+      "capacity1": "2 Erwachsene + 2 Kinder",
+      "text1": "Dieses Familienzimmer im Hauptgebäude (38-41 m²) verfügt über zwei Schlafzimmer mit Verbindungstür, ein Badezimmer und einen Balkon. Maximale Belegung: 4 Erwachsene + 1 Kind.",
+      "buttonText": "Mehr erfahren",
+      "subtitle2": "Frisch bleiben, ohne das Zimmer zu verlassen",
+      "title2": "Swim-up Zimmer",
+      "m2": "40-43 m²",
+      "capacity2": "2 Erwachsene + 1 Kind",
+      "text2": "Dieser stilvolle Zimmertyp bietet direkten Poolzugang und eine Terrasse – bei Meerblick zusätzlich mit privatem Pool.",
+      "subtitle3": "Komfort zu einem guten Preis",
+      "title3": "Superior Zimmer",
+      "m3": "30-32 m²",
+      "capacity3": "2 Erwachsene + 1 Kind",
+      "text3": "Ein eleganter Zimmertyp mit Balkon, Chip-Schlüsselarmband, täglich aufgefülltem Mini-Bar, hochwertigen Badezimmereinrichtungen und einem Tee-Kaffee-Set."
+    }
+  },
+
+  "Fitness": {
+    "subtitle": "ENTSPANNEN SIE IM LAGO WELLNESS CENTER",
+    "title": "Sport & Fitness",
+    "mobileTitle": "Entspannen Sie sich und tanken Sie neue Energie. Genießen Sie eine hochwertige professionelle Massage in unserem Wellness Center, das darauf ausgelegt ist, Körper und Geist zu erneuern.",
+    "text": "Entspannen Sie sich und tanken Sie neue Energie. Genießen Sie eine hochwertige professionelle Massage in unserem Wellness Center, das darauf ausgelegt ist, Körper und Geist zu erneuern.",
+    "InfoSection": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": "Bleiben Sie fit im LAGO Hotel",
+      "text": "Für diejenigen, die auch im Urlaub in Form bleiben möchten, bietet unser Fitnesscenter mit professioneller Ausstattung tägliche Workouts. Nach dem Training können Sie Ihren Körper und Geist mit einer professionellen Massage in unserem SPA entspannen, in unserem traditionellen Türkischen Bad abschalten oder sich in der finnischen Sauna neu beleben.",
+      "subtitle2": "Gesundes Leben und Fitbleiben",
+      "title2": "Beach Volleyball & Personal Trainer",
+      "text2": "Öffnungszeiten: 08:00 - 20:00",
+      "subtitle3": "Sport & Fitness",
+      "title3": "Gruppenaktivitäten",
+      "text3": "Bleiben Sie fit, steigern Sie Ihre Energie und bleiben Sie während Ihres Urlaubs motiviert mit unseren von professionellen Trainern geleiteten Gruppenaktivitäten.",
+      "list1": "Tabata",
+      "list2": "HIT Cardio",
+      "list3": "Zumba",
+      "list4": "Step Aerobic",
+      "list5": "Yoga, Pilates"
+    },
+    "SpaGallery": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": "Bleiben Sie stilvoll fit bei LAGO",
+      "text": "Genießen Sie das Training in LAGOs modernem und professionell ausgestatteten Fitnesscenter, das eine Vielzahl von Workout-Optionen für alle Fitnesslevels bietet. Steigern Sie Ihre Energie und bleiben Sie während Ihres Urlaubs gesund."
+    },
+    "Carousel": {
+      "subtitle": "ENTSPANNEN UND VERGESSEN",
+      "title": "Aktivitäten und Kurse",
+      "text": "Im LAGO bieten wir eine Vielzahl von Aktivitäten und Kursen an, um Ihr Urlaubserlebnis zu bereichern. Steigern Sie Ihre Energie, sammeln Sie neue Erfahrungen und schaffen Sie freudige Erinnerungen durch Gruppenaktivitäten, die von erfahrenen Trainern geleitet werden.",
+      "massage1": "Yoga & Pilates Kurse",
+      "massageText1": "DAUER: 60 MIN",
+      "massage2": "Zumba Kurse",
+      "massageText2": "DAUER: 60 MIN",
+      "massage3": "HIIT Cardio & Tabata",
+      "massageText3": "DAUER: 60 MIN",
+      "massage4": "Step Aerobic",
+      "massageText4": "DAUER: 60 MIN"
+    },
+    "SpaType": {
+      "subtitle": "Wasserball, Beach Volleyball",
+      "title": "Beach Volleyball",
+      "text": "Nehmen Sie an spannenden Beach-Volleyball-Spielen auf den schönen Sandsportplätzen von LAGO teil. Messen Sie sich, haben Sie Spaß und schaffen Sie unvergessliche Erinnerungen, während Sie Sonne und Meer genießen.",
+      "subtitle2": "Erreichen Sie Ihre Fitnessziele",
+      "title2": "Personal Trainer",
+      "text2": "Erreichen Sie Ihre Fitnessziele mit maßgeschneiderten Trainingsprogrammen, die von den professionellen Personal Trainern von LAGO entwickelt wurden. Erleben Sie personalisierte Workouts, die auf Ihre individuellen Bedürfnisse zugeschnitten sind, und bleiben Sie während Ihres Urlaubs motiviert."
+    }
+  },
+
+  "Entertainment": {
+    "subtitle": "Tägliche Aktivitäten & Abendshows",
+    "title": "Endlose Unterhaltung erwartet Sie",
+    "text": "Schaffen Sie unvergessliche Erinnerungen im LAGO mit unseren lebhaften täglichen Aktivitäten und spektakulären Abendshows. Von energiegeladenen Spielen und spannenden Sportaktivitäten am Tag bis hin zu atemberaubenden Aufführungen am Abend – Ihr Urlaub ist garantiert voller Freude und Spannung in jeder Minute.",
+    "InfoSection": {
+      "experiences": "Erlebnisse",
+      "title": "Tagesaktivitäten",
+      "title2": "ABENDAKTIVITÄTEN"
+    },
+    "CarouselSection": {
+      "subtitle": "Unterhaltung & Aktivitäten",
+      "title": "Events finden täglich statt",
+      "text": "Im LAGO erwartet Sie ein aufregendes Angebot an täglichen Events und Aktivitäten. Von lebhaften Discos, Boccia, Beachvolleyball und Tischtennis bis hin zu Strandspielen, Wassersport und spektakulären Abendshows bieten wir Ihnen endlose Sport- und Freizeitmöglichkeiten für einen unvergesslichen Urlaub.",
+      "daytime": "TAGESAKTIVITÄTEN",
+      "nighttime": "ABENDAKTIVITÄTEN",
+      "title1": "Sport & Fitness",
+      "description1": "Steigern Sie Ihre Energie und bleiben Sie aktiv mit verschiedenen Sport- und Fitnessaktivitäten, die täglich bei LAGO organisiert werden. Schließen Sie sich unseren professionellen Trainern an und bleiben Sie während Ihres Urlaubs fit.",
+      "title2": "Kids- & Teen-Club",
+      "description2": "Unser Kids- & Teen-Club bietet eine unterhaltsame, sichere und anregende Umgebung für unsere jüngeren Gäste. Spannende Aktivitäten und Spiele sorgen für endlose Unterhaltung für Kinder und Teenager.",
+      "title3": "Wassersport",
+      "description3": "Erleben Sie aufregende Wassersportarten am wunderschönen Strand des LAGO. Ob Jetski, Parasailing oder Tauchen – für jeden wartet ein spannendes Abenteuer.",
+      "title4": "Strandaktivitäten",
+      "description4": "Genießen Sie sonnige Tage mit unseren vielfältigen Strandaktivitäten wie Beachvolleyball, Boccia und unterhaltsamen Gruppenspielen, die jeden Moment mit Freude und Spannung erfüllen.",
+      "title5": "Sunset-Partys",
+      "description5": "Tanzen und entspannen Sie sich bei lebhafter Musik und erfrischenden Cocktails auf LAGOs unvergesslichen Sunset-Partys, die das Ende eines weiteren wunderschönen Tages feiern.",
+      "title6": "Bühnenshows",
+      "description6": "Genießen Sie spektakuläre Bühnenshows mit professionellen Künstlern und fesselnden Inszenierungen, die Gäste jeden Alters unterhalten sollen.",
+      "title7": "Themenpartys",
+      "description7": "Nehmen Sie an unseren Themenpartys teil, die mit kreativen Konzepten, farbenfrohen Dekorationen und mitreißender Musik unvergessliche Abende voller Spaß garantieren."
+    },
+    "Gallery": {
+      "subtitle": "Unterhaltung & Aktivitäten",
+      "title": "Fangen Sie den Rhythmus ",
+      "text": "Tauchen Sie ein in die lebendige Atmosphäre von LAGOs Unterhaltungswelt. Von spannenden Tagesveranstaltungen bis hin zu fesselnden Abendshows – spüren Sie den Rhythmus und schaffen Sie unvergessliche Erinnerungen.",
+      "span": "Das Ultra-All-Inclusive-Konzept sowie die Aktivitäten und Services des LAGO Hotels können sich je nach Saison und Wetterbedingungen ohne vorherige Ankündigung ändern. Alle diesbezüglichen Rechte des LAGO HOTELS sind vorbehalten. "
+    }
+  },
+
+  "KidsClub": {
+    "subtitle": "Spaß & Abenteuer für kleine Gäste!",
+    "title": "Bamboo Kids Club",
+    "text": "Der Bamboo Kids Club heißt Kinder im Alter von 4–12 Jahren mit einer Vielzahl an spaßigen Aktivitäten, spannenden Spielen, kreativen Workshops, Spielplätzen und Mini-Discos willkommen. Im LAGO erleben Ihre Kinder unvergessliche Abenteuer in einer sicheren und unterhaltsamen Umgebung!",
+    "gallerytitle": "Jeder Moment ist es wert, geteilt zu werden",
+    "InfoSection": {
+      "subtitle": "Spaß & Sicherheit für alle Altersgruppen",
+      "title": "Unvergessliche Erinnerungen im Bamboo Kids Club",
+      "text": "Im Bamboo Kids Club bieten wir altersgerechte Aktivitäten, spannende Spiele und ein fürsorgliches, professionelles Team in einer sicheren und fröhlichen Umgebung. Ihre Kinder werden unvergessliche Erinnerungen sammeln, während sie spielen, lernen und neue Freundschaften schließen.",
+      "span": "Öffnungszeiten: 08:00 - 20:00",
+      "age1": "Alter 4-7 Jahre",
+      "title1": " Mini Club",
+      "description1": "Ein sicherer und gemütlicher Spielbereich, der speziell für unsere jüngsten Gäste konzipiert wurde. Perfekt zum Entdecken und für jede Menge Spaß unter elterlicher Aufsicht.",
+      "age2": "Alter 8-12 Jahre",
+      "title2": "Junior Club",
+      "description2": "Eine Welt voller kreativer Aktivitäten und spannender Spiele für energiegeladene kleine Abenteurer. Jeder Tag ist eine neue Reise!",
+      "age3": "Alter 13-16 Jahre",
+      "title3": "Teenager Club",
+      "description3": "Ein ansprechender Raum mit speziell zugeschnittenen Aktivitäten und modernen Spielen, der unseren jugendlichen Gästen unvergessliche Erlebnisse bietet.",
+      "note": "Kinder im Alter von 0 bis 3,99 Jahren können unter elterlicher Aufsicht an den Mini-Club-Aktivitäten teilnehmen."
+    },
+    "IconSection": {
+      "icon1": "Sichere Umgebung",
+      "icon2": "Professionelles Personal",
+      "icon3": "Altersgerechte Aktivitäten",
+      "icon4": "Soziale Interaktion"
+    },
+    "Carousel": {
+      "subtitle": "Willkommen im LAGO Kids Club",
+      "title": "Wo Spaß und Lernen aufeinandertreffen",
+      "text": "Der LAGO Kids Club bietet lehrreiche und unterhaltsame Aktivitäten, die für Kinder jeden Alters geeignet sind. Wir haben eine Umgebung geschaffen, die die Kreativität Ihres Kindes fördert und dabei hilft, ihre Träume Wirklichkeit werden zu lassen.",
+      "activity1": "Lego-Zimmer",
+      "activity2": "Kinderaktivitäten",
+      "activity3": "Baby-Zimmer",
+      "activity4": "Bällebad",
+      "activity5": "Kinder-Amphitheater",
+      "activity6": "Trampolin",
+      "activity7": "Spielplatz",
+      "activity8": "Playstation-Räume",
+      "activity9": "Spielräume"
+    },
+    "KidsRestaurant": {
+      "subtitle": "Bamboo Kids Club",
+      "title": "Magna Kids Restaurant",
+      "text": "Speziell für unsere jüngsten Gäste konzipiert, bietet das Magna Kids Restaurant nahrhafte und leckere Gerichte, die Kinder lieben. Genießen Sie ein entspanntes Essen, während Ihre Kinder in einer kinderfreundlichen Atmosphäre Spaß haben.",
+      "list1": "Frühstück: 07:00 - 10:30",
+      "list2": "Mittagessen: 12:30 - 14:00",
+      "list3": "Abendessen: 18:30 - 21:30"
+    },
+    "CuisinesCarousel": {
+      "subtitle": "Bamboo Kids Club",
+      "title": "Kinderpools",
+      "text": "Unsere Kinderpools sind speziell darauf ausgelegt, dass unsere kleinen Gäste sicher schwimmen können. Tiefe und Wassertemperatur der Pools sind so eingestellt, dass Kinder unbeschwert Spaß haben können. Bunte Wasserspielzeuge und interaktive Spielbereiche wurden integriert, damit die Kinder ihre Zeit hier voller Freude verbringen. Für Eltern gibt es bequeme Sitzgelegenheiten im sichtbaren Bereich, von denen aus sie ihre Kinder im Blick behalten können.",
+      "cuisines1subtitle": "Bamboo Kids Club",
+      "cuisines1title": "Maldivas Kinderpool",
+      "cuisines1text": "Unser Kinder-Aquapark-Pool mit 5 Rutschen bietet sicheren Spaß und unvergessliche Erinnerungen.",
+      "buttonText": "Mehr entdecken",
+      "cuisines2subtitle": "Bamboo Kids Club",
+      "cuisines2title": "Kid Aqua Pool",
+      "cuisines2text": "Unser Kinder-Aquapark-Bereich mit 5 Rutschen bietet sichere Unterhaltung und unvergessliche Momente.",
+      "cuisines3subtitle": "Bamboo Kids Club",
+      "cuisines3title": "Innen-Kinderpool",
+      "cuisines3text": "Genießen Sie bei jedem Wetter unbegrenzten Spaß in unserem speziell für unsere kleinen Gäste gestalteten Innen-Kinderpool. Hier können Kinder sicher planschen, schwimmen und spielen, während sie unter der aufmerksamen Aufsicht unseres professionellen Personals stehen. Der perfekte Ort für fröhliche Unterhaltung das ganze Jahr über!"
+    }
+  },
+
+  "Special": {
+    "subtitle": "GLÜCKLICHE MOMENTE, UNVERGESSLICHE ERINNERUNGEN",
+    "title": "Besondere Anlässe",
+    "text": "Das LAGO-Team arbeitet daran, dass Sie unvergessliche Erinnerungen mit Ihren Lieben bei Ihren besonderen Anlässen schaffen.",
+    "gallerytitle": "Ein Paradies im Herzen des Mittelmeers",
+
+    "InfoSection": {
+      "subtitle": "Unsere exklusiven Dienstleistungen",
+      "title": "besondere Anlässe",
+      "text": "Im LAGO Hotel bieten wir eine Vielzahl von Optionen, um Ihre besonderen Anlässe wirklich unvergesslich zu machen. Mit unseren sorgfältig ausgewählten Dienstleistungen helfen wir Ihnen, bleibende Erinnerungen zu schaffen.",
+      "subtitle1": "Besondere Anlässe",
+      
+      "key1":"Honeymoon",
+      "title1": "Honeymoon",
+      "text1": "Feiern Sie Ihre Liebe im LAGO Hotel mit romantischen Erlebnissen, die exklusiv für frisch verheiratete Paare entworfen wurden. Schaffen Sie unvergessliche Erinnerungen in einer traumhaften Atmosphäre.",
+      
+      "key2":"Heiratsantrag",
+      "title2": "Heiratsantrag-Arrangement",
+      "text2": "Machen Sie Ihren Heiratsantrag unvergesslich mit den romantischen Arrangements von LAGO. Wir kümmern uns um jedes Detail, um den perfekten Moment für Sie und Ihre Liebste zu schaffen.",
+      
+      "key3":"Pavillon",
+      "title3": "Pavillon-Erlebnis",
+      "text3": "Genießen Sie ein exklusives Pavillon-Erlebnis im LAGO. Verbringen Sie Ihren besonderen Tag in Privatsphäre und Luxus, begleitet von makellosem Service und atemberaubender Aussicht.",
+     
+      "key4":"Geburtstag",
+      "title4": "Geburtstagspakete",
+      "text4": "Feiern Sie Ihren Geburtstag stilvoll mit unseren personalisierten Geburtstagspaketen. Von Dekorationen bis zu speziellen Menüs – wir machen Ihren Tag wirklich unvergesslich.",
+     
+      "key5":"Hochzeit",
+      "title5": "Hochzeitsdienstleistungen",
+      "text5": "Das LAGO Hotel bietet umfassende Hochzeitsdienstleistungen an und sorgt dafür, dass Ihr besonderer Tag in jeder Hinsicht perfekt wird. Überlassen Sie unserem erfahrenen Team alle Details.",
+      
+      "key6":"Blume",
+      "title6": "Maßgeschneiderte Blumenbestellungen",
+      "text6": "Erhellen Sie Ihre besonderen Anlässe mit maßgeschneiderten Blumenarrangements von LAGO. Wir kreieren einzigartige Blumendesigns, die ganz auf Ihre Wünsche zugeschnitten sind."
+    },
+    "HoverSection": {
+      "subtitle": "Zeitlose Erinnerungen im LAGO Hotel schaffen",
+      "title": "Feiern Sie die kostbaren Momente des Lebens",
+      "text": "Im LAGO Hotel haben wir uns darauf spezialisiert, die Meilensteine Ihres Lebens in außergewöhnliche Erlebnisse zu verwandeln. Von personalisierten Services bis hin zu maßgeschneiderten Feierlichkeiten – jedes Detail wird sorgfältig ausgearbeitet, um Erinnerungen zu schaffen, die ein Leben lang halten.",
+      "subtitle1": "Besondere Anlässe",
+      "title1": "Honeymoon Concept",
+      "text1": "Genießen Sie romantische Überraschungen, luxuriöse Annehmlichkeiten und spezielle Arrangements, die ausschließlich für frisch Verheiratete entworfen wurden. Machen Sie Ihren ersten Urlaub als verheiratetes Paar im LAGO unvergesslich.",
+      "subtitle2": "Besondere Anlässe",
+      "title2": "Pavilion Experience",
+      "text2": "Verbringen Sie unvergessliche Momente in unseren exklusiven Pavillons, die Privatsphäre, Komfort und personalisierte Services bieten, begleitet von atemberaubenden Ausblicken.",
+      "subtitle3": "Besondere Anlässe",
+      "title3": "Heiratsantrag",
+      "text3": "Planen Sie den perfekten Heiratsantrag mit den romantischen Arrangements von LAGO. Unser erfahrenes Team kümmert sich um jedes Detail, damit Ihr besonderer Moment unvergesslich wird.",
+      "subtitle4": "Besondere Anlässe",
+      "title4": "Geburtstagspakete",
+      "text4": "Feiern Sie Geburtstage mit maßgeschneiderten Paketen im LAGO Hotel. Von speziellen Kuchen bis hin zu festlicher Dekoration sorgen wir dafür, dass Ihre Feier fröhlich und unvergesslich wird.",
+      "subtitle5": "Besondere Anlässe",
+      "title5": "Hochzeitsservices",
+      "text5": "Mit umfassenden Hochzeitsdienstleistungen im LAGO Hotel verwandeln wir Ihre Traumhochzeit in Wirklichkeit. Unser professionelles Team ist bestrebt, makellose Erinnerungen zu schaffen.",
+      "subtitle6": "Besondere Anlässe",
+      "title6": "Blumenbestellungen",
+      "text6": "Bereichern Sie Ihre besonderen Anlässe mit maßgeschneiderten Blumenarrangements. Im LAGO gestalten wir jeden Strauß mit großer Sorgfalt, um Ihren unvergesslichen Momenten Schönheit und Eleganz zu verleihen."
+    },
+    "TwoImageSection": {
+      "subtitle": "Zeitlose Erinnerungen im LAGO Hotel schaffen",
+      "title": "Historische Schätze in der Nähe",
+      "text": "Das LAGO Hotel in Antalya Manavgat bietet ein einzigartiges Erlebnis, bei dem moderner Luxus auf den zeitlosen Charme der Geschichte trifft. Während die Gäste in unseren komfortablen Unterkünften entspannen, sind sie eingeladen, die antiken Ruinen und die natürliche Schönheit zu erkunden, die die historische Atmosphäre von Side bereichern. Unser Hotel präsentiert eine sorgfältig zusammengestellte Auswahl an lokalen und internationalen kulinarischen Köstlichkeiten, die den lebendigen Geist des Mittelmeers widerspiegeln und jeden Moment zu einer unvergesslichen Erinnerung machen. Das LAGO Hotel lädt Sie ein zu einer inspirierenden Reise, in der sich die faszinierenden Echos der Vergangenheit mit einem zukunftsorientierten Blick verbinden."
+    }
+  },
+
+  "About": {
+    "subtitle": "GLÜCKLICHE MOMENTE, UNVERGESSLICHE ERINNERUNGEN",
+    "title": "Über Unser Hotel",
+    "InfoSection": {
+      "subtitle": "Hotel LAGO",
+      "title": "Der genaue Ort",
+      "text": "Wir bieten Ihnen ein unvergessliches Urlaubserlebnis in Zimmern, die auf unterschiedliche Geschmäcker und Bedürfnisse abgestimmt sind – eine gelungene Verbindung aus Ästhetik und Komfort durch auffällige Designs und durchdachte Raumgestaltung. Unser Hotel verfügt außerdem über beheizte Innenpools, die getrennt für Erwachsene und Kinder konzipiert wurden. Dank der einzigartigen Lage unseres Hotels bieten die meisten Zimmer einen atemberaubenden Ausblick auf das Meer und den Pool sowie auf Seen-, Fluss- oder Landschaftspanoramen.",
+      "buttonText": "MEHR DARÜBER"
+    },
+    "MissinonVision": {
+      "subtitle": "Hotel LAGO",
+      "title": "Unsere Mission & Vision",
+      "text": "Unsere Mission ist es, unvergleichliche Gastfreundschaft zu bieten und unvergessliche Erinnerungen für unsere Gäste zu schaffen. Wir setzen uns für Exzellenz in jedem Aspekt Ihres Aufenthalts ein – von personalisierten Services bis hin zu nachhaltigen Praktiken. Unsere Vision ist es, eine führende Rolle in der Hotelbranche einzunehmen und für außergewöhnliche Erlebnisse bekannt zu sein, während wir gleichzeitig die Umwelt schützen.",
+      "clubsubtitle1": "Отель Лаго",
+      "clubtitle1": "Warum Lago Hotel wählen?",
+      "clubtext1": "Zudem bietet unser Hotel köstliche Mahlzeiten, die von professionellen Köchen zubereitet werden, einzigartige Bars mit charakteristischen Aromen und Restaurants, die Küchen aus aller Welt präsentieren. Erwachen Sie mit den beruhigenden Klängen von Nachtigallen und anderen Vögeln und genießen Sie unseren funkelnden Pool und das kristallklare Meer. Für Ihren Komfort stellt LAGO zudem eine Vielzahl von Annehmlichkeiten bereit, darunter Sauna, Spa, Fitnesscenter, Herren- und Damenuhren-Salons, Boutique, Juwelier, Fotostudio, Spielzentrum und Einkaufszentrum.",
+      "clubsubtitle2": "Hotel LAGO",
+      "clubtitle2": "Ein besonderer Urlaub",
+      "clubtext2": "Unser Hotel liegt nur 50 Meter vom See und 300 Meter vom Fluss entfernt und bietet ausgezeichnete Möglichkeiten für Spaziergänge, Joggen, Angeln, Vogelbeobachtungen von Arten aus der ganzen Welt und ein intensives Naturerlebnis. Darüber hinaus befinden wir uns nur 4 km vom Stadtzentrum von Manavgat und 6 km vom schönen Manavgat-Wasserfall entfernt. Die antike Stadt Side ist nur 9 km entfernt, wo Sie historische Sehenswürdigkeiten wie das Antike Amphitheater, den Apollotempel, das Side-Museum und den weltweit ersten Sonnenuhr entdecken können. Entfernungen: Side Stadtzentrum: 9 km, Manavgat Stadtzentrum: 4 km, Flughafen Antalya: 63 km.",
+      "buttonText":"Mehr entdecken"
+    }
+  },
+
+  "BlogNews": {
+    "subtitle": "Entdecken Sie Ihren perfekten Kurzurlaub",
+    "title": "Neueste Nachrichten",
+    "InfoSection": {
+      "subtitle": "Perfekte Gourmet-Erlebnisse",
+      "title": "Lago Hotel News",
+      "text": "Eine Welt unvergleichlicher Erlebnisse, in der Luxus auf Komfort trifft und jedes Detail sorgfältig zu Ihrem Vergnügen gestaltet wird. Von ruhigen Spa-Auszeiten und exquisiten kulinarischen Erlebnissen bis hin zu mitreißenden Aktivitäten und unvergesslichen Feiern bietet unser Hotel etwas Außergewöhnliches für jeden.",
+      "secsubtitle1": "Umweltfreundliche Praktiken",
+      "sectitle1": "Nachhaltiger Luxus",
+      "sectext1": "Tauchen Sie ein in das Nonplusultra von Komfort und Eleganz mit unseren luxuriösen Zimmern und Suiten. Jedes Zimmer ist sorgfältig gestaltet, um all Ihre Bedürfnisse zu erfüllen, und bietet moderne Annehmlichkeiten, stilvolle Einrichtung und atemberaubende Ausblicke. Ob Sie sich für ein gemütliches Standardzimmer, eine geräumige Familiensuite oder eine opulente Executive-Suite entscheiden – Sie finden eine Oase, die sich wie Ihr Zuhause anfühlt.",
+      "secsubtitle2": "Pools & Strand",
+      "sectitle2": "Ein Spritzer Spaß",
+      "sectext2": "Tauchen Sie ein in die Schönheit kristallklarer Gewässer in unseren Pools oder entspannen Sie an unserem ruhigen Privatstrand. Mit Liegestühlen, Sonnenschirmen und aufmerksamem Service verwandelt sich jeder Moment in ein Stück Paradies. Familien können sichere und unterhaltsame Wasseraktivitäten genießen, während diejenigen, die Ruhe suchen, sich von den beruhigenden Klängen der Wellen verwöhnen lassen."
+    },
+    "BlogList": {
+      "blogsubtitle1": "GASTRONOMIE",
+      "blogtitle1": "Köstliche Geheimnisse der mediterranen Küche",
+      "blogtext1": "Entdecken Sie einzigartige mediterrane Aromen, kreiert von erfahrenen Köchen im Lago Hotel. Begeben Sie sich auf eine unvergessliche kulinarische Reise mit gesunden, frischen und köstlichen Rezepten.",
+      "blogsubtitle2": "WELLNESS",
+      "blogtitle2": "Spa und Gesundes Leben",
+      "blogtext2": "Beleben Sie Ihren Geist und Körper im LAGO Wellness Center. Verleihen Sie Ihrem Urlaub mit Spa-Behandlungen, Massagen und Fitnessaktivitäten einen gesunden Touch.",
+      "blogsubtitle3": "FAMILIENURLAUB",
+      "blogtitle3": "Eine Welt voller Spaß für Ihre Kinder",
+      "blogtext3": "Der LAGO Kids Club bietet kreative, unterhaltsame und lehrreiche Aktivitäten für Ihre Kinder. Schaffen Sie gemeinsam unvergessliche Familienerinnerungen.",
+      "blogsubtitle4": "REISEN & ENTDECKEN",
+      "blogtitle4": "Entdecken Sie die historischen Wunder von Side",
+      "blogtext4": "Erkunden Sie die faszinierende Atmosphäre des antiken Side. Besuchen Sie den Apollon-Tempel, das antike Theater, das Museum und die weltweit erste Sonnenuhr.",
+      "blogsubtitle5": "NATUR & ABENTEUER",
+      "blogtitle5": "Ein Tag in der Natur in Manavgat",
+      "blogtext5": "Erleben Sie die Ruhe rund um den Manavgat-Wasserfall. Entdecken Sie die Natur neu durch Vogelbeobachtung, Angeln und Wanderaktivitäten.",
+      "blogsubtitle6": "BESONDERE ANLÄSSE",
+      "blogtitle6": "Lago Hotel für traumhafte Flitterwochen",
+      "blogtext6": "Erleben Sie die romantischsten Momente Ihres Lebens mit exklusiven Flitterwochenarrangements im Lago Hotel, die Ihren Urlaub unvergesslich machen.",
+      "blogsubtitle7": "UNTERHALTUNG & AKTIVITÄTEN",
+      "blogtitle7": "Endloser Spaß im Lago Hotel",
+      "blogtext7": "Von Tagesaktivitäten und Strandveranstaltungen bis hin zu spektakulären Nachtshows und Themenpartys – das Lago Hotel verspricht urlaubsfüllte, unterhaltsame Momente.",
+      "blogsubtitle8": "NACHHALTIGER TOURISMUS",
+      "blogtitle8": "Ein umweltfreundliches Urlaubserlebnis",
+      "blogtext8": "Unterstützen Sie nachhaltigen Tourismus durch die umweltfreundlichen Praktiken des Lago Hotels. Genießen Sie Luxusurlaube, während Sie einen positiven Beitrag zum Umweltschutz leisten.",
+      "blogsubtitle9": "TIPPS & EMPFEHLUNGEN",
+      "blogtitle9": "Tipps für den perfekten Urlaub",
+      "blogtext9": "Entdecken Sie praktische Tipps und Empfehlungen, die Ihren Aufenthalt im Lago Hotel angenehmer und komfortabler machen und für einen makellosen Urlaub sorgen.",
+      "buttonText":"Mehr entdecken"
+    }
+  },
+
+  "Contact": {
+    "subtitle": "LAGO HOTEL KONTAKT",
+    "title": "Kontaktieren Sie uns",
+    "contact1": "Unsere Adresse:",
+    "contact2": "Telefonnummer:",
+    "contact3": "E-Mail-Adresse:",
+    "Form": {
+      "title": "Fühlen Sie sich frei, uns eine Nachricht zu hinterlassen",
+      "text": "Haben Sie etwas, das Sie uns mitteilen möchten? Zögern Sie bitte nicht, uns über unser Kontaktformular zu erreichen.",
+      "name": "Vollständiger Name",
+      "address": "E-Mail-Adresse",
+      "message": "Ihre Nachricht",
+      "save": "Speichern Sie meinen Namen, meine E-Mail-Adresse und meine Website in diesem Browser für das nächste Mal, wenn ich einen Kommentar hinterlasse.",
+      "send": "Nachricht senden"
+    }
+  },
+
+  "Gallery": {
+    "subtitle": "Erkunden Sie das Hotel",
+    "title": "Lago Galerie",
+    "general": "Gesamtansicht",
+    "rooms": "Zimmer",
+    "villa": "Villa",
+    "pool": "Pool & Strand",
+    "flavours": "Aromen",
+    "spa": "Spa & Wellness",
+    "kidsclub": "Kinderclub",
+    "entertainment": "Entertainment",
+    "bar":"Bar",
+    "lobby":"Lobby"
+  },
+
+  "CookiePopup": {
+    "cookie": "Wir verwenden Cookies: ",
+    "cookieText": "Wir nutzen eigene und Drittanbieter-Cookies, um Inhalte zu personalisieren und den Webverkehr zu analysieren.",
+    "read": " Mehr lesen",
+    "about": "über Cookies",
+    "deny": "Alle Cookies ablehnen",
+    "manage": "Cookie-Einstellungen verwalten",
+    "accept": "Alle Cookies akzeptieren",
+    "policy": "Cookie-Richtlinie",
+    "clarification": "Cookie-Erklärungstext",
+    "what": "Was sind Cookies?",
+    "dropdown1": "Unbedingt erforderlich",
+    "dropdown2": "Leistung",
+    "dropdown3": "Funktional",
+    "dropdown4": "Targeting"
+  },
+
+  "Explore":{
+    "header":"Routen, die Ihren Urlaub bereichern",
+    "title1":"Manavgat-Wasserfall",
+    "text1":"Nur 5 km von Titreyengöl entfernt liegt der Manavgat-Wasserfall, ein ruhiger Ort, an dem kühles Wasser auf üppiges Grün trifft. Ideal für Picknicks und entspannte Spaziergänge.",
+    "distance":"Entfernung" ,
+    "title2":"Antike Stadt Side",
+    "text2":"Etwa 7 km entfernt bietet die antike Stadt Side mit dem Apollon-Tempel und dem antiken Theater ein einzigartiges Erlebnis. Die Ruinen in Kombination mit dem Mittelmeerblick sind wirklich faszinierend.",
+    "title3":"Antikes Theater von Aspendos ",
+    "text3":"Rund 35 km von Titreyengöl entfernt befindet sich Aspendos mit einem der am besten erhaltenen römischen Theater der Welt. Die beeindruckende Architektur und Akustik machen es zu einem Muss für Geschichtsliebhaber.",
+    "title4":"Köprülü-Schlucht",
+    "text4":"Ungefähr 50 km entfernt ist die Köprülü-Schlucht perfekt für Rafting und Naturwanderungen. Dieser Nationalpark bietet Möglichkeiten zum Campen und Picknicken inmitten atemberaubender Natur.",
+    "title5":"Oymapınar-Stausee",
+    "text5":"Der 20 km entfernte Oymapınar-Stausee ist bekannt für seine atemberaubenden Ausblicke und Bootstouren. Besucher können Spaziergänge rund um den See genießen oder in lokalen Cafés entspannen.",
+    "title6":"Antike Stadt Seleukeia  ",
+    "text6":"Eingebettet in die Sorgun-Wälder, etwa 15 km von Titreyengöl entfernt, bietet Seleukeia eine ruhige historische Atmosphäre. Ideal für diejenigen, die eine friedliche Erkundung abseits der Massen suchen."
+  }
+  
+
+  }
