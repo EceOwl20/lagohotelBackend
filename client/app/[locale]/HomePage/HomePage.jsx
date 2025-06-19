@@ -37,7 +37,7 @@ const HomePage = () => {
       <EmblaCarousel slides={pageData.slider} options={{loop:true}} /> {/* ✅ artık props ile veri gidiyor */}
       <div className="flex flex-col items-center justify-center w-screen gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]">
         <TwoAnimationImage animationData={pageData.animationSection} />
-        <HomePage4 />
+       <HomePage4 accommodation={pageData.accommodation} />
         <HomePage5 />
         <ContactSection />
         <HomePage6 />

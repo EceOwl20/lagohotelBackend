@@ -103,6 +103,7 @@ const homepageSchema = new mongoose.Schema({
         description: { tr: String, en: String, de: String, ru: String },
         area: { tr: String, en: String, de: String, ru: String },
         view: { tr: String, en: String, de: String, ru: String },
+        buttonText: { tr: String, en: String, de: String, ru: String, },
         link: String
       }
     ]

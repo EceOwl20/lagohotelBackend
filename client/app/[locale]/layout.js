@@ -3,7 +3,7 @@ import "../globals.css";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { setRequestLocale } from "next-intl/server";
+import { getMessages, setRequestLocale } from "next-intl/server";
 import ClientLayoutWrapper from "./ClientLayoutWrapper";
 
 const geistSans = Geist({
@@ -24,15 +24,24 @@ export const metadata = {
   },
 };
 
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
+
 // ✅ async function tanımlanıyor
 export default async function RootLayout({ children, params }) {
-  const locale = params.locale;
+  const { locale } = await params;
 
-  if (!hasLocale(routing.locales, locale)) {
+  if (!routing.locales.includes(locale)) {
     notFound();
   }
 
-  await setRequestLocale(locale);
+   // 1) Gelen locale bilgisini Next Intl’in store’una yazıyoruz
+   setRequestLocale(locale)
+  
+    // 2) Ardından mesajları yükleyip client’a iletebiliriz
+    const messages = await getMessages()
+
 
   return (
     <html lang={locale}>
