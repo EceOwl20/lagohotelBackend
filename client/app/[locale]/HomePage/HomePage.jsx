@@ -34,13 +34,13 @@ const HomePage = () => {
     <div>
       <HomePage1 />
       <HomePage2 section1={pageData.section1} />
-      <EmblaCarousel slides={pageData.slider} options={{loop:true}} /> {/* ✅ artık props ile veri gidiyor */}
+      <EmblaCarousel slides={pageData.slider} options={{loop:true}} /> 
       <div className="flex flex-col items-center justify-center w-screen gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]">
         <TwoAnimationImage animationData={pageData.animationSection} />
        <HomePage4 accommodation={pageData.accommodation} />
-        <HomePage5 />
-        <ContactSection />
-        <HomePage6 />
+        <HomePage5 essentials={pageData.essentials}/>
+        <ContactSection contact={pageData.contact}/>
+        <HomePage6 banner={pageData.banner}/>
       </div>
     </div>
   );

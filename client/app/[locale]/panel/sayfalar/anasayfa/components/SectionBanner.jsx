@@ -1,7 +1,34 @@
 "use client";
 
+const langs = ["tr", "en", "de", "ru"];
+
 export default function SectionBanner({ data, setData }) {
-  const langs = ["tr", "en", "de", "ru"];
+  // Görsel yükleme fonksiyonu
+  const handleImageUpload = async (e, key) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const res = await fetch("http://localhost:5001/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+
+      setData(prev => ({
+        ...prev,
+        banner: {
+          ...(prev.banner || {}),
+          [key]: result.imageUrl,
+        },
+      }));
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    }
+  };
 
   return (
     <div className="border p-4 rounded bg-white space-y-4">
@@ -18,10 +45,7 @@ export default function SectionBanner({ data, setData }) {
                 ...data,
                 banner: {
                   ...data.banner,
-                  subtitle: {
-                    ...data.banner?.subtitle,
-                    [lang]: e.target.value,
-                  },
+                  subtitle: { ...data.banner?.subtitle, [lang]: e.target.value },
                 },
               })
             }
@@ -37,10 +61,7 @@ export default function SectionBanner({ data, setData }) {
                 ...data,
                 banner: {
                   ...data.banner,
-                  title: {
-                    ...data.banner?.title,
-                    [lang]: e.target.value,
-                  },
+                  title: { ...data.banner?.title, [lang]: e.target.value },
                 },
               })
             }
@@ -55,65 +76,67 @@ export default function SectionBanner({ data, setData }) {
                 ...data,
                 banner: {
                   ...data.banner,
-                  text: {
-                    ...data.banner?.text,
+                  text: { ...data.banner?.text, [lang]: e.target.value },
+                },
+              })
+            }
+            className="w-full border p-2 rounded mb-2"
+          />
+
+          <label>Buton Metni ({lang.toUpperCase()})</label>
+          <input
+            type="text"
+            value={data.banner?.discoverMoreText?.[lang] || ""}
+            onChange={(e) =>
+              setData({
+                ...data,
+                banner: {
+                  ...data.banner,
+                  discoverMoreText: {
+                    ...data.banner?.discoverMoreText,
                     [lang]: e.target.value,
                   },
                 },
               })
             }
-            className="w-full border p-2 rounded"
+            className="w-full border p-2 rounded mb-2"
+          />
+
+          <label>Buton Linki ({lang.toUpperCase()})</label>
+          <input
+            type="text"
+            value={data.banner?.discoverMoreLink?.[lang] || ""}
+            onChange={(e) =>
+              setData({
+                ...data,
+                banner: {
+                  ...data.banner,
+                  discoverMoreLink: {
+                    ...data.banner?.discoverMoreLink,
+                    [lang]: e.target.value,
+                  },
+                },
+              })
+            }
+            className="w-full border p-2 rounded mb-4"
           />
         </div>
       ))}
 
-      <label>Buton Metni</label>
+      <label className="block mt-4">Arka Plan Resmi Yükle</label>
       <input
-        type="text"
-        value={data.banner?.discoverMoreText || ""}
-        onChange={(e) =>
-          setData({
-            ...data,
-            banner: {
-              ...data.banner,
-              discoverMoreText: e.target.value,
-            },
-          })
-        }
-        className="w-full border p-2 rounded"
+        type="file"
+        accept="image/*"
+        onChange={e => handleImageUpload(e, "backgroundImage")}
+        className="mb-2"
       />
-
-      <label>Buton Linki</label>
-      <input
-        type="text"
-        value={data.banner?.discoverMoreLink || ""}
-        onChange={(e) =>
-          setData({
-            ...data,
-            banner: {
-              ...data.banner,
-              discoverMoreLink: e.target.value,
-            },
-          })
-        }
-        className="w-full border p-2 rounded"
-      />
-
-      <label>Arka Plan Görsel URL</label>
-      <input
-        type="text"
-        value={data.banner?.backgroundImage || ""}
-        onChange={(e) =>
-          setData({
-            ...data,
-            banner: {
-              ...data.banner,
-              backgroundImage: e.target.value,
-            },
-          })
-        }
-        className="w-full border p-2 rounded"
-      />
+      {data.banner?.backgroundImage && (
+        <img
+          src={`http://localhost:5001${data.banner.backgroundImage}`}
+          alt="Background"
+          className="w-32 h-24 object-cover rounded mb-2"
+        />
+      )}
     </div>
   );
 }

@@ -8,18 +8,18 @@ export default function Section1({ data, setData }) {
       <h2 className="text-xl font-bold mb-2">🎯 Section 1 (Giriş Bloğu)</h2>
 
       {languages.map((lang) => (
-        <div key={lang}>
+        <div key={lang} className="mb-4 border-b pb-4">
           <label className="block font-semibold">Başlık ({lang.toUpperCase()})</label>
           <input
             type="text"
             value={data.section1?.title?.[lang] || ""}
-            onChange={(e) =>
+            onChange={e =>
               setData({
                 ...data,
                 section1: {
                   ...data.section1,
-                  title: { ...data.section1?.title, [lang]: e.target.value },
-                },
+                  title: { ...data.section1?.title, [lang]: e.target.value }
+                }
               })
             }
             className="w-full border p-2 rounded mb-2"
@@ -29,13 +29,13 @@ export default function Section1({ data, setData }) {
           <input
             type="text"
             value={data.section1?.subtitle?.[lang] || ""}
-            onChange={(e) =>
+            onChange={e =>
               setData({
                 ...data,
                 section1: {
                   ...data.section1,
-                  subtitle: { ...data.section1?.subtitle, [lang]: e.target.value },
-                },
+                  subtitle: { ...data.section1?.subtitle, [lang]: e.target.value }
+                }
               })
             }
             className="w-full border p-2 rounded mb-2"
@@ -45,35 +45,51 @@ export default function Section1({ data, setData }) {
           <textarea
             rows={3}
             value={data.section1?.text?.[lang] || ""}
-            onChange={(e) =>
+            onChange={e =>
               setData({
                 ...data,
                 section1: {
                   ...data.section1,
-                  text: { ...data.section1?.text, [lang]: e.target.value },
-                },
+                  text: { ...data.section1?.text, [lang]: e.target.value }
+                }
+              })
+            }
+            className="w-full border p-2 rounded mb-2"
+          />
+
+          <label className="block font-semibold">Buton Metni ({lang.toUpperCase()})</label>
+          <input
+            type="text"
+            value={data.section1?.discoverMoreText?.[lang] || ""}
+            onChange={e =>
+              setData({
+                ...data,
+                section1: {
+                  ...data.section1,
+                  discoverMoreText: { ...data.section1?.discoverMoreText, [lang]: e.target.value }
+                }
+              })
+            }
+            className="w-full border p-2 rounded mb-2"
+          />
+
+          <label className="block font-semibold">Buton Linki ({lang.toUpperCase()})</label>
+          <input
+            type="text"
+            value={data.section1?.discoverMoreLink?.[lang] || ""}
+            onChange={e =>
+              setData({
+                ...data,
+                section1: {
+                  ...data.section1,
+                  discoverMoreLink: { ...data.section1?.discoverMoreLink, [lang]: e.target.value }
+                }
               })
             }
             className="w-full border p-2 rounded"
           />
         </div>
       ))}
-
-      <label className="block font-semibold mt-4">Discover More Buton Linki</label>
-      <input
-        type="text"
-        value={data.section1?.discoverMoreLink || ""}
-        onChange={(e) =>
-          setData({
-            ...data,
-            section1: {
-              ...data.section1,
-              discoverMoreLink: e.target.value,
-            },
-          })
-        }
-        className="w-full border p-2 rounded"
-      />
     </div>
   );
 }

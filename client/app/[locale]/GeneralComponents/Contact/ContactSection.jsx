@@ -1,19 +1,20 @@
 "use client"
 import React,{ useEffect, useRef } from "react";
 import Image from 'next/image'
-import img1 from "./images/contactGaleri.png"
-import img2 from "./images/contactGaleri2.png"
 import imgBackground from "./images/socialgalleryback3.webp"
 import LeafSvg from '../Header/Icons/LeafSvg'
 import minigallery from "./images/minigallery2.png"
 import Link from 'next/link'
 import { PiInstagramLogoLight,PiMetaLogoLight,PiFacebookLogoLight, PiYoutubeLogoLight} from "react-icons/pi";
 import {useTranslations} from 'next-intl';
+import { useLocale } from "next-intl";
 
-const ContactSection = () => {
+const ContactSection = ({contact}) => {
   const t = useTranslations('ContactSection');
-
+ 
+  const locale = useLocale();
   const scrollRef = useRef(null);
+  // if (!contact) return null;
 
   useEffect(() => {
     const scrollContainer = scrollRef.current;
@@ -40,67 +41,36 @@ const ContactSection = () => {
     return () => clearInterval(scrollInterval); // Component unmount olursa temizle
   }, []);
 
-  const images=[
-    {
-      id:1,
-      imgSrc:img1
-    },
-    {
-      id:2,
-      imgSrc:img1
-    },{
-      id:3,
-      imgSrc:img1
-    },
-    {
-      id:4,
-      imgSrc:img1
-    },
-    {
-      id:5,
-      imgSrc:img2
-    },
-    {
-      id:6,
-      imgSrc:img1
-    },
-    {
-      id:7,
-      imgSrc:img2
-    },
-    {
-      id:8,
-      imgSrc:img1
-    },{
-      id:9,
-      imgSrc:img1
-    }
-  ];
+
 
   return (
-    <div className='flex w-screen h-screen md:h-[497px] lg:h-[750px] 2xl:h-[850px] items-center md:justify-start bg-cover bg-center relative  max-w-[1920px] overflow-hidden justify-center z-10' style={{ backgroundImage: `url(${imgBackground.src})` }}>
+    <div className='flex w-screen h-screen md:h-[497px] lg:h-[750px] 2xl:h-[850px] items-center md:justify-start bg-cover bg-center relative  max-w-[1920px] overflow-hidden justify-center z-10' style={{
+  backgroundImage: contact.backgroundImage
+    ? `url(http://localhost:5001${contact.backgroundImage})`
+    : undefined
+}}>
       <LeafSvg className="absolute top-6 -left-24 z-20" width={498} height={652}/>
       <div className='flex flex-col md:flex-row w-[95%] md:w-[88%] lg:w-[80%] items-center justify-center bg-white h-[85%] lg:h-[88%] max-w-[1440px] gap-[20px]'>
 
         <div className='flex h-[39%] md:h-auto w-[90%] md:w-[45%] lg:w-[39%] font-jost text-black items-center md:items-start justify-center '>
            <div className='flex flex-col md:w-[79%] items-center text-center md:text-start md:items-start justify-center gap-[15px] md:gap-[23.19px] lg:gap-[30px]'>
-           <span className='z-50 text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px] mt-[10%] md:mt-0'>{t('subtitle')}</span>
-            <h2 className='z-50 font-marcellus font-normal text-[32px] lg:text-[48px] leading-[150%] lg:leading-[57.6px] capsizedText3 lg:capsizedText2'>{t('title')}</h2>
+           <span className='z-50 text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px] mt-[10%] md:mt-0'>{contact.subtitle?.[locale] || ""}</span>
+            <h2 className='z-50 font-marcellus font-normal text-[32px] lg:text-[48px] leading-[150%] lg:leading-[57.6px] capsizedText3 lg:capsizedText2'>{contact.title?.[locale] || ""}</h2>
             <p className=' z-50 text-[14px] lg:text-[16px] font-normal leading-[24px] '>
-             Sorgun Mah. Titreyengol Mevkii No:26 Manavgat/ Antalya / TR <br></br>
-            Phone: <Link href="tel:02427569900" className='underline '>+90 242 756 99 00 </Link> <br></br>
-            Call Center: <Link href="tel:02425245787" className='underline '>+90 242 524 57 87</Link> <br></br>
-            Email: <Link href="/" className='underline '>info@lagohotel.com</Link> <br></br>
+             {contact.addressHtml?.[locale] || ""}<br></br>
+            {contact.phoneLabel?.[locale] || ""} <Link href="tel:02427569900" className='underline '> {contact.phone || ""} </Link> <br></br>
+             {contact.callcenterLabel?.[locale] || ""} <Link href="tel:02425245787" className='underline '>{contact.callcenter || ""}</Link> <br></br>
+             {contact.emailLabel?.[locale] || ""} <Link href="/" className='underline '>{contact.email || ""}</Link> <br></br>
             </p>
             <div className='flex z-50 w-full items-center justify-start gap-[20px] '>
                 <div className='flex items-center justify-center gap-[18px]'>
                 <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.instagram.com/lagohotels/"> <PiInstagramLogoLight size={28} /></Link>
+                  target="_blank" href={contact.instagram || ""}> <PiInstagramLogoLight size={28} /></Link>
                 {/* <PiMetaLogoLight size={30} /> */}
                 <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.facebook.com/lagohotels"><PiFacebookLogoLight size={28} /></Link>
+                  target="_blank" href={contact.facebook || ""}><PiFacebookLogoLight size={28} /></Link>
                 <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ"><PiYoutubeLogoLight size={28} /></Link>
+                  target="_blank" href={contact.youtube || ""}><PiYoutubeLogoLight size={28} /></Link>
                 </div>
                 <div className='flex bg-black h-[20px] w-[1px]'></div>
                 <Link rel="norefferer nofollower"
@@ -118,7 +88,7 @@ const ContactSection = () => {
             [minigallery].map((img, index) => (
               <Image
                 key={`${loopIndex}-${index}`}
-                src={img}
+                src={`http://localhost:5001${contact.galleryImage}`}
                 height={img.height}
                 width={img.width}
                 alt="Minigallery"
