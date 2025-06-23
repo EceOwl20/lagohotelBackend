@@ -28,6 +28,9 @@ app.use("/api/upload", uploadRoutes);
 const headerRoutes = require('./routes/headerRoutes');
 app.use("/api",headerRoutes)
 
+const footerRoutes = require('./routes/footerRoutes');
+app.use("/api",footerRoutes)
+
 
 // MongoDB bağlantısı
 mongoose.connect(process.env.MONGO_URI, {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import {
   FaInstagram,
@@ -16,12 +16,31 @@ import MessageSvg from "./MessageSvg";
 import ArrawDown from "@/app/[locale]/HomePage/Components/Icons/ArrawDown";
 import DgtlfaceSvg from "./DgtlfaceSvg";
 import BSvg from "./BSvg";
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
 
 export default function Footer() {
+   const locale = useLocale();
+   const [footerData, setFooterData] = useState(null);
+  
   const t = useTranslations('Footer');
   const [isRoomsOpen, setIsRoomsOpen] = useState(false);
   const [isMoreOpen, setIsMoreOpen] = useState(false);
+
+  useEffect(() => {
+      const fetchPageData = async () => {
+        try {
+          const res = await fetch("http://localhost:5001/api/footer");
+          const json = await res.json();
+          setFooterData(json);
+        } catch (err) {
+          console.error("Footer verisi alınamadı:", err.message);
+        }
+      };
+  
+      fetchPageData();
+    }, []);
+
+    if (!footerData) return <p className="p-10">Yükleniyor...</p>;
 
   return (
     <footer className="w-full flex flex-col bg-[#1A1A16] text-gray-200 text-sm justify-center items-center z-10">
@@ -41,7 +60,7 @@ export default function Footer() {
           {/* Sosyal ikonlar */}
           <div className="grid grid-cols-2 lg:flex items-center gap-[32px]">
             <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.instagram.com/lagohotels/"><FaInstagram className="w-[30px] h-[32px]" color="#fff"/></Link>
+                  target="_blank" href={footerData.social.instagram || "https://www.instagram.com/lagohotels/"}><FaInstagram className="w-[30px] h-[32px]" color="#fff"/></Link>
             <Link rel="norefferer nofollower"
                   target="_blank" href="https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ" > <FaYoutube className="w-[30px] h-[32px]" color='#fff'/></Link>
             <Link rel="norefferer nofollower"

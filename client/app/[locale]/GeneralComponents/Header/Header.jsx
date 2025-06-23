@@ -263,7 +263,7 @@ export default function Header() {
               >
                 <div className="mt-2 space-y-2 pl-4  border-white/30 font-jost">
                 <Link
-                      href={headerData.menuItems[2]?.link?.[locale] || "/rooms/superior-room"}
+                      href={headerData.menuItems[2]?.link?.[locale] || "/rooms"}
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
                    {headerData.menuItems[1]?.text?.[locale] || t('accommodation')}
@@ -335,7 +335,7 @@ export default function Header() {
               href="/entertainment"
               className="block font-normal leading-[26.667px] w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-              {headerData.menuItems[12]?.text?.[locale] || t('entertainment')}
+              {headerData.menuItems[12]?.text?.[locale] || t('experiences')}
             </Link>
             <Link
               href="/kidsclub"

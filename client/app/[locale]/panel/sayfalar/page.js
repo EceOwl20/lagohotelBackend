@@ -18,6 +18,12 @@ export default function PagesPanel() {
               <Link href="/panel/sayfalar/header" className="text-blue-600 hover:underline">
             ⛩️ Header 
           </Link>
+          </li> 
+
+          <li>
+              <Link href="/panel/sayfalar/footer" className="text-blue-600 hover:underline">
+            🌵 Footer 
+          </Link>
           </li>
         {/* İleride buraya diğer sayfa linkleri eklersin (örneğin: hakkında, odalar, restoranlar vs.) */}
       </ul>
