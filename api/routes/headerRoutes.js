@@ -1,13 +1,13 @@
-// routes/header.js
+// api/routes/header.js
 const express = require("express");
 const router = express.Router();
 const verifyToken = require("../middleware/authMiddleware");
 const Header = require("../models/Header");
 
-// GET /api/pages/header
+// GET /api/header
 router.get("/header", async (req, res) => {
   try {
-    const header = await Header.findOne({ slug: "header" });
+    const header = await Header.findOne({ slug: "header" }); 
     if (!header) return res.status(404).json({ error: "Header bulunamadı" });
     res.json(header);
   } catch (err) {
@@ -15,7 +15,7 @@ router.get("/header", async (req, res) => {
   }
 });
 
-// PUT /api/pages/header
+// PUT /api/header
 router.put("/header", verifyToken, async (req, res) => {
   try {
     if (req.user.role !== "admin") {

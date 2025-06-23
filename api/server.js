@@ -4,8 +4,6 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const userRoutes = require('./routes/userRoutes');
 
-
-
 dotenv.config();
 
 const app = express();
@@ -26,6 +24,9 @@ app.use('/api/pages', pageRoutes);
 
 const uploadRoutes = require("./routes/uploadRoutes");
 app.use("/api/upload", uploadRoutes);
+
+const headerRoutes = require('./routes/headerRoutes');
+app.use("/api",headerRoutes)
 
 
 // MongoDB bağlantısı
