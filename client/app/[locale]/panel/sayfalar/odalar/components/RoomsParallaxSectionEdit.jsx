@@ -39,6 +39,7 @@ export default function RoomsParallaxSectionEdit({ data, setData }) {
             onChange={e => handleChange('roomsParallaxSection.backgroundImage', e.target.value)}
           />
         </label>
+        
         {parallaxFields.map(field => (
           langsParallax.map(lang => (
             <label key={`${field}-${lang}`} className="block font-semibold">
@@ -50,6 +51,7 @@ export default function RoomsParallaxSectionEdit({ data, setData }) {
                 onChange={e => handleChange(`roomsParallaxSection.${field}.${lang}`, e.target.value)}
               />
             </label>
+            
           ))
         ))}
       </div>
