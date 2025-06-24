@@ -65,52 +65,98 @@ export default function Page() {
   };
 
   // Quick Menu
-  const addQuickMenu = () =>
-    setFooter(prev => ({ ...prev, quickMenu: [...(prev.quickMenu || []), { ...emptyQuickMenuItem }] }));
-  const removeQuickMenu = idx =>
-    setFooter(prev => ({ ...prev, quickMenu: prev.quickMenu.filter((_, i) => i !== idx) }));
+ // Quick Menu
+const addQuickMenu = () =>
+  setFooter(prev => ({
+    ...prev,
+    quickMenu: [
+      ...(prev.quickMenu || []),
+      JSON.parse(JSON.stringify(emptyQuickMenuItem))
+    ]
+  }));
 
-  const handleQuickMenuTitle = (idx, lang, value) => {
-    const updated = [...footer.quickMenu];
-    updated[idx].title[lang] = value;
-    setFooter(prev => ({ ...prev, quickMenu: updated }));
-  };
-  const addQuickMenuLink = idx => {
-    const updated = [...footer.quickMenu];
-    updated[idx].links.push({ text: { ...emptyLangs }, url: "" });
-    setFooter(prev => ({ ...prev, quickMenu: updated }));
-  };
-  const removeQuickMenuLink = (idx, lidx) => {
-    const updated = [...footer.quickMenu];
-    updated[idx].links.splice(lidx, 1);
-    setFooter(prev => ({ ...prev, quickMenu: updated }));
-  };
-  const handleQuickMenuLink = (idx, lidx, lang, value) => {
-    const updated = [...footer.quickMenu];
-    updated[idx].links[lidx].text[lang] = value;
-    setFooter(prev => ({ ...prev, quickMenu: updated }));
-  };
-  const handleQuickMenuLinkUrl = (idx, lidx, value) => {
-    const updated = [...footer.quickMenu];
-    updated[idx].links[lidx].url = value;
-    setFooter(prev => ({ ...prev, quickMenu: updated }));
-  };
+const addQuickMenuLink = idx => {
+  const updated = footer.quickMenu.map((item, i) =>
+    i === idx
+      ? { ...item, links: [...item.links, { text: { ...emptyLangs }, url: "" }] }
+      : item
+  );
+  setFooter(prev => ({ ...prev, quickMenu: updated }));
+};
+const removeQuickMenuLink = (idx, lidx) => {
+  const updated = footer.quickMenu.map((item, i) =>
+    i === idx
+      ? { ...item, links: item.links.filter((_, j) => j !== lidx) }
+      : item
+  );
+  setFooter(prev => ({ ...prev, quickMenu: updated }));
+};
+const handleQuickMenuTitle = (idx, lang, value) => {
+  const updated = footer.quickMenu.map((item, i) =>
+    i === idx
+      ? { ...item, title: { ...item.title, [lang]: value } }
+      : item
+  );
+  setFooter(prev => ({ ...prev, quickMenu: updated }));
+};
+const handleQuickMenuLink = (idx, lidx, lang, value) => {
+  const updated = footer.quickMenu.map((item, i) =>
+    i === idx
+      ? {
+          ...item,
+          links: item.links.map((link, j) =>
+            j === lidx
+              ? { ...link, text: { ...link.text, [lang]: value } }
+              : link
+          )
+        }
+      : item
+  );
+  setFooter(prev => ({ ...prev, quickMenu: updated }));
+};
+const handleQuickMenuLinkUrl = (idx, lidx, value) => {
+  const updated = footer.quickMenu.map((item, i) =>
+    i === idx
+      ? {
+          ...item,
+          links: item.links.map((link, j) =>
+            j === lidx
+              ? { ...link, url: value }
+              : link
+          )
+        }
+      : item
+  );
+  setFooter(prev => ({ ...prev, quickMenu: updated }));
+};
 
   // Bottom Links
-  const addBottomLink = () =>
-    setFooter(prev => ({ ...prev, bottomLinks: [...(prev.bottomLinks || []), { ...emptyBottomLink }] }));
-  const removeBottomLink = idx =>
-    setFooter(prev => ({ ...prev, bottomLinks: prev.bottomLinks.filter((_, i) => i !== idx) }));
-  const handleBottomLink = (idx, lang, value) => {
-    const updated = [...footer.bottomLinks];
-    updated[idx].text[lang] = value;
-    setFooter(prev => ({ ...prev, bottomLinks: updated }));
-  };
-  const handleBottomLinkUrl = (idx, value) => {
-    const updated = [...footer.bottomLinks];
-    updated[idx].url = value;
-    setFooter(prev => ({ ...prev, bottomLinks: updated }));
-  };
+ const addBottomLink = () =>
+  setFooter(prev => ({
+    ...prev,
+    bottomLinks: [
+      ...(prev.bottomLinks || []),
+      JSON.parse(JSON.stringify(emptyBottomLink))
+    ]
+  }));
+
+const handleBottomLink = (idx, lang, value) => {
+  const updated = footer.bottomLinks.map((item, i) =>
+    i === idx
+      ? { ...item, text: { ...item.text, [lang]: value } }
+      : item
+  );
+  setFooter(prev => ({ ...prev, bottomLinks: updated }));
+};
+
+const handleBottomLinkUrl = (idx, value) => {
+  const updated = footer.bottomLinks.map((item, i) =>
+    i === idx
+      ? { ...item, url: value }
+      : item
+  );
+  setFooter(prev => ({ ...prev, bottomLinks: updated }));
+};
 
   const handleSubmit = async e => {
     e.preventDefault();

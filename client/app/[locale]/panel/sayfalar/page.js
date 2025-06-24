@@ -25,6 +25,12 @@ export default function PagesPanel() {
             🌵 Footer 
           </Link>
           </li>
+
+          <li>
+              <Link href="/panel/sayfalar/odalar" className="text-blue-600 hover:underline">
+            🏘️ Odalar 
+          </Link>
+          </li>
         {/* İleride buraya diğer sayfa linkleri eklersin (örneğin: hakkında, odalar, restoranlar vs.) */}
       </ul>
     </div>

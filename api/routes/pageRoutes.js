@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const verifyToken = require("../middleware/authMiddleware");
 const HomePage = require("../models/homepage"); // modelin dosya adı buysa
-const Header = require("../models/Header");
+const Rooms = require("../models/roomspage");
 
 // GET /api/pages/homepage → anasayfa içeriğini getir
 router.get("/homepage", async (req, res) => {
@@ -35,28 +35,32 @@ router.put("/homepage", verifyToken, async (req, res) => {
 });
 
 
-router.get("/header", async (req, res) => {
+
+/*rooms*/ 
+router.get("/rooms", async (req, res) => {
   try {
-    const header = await Header.findOne({ slug: "header" }); 
-    if (!header) return res.status(404).json({ error: "Header bulunamadı" });
-    res.json(header);
+    const page = await Rooms.findOne({ slug: "rooms" });
+    if (!page) return res.status(404).json({ error: "Odalar bulunamadı" });
+    res.json(page);
   } catch (err) {
     res.status(500).json({ error: "Sunucu hatası" });
   }
 });
 
-// PUT /api/header
-router.put("/header", verifyToken, async (req, res) => {
+// PUT /api/pages/rooms → anasayfa içeriğini güncelle (sadece admin için)
+router.put("/rooms", verifyToken, async (req, res) => {
   try {
     if (req.user.role !== "admin") {
       return res.status(403).json({ error: "Yetkiniz yok" });
     }
-    const updated = await Header.findOneAndUpdate(
-      { slug: "header" },
+
+    const updatedPage = await Rooms.findOneAndUpdate(
+      { slug: "rooms" },
       req.body,
-      { new: true, upsert: true }
+      { new: true, upsert: true } // upsert: ilk kayıt yoksa oluşturur
     );
-    res.json(updated);
+
+    res.json(updatedPage);
   } catch (err) {
     res.status(500).json({ error: "Güncelleme başarısız" });
   }

@@ -62,31 +62,31 @@ export default function Footer() {
             <Link rel="norefferer nofollower"
                   target="_blank" href={footerData.social.instagram || "https://www.instagram.com/lagohotels/"}><FaInstagram className="w-[30px] h-[32px]" color="#fff"/></Link>
             <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ" > <FaYoutube className="w-[30px] h-[32px]" color='#fff'/></Link>
+                  target="_blank" href={footerData.social.youtube || "https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ"} > <FaYoutube className="w-[30px] h-[32px]" color='#fff'/></Link>
             <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.facebook.com/lagohotels"><FaFacebook className="w-[30px] h-[32px]" color="#fff" /></Link>
+                  target="_blank" href={footerData.social.facebook || "https://www.facebook.com/lagohotels"}><FaFacebook className="w-[30px] h-[32px]" color="#fff" /></Link>
             <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.tripadvisor.com.tr/Hotel_Review-g1192102-d545626-Reviews-Lago_Hotel-Sorgun_Manavgat_Turkish_Mediterranean_Coast.html" ><FaTripadvisor className="w-[30px] h-[32px]" color="##ffffff"/></Link>
+                  target="_blank" href={footerData.social.tripadvisor || "https://www.tripadvisor.com.tr/Hotel_Review-g1192102-d545626-Reviews-Lago_Hotel-Sorgun_Manavgat_Turkish_Mediterranean_Coast.html"} ><FaTripadvisor className="w-[30px] h-[32px]" color="##ffffff"/></Link>
           </div>
 
           {/* Alt linkler */}
           <div className="grid-cols-2 xl:grid-cols-3 grid  items-center gap-6 whitespace-nowrap text-lagoGray2 w-full">
             <a href="/terms-of-use" className="hover:underline">
-            {t('termsuse')}
+            {footerData.bottomLinks[0].text?.[locale] || t('termsuse')}
             </a>
             <a href="#" className="hover:underline">
-            {t('notice')}
+            {footerData.bottomLinks[2].text?.[locale] || t('notice')}
             </a>
             <a href="/sustainability" className="hover:underline">
-            {t('sustainability')}
+            {footerData.bottomLinks[4].text?.[locale] || t('sustainability')}
             </a>
             <Link href="/ourpolicies" className="hover:underline">
-            {t('ourpolicies')} 
+           {footerData.bottomLinks[1].text?.[locale] || t('ourpolicies')} 
             </Link>
             <a href="/certificates" className="hover:underline">
-            Certificate
+            {footerData.bottomLinks[5].text?.[locale] || "Certificate"}
             </a>
-          <Link className="hover:text-white cursor-pointer" href="/news">{t('blog')}</Link>
+          <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] || t('blog')}</Link>
 
           </div>
         </div>
@@ -170,10 +170,10 @@ export default function Footer() {
                 </p>
                 <p className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] underline">Call Center: <Link href="tel:02425245787" className='underline '>+90 242 524 57 87</Link></p>
                 <p className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px]">
-                {t('email')}
+                {footerData.contact.emailLabel?.[locale] || "E-mail"} {footerData.contact.email || "info@lagohotel.com"} 
                 </p>
                 <p className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] ">
-                {t('address')}
+                 {footerData.contact.addressLabel?.[locale] || "Address"}  {footerData.contact.address?.[locale] || "Address"}  
                 </p>
               </div>
             </div>
@@ -199,11 +199,11 @@ export default function Footer() {
               <Phone className="flex" width={25} height={25} color="#A6A6A6" />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  Hotel Line
+                   {footerData.contact.phoneLabel?.[locale] || "Hotel Line"} 
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6">
-                  + 90 242 756 99 00
+                   {footerData.contact.phone || "+ 90 242 756 99 00"}  
                 </p>
               </div>
             </div>
@@ -212,11 +212,11 @@ export default function Footer() {
               <Phone className="flex" width={25} height={25} color="#A6A6A6" />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  Call Center
+                  {footerData.contact.callCenterLabel?.[locale] || "Call Center"} 
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6">
-                  + 90 242 524 57 87
+                 {footerData.contact.callCenter || "+ 90 242 524 57 87"}  
                 </p>
               </div>
             </div>
@@ -248,11 +248,11 @@ export default function Footer() {
               />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  E-mail
+                  {footerData.contact.emailLabel?.[locale] || "E-mail"}  
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  info@lagohotel.com
+                 {footerData.contact.email || "info@lagohotel.com"} 
                 </p>
               </div>
             </div>
@@ -265,11 +265,11 @@ export default function Footer() {
             <Link href="/rooms">{t('category1')}</Link>
             </h4>
             <ul className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] space-y-6">
-               <li className="hover:text-white cursor-pointer"><Link href="/rooms/superiorroom">{t('superior')}</Link></li>
-                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyroom">{t('family')}</Link></li>
-                <li className="hover:text-white cursor-pointer"><Link href="/rooms/swimuproom">{t('swimup')}</Link></li>
-                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyswimup">{t('familyswimup')}</Link></li>
-                {/* <li className="hover:text-white cursor-pointer"><Link href="/rooms/tinyvilla">{t('tinyvilla')}</Link></li> */}
+               <li className="hover:text-white cursor-pointer"><Link href="/rooms/superiorroom">{footerData.quickMenu[0].links[1].text?.[locale] || t("superiorroom")}</Link></li>
+                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyroom"> {footerData.quickMenu[0].links[2].text?.[locale] || t("familyroom")}</Link></li>
+                <li className="hover:text-white cursor-pointer"><Link href="/rooms/swimuproom"> {footerData.quickMenu[0].links[3].text?.[locale] || t("swimup")}</Link></li>
+                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyswimup"> {footerData.quickMenu[0].links[4].text?.[locale] || t("familyswimup")}</Link></li>
+             
 
             </ul>
           </div>
@@ -277,25 +277,23 @@ export default function Footer() {
           {/* TERM & CONDITIONS */}
           <div className="flex flex-col items-start justify-start text-start gap-[40px] w-[33%]">
             <h4 className="text-[15px] text-white font-marcellus font-normal leading-[26px] tracking-[0.6px] uppercase ">
-            <Link href="/restaurants">{t('category2')}</Link>
+            <Link href="/restaurants"> {footerData.quickMenu[4].title?.[locale] || t("category2")}</Link>
             </h4>
             <ul className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] space-y-6">
             <li className="hover:text-white cursor-pointer">
-                <Link href="/restaurants/mainrestaurant">{t('mainrestaurant')}</Link>
+                <Link href="/restaurants/mainrestaurant">{footerData.quickMenu[4].links[0].text?.[locale] || t("mainrestaurant")}</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-               <Link href="/restaurants/gustorestaurant"> {t('gusto')}</Link>
+               <Link href="/restaurants/gustorestaurant"> {footerData.quickMenu[4].links[1].text?.[locale] || t("gusto")}</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-              <Link href="/barcafes"> {t('barcafes')}</Link>
+              <Link href="/barcafes"> {footerData.quickMenu[4].links[2].text?.[locale] || t("barcafes")}</Link>
                 </li>
                 
                 <li className="hover:text-white cursor-pointer">
-                <Link href="/barcafes/maldivabar"> {t('maldiva')}</Link>
+                <Link href="/barcafes/maldivabar"> {footerData.quickMenu[4].links[3].text?.[locale] || t("maldiva")}</Link>
                 </li>
-                <li className="hover:text-white cursor-pointer">
-                <Link href="/barcafes/cafedelago"> {t('cafedelago')}</Link>
-                </li>
+            
              
             </ul>
           </div>
@@ -303,22 +301,22 @@ export default function Footer() {
           {/* COMPANY */}
           <div className="flex flex-col items-start justify-start text-start gap-[40px] w-[33%]">
             <h4 className="text-[15px] text-white font-marcellus font-normal leading-[26px] tracking-[0.6px] uppercase ">
-            <Link href="/entertainment"> {t('category3')}</Link>
+            <Link href="/entertainment"> {footerData.quickMenu[5].title?.[locale] || t("category3")}</Link>
             </h4>
             <ul className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] space-y-6">
               <li className="hover:text-white cursor-pointer">
-              <Link href="/spor"> {t('spor')}</Link>
+              <Link href="/spor"> {footerData.quickMenu[5].links[0].text?.[locale] || t("spor")}</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-                <Link href="/kidsclub">{t('kidsclub')}</Link> 
+                <Link href="/kidsclub">{footerData.quickMenu[5].links[1].text?.[locale] || t("kidsclub")}</Link> 
                 </li>
                 <li className="hover:text-white cursor-pointer">
-                  <Link href="/entertainment">{t('stageshow')}</Link>
+                  <Link href="/entertainment">{footerData.quickMenu[5].links[2].text?.[locale] || t("entertainment")}</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-                <Link href="/spawellness">{t('spa')}</Link>
+                <Link href="/spawellness">{footerData.quickMenu[5].links[3].text?.[locale] || t("spa")}</Link>
                 </li>
-                <li className="hover:text-white cursor-pointer"><Link href="/special">{t('special')}</Link></li>
+               
             </ul>
           </div>
         </div>
@@ -327,33 +325,33 @@ export default function Footer() {
           {/* Sosyal ikonlar */}
           <div className="flex items-center gap-[32px]">
           <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.instagram.com/lagohotels/"><FaInstagram className="w-[30px] h-[32px]" /></Link>
+                  target="_blank" href={footerData.social.instagram || "https://www.instagram.com/lagohotels/"}><FaInstagram className="w-[30px] h-[32px]" /></Link>
           <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ"> <FaYoutube className="w-6 h-6" color='#fff'/></Link>
+                  target="_blank" href={footerData.social.youtube || "https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ"}> <FaYoutube className="w-6 h-6" color='#fff'/></Link>
           <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.facebook.com/lagohotels"><FaFacebook className="w-[30px] h-[32px]" /></Link>
+                  target="_blank" href={footerData.social.facebook || "https://www.facebook.com/lagohotels"}><FaFacebook className="w-[30px] h-[32px]" /></Link>
           <Link  rel="norefferer nofollower"
-                  target="_blank" href="https://www.tripadvisor.com.tr/Hotel_Review-g1192102-d545626-Reviews-Lago_Hotel-Sorgun_Manavgat_Turkish_Mediterranean_Coast.html"><FaTripadvisor className="w-6 h-6" color="##fff"/></Link>
+                  target="_blank" href={footerData.social.tripadvisor || "https://www.tripadvisor.com.tr/Hotel_Review-g1192102-d545626-Reviews-Lago_Hotel-Sorgun_Manavgat_Turkish_Mediterranean_Coast.html"}><FaTripadvisor className="w-6 h-6" color="##fff"/></Link>
           </div>
 
           {/* Alt linkler */}
           <div className="grid grid-cols-3 items-center gap-6 font-jost whitespace-nowrap font-normal leading-[20px] text-[16px] text-lagoGray2">
             <Link href="/terms-of-use" className="hover:underline">
-            {t('termsuse')}
+             {footerData.bottomLinks[0].text?.[locale] || t('termsuse')}
             </Link>
             <Link href="#" className="hover:underline">
-            {t('notice')} 
+          {footerData.bottomLinks[2].text?.[locale] || t('notice')}
             </Link>
             <Link href="/sustainability" className="hover:underline">
-            {t('sustainability')} 
+             {footerData.bottomLinks[4].text?.[locale] || t('sustainability')}
             </Link>
             <Link href="/ourpolicies" className="hover:underline">
-            {t('ourpolicies')} 
+           {footerData.bottomLinks[1].text?.[locale] || t('ourpolicies')} 
             </Link>
             <Link href="/certificates" className="hover:underline">
-            Certificate
+            {footerData.bottomLinks[5].text?.[locale] || "Certificate"}
             </Link>
-            <Link className="hover:text-white cursor-pointer" href="/news">{t('blog')}</Link>
+            <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] || t('blog')}</Link>
           </div>
         </div>
       </div>
@@ -373,11 +371,11 @@ export default function Footer() {
               <Phone className="flex" width={25} height={25} color="#A6A6A6" />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  Hotel Line
+                {footerData.contact.phoneLabel?.[locale] || "Hotel Line"} 
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6">
-                  + 90 242 756 99 00
+                {footerData.contact.phone || "+ 90 242 756 99 00"} 
                 </p>
               </div>
             </div>
@@ -386,11 +384,11 @@ export default function Footer() {
               <Phone className="flex" width={25} height={25} color="#A6A6A6" />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  Call Center
+                   {footerData.contact.callCenterLabel?.[locale] || "Call Center"} 
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6">
-                  + 90 242 524 57 87
+                  {footerData.contact.callCenter || "+ 90 242 524 57 87"}  
                 </p>
               </div>
             </div>
@@ -404,11 +402,11 @@ export default function Footer() {
               />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  Adress
+                {footerData.contact.addressLabel?.[locale] || "Address"}  
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6 tracking-[0.3px] whitespace-nowrap">
-                  Manavgat/Antalya, TR
+                  Manavgat/Antalya
                 </p>
               </div>
             </div>
@@ -422,11 +420,11 @@ export default function Footer() {
               />
               <div className="flex flex-col gap-[10px] items-start justify-start">
                 <span className="text-[#A6A6A6] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  E-mail
+                {footerData.contact.emailLabel?.[locale] || "E-mail"}  
                 </span>
                 <div className="flex h-[1px] w-full bg-[#D9D9D9]/50"></div>
                 <p className="text-[#FBFBFB] leading-[32.53px] capsizedText6 tracking-[0.3px]">
-                  info@lagohotel.com
+                 {footerData.contact.email || "info@lagohotel.com"} 
                 </p>
               </div>
             </div>
@@ -437,7 +435,7 @@ export default function Footer() {
               onClick={() => setIsRoomsOpen(!isRoomsOpen)}
               className="flex w-[98%] p-[10px] md:max-w-[306px] items-center justify-between border border-white leading-[26.667px] uppercase"
             >
-              {t('accommodation')} <ArrawDown className="flex" width={25} height={25} />
+              {footerData.quickMenu[0].title?.[locale] || t('accommodation')}  <ArrawDown className="flex" width={25} height={25} />
             </div>
             <div
               className={`overflow-hidden transition-all duration-500 ease-in-out ${
@@ -449,37 +447,37 @@ export default function Footer() {
                   href="/rooms"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                  All Rooms
+                {footerData.quickMenu[0].links[0].text?.[locale] || "All rooms"}
                 </Link>
                 <Link
                   href="/rooms/superiorroom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                {t("superior")}
+                 {footerData.quickMenu[0].links[1].text?.[locale] || t("superiorroom")}
                 </Link>
                 <Link
                   href="/rooms/familyroom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                 {t("family")}
+                  {footerData.quickMenu[0].links[2].text?.[locale] || t("familyroom")}
                 </Link>
                 <Link
                   href="/rooms/swimuproom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                   {t("swimup")}
+                    {footerData.quickMenu[0].links[3].text?.[locale] || t("swimuproom")}
                 </Link>
                 <Link
                   href="/rooms/familyswimuproom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                 {t("familyswimup")}
+                 {footerData.quickMenu[0].links[4].text?.[locale] || t("familyswimuproom")}
                 </Link>
                 <Link
                   href="/rooms/duplexfamilyroom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                 {t("duplex")}
+                 {footerData.quickMenu[0].links[5].text?.[locale] || t("duplexfamilyroom")}
                 </Link>
                 {/* <Link
                   href="/rooms/tinyvilla"
@@ -494,19 +492,19 @@ export default function Footer() {
               href="/special"
               className="flex w-[98%] p-[10px] md:max-w-[306px] mt-[15px] items-center justify-between border border-white leading-[26.667px] uppercase"
             >
-              {t('experiences')}
+               {footerData.quickMenu[1].title?.[locale] || t('experiences')} 
             </Link>
             <Link
               href="/connect"
               className="flex w-[98%] p-[10px] md:max-w-[306px] mt-[15px] items-center justify-between border border-white leading-[26.667px]"
             >
-              CONTACT US{" "}
+              {footerData.quickMenu[2].title?.[locale] || "Contact Us"} 
             </Link>
             <div
                 onClick={() => setIsMoreOpen(!isMoreOpen)}
               className="flex w-[98%] p-[10px] md:max-w-[306px] mt-[15px] items-center justify-between border border-white leading-[26.667px]"
             >
-              MORE <ArrawDown className="flex" width={25} height={25} />
+               {footerData.quickMenu[3].title?.[locale] || "More"}  <ArrawDown className="flex" width={25} height={25} />
             </div>
             <div
               className={`overflow-hidden transition-all duration-500 ease-in-out ${
@@ -515,22 +513,22 @@ export default function Footer() {
             >
               <div className="mt-2 space-y-2 pl-4 border-l border-white/30 font-jost">
                 <Link
-                  href="/special"
-                  className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
-                >
-                 {t('kidsclub')}
-                </Link>
-                <Link
                   href="/kidsclub"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                  {t('special')}
+                  {footerData.quickMenu[3].links[0].text?.[locale] || t('kidsclub')} 
                 </Link>
                 <Link
-                  href="/gallery/"
+                  href="/special"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                  Gallery
+                  {footerData.quickMenu[3].links[1].text?.[locale] || t('special')} 
+                </Link>
+                <Link
+                  href="/gallery"
+                  className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
+                >
+                   {footerData.quickMenu[3].links[2].text?.[locale] || "Gallery"} 
                 </Link>
                 
               
@@ -551,21 +549,21 @@ export default function Footer() {
 
           <div className="grid-cols-2 grid items-center justify-center text-center gap-[10px] whitespace-nowrap text-lagoGray2 w-full text-[14px]">
             <a href="/terms-of-use" >
-            {t('termsuse')}
+             {footerData.bottomLinks[0].text?.[locale] || t('termsuse')}
             </a>
             <a href="#" >
-            {t('notice')}
+           {footerData.bottomLinks[2].text?.[locale] || t('notice')}
             </a>
             <a href="/sustainability" >
-            {t('sustainability')}
+           {footerData.bottomLinks[4].text?.[locale] || t('sustainability')}
             </a>
             <Link href="/ourpolicies" >
-            {t('ourpolicies')} 
+            {footerData.bottomLinks[1].text?.[locale] || t('ourpolicies')} 
             </Link>
             <a href="/certificates" >
-            Certificate
+            {footerData.bottomLinks[5].text?.[locale] || "Certificate"}
             </a>
-          <Link className="hover:text-white cursor-pointer" href="/news">{t('blog')}</Link>
+          <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] || t('blog')}</Link>
 
           </div>
         </div>

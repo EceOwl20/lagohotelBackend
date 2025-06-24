@@ -263,7 +263,7 @@ export default function Header() {
               >
                 <div className="mt-2 space-y-2 pl-4  border-white/30 font-jost">
                 <Link
-                      href={headerData.menuItems[2]?.link?.[locale] || "/rooms"}
+                      href={headerData.menuItems[1]?.link?.[locale] || "/rooms"}
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
                    {headerData.menuItems[1]?.text?.[locale] || t('accommodation')}
