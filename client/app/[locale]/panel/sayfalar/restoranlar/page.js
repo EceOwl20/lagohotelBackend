@@ -16,7 +16,7 @@ export default function RestaurantPanelPage() {
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/restaurant")
+    fetch("http://localhost:5001/api/pages/restaurants")
       .then(res => res.json())
       .then(json => setData(json))
       .catch(() => setData({}));
@@ -25,7 +25,7 @@ export default function RestaurantPanelPage() {
   const handleSave = async () => {
     setStatus("Yükleniyor...");
     try {
-      const res = await fetch("http://localhost:5001/api/pages/restaurant", {
+      const res = await fetch("http://localhost:5001/api/pages/restaurants", {
         method: "PUT",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
         body: JSON.stringify(data)
