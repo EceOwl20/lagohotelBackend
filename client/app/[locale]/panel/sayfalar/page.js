@@ -3,19 +3,20 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 
 export default function PagesPanel() {
-
-    const [roomSlugs, setRoomSlugs] = useState([]);
+ const [roomSlugs, setRoomSlugs] = useState([]);
 
   useEffect(() => {
-    fetch("/api/pages/rooms/subrooms")
-     .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch room slugs");
+    fetch("http://localhost:5001/api/pages/rooms/subrooms")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch subroom slugs");
         return res.json();
       })
       .then((slugs) => setRoomSlugs(slugs))
       .catch((err) => console.error(err));
   }, []);
-  
+
+
+
   return (
     <div className="p-6 space-y-4 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold">📄 Sayfalar Yönetimi</h1>
@@ -50,17 +51,15 @@ export default function PagesPanel() {
             🏠 Superior Oda 
           </Link>
           </li>
-           {roomSlugs.map(slug => (
+         
+            {roomSlugs.map(slug => (
           <li key={slug}>
-            <Link
-              href={`/panel/sayfalar/odalar/${slug}`}
-              className="text-blue-600 hover:underline capitalize"
-            >
-              {slug.replace(/([a-z])([A-Z])/g, '$1 $2')}
+            <Link href={`/panel/sayfalar/odalar/${slug}`} className="text-blue-600 hover:underline">
+              🛏️ {slug}
             </Link>
           </li>
         ))}
-       
+
       </ul>
     </div>
   );
