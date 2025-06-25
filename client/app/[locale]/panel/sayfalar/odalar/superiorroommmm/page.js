@@ -21,7 +21,7 @@ export default function SuperiorRoomEdit() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5001/api/pages/rooms/superiorroom', {
+      const res = await fetch('http://localhost:5001/api/pages/rooms/superiorroom', { 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

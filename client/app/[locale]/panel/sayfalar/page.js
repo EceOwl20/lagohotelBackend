@@ -47,6 +47,13 @@ export default function PagesPanel() {
           </li>
 
           <li>
+              <Link href="/panel/sayfalar/restoranlar" className="text-blue-600 hover:underline">
+             Restoranlar 
+          </Link>
+          </li>
+
+
+          <li>
               <Link href="/panel/sayfalar/odalar/superiorroom" className="text-blue-600 hover:underline">
             🏠 Superior Oda 
           </Link>
