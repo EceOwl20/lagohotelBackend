@@ -40,7 +40,7 @@ export default function RestaurantPanelPage() {
   if (!data) return <p>Yükleniyor...</p>;
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
+    <div className="max-w-6xl mx-auto p-2 space-y-9">
        <MainBannerEdit data={data} setData={setData} langs={langs} />
       <ClinaryInfoEdit data={data} setData={setData} langs={langs} />
       <MainRestaurantSectionEdit data={data} setData={setData} langs={langs} />
@@ -54,7 +54,7 @@ export default function RestaurantPanelPage() {
       >
         Kaydet
       </button>
-      <p className="mt-2">{status}</p>
+      <p className="mt-2 text-lg text-green-800">{status}</p>
     </div>
   );
 }

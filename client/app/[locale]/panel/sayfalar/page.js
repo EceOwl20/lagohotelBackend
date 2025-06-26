@@ -5,15 +5,15 @@ import Link from "next/link";
 export default function PagesPanel() {
  const [roomSlugs, setRoomSlugs] = useState([]);
 
-  useEffect(() => {
-    fetch("http://localhost:5001/api/pages/rooms/subrooms")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch subroom slugs");
-        return res.json();
-      })
-      .then((slugs) => setRoomSlugs(slugs))
-      .catch((err) => console.error(err));
-  }, []);
+  // useEffect(() => {
+  //   fetch("http://localhost:5001/api/pages/rooms/subrooms")
+  //     .then((res) => {
+  //       if (!res.ok) throw new Error("Failed to fetch subroom slugs");
+  //       return res.json();
+  //     })
+  //     .then((slugs) => setRoomSlugs(slugs))
+  //     .catch((err) => console.error(err));
+  // }, []);
 
 
 
@@ -48,24 +48,42 @@ export default function PagesPanel() {
 
           <li>
               <Link href="/panel/sayfalar/restoranlar" className="text-blue-600 hover:underline">
-             Restoranlar 
+            🍔 Restoranlar 
+          </Link>
+          </li>
+
+           <li>
+              <Link href="/panel/sayfalar/barkafeler" className="text-blue-600 hover:underline">
+            🍻 Bar ve ☕️ kafeler 
+          </Link>
+          </li>
+
+          <li>
+              <Link href="/panel/sayfalar/sahilhavuz" className="text-blue-600 hover:underline">
+              🌊 Sahil ve Havuzlar
+          </Link>
+          </li>
+
+            <li>
+              <Link href="/panel/sayfalar/kidsclub" className="text-blue-600 hover:underline">
+              🎡 Kids
           </Link>
           </li>
 
 
           <li>
-              <Link href="/panel/sayfalar/odalar/superiorroom" className="text-blue-600 hover:underline">
+              <Link href="/panel/sayfalar/odalar/superioroda" className="text-blue-600 hover:underline">
             🏠 Superior Oda 
           </Link>
           </li>
          
-            {roomSlugs.map(slug => (
+            {/* {roomSlugs.map(slug => (
           <li key={slug}>
             <Link href={`/panel/sayfalar/odalar/${slug}`} className="text-blue-600 hover:underline">
               🛏️ {slug}
             </Link>
           </li>
-        ))}
+        ))} */}
 
       </ul>
     </div>

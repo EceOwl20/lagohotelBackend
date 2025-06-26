@@ -6,6 +6,67 @@ const Rooms = require("../models/roomspage");
 const SuperiorRoom = require('../models/superiorroom') ;
 const Subrooms = require('../models/subrooms')
 const RestaurantPage = require("../models/restaurantpage");
+const BarCafes = require("../models/barcafespage");
+const BeachPools = require("../models/beachpoolspage");
+const KidsClub = require('../models/kidsclubpage');
+
+// GET kidsclub page data
+router.get('/kidsclub', async (req, res) => {
+  try {
+    const page = await KidsClub.findOne({ slug: 'kidsclub' });
+    res.json(page);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT kidsclub page update
+router.put('/kidsclub', async (req, res) => {
+  try {
+    const updated = await KidsClub.findOneAndUpdate(
+      { slug: "kidsclub" },
+      req.body,
+      { upsert: true, new: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.get("/beachpools", async (req, res) => {
+  const doc = await req.db.collection("beachpools").findOne({});
+  res.json(doc || BeachPools.empty());
+});
+
+router.put("/beachpools", async (req, res) => {
+  // (Auth check, validation eklenebilir)
+  const body = req.body;
+  const result = await req.db.collection("beachpools").findOneAndUpdate(
+    {},
+    { $set: body },
+    { returnDocument: "after", upsert: true }
+  );
+  res.json(result.value);
+});
+
+// GET - fetch
+router.get("/barcafes", async (req, res) => {
+  const doc = await BarCafes.findOne({}) || {};
+  res.json(doc);
+});
+
+// PUT - update (with auth middleware as needed)
+router.put("/barcafes", async (req, res) => {
+  const doc = await BarCafes.findOneAndUpdate(
+    {},
+    req.body,
+    { new: true, upsert: true }
+  );
+  res.json(doc);
+});
+
 
 // GET (public)
 router.get("/restaurants", async (req, res) => {
