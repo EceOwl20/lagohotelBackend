@@ -70,6 +70,18 @@ export default function PagesPanel() {
           </Link>
           </li>
 
+            <li>
+              <Link href="/panel/sayfalar/spa" className="text-blue-600 hover:underline">
+              🧖🏼‍♀️ Spa
+          </Link>
+          </li>
+
+             <li>
+              <Link href="/panel/sayfalar/entertainment" className="text-blue-600 hover:underline">
+              🎆 Entertainment
+          </Link>
+          </li>
+
 
           <li>
               <Link href="/panel/sayfalar/odalar/superioroda" className="text-blue-600 hover:underline">

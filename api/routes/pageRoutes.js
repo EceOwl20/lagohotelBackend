@@ -9,6 +9,55 @@ const RestaurantPage = require("../models/restaurantpage");
 const BarCafes = require("../models/barcafespage");
 const BeachPools = require("../models/beachpoolspage");
 const KidsClub = require('../models/kidsclubpage');
+const SpaPage = require('../models/spapage');
+const EntertainmentPage = require("../models/entertainment");
+
+// GET
+router.get("/entertainment", async (req, res) => {
+  try {
+    const doc = await EntertainmentPage.findOne({});
+    res.json(doc || {});
+  } catch (err) {
+    res.status(500).json({ error: "Sunucu hatası" });
+  }
+});
+
+// PUT
+router.put("/entertainment", async (req, res) => {
+  try {
+    const updated = await EntertainmentPage.findOneAndUpdate(
+      {},
+      req.body,
+      { new: true, upsert: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: "Güncelleme başarısız" });
+  }
+});
+
+
+// GET SPA PAGE
+router.get('/spa', async (req, res) => {
+  try {
+    let spa = await SpaPage.findOne();
+    if (!spa) spa = await SpaPage.create({});
+    res.json(spa);
+  } catch (e) {
+    res.status(500).json({ error: 'Server error' });
+  }
+});
+
+// PUT SPA PAGE
+router.put('/spa', async (req, res) => {
+  try {
+    const body = req.body;
+    const updated = await SpaPage.findOneAndUpdate({}, body, { new: true, upsert: true });
+    res.json(updated);
+  } catch (e) {
+    res.status(500).json({ error: 'Update failed' });
+  }
+});
 
 // GET kidsclub page data
 router.get('/kidsclub', async (req, res) => {
