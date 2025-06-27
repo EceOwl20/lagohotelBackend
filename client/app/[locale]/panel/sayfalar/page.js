@@ -82,6 +82,25 @@ export default function PagesPanel() {
           </Link>
           </li>
 
+             <li>
+              <Link href="/panel/sayfalar/iletisim" className="text-blue-600 hover:underline">
+              ☎️ İletisim
+          </Link>
+          </li>
+
+          <li>
+              <Link href="/panel/sayfalar/fitness" className="text-blue-600 hover:underline">
+              🚴🏼‍♂️ Fitness
+          </Link>
+          </li>
+
+          <li>
+              <Link href="/panel/sayfalar/hakkimizda" className="text-blue-600 hover:underline">
+              📜 Hakkımızda
+          </Link>
+          </li>
+
+
 
           <li>
               <Link href="/panel/sayfalar/odalar/superioroda" className="text-blue-600 hover:underline">

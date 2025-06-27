@@ -11,6 +11,65 @@ const BeachPools = require("../models/beachpoolspage");
 const KidsClub = require('../models/kidsclubpage');
 const SpaPage = require('../models/spapage');
 const EntertainmentPage = require("../models/entertainment");
+const ConnectPage = require("../models/contactpage");
+const Fitness = require('../models/fitnesspage');
+const About = require("../models/aboutpage");
+
+// GET - get page data
+router.get("/about", async (req, res) => {
+  try {
+    const data = await About.findOne({});
+    res.json(data || {});
+  } catch (err) {
+    res.status(500).json({ error: "Sunucu hatası" });
+  }
+});
+
+// PUT - update page data
+router.put("/about", verifyToken, async (req, res) => {
+  try {
+    const updated = await About.findOneAndUpdate({}, req.body, {
+      new: true,
+      upsert: true
+    });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: "Güncelleme başarısız" });
+  }
+});
+
+// GET
+router.get('/fitness', async (req, res) => {
+  try {
+    const doc = await Fitness.findOne({}) || {};
+    res.json(doc);
+  } catch (err) {
+    res.status(500).json({ error: 'Sunucu hatası' });
+  }
+});
+
+// PUT
+router.put('/fitness', async (req, res) => {
+  try {
+    const updated = await Fitness.findOneAndUpdate({}, req.body, { upsert: true, new: true });
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: 'Güncelleme başarısız' });
+  }
+});
+
+// GET
+router.get("/contact", async (req, res) => {
+  const doc = await ConnectPage.findOne() || {};
+  res.json(doc);
+});
+
+// PUT (güncelle veya oluştur)
+router.put("/contact", async (req, res) => {
+  const update = req.body;
+  const doc = await ConnectPage.findOneAndUpdate({}, update, { new: true, upsert: true });
+  res.json(doc);
+});
 
 // GET
 router.get("/entertainment", async (req, res) => {
