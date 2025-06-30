@@ -46,8 +46,7 @@ export default function AboutPanelPage() {
       <EmblaCarouselEdit data={data} setData={setData} langs={langs} />
        <button
         className="mt-6 px-6 py-3 rounded bg-blue-600 text-white font-bold"
-        onClick={handleSave}
-      >
+        onClick={handleSave}>
         Kaydet
       </button>
       <p className="mt-2 text-lg text-green-800">{status}</p>

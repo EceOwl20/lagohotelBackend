@@ -1,49 +1,38 @@
-// app/components/panel/ImageUploadInput.jsx
 "use client";
-import React from "react";
+import { useRef } from "react";
 
-export default function ImageUploadInput({ value, onChange, label }) {
-  const fileInput = React.useRef();
+export default function ImageUploadInput({ value, onChange }) {
+  const fileInputRef = useRef();
 
-  const handleFile = async (e) => {
+  // Seçili dosyayı API'ye yükle ve URL döndür
+  const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    // Örnek: /api/upload endpoint’i ile upload edebilirsin veya sadece local olarak göster
-    // Burada base64 örneği var:
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      onChange(reader.result); // base64 url
-    };
-    reader.readAsDataURL(file);
+    const formData = new FormData();
+    formData.append("file", file);
+    const res = await fetch("/api/upload", {
+      method: "POST",
+      body: formData,
+    });
+    const data = await res.json();
+    if (data.url) onChange(data.url); // 👈 URL'i parent'a geçir!
   };
 
   return (
-    <div className="mb-2">
-      {label && <label className="block mb-1">{label}</label>}
+    <div className="flex flex-col gap-2 mb-2">
+      <input
+        type="file"
+        ref={fileInputRef}
+        accept="image/*"
+        onChange={handleFileChange}
+      />
       {value && (
         <img
           src={value}
           alt="Yüklenen görsel"
-          className="w-24 h-24 object-cover mb-2 rounded"
+          className="max-h-32 object-contain"
         />
       )}
-      <input
-        ref={fileInput}
-        type="file"
-        accept="image/*"
-        onChange={handleFile}
-        className="block"
-      />
-      <button
-        type="button"
-        className="mt-1 px-2 py-1 bg-gray-200 rounded"
-        onClick={() => {
-          onChange("");
-          fileInput.current.value = "";
-        }}
-      >
-        Temizle
-      </button>
     </div>
   );
 }

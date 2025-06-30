@@ -4,7 +4,7 @@ const verifyToken = require("../middleware/authMiddleware");
 const HomePage = require("../models/homepage"); // modelin dosya adı buysa
 const Rooms = require("../models/roomspage");
 const SuperiorRoom = require('../models/superiorroom') ;
-const Subrooms = require('../models/subrooms')
+
 const RestaurantPage = require("../models/restaurantpage");
 const BarCafes = require("../models/barcafespage");
 const BeachPools = require("../models/beachpoolspage");
@@ -14,6 +14,31 @@ const EntertainmentPage = require("../models/entertainment");
 const ConnectPage = require("../models/contactpage");
 const Fitness = require('../models/fitnesspage');
 const About = require("../models/aboutpage");
+const SubRoom = require('../models/subroom');
+
+// Tüm odalar
+router.get('/rooms/subroom', async (req, res) => {
+  const rooms = await SubRoom.find().lean();
+  res.json(rooms);
+});
+
+// Belirli oda
+router.get('/rooms/subroom/:slug', async (req, res) => {
+  const room = await SubRoom.findOne({ slug: req.params.slug }).lean();
+  res.json(room);
+});
+
+// Oda güncelle (veya oluştur)
+router.put('/rooms/subroom/:slug', async (req, res) => {
+  const updated = await SubRoom.findOneAndUpdate(
+    { slug: req.params.slug },
+    req.body,
+    { new: true, upsert: true }
+  );
+  res.json(updated);
+});
+
+
 
 // GET - get page data
 router.get("/about", async (req, res) => {
@@ -297,47 +322,5 @@ router.put("/rooms/superiorroom", verifyToken, async (req, res) => {
   }
 });
 
-// GET /api/pages/subrooms
-router.get('/rooms/subrooms', async (req, res) => {
-  try {
-    const rooms = await Subrooms.find({}, 'slug').lean()
-    return res.json(rooms.map(r => r.slug))
-  } catch (err) {
-    console.error(err)
-    return res.status(500).json({ error: 'Sunucu hatası' })
-  }
-})
-
-// 2) Tek bir slug’a göre tam belgeyi döner
-//    GET /api/pages/rooms/subrooms/:slug
-router.get('/rooms/subrooms/:slug', async (req, res) => {
-  try {
-    const { slug } = req.params
-    const doc = await Subrooms.findOne({ slug }).lean()
-    if (!doc) return res.status(404).json({ error: 'Oda bulunamadı' })
-    return res.json(doc)
-  } catch (err) {
-    console.error(err)
-    return res.status(500).json({ error: 'Sunucu hatası' })
-  }
-})
-
-// 3) Slug’a göre belgeyi günceller
-//    PUT /api/pages/rooms/subrooms/:slug
-router.put('/rooms/subrooms/:slug', verifyToken, async (req, res) => {
-  console.log('PUT /subrooms/:slug body:', req.body);
-  try {
-    const updated = await Subrooms.findOneAndUpdate(
-      { slug: req.params.slug },
-
-     { $set: req.body },
-      { new: true, upsert: true }
-    );
-    return res.json(updated);
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ error: 'Güncelleme başarısız' });
-  }
-});
 
 module.exports = router;
