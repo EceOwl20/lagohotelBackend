@@ -4,9 +4,9 @@ import { useRef, useState } from "react";
 const langs = ["tr", "en", "de", "ru"];
 
 export default function BackgroundSectionEdit({ data, setData }) {
-  const bg = data.backgroundSection || {
-    span: { tr: "", en: "", de: "", ru: "" },
-    header: { tr: "", en: "", de: "", ru: "" },
+  const bg = data.background || {
+    subtitle: { tr: "", en: "", de: "", ru: "" },
+    title: { tr: "", en: "", de: "", ru: "" },
     texts: [
       { tr: "", en: "", de: "", ru: "" },
       { tr: "", en: "", de: "", ru: "" },
@@ -15,27 +15,54 @@ export default function BackgroundSectionEdit({ data, setData }) {
     link: "",
     image: ""
   };
+  
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
 
   const handleChange = (field, value, idx, lang) => {
-    setData(prev => {
-      const updated = { ...bg };
-      if (field === "image" || field === "link") {
-        updated[field] = value;
-      } else if (field === "span" || field === "header") {
-        updated[field][lang] = value;
-      } else if (field === "texts") {
-        updated.texts[idx][lang] = value;
-      }
-      return { ...prev, backgroundSection: updated };
-    });
+    if (field === "image" || field === "link") {
+      // Direkt field güncellemesi
+      setData({
+        ...data,
+        background: {
+          ...bg,
+          [field]: value
+        }
+      });
+    } else if (field === "subtitle" || field === "title") {
+      // Dil bazlı güncelleme
+      setData({
+        ...data,
+        background: {
+          ...bg,
+          [field]: {
+            ...bg[field],
+            [lang]: value
+          }
+        }
+      });
+    } else if (field === "texts") {
+      // Array içindeki dil bazlı güncelleme
+      const newTexts = [...bg.texts];
+      newTexts[idx] = {
+        ...newTexts[idx],
+        [lang]: value
+      };
+      setData({
+        ...data,
+        background: {
+          ...bg,
+          texts: newTexts
+        }
+      });
+    }
   };
 
-  // --- RESİM YÜKLEME FONKSİYONU ---
+  // Resim yükleme fonksiyonu - DEBUG VERSİYONU
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    
     setUploading(true);
     setError("");
     const formData = new FormData();
@@ -47,9 +74,31 @@ export default function BackgroundSectionEdit({ data, setData }) {
         body: formData,
       });
       const result = await res.json();
-      if (!res.ok || !result.imageUrl) throw new Error(result.error || "Yükleme başarısız");
-      handleChange("image", result.imageUrl);
+      
+      console.log("Upload response:", result); // DEBUG
+      
+      if (!res.ok || !result.imageUrl) {
+        throw new Error(result.error || "Yükleme başarısız");
+      }
+      
+      console.log("Before state update - current bg:", bg); // DEBUG
+      
+      // Direkt state güncelleme - handleChange yerine
+      const newData = {
+        ...data,
+        background: {
+          ...bg,
+          image: result.imageUrl
+        }
+      };
+      
+      console.log("New data to set:", newData); // DEBUG
+      setData(newData);
+      
+      console.log("State updated successfully"); // DEBUG
+      
     } catch (err) {
+      console.error("Upload error:", err); // DEBUG
       setError("Resim yüklenemedi! " + (err?.message || ""));
     } finally {
       setUploading(false);
@@ -59,6 +108,7 @@ export default function BackgroundSectionEdit({ data, setData }) {
   return (
     <div className="border p-4 rounded bg-white mb-8">
       <h3 className="font-bold text-lg mb-4">Background Section</h3>
+      
       <div className="mb-3">
         <label className="font-semibold block mb-1">Görsel</label>
         <input
@@ -77,22 +127,40 @@ export default function BackgroundSectionEdit({ data, setData }) {
           />
         )}
       </div>
-      {["span", "header"].map(field => (
-        <div key={field} className="mb-3">
-          <label className="font-semibold block mb-1">{field}</label>
-          <div className="grid grid-cols-2 gap-2">
-            {langs.map(lang => (
-              <input
-                key={lang}
-                className="border p-2"
-                placeholder={`${field} (${lang})`}
-                value={bg[field]?.[lang] || ""}
-                onChange={e => handleChange(field, e.target.value, null, lang)}
-              />
-            ))}
-          </div>
+
+      {/* subtitle alanları */}
+      <div className="mb-3">
+        <label className="font-semibold block mb-1">subtitle</label>
+        <div className="grid grid-cols-2 gap-2">
+          {langs.map(lang => (
+            <input
+              key={lang}
+              className="border p-2"
+              placeholder={`subtitle (${lang})`}
+              value={bg.subtitle?.[lang] || ""}
+              onChange={e => handleChange("subtitle", e.target.value, null, lang)}
+            />
+          ))}
         </div>
-      ))}
+      </div>
+
+      {/* title alanları */}
+      <div className="mb-3">
+        <label className="font-semibold block mb-1">title</label>
+        <div className="grid grid-cols-2 gap-2">
+          {langs.map(lang => (
+            <input
+              key={lang}
+              className="border p-2"
+              placeholder={`title (${lang})`}
+              value={bg.title?.[lang] || ""}
+              onChange={e => handleChange("title", e.target.value, null, lang)}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Texts alanları */}
       <div className="mb-3">
         <label className="font-semibold block mb-1">Açıklama Paragrafları</label>
         {bg.texts.map((text, i) => (
@@ -109,6 +177,8 @@ export default function BackgroundSectionEdit({ data, setData }) {
           </div>
         ))}
       </div>
+
+      {/* Link alanı */}
       <input
         className="border p-2 w-full"
         placeholder="Link"

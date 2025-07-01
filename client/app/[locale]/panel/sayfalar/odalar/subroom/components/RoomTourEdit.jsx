@@ -1,10 +1,10 @@
 const langs = ["tr", "en", "de", "ru"];
 
 export default function RoomTourEdit({ data, setData }) {
-  const tours = data.roomTour || [
+  const tours = data.tours || [
     {
-      span: { tr: "", en: "", de: "", ru: "" },
-      header: { tr: "", en: "", de: "", ru: "" },
+      subtitle: { tr: "", en: "", de: "", ru: "" },
+      title: { tr: "", en: "", de: "", ru: "" },
       text: { tr: "", en: "", de: "", ru: "" },
       link: ""
     }
@@ -28,8 +28,8 @@ export default function RoomTourEdit({ data, setData }) {
       roomTour: [
         ...(prev.roomTour || []),
         {
-          span: { tr: "", en: "", de: "", ru: "" },
-          header: { tr: "", en: "", de: "", ru: "" },
+          subtitle: { tr: "", en: "", de: "", ru: "" },
+          title: { tr: "", en: "", de: "", ru: "" },
           text: { tr: "", en: "", de: "", ru: "" },
           link: ""
         }
@@ -49,7 +49,7 @@ export default function RoomTourEdit({ data, setData }) {
       <h3 className="font-bold text-lg mb-4">Room Tour</h3>
       {tours.map((tour, idx) => (
         <div key={idx} className="border-b pb-4 mb-4">
-          {["span", "header", "text"].map(field => (
+          {["subtitle", "title", "text"].map(field => (
             <div key={field} className="grid grid-cols-2 gap-2 mb-2">
               {langs.map(lang => (
                 <input

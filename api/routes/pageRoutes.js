@@ -16,28 +16,37 @@ const Fitness = require('../models/fitnesspage');
 const About = require("../models/aboutpage");
 const SubRoom = require('../models/subroom');
 
-// Tüm odalar
+// Eski endpoint'ler de desteklensin (geriye uyumluluk için)
 router.get('/rooms/subroom', async (req, res) => {
-  const rooms = await SubRoom.find().lean();
-  res.json(rooms);
+  try {
+    const rooms = await SubRoom.find().lean();
+    res.json(rooms);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-// Belirli oda
 router.get('/rooms/subroom/:slug', async (req, res) => {
-  const room = await SubRoom.findOne({ slug: req.params.slug }).lean();
-  res.json(room);
+  try {
+    const room = await SubRoom.findOne({ slug: req.params.slug }).lean();
+    res.json(room);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-// Oda güncelle (veya oluştur)
 router.put('/rooms/subroom/:slug', async (req, res) => {
-  const updated = await SubRoom.findOneAndUpdate(
-    { slug: req.params.slug },
-    req.body,
-    { new: true, upsert: true }
-  );
-  res.json(updated);
+  try {
+    const updated = await SubRoom.findOneAndUpdate(
+      { slug: req.params.slug },
+      req.body,
+      { new: true, upsert: true }
+    );
+    res.json(updated);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
-
 
 
 // GET - get page data
