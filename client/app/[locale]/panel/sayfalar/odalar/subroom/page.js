@@ -91,7 +91,7 @@ export default function RoomPanelPage() {
                 data={selectedRoom}
                 setData={setRoomData}
                 langs={langs}
-              />
+              /> 
               <RoomTourEdit
                 data={selectedRoom}
                 setData={setRoomData}

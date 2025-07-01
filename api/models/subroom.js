@@ -25,8 +25,8 @@ const BackgroundSectionSchema = new mongoose.Schema({
   subtitle: { tr: String, en: String, de: String, ru: String },
   title: { tr: String, en: String, de: String, ru: String },
   texts: [{ tr: String, en: String, de: String, ru: String }],
-  img: String,
-  link: String,
+  image: { type: String, default: "" }, 
+  link: { type: String, default: "" },
 });
 
 const RoomTourSchema = new mongoose.Schema({

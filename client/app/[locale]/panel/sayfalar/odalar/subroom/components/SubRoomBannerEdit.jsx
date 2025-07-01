@@ -1,7 +1,12 @@
-import ImageUploadInput from "@/app/[locale]/panel/components/ImageUploadInput";
+"use client";
+import { useRef, useState } from "react";
+
+const langs = ["tr", "en", "de", "ru"];
 
 export default function SubRoomBannerEdit({ data, setData, langs }) {
   const banner = data.banner || {};
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
 
   // Çoklu dil için nesne şablonu
   const emptyLangs = langs.reduce((acc, lang) => ({ ...acc, [lang]: "" }), {});
@@ -51,13 +56,54 @@ export default function SubRoomBannerEdit({ data, setData, langs }) {
     });
   };
 
+  // Dosya yükleme fonksiyonu
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setError("");
+    const formData = new FormData();
+    formData.append("image", file);
+
+    try {
+      const res = await fetch("http://localhost:5001/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      if (!res.ok || !result.imageUrl) throw new Error(result.error || "Yükleme başarısız");
+      // Backend imageUrl'i /uploads/... olarak döndürmeli.
+      setData({
+        ...data,
+        banner: { ...banner, image: result.imageUrl }
+      });
+    } catch (err) {
+      setError("Resim yüklenemedi! " + (err?.message || ""));
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <div className="border p-4 rounded bg-white mb-8 ">
       <h3 className="font-bold mb-3">Banner</h3>
-      <ImageUploadInput
-        value={banner.img}
-        onChange={url => handleChange("img", null, url)}
+
+      <label className="block mb-2 font-semibold">Resim Yükle</label>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageUpload}
+        disabled={uploading}
       />
+      {uploading && <p className="text-blue-600">Yükleniyor...</p>}
+      {banner.image && (
+        <img
+          src={`http://localhost:5001${banner.image}`}
+          alt="Banner"
+          className="w-32 h-24 object-cover rounded my-2"
+        />
+      )}
+      {error && <p className="text-red-600">{error}</p>}
 
       {/* Çoklu dil: başlık */}
       {langs.map(lang => (
