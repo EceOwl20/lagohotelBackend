@@ -2,8 +2,8 @@ const langs = ["tr", "en", "de", "ru"];
 
 export default function RoomFeaturesEdit({ data, setData }) {
   const features = data.features || {
-    span: { tr: "", en: "", de: "", ru: "" },
-    header: { tr: "", en: "", de: "", ru: "" },
+    subtitle: { tr: "", en: "", de: "", ru: "" },
+    title: { tr: "", en: "", de: "", ru: "" },
     text: { tr: "", en: "", de: "", ru: "" },
     header2: { tr: "", en: "", de: "", ru: "" },
     header3: { tr: "", en: "", de: "", ru: "" },
@@ -30,7 +30,7 @@ export default function RoomFeaturesEdit({ data, setData }) {
   return (
     <div className="border p-4 rounded bg-white mb-8">
       <h3 className="font-bold text-lg mb-4">Oda Özellikleri</h3>
-      {["span", "header", "text", "header2", "header3", "text2"].map(field => (
+      {["subtitle", "title", "text", "header2", "header3", "text2"].map(field => (
         <div key={field} className="mb-3">
           <label className="font-semibold block mb-1">{field}</label>
           <div className="grid grid-cols-2 gap-2">

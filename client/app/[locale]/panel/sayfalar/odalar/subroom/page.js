@@ -19,20 +19,22 @@ export default function RoomPanelPage() {
   useEffect(() => {
     console.log("Fetching rooms..."); // DEBUG
     fetch("http://localhost:5001/api/pages/rooms/subroom")
-      .then(res => res.json())
-      .then(data => {
+      .then((res) => res.json())
+      .then((data) => {
         console.log("Fetched rooms:", data); // DEBUG
         setRooms(data || []);
         setLoading(false);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Error fetching rooms:", err); // DEBUG
         setLoading(false);
       });
   }, []);
 
   // Seçilen oda objesi
-  const selectedRoom = rooms.find(room => room.slug === selectedSlug);
+  const selectedRoom = rooms.find((room) => room.slug === selectedSlug) || {
+    carousel: [],
+  };
 
   // DEBUG: selectedRoom değişikliklerini takip et
   useEffect(() => {
@@ -43,82 +45,80 @@ export default function RoomPanelPage() {
   }, [selectedRoom]);
 
   // Oda güncelleme (component'lar içinden çağrılır)
-  const setRoomData = (nextData) => {
-    console.log("setRoomData called with:", nextData); // DEBUG
-    console.log("Current selectedSlug:", selectedSlug); // DEBUG
-    
-    setRooms((prev) => {
-      const newRooms = prev.map((r) =>
-        r.slug === selectedSlug ? { ...r, ...nextData } : r
-      );
-      
-      console.log("Updated rooms:", newRooms); // DEBUG
-      
-      // Güncellenmiş odayı bul ve carousel'ını logla
-      const updatedRoom = newRooms.find(room => room.slug === selectedSlug);
-      console.log("Updated selected room:", updatedRoom); // DEBUG
-      console.log("Updated selected room carousel:", updatedRoom?.carousel); // DEBUG
-      
-      return newRooms;
-    });
+  // Şu fonksiyonu child'lara gönder:
+  const setRoomData = (updateFnOrObject) => {
+    setRooms((prevRooms) =>
+      prevRooms.map((r) =>
+        r.slug === selectedSlug
+          ? typeof updateFnOrObject === "function"
+            ? updateFnOrObject(r)
+            : { ...r, ...updateFnOrObject }
+          : r
+      )
+    );
   };
 
   // Kaydet butonu fonksiyonu
   const handleSave = async () => {
-    if (!selectedRoom) return;
-    
-    console.log("Saving room data:", selectedRoom); // DEBUG
-    console.log("Carousel data being saved:", selectedRoom.carousel); // DEBUG
-    
+    if (!selectedSlug) return;
+    // HER ZAMAN en güncel rooms array’inden ilgili odayı bul
+    const roomToSave = rooms.find((r) => r.slug === selectedSlug);
+    if (!roomToSave) return alert("Oda bulunamadı");
+
     setSaving(true);
-    
+
     try {
-      const response = await fetch(`http://localhost:5001/api/pages/rooms/subroom/${selectedRoom.slug}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(selectedRoom),
-      });
-      
+      const response = await fetch(
+        `http://localhost:5001/api/pages/rooms/subroom/${selectedSlug}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(roomToSave), // EN GÜNCEL HALİ
+        }
+      );
       const result = await response.json();
-      console.log("Save response:", result); // DEBUG
-      
-      if (!response.ok) {
-        throw new Error(result.error || "Save failed");
-      }
-      
-      setSaving(false);
+      if (!response.ok) throw new Error(result.error || "Save failed");
       alert("Kaydedildi!");
-      
     } catch (error) {
-      console.error("Save error:", error); // DEBUG
-      setSaving(false);
       alert("Kaydetme hatası: " + error.message);
+    } finally {
+      setSaving(false);
     }
   };
 
   return (
     <div className="p-6 ">
       <h1 className="text-2xl font-bold mb-4">Oda Sayfaları Paneli</h1>
-      
+
       {/* DEBUG BİLGİLERİ */}
       <div className="mb-4 p-3 bg-gray-100 rounded text-sm">
-        <p><strong>Selected Slug:</strong> {selectedSlug || "None"}</p>
-        <p><strong>Selected Room Carousel Length:</strong> {selectedRoom?.carousel?.length || 0}</p>
-        <p><strong>Selected Room Carousel:</strong> {JSON.stringify(selectedRoom?.carousel || [])}</p>
+        <p>
+          <strong>Selected Slug:</strong> {selectedSlug || "None"}
+        </p>
+        <p>
+          <strong>Selected Room Carousel Length:</strong>{" "}
+          {selectedRoom?.carousel?.length || 0}
+        </p>
+        <p>
+          <strong>Selected Room Carousel:</strong>{" "}
+          {JSON.stringify(selectedRoom?.carousel || [])}
+        </p>
       </div>
-      
+
       {loading ? (
         <p>Yükleniyor...</p>
       ) : (
         <>
           <div className="flex gap-3 mb-6 flex-wrap">
-            {rooms.map(room => (
+            {rooms.map((room) => (
               <button
                 key={room.slug}
                 className={`px-4 py-2 rounded transition-all duration-150
-                  ${room.slug === selectedSlug
-                    ? "bg-blue-600 text-white shadow"
-                    : "bg-gray-200 hover:bg-gray-300"}`}
+                  ${
+                    room.slug === selectedSlug
+                      ? "bg-blue-600 text-white shadow"
+                      : "bg-gray-200 hover:bg-gray-300"
+                  }`}
                 onClick={() => {
                   console.log("Selecting room:", room.slug); // DEBUG
                   setSelectedSlug(room.slug);
@@ -135,10 +135,14 @@ export default function RoomPanelPage() {
                 setData={setRoomData}
                 langs={langs}
               />
-              <SubroomCarouselEdit
-                data={selectedRoom}
-                setData={setRoomData}
-              />
+              {selectedRoom ? (
+                <SubroomCarouselEdit
+                  data={selectedRoom}
+                  setData={setRoomData}
+                />
+              ) : (
+                <div>Bir oda seçiniz</div>
+              )}
               <RoomFeaturesEdit
                 data={selectedRoom}
                 setData={setRoomData}
@@ -148,7 +152,7 @@ export default function RoomPanelPage() {
                 data={selectedRoom}
                 setData={setRoomData}
                 langs={langs}
-              /> 
+              />
               <RoomTourEdit
                 data={selectedRoom}
                 setData={setRoomData}

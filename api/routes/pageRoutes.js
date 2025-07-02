@@ -35,17 +35,15 @@ router.get('/rooms/subroom/:slug', async (req, res) => {
   }
 });
 
+// route
 router.put('/rooms/subroom/:slug', async (req, res) => {
-  try {
-    const updated = await SubRoom.findOneAndUpdate(
-      { slug: req.params.slug },
-      req.body,
-      { new: true, upsert: true }
-    );
-    res.json(updated);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+   console.log("REQ.BODY:", req.body); // <-- BURAYA BAK
+  const updated = await SubRoom.findOneAndUpdate(
+    { slug: req.params.slug },
+    req.body, // burada background, carousel vs. hepsi olmalı
+    { new: true, upsert: true }
+  );
+  res.json(updated);
 });
 
 

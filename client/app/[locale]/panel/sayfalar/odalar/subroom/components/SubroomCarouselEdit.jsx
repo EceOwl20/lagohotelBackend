@@ -3,20 +3,17 @@ import { useState } from "react";
 
 export default function SubroomCarouselEdit({ data, setData }) {
   const [uploading, setUploading] = useState({});
-  const items = data.carousel || [];
 
-  console.log("Current data:", data); // DEBUG
-  console.log("Current carousel items:", items); // DEBUG
+const items = Array.isArray(data.carousel) ? data.carousel : [];
+
 
   // Resim yükleme fonksiyonu (her index için ayrı)
   const handleImageUpload = async (e, idx) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    console.log(`Uploading image for index ${idx}:`, file.name); // DEBUG
-    
     setUploading(prev => ({ ...prev, [idx]: true }));
-    
+
     const formData = new FormData();
     formData.append("image", file);
 
@@ -26,97 +23,52 @@ export default function SubroomCarouselEdit({ data, setData }) {
         body: formData,
       });
       const result = await res.json();
-      
-      console.log("Upload response:", result); // DEBUG
-      
+
       if (!res.ok || !result.imageUrl) {
         throw new Error(result.error || "Yükleme başarısız");
       }
 
-      console.log(`Setting image URL for index ${idx}:`, result.imageUrl); // DEBUG
-      
-      // Direkt setData kullan - handleChange'e güvenme
-      setData(prev => {
-        const currentCarousel = prev.carousel || [];
+      // En güncel state'i fonksiyonel olarak güncelle!
+      setData(prevRoom => {
+        const currentCarousel = prevRoom.carousel || [];
         const newCarousel = [...currentCarousel];
-        
-        // Eğer index mevcut array boyutundan büyükse, array'i genişlet
-        while (newCarousel.length <= idx) {
-          newCarousel.push("");
-        }
-        
+        while (newCarousel.length <= idx) newCarousel.push("");
         newCarousel[idx] = result.imageUrl;
-        
-        const newData = { ...prev, carousel: newCarousel };
-        console.log("New data after upload:", newData); // DEBUG
-        
-        return newData;
+        return { ...prevRoom, carousel: newCarousel };
       });
-      
-      console.log("Upload completed for index:", idx); // DEBUG
-      
+
     } catch (err) {
-      console.error("Upload error:", err); // DEBUG
       alert("Resim yüklenemedi: " + (err.message || ""));
     } finally {
       setUploading(prev => ({ ...prev, [idx]: false }));
     }
   };
 
-  const handleChange = (idx, url) => {
-    console.log(`Updating carousel index ${idx} with URL:`, url); // DEBUG
-    console.log("Previous data:", data); // DEBUG
-    
-    setData(prev => {
-      const currentCarousel = prev.carousel || [];
-      const newCarousel = [...currentCarousel];
-      
-      // Eğer index mevcut array boyutundan büyükse, array'i genişlet
-      while (newCarousel.length <= idx) {
-        newCarousel.push("");
-      }
-      
-      newCarousel[idx] = url;
-      
-      const newData = { ...prev, carousel: newCarousel };
-      console.log("New data after update:", newData); // DEBUG
-      
-      return newData;
-    });
-  };
-
   const handleAdd = () => {
-    console.log("Adding new carousel item"); // DEBUG
-    setData(prev => {
-      const newData = {
-        ...prev,
-        carousel: [...(prev.carousel || []), ""]
-      };
-      console.log("Data after adding new item:", newData); // DEBUG
-      return newData;
-    });
+    setData(prevRoom => ({
+      ...prevRoom,
+      carousel: [...(prevRoom.carousel || []), ""],
+    }));
   };
 
   const handleDelete = idx => {
-    console.log(`Deleting carousel item at index ${idx}`); // DEBUG
-    setData(prev => {
-      const newData = {
-        ...prev,
-        carousel: (prev.carousel || []).filter((_, i) => i !== idx)
-      };
-      console.log("Data after deletion:", newData); // DEBUG
-      return newData;
-    });
+    setData(prevRoom => ({
+      ...prevRoom,
+      carousel: (prevRoom.carousel || []).filter((_, i) => i !== idx)
+    }));
   };
 
   return (
     <div className="border p-4 rounded bg-white mb-8">
-      <h3 className="font-bold text-lg mb-4">Carousel Resimleri ({items.length} adet)</h3>
-      
+      <h3 className="font-bold text-lg mb-4">
+        Carousel Resimleri ({items.length} adet)
+      </h3>
       {items.length === 0 && (
-        <p className="text-gray-500 mb-4">Henüz carousel resmi yok. Yeni resim ekleyin.</p>
+        <p className="text-gray-500 mb-4">
+          Henüz carousel resmi yok. Yeni resim ekleyin.
+        </p>
       )}
-      
+
       {items.map((url, idx) => (
         <div key={idx} className="flex gap-3 items-center mb-3 p-3 border rounded">
           <div className="flex-1">
@@ -133,7 +85,6 @@ export default function SubroomCarouselEdit({ data, setData }) {
                 <p className="text-blue-600 text-sm">Yükleniyor...</p>
               )}
             </div>
-            
             {url && (
               <div>
                 <img
@@ -144,21 +95,19 @@ export default function SubroomCarouselEdit({ data, setData }) {
                 <p className="text-xs text-gray-500 mt-1">URL: {url}</p>
               </div>
             )}
-            
             {!url && !uploading[idx] && (
               <p className="text-gray-400 text-sm">Resim seçilmedi</p>
             )}
           </div>
-          
-          <button 
-            onClick={() => handleDelete(idx)} 
+          <button
+            onClick={() => handleDelete(idx)}
             className="text-red-600 hover:text-red-800 px-3 py-1 border border-red-300 rounded"
+            type="button"
           >
             Sil
           </button>
         </div>
       ))}
-      
       <button
         onClick={handleAdd}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
