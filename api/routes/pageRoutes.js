@@ -35,6 +35,15 @@ router.get('/rooms/subroom/:slug', async (req, res) => {
   }
 });
 
+// router.get('/rooms/subroom/:slug', async (req, res) => {
+//   try {
+//     const room = await SubRoom.findOne({ slug: req.params.slug }).lean();
+//     res.json(room);
+//   } catch (error) {
+//     res.status(500).json({ error: error.message });
+//   }
+// });
+
 // route
 router.put('/rooms/subroom/:slug', async (req, res) => {
    console.log("REQ.BODY:", req.body); // <-- BURAYA BAK

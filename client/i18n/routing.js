@@ -59,7 +59,7 @@ export const routing = defineRouting({
       ru: "/nomera/semeynyi-nomer",
     },
   
-    "/rooms/familyswimuproom": {
+    "/rooms/familyswimup": {
       en: "/rooms/family-swim-up-room",
       tr: "/odalar/ailehavuzluoda",
       de: "/zimmer/familienzimmer-mit-poolzugang",

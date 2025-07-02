@@ -102,7 +102,7 @@ export default function PagesPanel() {
 
                <li>
               <Link href="/panel/sayfalar/odalar/subroom" className="text-blue-600 hover:underline">
-              📜 Yeni subroom page
+              🛏️ Yeni subroom page
           </Link>
           </li>
 

@@ -55,8 +55,8 @@ const SubroomCarousel = ({images}) => {
                 src={img}
                 alt={`Slide ${index}`}
                 className="w-auto h-full object-cover"
-                width={img.width}
-                height={img.height}
+                width={img.width || 300}
+                height={img.height || 200}
               />
             </div>
           ))}
