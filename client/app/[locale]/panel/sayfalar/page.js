@@ -106,21 +106,38 @@ export default function PagesPanel() {
           </Link>
           </li>
 
+            <li>
+              <Link href="/panel/sayfalar/contactSection" className="text-blue-600 hover:underline">
+              📠 Contact section 2
+          </Link>
+          </li>
+
+
+            <li>
+              <Link href="/panel/sayfalar/otheroptions" className="text-blue-600 hover:underline">
+              ⚙️ Other options
+          </Link>
+          </li>
+
+             <li>
+              <Link href="/panel/sayfalar/roomfeatures" className="text-blue-600 hover:underline">
+              🛏️ 🛌 Room features
+          </Link>
+          </li>
+
+           <li>
+              <Link href="/panel/sayfalar/restoranlar/subrestaurants" className="text-blue-600 hover:underline">
+              🍝 SubRestaurants
+          </Link>
+          </li>
 
 
           <li>
-              <Link href="/panel/sayfalar/odalar/superioroda" className="text-blue-600 hover:underline">
+              <Link href="/panel/sayfalar/superioroda" className="text-blue-600 hover:underline">
             🏠 Superior Oda 
           </Link>
           </li>
-         
-            {/* {roomSlugs.map(slug => (
-          <li key={slug}>
-            <Link href={`/panel/sayfalar/odalar/${slug}`} className="text-blue-600 hover:underline">
-              🛏️ {slug}
-            </Link>
-          </li>
-        ))} */}
+
 
       </ul>
     </div>

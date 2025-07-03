@@ -10,15 +10,32 @@ const RoomContentSchema = new mongoose.Schema({
   image: String, // Ana banner görseli (dosya yolu)
 });
 
+const FeatureItemSchema = new mongoose.Schema({
+  text: defaultLangs,
+  icon: { type: String, default: "" }, // svg adı veya font icon class (örn: "PoolSvg2" ya da "BiArea")
+});
+
 const RoomFeatureSchema = new mongoose.Schema({
-  subtitle: { tr: String, en: String, de: String, ru: String },
-  title: { tr: String, en: String, de: String, ru: String },
-  text: { tr: String, en: String, de: String, ru: String },
-  header2: { tr: String, en: String, de: String, ru: String },
-  header3: { tr: String, en: String, de: String, ru: String },
-  text2: { tr: String, en: String, de: String, ru: String },
-  iconsTexts: [{ tr: String, en: String, de: String, ru: String }],
-  pool: Boolean,
+  span: defaultLangs,
+  header: defaultLangs,
+  text: defaultLangs,
+  header2: defaultLangs,
+  header3: defaultLangs,
+  text2: defaultLangs,
+  iconsTexts: [defaultLangs], // 3 adet, sırayla Pool, Bed, BabyCrib vs.
+  pool: { type: Boolean, default: false },
+  items: [FeatureItemSchema],   // Özellikler dizisi, ikon ve metin
+  reservation: {
+    title: defaultLangs,
+    text: defaultLangs,
+    checkin: defaultLangs,
+    checkout: defaultLangs,
+    adult: defaultLangs,
+    kids: defaultLangs,
+    booknow: defaultLangs,
+    contact: defaultLangs,
+    phone: { type: String, default: "" },
+  }
 });
 
 const BackgroundSectionSchema = new mongoose.Schema({
