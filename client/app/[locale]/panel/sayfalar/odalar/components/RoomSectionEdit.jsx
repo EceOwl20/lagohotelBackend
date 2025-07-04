@@ -5,20 +5,39 @@ const sectionFields = ["title", "subtitle", "m", "view", "buttonText", "buttonLi
 export default function RoomSectionEdit({ sectionKey, data, setData }) {
   const [uploading, setUploading] = useState({});
 
+  // Alan yoksa otomatik boş obje olarak ata!
+  const sectionData = {
+    ...langsRoom.reduce(
+      (acc, lang) => ({
+        ...acc,
+        ...sectionFields.reduce(
+          (acc2, field) => ({
+            ...acc2,
+            [field]: { ...(data?.[sectionKey]?.[field] || {}), [lang]: data?.[sectionKey]?.[field]?.[lang] ?? "" }
+          }),
+          {}
+        )
+      }),
+      {}
+    ),
+    img: data?.[sectionKey]?.img ?? "",
+    img2: data?.[sectionKey]?.img2 ?? "",
+  };
+
   const handleChange = (path, value) => {
     setData((prev) => {
       const updated = { ...prev };
       const keys = path.split(".");
       let obj = updated;
       for (let i = 0; i < keys.length - 1; i++) {
-        obj = obj?.[keys[i]] ?? {};
+        obj[keys[i]] = obj[keys[i]] ?? {};
+        obj = obj[keys[i]];
       }
       obj[keys[keys.length - 1]] = value;
       return updated;
     });
   };
 
-  // Yeni: Tek fonksiyon, closure değil!
   const handleImageUpload = async (e, field) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -60,6 +79,7 @@ export default function RoomSectionEdit({ sectionKey, data, setData }) {
                 className="mt-1 w-full border rounded p-2"
                 value={data?.[sectionKey]?.[field]?.[lang] ?? ""}
                 onChange={(e) => handleChange(`${sectionKey}.${field}.${lang}`, e.target.value)}
+                autoComplete="off"
               />
             </label>
           ))

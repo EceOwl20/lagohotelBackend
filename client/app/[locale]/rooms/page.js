@@ -26,9 +26,10 @@ import imgDisable2 from "./disableroom/images/lago-engl2.webp"
 import imgDuplex from "./images/oda6-1.webp";
 import imgDuplex2 from "./images/odalar6-2.webp";
 import ContactSection2 from "../GeneralComponents/Contact/ContactSection2";
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const Page = () => {
+    const locale = useLocale(); // "tr", "en", "de", "ru"
 
    const room1 = useTranslations('Accommodation.RoomSection1');
   const room2 = useTranslations('Accommodation.RoomSection2');
@@ -65,7 +66,7 @@ const Page = () => {
       id="superiorroom"
         img={imgSuperior}
         img2={imgSuperior2}
-        header={room1('title')}
+        header={pageData.roomSection1?.title?.[locale] || room1('title')}
         text={room1('subtitle')}
          span={room1('m')}
         span2={room1('view')}
@@ -76,7 +77,7 @@ const Page = () => {
       id="familyroom"
         img={imgFamily}
         img2={imgFamily2}
-        header={room2('title')}
+        header={pageData.roomSection1.title?[locale] : room2('title')}
         text={room2('subtitle')}
          span={room2('m')}
         span2={room2('view')}
