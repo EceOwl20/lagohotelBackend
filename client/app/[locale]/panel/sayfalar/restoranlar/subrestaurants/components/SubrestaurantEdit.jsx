@@ -3,7 +3,7 @@ import { useState } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
 
-// Yardımcı multi-lang input fonksiyonu
+// Multi-language input helper
 function MultiLangInputs({ label, value = {}, onChange }) {
   return (
     <div className="mb-2">
@@ -14,7 +14,7 @@ function MultiLangInputs({ label, value = {}, onChange }) {
             key={lang}
             className="border p-1 rounded w-1/4"
             placeholder={`${label} (${lang})`}
-            value={value[lang] || ""}
+            value={value?.[lang] || ""}
             onChange={(e) => onChange(lang, e.target.value)}
           />
         ))}
@@ -23,11 +23,11 @@ function MultiLangInputs({ label, value = {}, onChange }) {
   );
 }
 
-// Görsel yükleme
+// Image upload helper
 async function uploadImage(file) {
   const formData = new FormData();
   formData.append("image", file);
-  const res = await fetch("/api/upload", {
+  const res = await fetch("http://localhost:5001/api/upload", {
     method: "POST",
     body: formData,
   });
@@ -39,59 +39,39 @@ async function uploadImage(file) {
 export default function SubrestaurantEdit({ data, setData }) {
   const [uploading, setUploading] = useState({});
 
-  // Banner alanı değişikliği
-  const handleBannerChange = (field, lang, value) => {
-    setData((prev) => ({
+  // Genel alanı güncelle (deep merge)
+  const setField = (section, field, langOrValue, value) => {
+    setData(prev => ({
       ...prev,
-      mainBanner: {
-        ...prev.mainBanner,
-        [field]: { ...prev.mainBanner?.[field], [lang]: value },
+      [section]: {
+        ...prev[section],
+        [field]:
+          value !== undefined
+            ? { ...(prev[section]?.[field] || {}), [langOrValue]: value }
+            : langOrValue,
       },
     }));
   };
-  const handleBannerImage = async (e) => {
+
+  // Tek görsel alanı yükle (ör: mainBanner.image)
+  const handleImage = async (section, field, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading((prev) => ({ ...prev, mainBanner: true }));
+    setUploading(prev => ({ ...prev, [section + field]: true }));
     try {
       const imageUrl = await uploadImage(file);
-      setData((prev) => ({
+      setData(prev => ({
         ...prev,
-        mainBanner: { ...prev.mainBanner, image: imageUrl },
+        [section]: { ...prev[section], [field]: imageUrl }
       }));
     } finally {
-      setUploading((prev) => ({ ...prev, mainBanner: false }));
+      setUploading(prev => ({ ...prev, [section + field]: false }));
     }
   };
 
-  // InfoSection değişikliği
-  const handleInfoChange = (field, lang, value) => {
-    setData((prev) => ({
-      ...prev,
-      infoSection: {
-        ...prev.infoSection,
-        [field]: { ...prev.infoSection?.[field], [lang]: value },
-      },
-    }));
-  };
-  const handleInfoImage = async (field, e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading((prev) => ({ ...prev, [field]: true }));
-    try {
-      const imageUrl = await uploadImage(file);
-      setData((prev) => ({
-        ...prev,
-        infoSection: { ...prev.infoSection, [field]: imageUrl },
-      }));
-    } finally {
-      setUploading((prev) => ({ ...prev, [field]: false }));
-    }
-  };
-
-  // Carousel
+  // Carousel fonksiyonları
   const handleCarouselChange = (idx, url) => {
-    setData((prev) => {
+    setData(prev => {
       const arr = Array.isArray(prev.carousel) ? [...prev.carousel] : [];
       arr[idx] = url;
       return { ...prev, carousel: arr };
@@ -100,28 +80,28 @@ export default function SubrestaurantEdit({ data, setData }) {
   const handleCarouselImage = async (idx, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading((prev) => ({ ...prev, ["carousel-" + idx]: true }));
+    setUploading(prev => ({ ...prev, ["carousel-" + idx]: true }));
     try {
       const imageUrl = await uploadImage(file);
       handleCarouselChange(idx, imageUrl);
     } finally {
-      setUploading((prev) => ({ ...prev, ["carousel-" + idx]: false }));
+      setUploading(prev => ({ ...prev, ["carousel-" + idx]: false }));
     }
   };
   const handleCarouselAdd = () =>
-    setData((prev) => ({
+    setData(prev => ({
       ...prev,
       carousel: [...(prev.carousel || []), ""],
     }));
   const handleCarouselRemove = (idx) =>
-    setData((prev) => ({
+    setData(prev => ({
       ...prev,
       carousel: (prev.carousel || []).filter((_, i) => i !== idx),
     }));
 
-  // Cuisines array
+  // Cuisine fonksiyonları
   const handleCuisineChange = (idx, field, langOrValue, value) => {
-    setData((prev) => {
+    setData(prev => {
       const arr = Array.isArray(prev.cuisines) ? [...prev.cuisines] : [];
       if (!arr[idx]) arr[idx] = {};
       if (["title", "description", "text", "buttonText"].includes(field)) {
@@ -135,78 +115,53 @@ export default function SubrestaurantEdit({ data, setData }) {
   const handleCuisineImage = async (idx, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading((prev) => ({ ...prev, ["cuisine-" + idx]: true }));
+    setUploading(prev => ({ ...prev, ["cuisine-" + idx]: true }));
     try {
       const imageUrl = await uploadImage(file);
       handleCuisineChange(idx, "image", imageUrl);
     } finally {
-      setUploading((prev) => ({ ...prev, ["cuisine-" + idx]: false }));
+      setUploading(prev => ({ ...prev, ["cuisine-" + idx]: false }));
     }
   };
   const handleCuisineAdd = () =>
-    setData((prev) => ({
+    setData(prev => ({
       ...prev,
       cuisines: [...(prev.cuisines || []), {}],
     }));
   const handleCuisineRemove = (idx) =>
-    setData((prev) => ({
+    setData(prev => ({
       ...prev,
       cuisines: (prev.cuisines || []).filter((_, i) => i !== idx),
     }));
 
-  // Background
-  const handleBackgroundChange = (field, lang, value) => {
-    setData((prev) => ({
-      ...prev,
-      background: {
-        ...prev.background,
-        [field]: { ...prev.background?.[field], [lang]: value },
-      },
-    }));
-  };
-  const handleBackgroundImage = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading((prev) => ({ ...prev, background: true }));
-    try {
-      const imageUrl = await uploadImage(file);
-      setData((prev) => ({
-        ...prev,
-        background: { ...prev.background, image: imageUrl },
-      }));
-    } finally {
-      setUploading((prev) => ({ ...prev, background: false }));
-    }
-  };
-
   // Panel render
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="font-bold text-xl mb-3">Restaurant Düzenle</h2>
+      <h2 className="font-bold text-xl mb-3">Restoran Düzenle</h2>
       {/* --- Banner --- */}
       <div className="p-4 border rounded mb-2">
         <h3 className="font-semibold mb-2">Ana Banner</h3>
         <MultiLangInputs
           label="Banner Subtitle"
           value={data.mainBanner?.subtitle}
-          onChange={(lang, v) => handleBannerChange("subtitle", lang, v)}
+          onChange={(lang, v) => setField("mainBanner", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Banner Title"
           value={data.mainBanner?.title}
-          onChange={(lang, v) => handleBannerChange("title", lang, v)}
+          onChange={(lang, v) => setField("mainBanner", "title", lang, v)}
         />
         <MultiLangInputs
           label="Banner Text"
           value={data.mainBanner?.text}
-          onChange={(lang, v) => handleBannerChange("text", lang, v)}
+          onChange={(lang, v) => setField("mainBanner", "text", lang, v)}
         />
         <div className="flex items-center gap-3 mt-2">
           <input
             type="file"
             accept="image/*"
-            onChange={handleBannerImage}
-            disabled={uploading.mainBanner}
+            onChange={e => handleImage("mainBanner", "image", e)}
+            disabled={uploading.mainBannerimage}
           />
           {data.mainBanner?.image && (
             <img
@@ -223,34 +178,34 @@ export default function SubrestaurantEdit({ data, setData }) {
       </div>
       {/* --- Info Section --- */}
       <div className="p-4 border rounded mb-2">
-        <h3 className="font-semibold mb-2">Info Section</h3>
+        <h3 className="font-semibold mb-2">Bilgi Bölümü (Info Section)</h3>
         <MultiLangInputs
           label="Subtitle"
           value={data.infoSection?.subtitle}
-          onChange={(lang, v) => handleInfoChange("subtitle", lang, v)}
+          onChange={(lang, v) => setField("infoSection", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Title"
           value={data.infoSection?.title}
-          onChange={(lang, v) => handleInfoChange("title", lang, v)}
+          onChange={(lang, v) => setField("infoSection", "title", lang, v)}
         />
         <MultiLangInputs
           label="Text 1"
           value={data.infoSection?.text1}
-          onChange={(lang, v) => handleInfoChange("text1", lang, v)}
+          onChange={(lang, v) => setField("infoSection", "text1", lang, v)}
         />
         <MultiLangInputs
           label="Text 2"
           value={data.infoSection?.text2}
-          onChange={(lang, v) => handleInfoChange("text2", lang, v)}
+          onChange={(lang, v) => setField("infoSection", "text2", lang, v)}
         />
         <div className="flex items-center gap-3 mt-2">
           <span>Resim 1</span>
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => handleInfoImage("image1", e)}
-            disabled={uploading.image1}
+            onChange={e => handleImage("infoSection", "image1", e)}
+            disabled={uploading.infoSectionimage1}
           />
           {data.infoSection?.image1 && (
             <img
@@ -269,8 +224,8 @@ export default function SubrestaurantEdit({ data, setData }) {
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => handleInfoImage("image2", e)}
-            disabled={uploading.image2}
+            onChange={e => handleImage("infoSection", "image2", e)}
+            disabled={uploading.infoSectionimage2}
           />
           {data.infoSection?.image2 && (
             <img
@@ -381,34 +336,37 @@ export default function SubrestaurantEdit({ data, setData }) {
         <MultiLangInputs
           label="Arkaplan Subtitle"
           value={data.background?.subtitle}
-          onChange={(lang, v) => handleBackgroundChange("subtitle", lang, v)}
+          onChange={(lang, v) => setField("background", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Arkaplan Title"
           value={data.background?.title}
-          onChange={(lang, v) => handleBackgroundChange("title", lang, v)}
+          onChange={(lang, v) => setField("background", "title", lang, v)}
         />
         <MultiLangInputs
           label="Arkaplan Text"
           value={data.background?.text}
-          onChange={(lang, v) => handleBackgroundChange("text", lang, v)}
+          onChange={(lang, v) => setField("background", "text", lang, v)}
         />
         <MultiLangInputs
           label="Button Text"
           value={data.background?.buttonText}
-          onChange={(lang, v) => handleBackgroundChange("buttonText", lang, v)}
+          onChange={(lang, v) => setField("background", "buttonText", lang, v)}
         />
         <input
           className="border p-1 rounded w-full my-1"
           placeholder="Link"
           value={data.background?.link || ""}
-          onChange={e => handleBackgroundChange("link", "", e.target.value)}
+          onChange={e => setData(prev => ({
+            ...prev,
+            background: { ...prev.background, link: e.target.value }
+          }))}
         />
         <input
           type="file"
           accept="image/*"
-          onChange={handleBackgroundImage}
-          disabled={uploading.background}
+          onChange={e => handleImage("background", "image", e)}
+          disabled={uploading.backgroundimage}
         />
         {data.background?.image && (
           <img

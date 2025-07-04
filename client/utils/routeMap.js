@@ -81,3 +81,48 @@ export const RESTAURANT_URL_TO_SLUG = {
   }
 };
 
+// routeMap.js
+export const BARCAFE_URL_TO_SLUG = {
+  "tr": {
+    "abellapatisserie": "AbellaPatisserie",
+    "cafedehouse": "CafeDeHouse",
+    "cafedelago": "CafeDeLago",
+    "joiebar": "JoieBar",
+    "maldivabar": "MaldivaBar",
+    "mignonbar": "MignonBar",
+    "pianobar": "PianoBar",
+    "vagobar": "VagoBar"
+  },
+  "en": {
+    "abellapatisserie": "AbellaPatisserie",
+    "cafedehouse": "CafeDeHouse",
+    "cafedelago": "CafeDeLago",
+    "joiebar": "JoieBar",
+    "maldivabar": "MaldivaBar",
+    "mignonbar": "MignonBar",
+    "pianobar": "PianoBar",
+    "vagobar": "VagoBar"
+  },
+  "de": {
+    "abellapatisserie": "AbellaPatisserie",
+    "cafedehouse": "CafeDeHouse",
+    "cafedelago": "CafeDeLago",
+    "joiebar": "JoieBar",
+    "maldivabar": "MaldivaBar",
+    "mignonbar": "MignonBar",
+    "pianobar": "PianoBar",
+    "vagobar": "VagoBar"
+  },
+  "ru": {
+    "abellapatisserie": "AbellaPatisserie",
+    "cafedehouse": "CafeDeHouse",
+    "cafedelago": "CafeDeLago",
+    "joiebar": "JoieBar",
+    "maldivabar": "MaldivaBar",
+    "mignonbar": "MignonBar",
+    "pianobar": "PianoBar",
+    "vagobar": "VagoBar"
+  },
+};
+
+

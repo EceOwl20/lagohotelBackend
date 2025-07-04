@@ -13,7 +13,7 @@ export default function SubroomCarouselEdit({ data = {}, setData }) {
     try {
       const formData = new FormData();
       formData.append('file', file);
-      const res = await fetch('/api/upload', { method: 'POST', body: formData });
+      const res = await fetch('http://localhost:5001/api/upload', { method: 'POST', body: formData });
       const json = await res.json();
       if (res.ok && json.path) {
         setData(prev => {

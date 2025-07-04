@@ -28,6 +28,25 @@ import ContactSection2 from "../GeneralComponents/Contact/ContactSection2";
 import {useTranslations} from 'next-intl';
 
 const page = () => {
+  const [pageData, setPageData] = useState(null);
+  
+    useEffect(() => {
+      const fetchPageData = async () => {
+        try {
+          const res = await fetch("http://localhost:5001/api/pages/homepage");
+          const json = await res.json();
+          setPageData(json);
+        } catch (err) {
+          console.error("Anasayfa verisi alınamadı:", err.message);
+        }
+      };
+  
+      fetchPageData();
+    }, []);
+  
+    if (!pageData) return <p className="p-10">Yükleniyor...</p>;
+
+    
   const room1 = useTranslations('Accommodation.RoomSection1');
   const room2 = useTranslations('Accommodation.RoomSection2');
   const room3 = useTranslations('Accommodation.RoomSection3');

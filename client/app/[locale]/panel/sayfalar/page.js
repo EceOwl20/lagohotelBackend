@@ -131,6 +131,12 @@ export default function PagesPanel() {
           </Link>
           </li>
 
+           <li>
+              <Link href="/panel/sayfalar/barkafeler/subbarcafes" className="text-blue-600 hover:underline">
+              ☕️🍰 Sub BarCafes
+          </Link>
+          </li>
+
 
           <li>
               <Link href="/panel/sayfalar/superioroda" className="text-blue-600 hover:underline">

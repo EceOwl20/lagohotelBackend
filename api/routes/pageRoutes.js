@@ -16,6 +16,41 @@ const Fitness = require('../models/fitnesspage');
 const About = require("../models/aboutpage");
 const SubRoom = require('../models/subroom');
 const Subrestaurant = require("../models/subRestaurant");
+const BarCafe = require("../models/subbarcafes");
+
+// Tüm barcafe sayfalarını getir
+router.get("/barcafes/subbarcafes", async (req, res) => {
+  try {
+    const barcafes = await BarCafe.find().lean();
+    res.json(barcafes);
+  } catch (err) {
+    res.status(500).json({ error: "Barcafe çekilemedi" });
+  }
+});
+
+// Tek barcafe getir (panelde gerekirse)
+router.get("/barcafes/subbarcafes/:slug", async (req, res) => {
+  try {
+    const barcafe = await BarCafe.findOne({ slug: req.params.slug }).lean();
+    res.json(barcafe);
+  } catch (err) {
+    res.status(404).json({ error: "Bulunamadı" });
+  }
+});
+
+// Kaydet/güncelle
+router.put("/barcafes/subbarcafes/:slug", async (req, res) => {
+  try {
+    const updated = await BarCafe.findOneAndUpdate(
+      { slug: req.params.slug },
+      req.body,
+      { new: true, upsert: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: "Güncellenemedi" });
+  }
+});
 
 // Tüm restaurantlar (slug listesi)
 router.get("/restaurants/subrestaurants", async (req, res) => {

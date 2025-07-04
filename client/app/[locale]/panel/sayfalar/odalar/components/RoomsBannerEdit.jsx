@@ -1,76 +1,156 @@
-// components/RoomsBannerEdit.jsx
 "use client";
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const langs = ['tr', 'en', 'de', 'ru'];
+const langs = ["tr", "en", "de", "ru"];
+
+function MultiLangInputs({ label, value = {}, onChange }) {
+  return (
+    <div className="mb-2">
+      <b className="block mb-1">{label}</b>
+      <div className="flex gap-2">
+        {langs.map((lang) => (
+          <input
+            key={lang}
+            className="border p-1 rounded w-1/4"
+            placeholder={`${label} (${lang})`}
+            value={value[lang] || ""}
+            onChange={(e) => onChange(lang, e.target.value)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// Görsel upload helper
+async function uploadImage(file) {
+  const formData = new FormData();
+  formData.append("file", file);
+  const res = await fetch("http://localhost:5001/api/upload", {
+    method: "POST",
+    body: formData,
+  });
+  // Cevabı debug için gör
+  const text = await res.text();
+  let json = {};
+  try { json = JSON.parse(text); } catch { throw new Error("JSON parse hatası: " + text); }
+  if (res.ok && json.path) return json.path;
+  throw new Error(json.error || "Upload failed: " + text);
+}
 
 export default function RoomsBannerEdit({ data, setData }) {
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleChange = (path, value) => {
-    setData(prev => {
-      const updated = { ...prev };
-      const keys = path.split('.');
-      let obj = updated;
-      for (let i = 0; i < keys.length - 1; i++) {
-        obj = obj?.[keys[i]] ?? {};
-      }
-      obj[keys[keys.length - 1]] = value;
-      return updated;
-    });
-  };
-
-  const handleFileUpload = async (e) => {
-    const file = e.target.files?.[0];
+    const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
     if (!file) return;
+
+    const formData = new FormData();
+    formData.append("image", file);
+
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      const res = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
+      const res = await fetch("http://localhost:5001/api/upload", {
+        method: "POST",
+        body: formData,
       });
-      const json = await res.json();
-      if (res.ok && json.path) {
-        handleChange('roomsBanner.bannerImage', json.path);
-      }
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+
+      setData({
+        ...data,
+        roomsBanner: { ...data.roomsBanner, bannerImage: result.imageUrl },
+      });
     } catch (err) {
-      console.error(err);
+      alert("Yükleme hatası: " + err.message);
     } finally {
       setUploading(false);
     }
   };
 
+  // Banner görsel upload
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    setError("");
+    try {
+      const imgPath = await handleImageUpload(file);
+      setData((prev) => ({
+        ...prev,
+        roomsBanner: {
+          ...prev.roomsBanner,
+          bannerImage: imgPath,
+        },
+      }));
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  // Multi-lang başlık
+  const handleHeaderChange = (lang, value) => {
+    setData((prev) => ({
+      ...prev,
+      roomsBanner: {
+        ...prev.roomsBanner,
+        header: { ...(prev.roomsBanner?.header || {}), [lang]: value },
+      },
+    }));
+  };
+
+  // Dinamik butonlar (multi-lang)
+  const handleButtonChange = (idx, lang, value) => {
+    setData((prev) => {
+      const buttons = [...(prev.roomsBanner?.buttons || [])];
+      buttons[idx] = {
+        ...buttons[idx],
+        header: { ...(buttons[idx]?.header || {}), [lang]: value },
+      };
+      return { ...prev, roomsBanner: { ...prev.roomsBanner, buttons } };
+    });
+  };
+
+  const handleButtonLinkChange = (idx, value) => {
+    setData((prev) => {
+      const buttons = [...(prev.roomsBanner?.buttons || [])];
+      buttons[idx] = { ...buttons[idx], link: value };
+      return { ...prev, roomsBanner: { ...prev.roomsBanner, buttons } };
+    });
+  };
+
   const handleButtonAdd = () => {
-    setData(prev => ({
+    setData((prev) => ({
       ...prev,
       roomsBanner: {
         ...prev.roomsBanner,
         buttons: [
           ...(prev.roomsBanner?.buttons || []),
-          { header: { tr: '', en: '', de: '', ru: '' }, link: '' }
-        ]
-      }
+          { header: { tr: "", en: "", de: "", ru: "" }, link: "" },
+        ],
+      },
     }));
   };
 
-  const handleButtonRemove = (index) => {
-    setData(prev => {
+  const handleButtonRemove = (idx) => {
+    setData((prev) => {
       const buttons = [...(prev.roomsBanner?.buttons || [])];
-      buttons.splice(index, 1);
-      return {
-        ...prev,
-        roomsBanner: {
-          ...prev.roomsBanner,
-          buttons
-        }
-      };
+      buttons.splice(idx, 1);
+      return { ...prev, roomsBanner: { ...prev.roomsBanner, buttons } };
     });
   };
 
+  const bannerImgSrc = data?.roomsBanner?.bannerImage
+    ? data.roomsBanner.bannerImage.startsWith("/uploads")
+      ? "http://localhost:5001" + data.roomsBanner.bannerImage
+      : data.roomsBanner.bannerImage
+    : "";
+
   return (
-    <section className='border border-gray-300 rounded-md p-4 bg-slate-50'>
+    <section className="border border-gray-300 rounded-md p-4 bg-slate-50">
       <h2 className="text-[22px] font-semibold mb-4">Banner Ayarları</h2>
 
       {/* Görsel Upload */}
@@ -80,28 +160,30 @@ export default function RoomsBannerEdit({ data, setData }) {
           type="file"
           accept="image/*"
           className="mt-1 w-full"
-          onChange={handleFileUpload}
+          onChange={handleImageUpload}
+          disabled={uploading}
         />
         {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
-        {data?.roomsBanner?.bannerImage && (
+        {error && <p className="text-sm text-red-600">{error}</p>}
+       {data?.roomsBanner?.bannerImage && (
           <img
-            src={data.roomsBanner.bannerImage}
+            src={`http://localhost:5001${data.roomsBanner.bannerImage}`}
             alt="Banner Preview"
-            className="mt-2 h-32 object-cover border"
+            className="mt-2 h-32 object-cover border rounded"
           />
         )}
       </label>
 
       {/* Başlıklar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-        {langs.map(lang => (
+        {langs.map((lang) => (
           <label key={lang} className="block font-semibold">
             Başlık ({lang.toUpperCase()})
             <input
               type="text"
               className="mt-1 w-full border rounded p-2"
-              value={data?.roomsBanner?.header?.[lang] ?? ''}
-              onChange={e => handleChange(`roomsBanner.header.${lang}`, e.target.value)}
+              value={data?.roomsBanner?.header?.[lang] ?? ""}
+              onChange={(e) => handleHeaderChange(lang, e.target.value)}
             />
           </label>
         ))}
@@ -113,25 +195,28 @@ export default function RoomsBannerEdit({ data, setData }) {
         {(data?.roomsBanner?.buttons || []).map((btn, idx) => (
           <div key={idx} className="border rounded p-3 mb-4">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-2">
-              {langs.map(lang => (
+              {langs.map((lang) => (
                 <label key={lang} className="block font-semibold">
                   Metin ({lang.toUpperCase()})
                   <input
                     type="text"
                     className="mt-1 w-full border rounded p-2"
-                    value={btn.header?.[lang] ?? ''}
-                    onChange={e => handleChange(`roomsBanner.buttons.${idx}.header.${lang}`, e.target.value)}
+                    value={btn.header?.[lang] ?? ""}
+                    onChange={(e) =>
+                      handleButtonChange(idx, lang, e.target.value)
+                    }
                   />
                 </label>
               ))}
-
               <label className="block font-semibold">
                 Link
                 <input
                   type="text"
                   className="mt-1 w-full border rounded p-2"
-                  value={btn.link ?? ''}
-                  onChange={e => handleChange(`roomsBanner.buttons.${idx}.link`, e.target.value)}
+                  value={btn.link ?? ""}
+                  onChange={(e) =>
+                    handleButtonLinkChange(idx, e.target.value)
+                  }
                 />
               </label>
             </div>
