@@ -1,22 +1,28 @@
-// components/RoomsInfoSectionEdit.jsx
 "use client";
 import React from 'react';
 
 const langs = ['tr', 'en', 'de', 'ru'];
 const fields = ['subtitle', 'title', 'text', 'checkin', 'checkout'];
 
+// Derin güncelleme fonksiyonu (her componentte aynı fonksiyonu kullanabilirsin)
+function updateIn(obj, pathArr, value) {
+  if (!pathArr.length) return value;
+  const [key, ...rest] = pathArr;
+  // Eğer key sayı ise (array indexi)
+  if (!isNaN(key)) {
+    const arr = Array.isArray(obj) ? [...obj] : [];
+    arr[Number(key)] = updateIn(arr[Number(key)] ?? {}, rest, value);
+    return arr;
+  }
+  return {
+    ...obj,
+    [key]: updateIn(obj?.[key] ?? {}, rest, value),
+  };
+}
+
 export default function RoomsInfoSectionEdit({ data, setData }) {
   const handleChange = (path, value) => {
-    setData(prev => {
-      const updated = { ...prev };
-      const keys = path.split('.');
-      let obj = updated;
-      for (let i = 0; i < keys.length - 1; i++) {
-        obj = obj?.[keys[i]] ?? {};
-      }
-      obj[keys[keys.length - 1]] = value;
-      return updated;
-    });
+    setData(prev => updateIn(prev, path.split('.'), value));
   };
 
   return (

@@ -1,6 +1,6 @@
 // components/RoomsParallaxSectionEdit.jsx
 "use client";
-import React from 'react';
+import React, { useState } from 'react';
 
 const langsParallax = ['tr', 'en', 'de', 'ru'];
 const parallaxFields = [
@@ -13,6 +13,37 @@ const parallaxFields = [
 ];
 
 export default function RoomsParallaxSectionEdit({ data, setData }) {
+   const [uploading, setUploading] = useState(false);
+    const [error, setError] = useState("");
+
+
+    const handleImageUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append("image", file);
+
+    setUploading(true);
+    try {
+      const res = await fetch("http://localhost:5001/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+
+      setData({
+        ...data,
+        roomsParallaxSection: { ...data.roomsParallaxSection, backgroundImage: result.imageUrl },
+      });
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleChange = (path, value) => {
     setData(prev => {
       const updated = { ...prev };
@@ -32,13 +63,30 @@ export default function RoomsParallaxSectionEdit({ data, setData }) {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <label className="block font-semibold">
           Background Image
-          <input
+           <input
+          type="file"
+          accept="image/*"
+          className="mt-1 w-full"
+          onChange={handleImageUpload}
+          disabled={uploading}
+        />
+        {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
+        {error && <p className="text-sm text-red-600">{error}</p>}
+       {data?.roomsParallaxSection?.backgroundImage && (
+          <img
+            src={`http://localhost:5001${data.roomsParallaxSection.backgroundImage}`}
+            alt="Background Image Preview"
+            className="mt-2 h-32 object-cover border rounded"
+          />
+        )}
+      </label>
+          {/* <input
             type="text"
             className="mt-1 w-full border rounded p-2"
             value={data?.roomsParallaxSection?.backgroundImage ?? ''}
             onChange={e => handleChange('roomsParallaxSection.backgroundImage', e.target.value)}
           />
-        </label>
+        </label> */}
         
         {parallaxFields.map(field => (
           langsParallax.map(lang => (

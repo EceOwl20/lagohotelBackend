@@ -1,4 +1,5 @@
-import React from "react";
+"use client"
+import React, { useState, useEffect } from "react";
 import RoomsBanner from "./components/RoomsBanner";
 import RoomsInfoSection from "./components/RoomsInfoSection";
 import RoomsSection from "./components/RoomsSection";
@@ -27,13 +28,22 @@ import imgDuplex2 from "./images/odalar6-2.webp";
 import ContactSection2 from "../GeneralComponents/Contact/ContactSection2";
 import {useTranslations} from 'next-intl';
 
-const page = () => {
+const Page = () => {
+
+   const room1 = useTranslations('Accommodation.RoomSection1');
+  const room2 = useTranslations('Accommodation.RoomSection2');
+  const room3 = useTranslations('Accommodation.RoomSection3');
+  const room4 = useTranslations('Accommodation.RoomSection4');
+  const room5 = useTranslations('Accommodation.RoomSection5');
+  const room6 = useTranslations('Accommodation.RoomSection6');
+  const room7 = useTranslations('Accommodation.RoomSection7');
+
   const [pageData, setPageData] = useState(null);
   
     useEffect(() => {
       const fetchPageData = async () => {
         try {
-          const res = await fetch("http://localhost:5001/api/pages/homepage");
+          const res = await fetch("http://localhost:5001/api/pages/rooms");
           const json = await res.json();
           setPageData(json);
         } catch (err) {
@@ -46,19 +56,11 @@ const page = () => {
   
     if (!pageData) return <p className="p-10">Yükleniyor...</p>;
 
-    
-  const room1 = useTranslations('Accommodation.RoomSection1');
-  const room2 = useTranslations('Accommodation.RoomSection2');
-  const room3 = useTranslations('Accommodation.RoomSection3');
-  const room4 = useTranslations('Accommodation.RoomSection4');
-  const room5 = useTranslations('Accommodation.RoomSection5');
-  const room6 = useTranslations('Accommodation.RoomSection6');
-  const room7 = useTranslations('Accommodation.RoomSection7');
 
   return (
     <div className="overflow-hidden flex flex-col items-center justify-center gap-[50px] lg:gap-[100px] bg-[#fbfbfb]">
-      <RoomsBanner />
-      <RoomsInfoSection />
+      <RoomsBanner roomsBanner={pageData.roomsBanner}/>
+      <RoomsInfoSection roomsInfoSection={pageData.roomsInfoSection}/>
       <RoomsSection
       id="superiorroom"
         img={imgSuperior}
@@ -147,4 +149,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

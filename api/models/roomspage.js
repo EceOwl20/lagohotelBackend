@@ -8,13 +8,12 @@ const roomsPageSchema = new mongoose.Schema({
   // ----------------------
   roomsBanner: {
     header:       { tr: String, en: String, de: String, ru: String },
-    buttonText1:  { tr: String, en: String, de: String, ru: String },
-    buttonText2:  { tr: String, en: String, de: String, ru: String },
-    buttonText3:  { tr: String, en: String, de: String, ru: String },
-    buttonText4:  { tr: String, en: String, de: String, ru: String },
-    buttonText5:  { tr: String, en: String, de: String, ru: String },
-    buttonText6:  { tr: String, en: String, de: String, ru: String },
-    buttonText7:  { tr: String, en: String, de: String, ru: String },
+    buttons: [
+      {
+        header: { tr: String, en: String, de: String, ru: String },
+        link: String
+      }
+    ],
     bannerImage:  String  // örn: "/images/roomsBanner.png"
   },
 
@@ -38,6 +37,7 @@ const roomsPageSchema = new mongoose.Schema({
     m:          { tr: String, en: String, de: String, ru: String },
     view:       { tr: String, en: String, de: String, ru: String },
     buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
     img:        String,
     img2:       String
   },
@@ -47,14 +47,63 @@ const roomsPageSchema = new mongoose.Schema({
     m:          { tr: String, en: String, de: String, ru: String },
     view:       { tr: String, en: String, de: String, ru: String },
     buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
     img:        String,
     img2:       String
   },
-  roomSection3: { /* aynı yapı */ },
-  roomSection4: { /* … */ },
-  roomSection5: { /* … */ },
-  roomSection6: { /* … */ },
-  roomSection7: { /* … */ },
+   roomSection3: {
+    title:      { tr: String, en: String, de: String, ru: String },
+    subtitle:   { tr: String, en: String, de: String, ru: String },
+    m:          { tr: String, en: String, de: String, ru: String },
+    view:       { tr: String, en: String, de: String, ru: String },
+    buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
+    img:        String,
+    img2:       String
+  },
+
+   roomSection4: {
+    title:      { tr: String, en: String, de: String, ru: String },
+    subtitle:   { tr: String, en: String, de: String, ru: String },
+    m:          { tr: String, en: String, de: String, ru: String },
+    view:       { tr: String, en: String, de: String, ru: String },
+    buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
+    img:        String,
+    img2:       String
+  },
+     roomSection5: {
+    title:      { tr: String, en: String, de: String, ru: String },
+    subtitle:   { tr: String, en: String, de: String, ru: String },
+    m:          { tr: String, en: String, de: String, ru: String },
+    view:       { tr: String, en: String, de: String, ru: String },
+    buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
+    img:        String,
+    img2:       String
+  },
+
+     roomSection6: {
+    title:      { tr: String, en: String, de: String, ru: String },
+    subtitle:   { tr: String, en: String, de: String, ru: String },
+    m:          { tr: String, en: String, de: String, ru: String },
+    view:       { tr: String, en: String, de: String, ru: String },
+    buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
+    img:        String,
+    img2:       String
+  },
+
+       roomSection7: {
+    title:      { tr: String, en: String, de: String, ru: String },
+    subtitle:   { tr: String, en: String, de: String, ru: String },
+    m:          { tr: String, en: String, de: String, ru: String },
+    view:       { tr: String, en: String, de: String, ru: String },
+    buttonText: { tr: String, en: String, de: String, ru: String },
+    buttonLink: { tr: String, en: String, de: String, ru: String },
+    img:        String,
+    img2:       String
+  },
 
   // ------------------------------------------
   // RoomsParallaxSection bileşeni için ek bölüm

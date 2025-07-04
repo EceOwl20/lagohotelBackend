@@ -3,41 +3,6 @@ import React, { useState } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
 
-function MultiLangInputs({ label, value = {}, onChange }) {
-  return (
-    <div className="mb-2">
-      <b className="block mb-1">{label}</b>
-      <div className="flex gap-2">
-        {langs.map((lang) => (
-          <input
-            key={lang}
-            className="border p-1 rounded w-1/4"
-            placeholder={`${label} (${lang})`}
-            value={value[lang] || ""}
-            onChange={(e) => onChange(lang, e.target.value)}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Görsel upload helper
-async function uploadImage(file) {
-  const formData = new FormData();
-  formData.append("file", file);
-  const res = await fetch("http://localhost:5001/api/upload", {
-    method: "POST",
-    body: formData,
-  });
-  // Cevabı debug için gör
-  const text = await res.text();
-  let json = {};
-  try { json = JSON.parse(text); } catch { throw new Error("JSON parse hatası: " + text); }
-  if (res.ok && json.path) return json.path;
-  throw new Error(json.error || "Upload failed: " + text);
-}
-
 export default function RoomsBannerEdit({ data, setData }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -69,27 +34,6 @@ export default function RoomsBannerEdit({ data, setData }) {
     }
   };
 
-  // Banner görsel upload
-  const handleFileUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    setError("");
-    try {
-      const imgPath = await handleImageUpload(file);
-      setData((prev) => ({
-        ...prev,
-        roomsBanner: {
-          ...prev.roomsBanner,
-          bannerImage: imgPath,
-        },
-      }));
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setUploading(false);
-    }
-  };
 
   // Multi-lang başlık
   const handleHeaderChange = (lang, value) => {
