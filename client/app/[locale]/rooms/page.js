@@ -40,11 +40,12 @@ const Page = () => {
   const room7 = useTranslations('Accommodation.RoomSection7');
 
   const [pageData, setPageData] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
   
     useEffect(() => {
       const fetchPageData = async () => {
         try {
-          const res = await fetch("http://localhost:5001/api/pages/rooms");
+        const res = await fetch(`${apiUrl}/api/pages/rooms`);
           const json = await res.json();
           setPageData(json);
         } catch (err) {
@@ -57,7 +58,6 @@ const Page = () => {
   
     if (!pageData) return <p className="p-10">Yükleniyor...</p>;
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
 
   return (
     <div className="overflow-hidden flex flex-col items-center justify-center gap-[50px] lg:gap-[100px] bg-[#fbfbfb]">

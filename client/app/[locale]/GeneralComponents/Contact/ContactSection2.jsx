@@ -1,5 +1,5 @@
 "use client"
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from 'next/image'
 import minigallery from "./images/minigallery2.png"
 import Link from 'next/link'
@@ -15,11 +15,11 @@ const ContactDetails = () => {
     useEffect(() => {
            const fetchPageData = async () => {
              try {
-               const res = await fetch(`${apiUrl}/api/pages/contactsection2`);
+               const res = await fetch(`${apiUrl}/api/contactsection2`);
                const json = await res.json();
                setPageData(json);
              } catch (err) {
-               console.error("Anasayfa verisi alınamadı:", err.message);
+               console.error("Contact section 2 verisi alınamadı:", err.message);
              }
            };
        
@@ -27,6 +27,14 @@ const ContactDetails = () => {
          }, []);
        
          if (!pageData) return <p className="p-10">Yükleniyor...</p>;
+
+
+   const imgGallery  = pageData.image
+     const backgroundImgSrc = imgGallery
+    ? imgGallery.startsWith("/uploads")
+      ? `${apiUrl}${imgGallery}`
+      : imgGallery
+    : "";
   
   return (
     <div className="flex flex-col justify-center items-center w-full md:w-[40%] md:pl-6">
@@ -86,7 +94,7 @@ const ContactDetails = () => {
   )
 }
 
-const GallerySection = () => {
+const GallerySection = ({pageData}) => {
   const scrollRef = useRef(null);
 
   useEffect(() => {
@@ -112,6 +120,16 @@ const GallerySection = () => {
     return () => clearInterval(scrollInterval);
   }, []);
 
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+
+   const imggallery  = pageData.image
+     const backgroundImgSrc = imggallery
+    ? imggallery.startsWith("/uploads")
+      ? `${apiUrl}${imggallery}`
+      : imggallery
+    : "";
+
+
   return (
     <div className="flex justify-center md:justify-end items-center w-[90%] md:w-[60%] h-full">
       <div
@@ -121,12 +139,12 @@ const GallerySection = () => {
       >
         <div className="flex flex-col">
           {[...Array(100)].flatMap((_, loopIndex) =>
-            [minigallery].map((img, index) => (
+            [backgroundImgSrc].map((img, index) => (
               <Image
                 key={`${loopIndex}-${index}`}
                 src={img}
-                height={img.height}
-                width={img.width}
+                height={img.height || 2781}
+                width={img.width || 790}
                 alt="Minigallery"
                 loading="lazy"
                 className="xl:w-[100%] h-auto overflow-hidden"
@@ -140,18 +158,37 @@ const GallerySection = () => {
 }
 
 const ContactSection2 = () => {
+  const [pageData, setPageData] = useState(null);
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+
+    useEffect(() => {
+           const fetchPageData = async () => {
+             try {
+               const res = await fetch(`${apiUrl}/api/contactsection2`);
+               const json = await res.json();
+               setPageData(json);
+             } catch (err) {
+               console.error("Contact section 2 verisi alınamadı:", err.message);
+             }
+           };
+       
+           fetchPageData();
+         }, []);
+       
+         if (!pageData) return <p className="p-10">Yükleniyor...</p>;
+
   return (
     <div className="flex w-screen max-w-[1440px] mb-[100px] justify-start">
       {/* Desktop görünüm: İki bölüm arasında ekstra boşluk */}
       <div className="hidden md:flex justify-center items-center gap-8 border-[1px] border-lagoBlack xl:min-w-[90vw] 2xl:min-w-[1401px]  h-[34vh] min-h-[422px]">
         <ContactDetails />
-        <GallerySection />
+        <GallerySection  pageData={pageData}/>
       </div>
       {/* Mobil görünüm: Arkaplan resmi kaldırıldı */}
       <div className="flex flex-col w-full md:hidden justify-center items-center h-[65vh] bg-[#fbfbfb]">
         <div className="flex flex-col w-[90%] sm:w-[85%] bg-[#fbfbfb] gap-[33px] min-h-content h-[55vh] py-[30px] items-center justify-center text-center">
           <ContactDetails />
-          <GallerySection />
+          <GallerySection pageData={pageData}/>
         </div>
       </div>
     </div>

@@ -27,12 +27,19 @@ const RoomsParallaxSection = () => {
       }, []);
     
       if (!pageData) return <p className="p-10">Yükleniyor...</p>;
-  
+
+     const rawBg = pageData.roomsParallaxSection?.backgroundImage;
+  const backgroundImgSrc = rawBg
+    ? rawBg.startsWith("/uploads")
+      ? `${apiUrl}${rawBg}`
+      : rawBg
+    : "";
+
   
   return (
     <div
       className="relative flex flex-col xl:flex-row items-center justify-center min-h-[700px] xl:min-h-[610px] w-full bg-cover bg-center parallax "
-      style={{ backgroundImage: `url(${oda.src})` }}
+      style={{ backgroundImage: `url(${backgroundImgSrc})` }}
     >
       {/* Overlay yarı saydam siyah katman */}
       <div className="absolute inset-0 bg-lagoBlack/60 z-[1]"></div>
