@@ -13,16 +13,16 @@ const RoomsSection = ({img,img2, header,text,span,span2,link,id, buttonText}) =>
         <div className="flex flex-row items-center w-full lg:w-[72.5%] gap-[10px]">
           <Image
             src={img}
-            width={img.width}
-            height={img.height}
+            width={img.width || 430}
+            height={img.height || 620}
             alt="Superior Rooms"
             className="w-[50%] flex"
           />
 
           <Image
             src={img2}
-            width={img2.width}
-            height={img2.height}
+            width={img2.width || 430}
+            height={img2.height || 620}
             alt="Superior Rooms"
             className="w-[50%] flex"
           />

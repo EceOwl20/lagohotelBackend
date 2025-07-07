@@ -31,7 +31,7 @@ import { useLocale, useTranslations } from 'next-intl';
 const Page = () => {
     const locale = useLocale(); // "tr", "en", "de", "ru"
 
-   const room1 = useTranslations('Accommodation.RoomSection1');
+  const room1 = useTranslations('Accommodation.RoomSection1');
   const room2 = useTranslations('Accommodation.RoomSection2');
   const room3 = useTranslations('Accommodation.RoomSection3');
   const room4 = useTranslations('Accommodation.RoomSection4');
@@ -57,6 +57,7 @@ const Page = () => {
   
     if (!pageData) return <p className="p-10">Yükleniyor...</p>;
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
 
   return (
     <div className="overflow-hidden flex flex-col items-center justify-center gap-[50px] lg:gap-[100px] bg-[#fbfbfb]">
@@ -64,25 +65,34 @@ const Page = () => {
       <RoomsInfoSection roomsInfoSection={pageData.roomsInfoSection}/>
       <RoomsSection
       id="superiorroom"
-        img={imgSuperior}
-        img2={imgSuperior2}
+        img={ pageData.roomSection1?.img
+      ? `${apiUrl}${pageData.roomSection1.img}`
+      : imgSuperior}
+        img2={pageData.roomSection1?.img2
+      ? `${apiUrl}${pageData.roomSection1.img2}`
+      : imgSuperior2}
         header={pageData.roomSection1?.title?.[locale] || room1('title')}
-        text={room1('subtitle')}
-         span={room1('m')}
-        span2={room1('view')}
-        buttonText={room1('buttonText')}
-        link="/rooms/superiorroom" 
+        text={pageData.roomSection1?.subtitle?.[locale] || room1('subtitle')}
+         span={pageData.roomSection1?.m?.[locale] || room1('m')}
+        span2={pageData.roomSection1?.view?.[locale] || room1('view')}
+        buttonText={pageData.roomSection1?.buttonText?.[locale] || room1('buttonText')}
+        link={pageData.roomSection1?.buttonLink?.[locale]}
+        //"/rooms/superiorroom" 
       />
       <RoomsSectionReverse
       id="familyroom"
-        img={imgFamily}
-        img2={imgFamily2}
-        header={pageData.roomSection1.title?[locale] : room2('title')}
-        text={room2('subtitle')}
-         span={room2('m')}
-        span2={room2('view')}
-        buttonText={room2('buttonText')}
-        link="/rooms/familyroom" 
+      img={ pageData.roomSection2?.img
+      ? `${apiUrl}${pageData.roomSection2.img}`
+      : imgFamily}
+        img2={pageData.roomSection2?.img2
+      ? `${apiUrl}${pageData.roomSection2.img2}`
+      : imgFamily2}
+        header={pageData.roomSection2?.title?.[locale] || room2('title')}
+        text={pageData.roomSection2?.subtitle?.[locale] || room2('subtitle')}
+         span={pageData.roomSection2?.m?.[locale] || room2('m')}
+        span2={pageData.roomSection2?.view?.[locale] || room2('view')}
+        buttonText={pageData.roomSection2?.buttonText?.[locale] || room2('buttonText')}
+        link={pageData.roomSection2?.buttonLink?.[locale]}
       />
 
       <RoomsSection

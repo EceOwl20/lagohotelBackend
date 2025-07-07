@@ -1,13 +1,33 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import oda from "../images/oda.png";
 import MinibarSvg from "./svg/MinibarSvg";
 import FoundationSvg from "./svg/FoundationSvg";
 import WatchSvg from "./svg/WatchSvg";
 import TvSvg from "./svg/TvSvg";
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const RoomsParallaxSection = () => {
+  const locale = useLocale(); // "tr", "en", "de", "ru"
   const t = useTranslations('RoomsParallax');
+  const [pageData, setPageData] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+
+     useEffect(() => {
+        const fetchPageData = async () => {
+          try {
+            const res = await fetch(`${apiUrl}/api/pages/rooms`);
+            const json = await res.json();
+            setPageData(json);
+          } catch (err) {
+            console.error("Anasayfa verisi alınamadı:", err.message);
+          }
+        };
+    
+        fetchPageData();
+      }, []);
+    
+      if (!pageData) return <p className="p-10">Yükleniyor...</p>;
+  
   
   return (
     <div
@@ -21,7 +41,7 @@ const RoomsParallaxSection = () => {
       <div className="z-50 w-[87.79%] md:w-[91.4%] xl:w-[76.8%] flex flex-col items-center justify-center gap-[15px] lg:gap-[38px] font-jost text-white text-center lg:text-left">
         {/* Tagline */}
         <span className="uppercase text-[12px] font-medium leading-[14px] tracking-[0.48px] w-full pt-6 ml-[1.5%]">
-         {t('subtitle')}
+         {pageData.roomsParallaxSection.subtitle?.[locale] || t('subtitle')}
         </span>
 
         {/* İçerik kolonlarının bulunduğu wrapper */}
@@ -30,7 +50,7 @@ const RoomsParallaxSection = () => {
           <div className="w-full xl:w-[537px] flex flex-col items-center lg:items-start lg:text-start justify-center gap-[18px] lg:gap-[38px] xl:gap-[68px]">
             {/* Başlık */}
             <h3 className="font-marcellus font-normal text-[28px] lg:text-[36px] leading-[120%] lg:leading-[49px] md:leading-[42px] -tracking-[0.792px]">
-            {t('title')}
+            {pageData.roomsParallaxSection.title?.[locale] || t('title')}
             </h3>
 
             {/* Mini Bar ve Cosmetics grid */}
@@ -39,20 +59,20 @@ const RoomsParallaxSection = () => {
               <div className="w-full xl:w-[249px] flex flex-col items-center lg:items-start lg:text-start justify-center gap-[15px]">
                 <MinibarSvg className="flex" width={38} height={38} />
                 <h5 className="text-[16px] lg:text-[18px] font-normal leading-normal lg:leading-[30px] ">
-                {t('feature1')}
+                {pageData.roomsParallaxSection.feature1?.[locale] || t('feature1')}
                 </h5>
                 <p className="text-[12px] lg:text-[14px] md:text-[14px] font-normal leading-[130%] lg:leading-[21px] w-full md:w-[70%] lg:w-full">
-                {t('desc1')}
+                {pageData.roomsParallaxSection.desc1?.[locale] || t('desc1')}
                 </p>
               </div>
               {/* Cosmetics */}
               <div className="w-full xl:w-[249px] flex flex-col items-center lg:items-start lg:text-start  justify-center gap-[15px]">
                 <FoundationSvg className="flex" width={40} height={40} />
                 <h5 className="lg:text-[18px] text-[16px] font-normal leading-normal lg:leading-[30px]">
-                {t('feature2')}
+                {pageData.roomsParallaxSection.feature2?.[locale] || t('feature2')}
                 </h5>
                 <p className="text-[12px] lg:text-[14px] font-normal leading-[130%] lg:leading-[21px] w-full md:w-[70%] lg:w-full">
-                {t('desc2')}
+                {pageData.roomsParallaxSection.desc2?.[locale] || t('desc2')}
                 </p>
               </div>
             </div>
@@ -62,7 +82,7 @@ const RoomsParallaxSection = () => {
           <div className="w-full xl:w-[533px] flex flex-col items-center xl:items-start justify-center lg:text-start gap-[38px] xl:gap-[68px]">
             {/* Açıklama Paragrafı */}
             <p className="lg:text-[16px] text-[14px] font-normal leading-normal -tracking-[0.352px] max-w-[600px]">
-            {t('text')}
+            {pageData.roomsParallaxSection.text?.[locale] || t('text')}
             </p>
 
             {/* Room Access ve Wifi & LedTV grid */}
@@ -71,20 +91,20 @@ const RoomsParallaxSection = () => {
               <div className="w-full xl:w-[249px] flex flex-col items-center lg:items-start lg:text-start  justify-center gap-[15px]">
                 <WatchSvg className="flex" width={40} height={40} />
                 <h5 className="text-[16px] lg:text-[18px] font-normal leading-normal lg:leading-[30px]">
-                {t('feature3')}
+                {pageData.roomsParallaxSection.feature3?.[locale] || t('feature3')}
                 </h5>
                 <p className="text-[12px] lg:text-[14px] font-normal leading-[130%] lg:leading-[21px] w-full md:w-[70%] lg:w-full">
-                {t('desc3')}.
+                {pageData.roomsParallaxSection.desc3?.[locale] || t('desc3')}.
                 </p>
               </div>
               {/* Wifi & LedTV */}
               <div className="w-full xl:w-[249px] flex flex-col items-center lg:items-start lg:text-start justify-center gap-[15px]">
                 <TvSvg className="flex" width={43} height={43} />
                 <h5 className="text-[16px] lg:text-[18px] font-normal leading-normal lg:leading-[30px]">
-                {t('feature4')}
+                {pageData.roomsParallaxSection.feature4?.[locale] || t('feature4')}
                 </h5>
                 <p className="text-[12px] lg:text-[14px] font-normal leading-[130%] lg:leading-[21px] w-full md:w-[70%] lg:w-full">
-                {t('desc4')}
+                {pageData.roomsParallaxSection.dexc4?.[locale] || t('desc4')}
                 </p>
               </div>
             </div>

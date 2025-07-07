@@ -4,33 +4,52 @@ import Image from 'next/image'
 import minigallery from "./images/minigallery2.png"
 import Link from 'next/link'
 import { PiInstagramLogoLight, PiMetaLogoLight, PiFacebookLogoLight, PiYoutubeLogoLight } from "react-icons/pi";
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const ContactDetails = () => {
+  const locale = useLocale(); // "tr", "en", "de", "ru"
   const t = useTranslations('ContactSection2');
+  const [pageData, setPageData] = useState(null);
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+
+    useEffect(() => {
+           const fetchPageData = async () => {
+             try {
+               const res = await fetch(`${apiUrl}/api/pages/contactsection2`);
+               const json = await res.json();
+               setPageData(json);
+             } catch (err) {
+               console.error("Anasayfa verisi alınamadı:", err.message);
+             }
+           };
+       
+           fetchPageData();
+         }, []);
+       
+         if (!pageData) return <p className="p-10">Yükleniyor...</p>;
   
   return (
     <div className="flex flex-col justify-center items-center w-full md:w-[40%] md:pl-6">
       <div className="flex flex-col w-full max-w-[313px] items-center md:items-start justify-center gap-[20px] md:gap-[30px]">
         <span className="font-jost text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
-          {t('subtitle')}
+          {pageData.subtitle?.[locale] || t('subtitle')}
         </span>
         <h2 className="font-marcellus text-[28px] md:text-[32px] lg:text-[48px] leading-[36px] md:leading-[57.6px] lg:capsizedText2">
-        {t('title')}
+        {pageData.title?.[locale] || t('title')}
         </h2>
         <p className="font-jost text-[14px] md:text-[16px] leading-[24px] underline-offset-2 flex flex-col gap-2 ">
           {/* Mobil görünüm (lg'den küçük) */}
           <span className="capsizedText4 lg:hidden">
-          {t('address')}
+          {pageData.address?.[locale] || t('address')}
           </span>
           <span className="capsizedText4 lg:hidden">
-          {t('phone')}
+          {pageData.phone?.[locale] || t('phone')}
           </span>
           <span className="capsizedText4 lg:hidden">
-          {t('callcenter')}
+          {pageData.callcenter?.[locale] || t('callcenter')}
           </span>
           <span className="capsizedText4 lg:hidden">
-          {t('email')}
+          {pageData.email?.[locale] || t('email')}
           </span>
 
           {/* Desktop görünüm (lg ve üstü) */}
@@ -38,10 +57,10 @@ const ContactDetails = () => {
           Sorgun Mah. Titreyengol Mevkii No:26 Manavgat/ Antalya / TR 
           </span>
           <span className="hidden lg:block">
-          {t('phone')}
+          {pageData.phone?.[locale] || t('phone')}
           </span>
           <span className="hidden lg:block">
-          {t('callcenter')}
+          {pageData.callcenter?.[locale] || t('callcenter')}
           </span>
           <span className="hidden lg:block">
          Email: info@lagohotel.com
@@ -59,7 +78,7 @@ const ContactDetails = () => {
           </div>
           <div className="flex bg-black h-[20px] w-[1px] self-center"></div>
           <Link href="https://lagohotel.orsmod.com/" className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[16px] font-normal leading-[30px] uppercase">
-          {t('buttonText')}
+          {pageData.buttonText?.[locale] || t('buttonText')}
           </Link>
         </div>
       </div>
