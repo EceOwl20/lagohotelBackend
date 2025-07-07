@@ -1,3 +1,4 @@
+"use client"
 import React from 'react'
 import SubRoomBanner from '../familyswimup/components/SubRoomBanner'
 import SubroomCarousel from '../familyswimup/components/SubroomCarousel'
@@ -11,9 +12,10 @@ import img2 from "./images/SRF_4001.jpg";
 import img3 from "./images/SRF_4008.jpg";
 import img4 from "./images/SRF_4016.jpg";
 import RoomsParallaxSection from '../components/RoomsParallaxSection'
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
-const page = () => {
+const Page = () => {
+  const locale = useLocale(); // "tr", "en", "de", "ru"
   const t = useTranslations('SuperiorRoom');
   const t2 = useTranslations('SuperiorRoom.RoomInfo');
   const t3 = useTranslations('SuperiorRoom.RoomTour');
@@ -39,4 +41,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page

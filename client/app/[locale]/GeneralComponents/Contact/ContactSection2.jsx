@@ -62,7 +62,7 @@ const ContactDetails = () => {
 
           {/* Desktop görünüm (lg ve üstü) */}
           <span className="hidden lg:block">
-          Sorgun Mah. Titreyengol Mevkii No:26 Manavgat/ Antalya / TR 
+          {pageData.address?.[locale] || " Sorgun Mah. Titreyengol Mevkii No:26 Manavgat/ Antalya / TR "} 
           </span>
           <span className="hidden lg:block">
           {pageData.phone?.[locale] || t('phone')}
@@ -71,21 +71,21 @@ const ContactDetails = () => {
           {pageData.callcenter?.[locale] || t('callcenter')}
           </span>
           <span className="hidden lg:block">
-         Email: info@lagohotel.com
+          {pageData.email?.[locale] || "Email: info@lagohotel.com"} 
           </span>
         </p>
         <div className="flex gap-[20px] whitespace-nowrap">
           <div className="flex items-center justify-center gap-[18px]">
            <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.instagram.com/lagohotels/"> <PiInstagramLogoLight size={28} /></Link>
+                  target="_blank" href= {pageData.social?.instagram ||  "https://www.instagram.com/lagohotels/"} > <PiInstagramLogoLight size={28} /></Link>
             {/* <PiMetaLogoLight size={30} /> */}
             <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.facebook.com/lagohotels"><PiFacebookLogoLight size={28} /></Link>
+                  target="_blank" href={pageData.social?.facebook ||  "https://www.facebook.com/lagohotels"}><PiFacebookLogoLight size={28} /></Link>
             <Link rel="norefferer nofollower"
-                  target="_blank" href="https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ"><PiYoutubeLogoLight size={28} /></Link>
+                  target="_blank" href={pageData.social?.youtube ||  "https://www.youtube.com/channel/UCjbL19l36uYQEdy2EEw1nLQ"}><PiYoutubeLogoLight size={28} /></Link>
           </div>
           <div className="flex bg-black h-[20px] w-[1px] self-center"></div>
-          <Link href="https://lagohotel.orsmod.com/" className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[16px] font-normal leading-[30px] uppercase">
+          <Link href={pageData.social?.meta ||  "https://lagohotel.orsmod.com/"} className="text-lagoBrown font-marcellus underline underline-offset-[6px] text-[16px] font-normal leading-[30px] uppercase">
           {pageData.buttonText?.[locale] || t('buttonText')}
           </Link>
         </div>

@@ -97,61 +97,81 @@ const Page = () => {
 
       <RoomsSection
       id="swimuproom"
-        img={imgSwim}
-        img2={imgSwim2}
-        header={room3('title')}
-        text={room3('subtitle')}
-         span={room3('m')}
-        span2={room3('view')}
-        buttonText={room3('buttonText')}
-        link="/rooms/swimuproom" 
+        img={ pageData.roomSection3?.img
+      ? `${apiUrl}${pageData.roomSection3.img}`
+      : imgFamily}
+        img2={pageData.roomSection3?.img2
+      ? `${apiUrl}${pageData.roomSection3.img2}`
+      : imgFamily2}
+        header={pageData.roomSection3?.title?.[locale] || room3('title')}
+        text={pageData.roomSection3?.subtitle?.[locale] ||  room3('subtitle')}
+         span={pageData.roomSection3?.m?.[locale] ||  room3('m')}
+        span2={pageData.roomSection3?.view?.[locale] ||  room3('view')}
+        buttonText={pageData.roomSection3?.buttonText?.[locale] ||  room3('buttonText')}
+        link={pageData.roomSection3?.buttonLink?.[locale]}
       />
       <RoomsSectionReverse
        id="familyswimup"
-        img={imgFamilySwim}
-        img2={imgFamilySwim2}
-        header={room4('title')}
-        text={room4('subtitle')}
-         span={room4('m')}
-        span2={room4('view')}
-        buttonText={room4('buttonText')}
-        link="/rooms/familyswimup" 
+         img={ pageData.roomSection4?.img
+      ? `${apiUrl}${pageData.roomSection4.img}`
+      : imgFamily}
+        img2={pageData.roomSection4?.img2
+      ? `${apiUrl}${pageData.roomSection4.img2}`
+      : imgFamily2}
+        header={pageData.roomSection4?.title?.[locale] || room4('title')}
+        text={pageData.roomSection4?.subtitle?.[locale] ||  room4('subtitle')}
+         span={pageData.roomSection4?.m?.[locale] ||  room4('m')}
+        span2={pageData.roomSection4?.view?.[locale] ||  room4('view')}
+        buttonText={pageData.roomSection4?.buttonText?.[locale] ||  room4('buttonText')}
+        link={pageData.roomSection4?.buttonLink?.[locale]}
       />
 
       <RoomsSection
       id="duplexfamilyroom"
-        img={imgDuplex}
-        img2={imgDuplex2}
-        header={room5('title')}
-        text={room5('subtitle')}
-         span={room5('m')}
-        span2={room5('view')}
-        buttonText={room5('buttonText')}
-        link="/rooms/duplexfamilyroom" 
+       img={ pageData.roomSection5?.img
+      ? `${apiUrl}${pageData.roomSection5.img}`
+      : imgFamily}
+        img2={pageData.roomSection5?.img2
+      ? `${apiUrl}${pageData.roomSection5.img2}`
+      : imgFamily2}
+        header={pageData.roomSection5?.title?.[locale] || room5('title')}
+        text={pageData.roomSection5?.subtitle?.[locale] ||  room5('subtitle')}
+         span={pageData.roomSection5?.m?.[locale] ||  room5('m')}
+        span2={pageData.roomSection5?.view?.[locale] ||  room5('view')}
+        buttonText={pageData.roomSection5?.buttonText?.[locale] ||  room5('buttonText')}
+        link={pageData.roomSection5?.buttonLink?.[locale]}
       />
 
      <RoomsSectionReverse
       id="tinyvilla"
-        img={imgTinyvilla}
-        img2={imgTinyvilla2}
-        header={room6('title')}
-        text={room6('subtitle')}
-         span={room6('m')}
-        span2={room6('view')}
-        buttonText={room6('buttonText')}
-        link="/rooms/tinyvilla" 
+         img={ pageData.roomSection6?.img
+      ? `${apiUrl}${pageData.roomSection6.img}`
+      : imgFamily}
+        img2={pageData.roomSection6?.img2
+      ? `${apiUrl}${pageData.roomSection6.img2}`
+      : imgFamily2}
+        header={pageData.roomSection6?.title?.[locale] || room6('title')}
+        text={pageData.roomSection6?.subtitle?.[locale] ||  room6('subtitle')}
+         span={pageData.roomSection6?.m?.[locale] ||  room6('m')}
+        span2={pageData.roomSection6?.view?.[locale] ||  room6('view')}
+        buttonText={pageData.roomSection6?.buttonText?.[locale] ||  room6('buttonText')}
+        link={pageData.roomSection6?.buttonLink?.[locale]}
       />
 
       <RoomsSection
       id="disableroom"
-        img={imgDisable}
-        img2={imgDisable2}
-        header={room7('title')}
-        text={room7('subtitle')}
-         span={room7('m')}
-        span2={room7('view')}
-        buttonText={room7('buttonText')}
-        link="/rooms/disableroom" 
+          img={ pageData.roomSection7?.img
+      ? `${apiUrl}${pageData.roomSection7.img}`
+      : imgFamily}
+        img2={pageData.roomSection7?.img2
+      ? `${apiUrl}${pageData.roomSection7.img2}`
+      : imgFamily2}
+        header={pageData.roomSection7?.title?.[locale] || room7('title')}
+        text={pageData.roomSection7?.subtitle?.[locale] ||  room7('subtitle')}
+         span={pageData.roomSection7?.m?.[locale] ||  room7('m')}
+        span2={pageData.roomSection7?.view?.[locale] ||  room7('view')}
+        buttonText={pageData.roomSection7?.buttonText?.[locale] ||  room7('buttonText')}
+        link={pageData.roomSection7?.buttonLink?.[locale]}
       /> 
 
       <RoomsParallaxSection />

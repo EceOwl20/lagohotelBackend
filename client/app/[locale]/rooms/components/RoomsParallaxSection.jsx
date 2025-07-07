@@ -1,3 +1,4 @@
+"use client"
 import React, {useState, useEffect} from "react";
 import oda from "../images/oda.png";
 import MinibarSvg from "./svg/MinibarSvg";
