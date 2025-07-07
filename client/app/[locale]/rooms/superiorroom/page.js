@@ -1,24 +1,57 @@
 "use client"
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import SubRoomBanner from '../familyswimup/components/SubRoomBanner'
 import SubroomCarousel from '../familyswimup/components/SubroomCarousel'
 import RoomFeatures from '../familyswimup/components/RoomFeatures'
 import RoomTour from '../familyswimup/components/RoomTour'
 import OtherOptions from '../familyswimup/components/OtherOptions'
 import ContactSection2 from '@/app/[locale]/GeneralComponents/Contact/ContactSection2'
-
 import img1 from "./images/SRF_3999.jpg";
 import img2 from "./images/SRF_4001.jpg";
 import img3 from "./images/SRF_4008.jpg";
 import img4 from "./images/SRF_4016.jpg";
 import RoomsParallaxSection from '../components/RoomsParallaxSection'
+import { useParams } from "next/navigation";
 import { useLocale, useTranslations } from 'next-intl';
+import { ROOM_URL_TO_SLUG } from "@/utils/routeMap"; // doğru yolu ayarla
+import { usePathname } from "next/navigation";
 
 const Page = () => {
-  const locale = useLocale(); // "tr", "en", "de", "ru"
   const t = useTranslations('SuperiorRoom');
   const t2 = useTranslations('SuperiorRoom.RoomInfo');
   const t3 = useTranslations('SuperiorRoom.RoomTour');
+  const locale = useLocale();                  // "tr", "en", "de", "ru"
+  const pathname = usePathname();              // "/tr/rooms/superiorroom"
+  const segment = pathname.split("/").pop();    // "superiorroom"
+  const slug = ROOM_URL_TO_SLUG[locale]?.[segment];
+
+  const [pageData, setPageData] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL; // "http://localhost:5001"
+
+  useEffect(() => {
+    if (!slug) {
+      console.error("Unknown segment for slug:", segment);
+      return;
+    }
+    fetch(`${apiUrl}/api/pages/rooms/subroom/${slug}`)
+      .then(res => {
+        if (!res.ok) throw new Error(`Fetch error ${res.status}`);
+        return res.json();
+      })
+      .then(json => setPageData(json))
+      .catch(err => console.error("Subroom fetch failed:", err));
+  }, [apiUrl, slug, segment]);
+
+  if (!pageData) {
+    return (
+      <div className="p-10">
+        <p>Yükleniyor…</p>
+        <p>segment: {segment}</p>
+        <p>mapped slug: {slug}</p>
+      </div>
+    );
+  }
+
 
   const subroomBannerText=[t("text1"),t("text2"),t("text3")]
   const iconTexts=[t2("list1"),t2("list2"),t2("list3")];

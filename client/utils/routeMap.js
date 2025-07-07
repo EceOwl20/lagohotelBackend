@@ -19,6 +19,7 @@ export const ROOM_URL_TO_SLUG = {
     "disabled-room": "DisableRoom",
     "tiny-villa": "TinyVilla",
   },
+
   "de": {
     "familienzimmer-mit-poolzugang": "FamilySwimupRoom",
     "superiorzimmer": "SuperiorRoom",
@@ -126,3 +127,12 @@ export const BARCAFE_URL_TO_SLUG = {
 };
 
 
+/**
+ * URL’den gelen slug’u kanoniğe çevirir.
+ * @param {string} locale — "tr" | "en" | …
+ * @param {string} urlSlug — Next.js’in useParams()‘dan geldiği hali
+ * @returns {string|null} — örn. "SuperiorRoom" veya null
+ */
+export function getRoomSlug(locale, urlSlug) {
+  return ROOM_URL_TO_SLUG[locale]?.[urlSlug] ?? null;
+}
