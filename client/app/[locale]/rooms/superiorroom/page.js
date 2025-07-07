@@ -61,7 +61,7 @@ const Page = () => {
   return (
     <div className=' overflow-hidden flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
      <div className='flex flex-col'>
-     <SubRoomBanner img={img1} span={t("subtitle")} header={t("title")} texts={subroomBannerText} baby={true}/>
+     <SubRoomBanner img={img1} span={pageData.banner.subtitle?.[locale] || t("subtitle")} header={pageData.banner.subtitle?.[locale] || t("title")} texts={subroomBannerText} baby={true}/>
      <SubroomCarousel images={carouselImages}/>
      </div>
       <RoomFeatures span={t2("subtitle")} header={t2("title")} text={t2("text")} header2={t2("title2")} header3={t2("title3")}  text2={t2("text2")} iconsTexts={iconTexts}  roomName="SuperiorRoom" pool={false}/>
