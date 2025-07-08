@@ -19,28 +19,20 @@ import HandsoapSvg from "./HandsoapSvg";
 import TeaCoffeeSvg from "./TeaCoffeeSvg";
 import LedTvSvg from "./LedTvSvg";
 import BalconySvg from "./BalconySvg";
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from "next/link"
+import { ROOM_URL_TO_SLUG } from "@/utils/routeMap"; // doğru yolu ayarla
+import { usePathname } from "next/navigation";
 
 const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, roomName, pool}) => {
   const t = useTranslations(`${roomName}.RoomInfo`);
   const t2 = useTranslations(`SuperiorRoom.ReservationWidget`);
   const dropdownRef = useRef(null);
 
-  const items = [
-    { text: t("madde1"), icon: PoolSvg2 },
-    { text: t("madde2"), icon: AreaSvg },
-    { text: t("madde3"), icon: DresserSvg },
-    { text: t("madde4"), icon: SmokingSvg },
-    { text: t("madde5"), icon: FridgeSvg },
-    { text: t("madde6"), icon: SafeboxSvg },
-    { text: t("madde7"), icon: HairdryerSvg },
-    { text: t("madde8"), icon: HandsoapSvg },
-    { text: t("madde9"), icon: TeaCoffeeSvg },
-    { text: t("madde10"), icon: LedTvSvg },
-    { text: t("madde11"), icon: BalconySvg },
-    { text: t("madde12"), icon: ShowerSvg },
-  ];
+    const slug = roomName;
+  
+    const [pageData, setPageData] = useState(null);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // "http://localhost:5001"
 
   const [checkInDate, setCheckInDate] = useState(null)
   const [checkOutDate, setCheckOutDate] = useState(null)
@@ -48,6 +40,24 @@ const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, 
   const [adults, setAdults] = useState(0)
   const [children, setChildren] = useState(0)
   const [guestInfo, setGuestInfo] = useState({})
+
+
+  useEffect(() => {
+        if (!slug) {
+          console.error("Unknown segment for slug:", segment);
+          return;
+        }
+        fetch(`${apiUrl}/api/pages/rooms/subroom/${slug}`)
+          .then(res => {
+            if (!res.ok) throw new Error(`Fetch error ${res.status}`);
+            return res.json();
+          })
+          .then(json => setPageData(json))
+          .catch(err => console.error("Subroom fetch failed:", err));
+      }, [apiUrl, slug]);
+    
+      
+    
 
     // Dışarıya tıklamayı yakalayıp dropdown'u kapatan effect
     useEffect(() => {
@@ -84,7 +94,30 @@ const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, 
   const incrementChildren = () => setChildren(children + 1)
   const decrementChildren = () => children > 0 && setChildren(children - 1)
 
-  const filteredItems = pool ? items : items.slice(1);
+  if (!pageData) {
+        return (
+          <div className="p-10">
+            <p>Yükleniyor…</p>
+            <p>mapped slug: {slug}</p>
+          </div>
+        );
+      }
+
+  const items = [
+    { text: t("madde1"), icon: PoolSvg2 },
+    { text: pageData.features.iconTexts?.[0].text?.[locale] || t("madde2"), icon: AreaSvg },
+    { text: t("madde3"), icon: DresserSvg },
+    { text: t("madde4"), icon: SmokingSvg },
+    { text: t("madde5"), icon: FridgeSvg },
+    { text: t("madde6"), icon: SafeboxSvg },
+    { text: t("madde7"), icon: HairdryerSvg },
+    { text: t("madde8"), icon: HandsoapSvg },
+    { text: t("madde9"), icon: TeaCoffeeSvg },
+    { text: t("madde10"), icon: LedTvSvg },
+    { text: t("madde11"), icon: BalconySvg },
+    { text: t("madde12"), icon: ShowerSvg },
+  ];
+   const filteredItems = pool ? items : items.slice(1);
 
   return (
     <div className="flex w-screen h-auto items-center justify-center bg-[#fbfbfb] max-w-[1440px]">
