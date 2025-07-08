@@ -104,18 +104,18 @@ const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, 
       }
 
   const items = [
-    { text: t("madde1"), icon: PoolSvg2 },
-    { text: pageData.features.iconTexts?.[0].text?.[locale] || t("madde2"), icon: AreaSvg },
-    { text: t("madde3"), icon: DresserSvg },
-    { text: t("madde4"), icon: SmokingSvg },
-    { text: t("madde5"), icon: FridgeSvg },
-    { text: t("madde6"), icon: SafeboxSvg },
-    { text: t("madde7"), icon: HairdryerSvg },
-    { text: t("madde8"), icon: HandsoapSvg },
-    { text: t("madde9"), icon: TeaCoffeeSvg },
-    { text: t("madde10"), icon: LedTvSvg },
-    { text: t("madde11"), icon: BalconySvg },
-    { text: t("madde12"), icon: ShowerSvg },
+    { text:pageData.features.iconTexts?.[0].text?.[locale] || t("madde1"), icon: PoolSvg2 },
+    { text: pageData.features.iconTexts?.[1].text?.[locale] || t("madde2"), icon: AreaSvg },
+    { text:pageData.features.iconTexts?.[2].text?.[locale] || t("madde3"), icon: DresserSvg },
+    { text:pageData.features.iconTexts?.[3].text?.[locale] || t("madde4"), icon: SmokingSvg },
+    { text:pageData.features.iconTexts?.[4].text?.[locale] || t("madde5"), icon: FridgeSvg },
+    { text:pageData.features.iconTexts?.[5].text?.[locale] || t("madde6"), icon: SafeboxSvg },
+    { text:pageData.features.iconTexts?.[6].text?.[locale] || t("madde7"), icon: HairdryerSvg },
+    { text:pageData.features.iconTexts?.[7].text?.[locale] || t("madde8"), icon: HandsoapSvg },
+    { text:pageData.features.iconTexts?.[8].text?.[locale] || t("madde9"), icon: TeaCoffeeSvg },
+    { text:pageData.features.iconTexts?.[9].text?.[locale] || t("madde10"), icon: LedTvSvg },
+    { text:pageData.features.iconTexts?.[10].text?.[locale] || t("madde11"), icon: BalconySvg },
+    { text:pageData.features.iconTexts?.[11].text?.[locale] || t("madde12"), icon: ShowerSvg },
   ];
    const filteredItems = pool ? items : items.slice(1);
 

@@ -7,10 +7,29 @@ import options3 from "../images/option3.webp";
 import Image from "next/image";
 import Link from "next/link";
 import { BiArea, BiGroup } from "react-icons/bi";
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const OtherOptions = () => {
   const t = useTranslations('SuperiorRoom.OtherOptions');
+    const locale = useLocale(); // "tr", "en", "de", "ru"
+    const [pageData, setPageData] = useState(null);
+     const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+
+      useEffect(() => {
+                const fetchPageData = async () => {
+                  try {
+                    const res = await fetch(`${apiUrl}/api/otherOptions`);
+                    const json = await res.json();
+                    setPageData(json);
+                  } catch (err) {
+                    console.error("Contact section 2 verisi alınamadı:", err.message);
+                  }
+                };
+            
+                fetchPageData();
+              }, []);
+            
+          
 
   const rooms = [
     {
@@ -67,6 +86,17 @@ const OtherOptions = () => {
       setSelectedIndex(emblaApi.selectedScrollSnap());
     }
   }, [emblaApi]);
+
+
+      if (!pageData) return <p className="p-10">Yükleniyor...</p>;
+     
+     
+        const imgGallery  = pageData.image
+          const backgroundImgSrc = imgGallery
+         ? imgGallery.startsWith("/uploads")
+           ? `${apiUrl}${imgGallery}`
+           : imgGallery
+         : "";
 
   return (
     <div className="flex w-screen h-auto items-center justify-center max-w-[1440px]">
