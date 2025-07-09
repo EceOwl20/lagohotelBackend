@@ -1,11 +1,39 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from "react";
 import img from "../images/magnafull.webp"
 import Link from 'next/link'
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from 'next-intl';
 
 const MainRestaurantSection = () => {
   const t = useTranslations('Restaurants.MainRestaurantSection');
+  const locale = useLocale(); // "tr", "en", "de", "ru"
 
+   const [pageData, setPageData] = useState(null);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
+      
+        useEffect(() => {
+          const fetchPageData = async () => {
+            try {
+            const res = await fetch(`${apiUrl}/api/pages/restaurants`);
+              const json = await res.json();
+              setPageData(json);
+            } catch (err) {
+              console.error("Anasayfa verisi alınamadı:", err.message);
+            }
+          };
+      
+          fetchPageData();
+        }, []);
+      
+        if (!pageData) return <p className="p-10">Yükleniyor...</p>;
+        
+         const bannerImg = pageData.mainBanner?.image
+            ? pageData.mainBanner.image.startsWith("/")
+              ? `${apiUrl}${pageData.mainBanner.image}`
+              : pageData.mainBanner.image
+            : "";
+        
+            
   return (
     <div className='flex w-screen h-[45vh] min-h-[460px] items-center justify-center bg-center bg-cover  relative' style={{ backgroundImage: `url(${img.src})` }}>
         <div className='absolute inset-0 z-[1] bg-lagoBlack/40'></div>

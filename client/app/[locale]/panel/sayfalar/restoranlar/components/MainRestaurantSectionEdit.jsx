@@ -31,6 +31,36 @@ export default function MainRestaurantSectionEdit({ data, setData, langs }) {
     }
   };
 
+    const listItems = Array.isArray(data.mainRestaurantSection?.list) && data.mainRestaurantSection.list.length > 0
+    ? data.mainRestaurantSection.list
+    : [{ tr: "", en: "", de: "", ru: "" }];
+
+
+  // Liste fonksiyonları
+  const handleAddListItem = () => {
+    const yeni = [...listItems, { tr: "", en: "", de: "", ru: "" }];
+    setData(prev => ({
+      ...prev,
+      mainRestaurantSection: { ...prev.mainRestaurantSection, list: yeni }
+    }));
+  };
+  const handleRemoveListItem = idx => {
+    const yeni = listItems.filter((_, i) => i !== idx);
+    setData(prev => ({
+      ...prev,
+      mainRestaurantSection: { ...prev.mainRestaurantSection, list: yeni }
+    }));
+  };
+  const handleListChange = (idx, lang, value) => {
+    const yeni = listItems.map((item, i) =>
+      i === idx ? { ...item, [lang]: value } : item
+    );
+    setData(prev => ({
+      ...prev,
+      mainRestaurantSection: { ...prev.mainRestaurantSection, list: yeni }
+    }));
+  };
+
   return (
     <div className="mb-8">
       <h3 className="font-bold text-2xl mb-2">Main Restaurant Section</h3>
@@ -155,37 +185,52 @@ export default function MainRestaurantSectionEdit({ data, setData, langs }) {
         </div>
       </div>
 
-      {/* Liste (her satır ayrı) */}
-      <div className="mb-6">
-        <label className="block font-semibold mb-2 text-[18px]">Liste (her satır ayrı madde)</label>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {langs.map((lang) => (
-            <div key={lang} className="flex flex-col">
-              <label className="text-xs mb-1 text-gray-600">
-                {dilAdlari[lang] || lang.toUpperCase()}
-              </label>
-              <textarea
-                rows={3}
-                placeholder={`Liste (${lang.toUpperCase()})`}
-                value={data.mainRestaurantSection?.list?.[lang]?.join("\n") || ""}
-                onChange={e =>
-                  setData({
-                    ...data,
-                    mainRestaurantSection: {
-                      ...data.mainRestaurantSection,
-                      list: {
-                        ...data.mainRestaurantSection?.list,
-                        [lang]: e.target.value.split("\n"),
-                      },
-                    },
-                  })
-                }
-                className="w-full border p-2 rounded"
-              />
+  {/* Liste maddeleri */}
+        <div className="mb-6">
+          <label className="block font-semibold mb-2 text-[18px]">
+            Liste Maddeleri
+          </label>
+          {listItems.map((item, idx) => (
+            <div key={idx} className="mb-4 border p-4 rounded bg-white">
+              <div className="flex justify-between items-center mb-2">
+                <strong>Madde #{idx + 1}</strong>
+                {listItems.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => handleRemoveListItem(idx)}
+                    className="text-red-600 hover:underline text-sm"
+                  >
+                    Sil
+                  </button>
+                )}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {langs.map(lang => (
+                  <div key={lang}>
+                    <label className="text-xs text-gray-600 mb-1 block">
+                      {dilAdlari[lang] || lang.toUpperCase()}
+                    </label>
+                    <input
+                      type="text"
+                      placeholder={`Madde ${idx + 1} (${lang.toUpperCase()})`}
+                      value={item[lang] || ""}
+                      onChange={e => handleListChange(idx, lang, e.target.value)}
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
+
+          <button
+            type="button"
+            onClick={handleAddListItem}
+            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            + Madde Ekle
+          </button>
         </div>
-      </div>
 
       {/* Buton metni tüm diller */}
       <div className="mb-6">

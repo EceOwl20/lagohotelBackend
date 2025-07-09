@@ -31,7 +31,6 @@ const page = () => {
    
   const t = useTranslations('Restaurants');
   const t2 = useTranslations('Restaurants.ClinaryInfoSection');
-  const textsClinary=[t2("text1"),t2("text2"),t2("text3"),t2("text4")]
   const t3 = useTranslations('Restaurants.CuisinesCarousel');
   const t4 = useTranslations('Restaurants.ClinaryReverseSection');
   const t5 = useTranslations('Restaurants.CuisinesCarousel2');
@@ -124,10 +123,24 @@ const page = () => {
       : pageData.mainBanner.image
     : "";
 
+  const leftImage = pageData.clinaryInfo?.image1
+    ? pageData.clinaryInfo.image1.startsWith("/")
+      ? `${apiUrl}${pageData.clinaryInfo.image1}`
+      : pageData.clinaryInfo.image1
+    : "";
+
+    const rightImage = pageData.clinaryInfo?.image2
+    ? pageData.clinaryInfo.image2.startsWith("/")
+      ? `${apiUrl}${pageData.clinaryInfo.image2}`
+      : pageData.clinaryInfo.image2
+    : "";
+
+ const textsClinary=[pageData.clinaryInfo?.texts?.[0]?.[locale],pageData.clinaryInfo?.texts?.[1]?.[locale],pageData.clinaryInfo?.texts?.[2]?.[locale],pageData.clinaryInfo?.texts?.[3]?.[locale]]
+
   return (
     <div className='overflow-hidden items-center justify-center flex flex-col gap-[60px]  md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
       <RestaurantMainBanner img={bannerImg} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
-      <ClinaryInfoSection img1={img3} img2={img4} span={t2('subtitle')} header={t2('title')} texts={textsClinary}/>
+      <ClinaryInfoSection img1={rightImage} img2={leftImage} span={pageData.clinaryInfo?.subtitle?.[locale]} header={pageData.clinaryInfo?.title?.[locale]} texts={textsClinary}/>
       <MainRestaurantSection/>
       <CuisinesCarousel span={t3("subtitle")} header={t3("title")} text={t3("text")} cuisines={cuisines}/>
       <ClinaryReverseInfo img1={img1} img2={img2} span={t4("subtitle")} header={t4("title")} text1={t4("text1")} text2={t4("text2")}/>

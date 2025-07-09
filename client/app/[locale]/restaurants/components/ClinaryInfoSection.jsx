@@ -75,8 +75,8 @@ const ClinaryInfoSection = ({
           <Image
             src={img2}
             alt="art"
-            width={img2.width}
-            height={img2.height}
+            width={img2.width || 300}
+            height={img2.height || 450}
             className={`${imgClasses} mb-[20px] lg:mb-0 ${
               visible ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0"
             }`}
@@ -84,8 +84,8 @@ const ClinaryInfoSection = ({
           <Image
             src={img1}
             alt="art"
-            width={img1.width}
-            height={img1.height}
+            width={img1.width || 300}
+            height={img1.height || 450}
             className={`absolute top-[80px] left-[126px] md:top-[208px] md:left-[135px] lg:top-[105px] lg:left-[215px] ${imgClasses} ${
               visible ? "-translate-y-0 opacity-100" : "translate-y-5 opacity-0"
             }`}
