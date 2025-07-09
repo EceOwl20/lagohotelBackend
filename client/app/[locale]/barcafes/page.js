@@ -1,3 +1,5 @@
+"use client"
+import React, { useState, useEffect } from "react";
 import imgBanner from "./images/mainbar.webp"
 import ClinaryInfoSection from '../restaurants/components/ClinaryInfoSection'
 import cafebar1 from "./images/cafebar1.webp"
@@ -19,9 +21,10 @@ import lago from "./images/lago.webp"
 import house from "./images/house.webp"
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
 import RestaurantMainBanner from '../restaurants/components/RestaurantMainBanner'
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from 'next-intl';
 
 const page = () => {
+   const locale = useLocale(); // "tr", "en", "de", "ru"
   const t = useTranslations('BarAndCafes');
   const t2 = useTranslations('BarAndCafes.ClinaryInfoSection');
   const t3 = useTranslations('BarAndCafes.BarImageSection');
@@ -29,6 +32,25 @@ const page = () => {
   const t5 = useTranslations('BarAndCafes.BarImageSection2');
   const t6 = useTranslations('BarAndCafes.CuisinesCarousel2');
   const t7 = useTranslations('BarAndCafes.DiscoverBackground');
+
+   const [pageData, setPageData] = useState(null);
+      const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
+      
+        useEffect(() => {
+          const fetchPageData = async () => {
+            try {
+            const res = await fetch(`${apiUrl}/api/pages/barcafes`);
+              const json = await res.json();
+              setPageData(json);
+            } catch (err) {
+              console.error("Anasayfa verisi alınamadı:", err.message);
+            }
+          };
+      
+          fetchPageData();
+        }, []);
+      
+        if (!pageData) return <p className="p-10">Yükleniyor...</p>;
 
   const otherOptions = [
     {
@@ -114,7 +136,7 @@ const backgroundTexts2=[t5("text1") ]
 
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-hidden'>
-      <RestaurantMainBanner  img={imgBanner} span={t("subtitle")} header={t("title")} text={t("text")}/>
+      <RestaurantMainBanner  img={imgBanner} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
       <ClinaryInfoSection img1={cafebar1} img2={cafebar2} span={t2("subtitle")} header={t("title")} texts={clinaryTexts}/>
       <BackgroundSection span={t3("subtitle")} header={t3("title")} texts={backgroundTexts} link="/barcafes/mignonbar" img={backgroundImg2} buttonText={t3("title")}/>
       <OtherOptions4 span={t4("subtitle")} header={t4("title")} text={t4("text")} images={otherOptions} />
