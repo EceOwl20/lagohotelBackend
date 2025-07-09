@@ -1,4 +1,5 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from "react";
 import RestaurantMainBanner from './components/RestaurantMainBanner'
 import ClinaryInfoSection from './components/ClinaryInfoSection'
 import MainRestaurantSection from './components/MainRestaurantSection'
@@ -23,9 +24,11 @@ import img4 from "./images/art2.webp"
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
 import Image from 'next/image'
 import mainBanner from "./images/restaurantMain.webp"
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from 'next-intl';
 
 const page = () => {
+   const locale = useLocale(); // "tr", "en", "de", "ru"
+   
   const t = useTranslations('Restaurants');
   const t2 = useTranslations('Restaurants.ClinaryInfoSection');
   const textsClinary=[t2("text1"),t2("text2"),t2("text3"),t2("text4")]
@@ -33,6 +36,25 @@ const page = () => {
   const t4 = useTranslations('Restaurants.ClinaryReverseSection');
   const t5 = useTranslations('Restaurants.CuisinesCarousel2');
   const t6 = useTranslations('Restaurants.DiscoverBackground');
+
+  const [pageData, setPageData] = useState(null);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
+    
+      useEffect(() => {
+        const fetchPageData = async () => {
+          try {
+          const res = await fetch(`${apiUrl}/api/pages/restaurants`);
+            const json = await res.json();
+            setPageData(json);
+          } catch (err) {
+            console.error("Anasayfa verisi alınamadı:", err.message);
+          }
+        };
+    
+        fetchPageData();
+      }, []);
+    
+      if (!pageData) return <p className="p-10">Yükleniyor...</p>;
 
   const cuisines = [
     {
@@ -95,9 +117,16 @@ const page = () => {
     }
   ];
 
+    // banner.image mutlak URL’e çevir
+  const bannerImg = pageData.mainBanner?.image
+    ? pageData.mainBanner.image.startsWith("/")
+      ? `${apiUrl}${pageData.mainBanner.image}`
+      : pageData.mainBanner.image
+    : "";
+
   return (
     <div className='overflow-hidden items-center justify-center flex flex-col gap-[60px]  md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
-      <RestaurantMainBanner img={mainBanner} span={t('subtitle')} header={t('title')} text={t('text')}/>
+      <RestaurantMainBanner img={bannerImg} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
       <ClinaryInfoSection img1={img3} img2={img4} span={t2('subtitle')} header={t2('title')} texts={textsClinary}/>
       <MainRestaurantSection/>
       <CuisinesCarousel span={t3("subtitle")} header={t3("title")} text={t3("text")} cuisines={cuisines}/>

@@ -15,12 +15,14 @@ const RestaurantPageSchema = new mongoose.Schema({
     image2: String,
     subtitle: { tr: String, en: String, de: String, ru: String },
     title:    { tr: String, en: String, de: String, ru: String },
-    texts:    {
-      tr: [String],
-      en: [String],
-      de: [String],
-      ru: [String]
+    texts: [
+    {
+      tr: String,
+      en: String,
+      de: String,
+      ru: String
     }
+  ]
   },
 
   mainRestaurantSection: {
@@ -29,10 +31,10 @@ const RestaurantPageSchema = new mongoose.Schema({
     title:    { tr: String, en: String, de: String, ru: String },
     text:     { tr: String, en: String, de: String, ru: String },
     list: {
-      tr: [String],
-      en: [String],
-      de: [String],
-      ru: [String]
+      tr: String,
+      en: String,
+      de: String,
+      ru: String
     },
     buttonText: { tr: String, en: String, de: String, ru: String },
     buttonLink: String

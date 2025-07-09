@@ -29,40 +29,7 @@ const OtherOptions = () => {
                 fetchPageData();
               }, []);
             
-          
-
-  const rooms = [
-    {
-      id: 1,
-      img: options1,
-      title: t("title1"),
-      description: t("subtitle1"),
-      size: t("m1"),
-      capacity: t("capacity1"),
-      text: t("text1"),
-      link: "/rooms/familyroom",
-    },
-    {
-      id: 2,
-      img: options2,
-      title: t("title2"),
-      description: t("subtitle2"),
-      size: t("m2"),
-      capacity: t("capacity2"),
-      text: t("text2"),
-      link: "/rooms/swimuproom",
-    },
-    {
-      id: 3,
-      img: options3,
-      title: t("title3"),
-      description: t("subtitle3"),
-      size: t("m3"),
-      capacity: t("capacity3"),
-      text: t("text3"),
-      link: "/rooms/superiorroom",
-    },
-  ];
+        
 
   const [emblaRef, emblaApi] = useEmblaCarousel({  loop: true,
     align: "start",
@@ -98,15 +65,50 @@ const OtherOptions = () => {
            : imgGallery
          : "";
 
+
+
+ const rooms = [
+    {
+      id: 1,
+      img: options1,
+      title: pageData.rooms?.[0]?.title?.[locale],
+      description: pageData.rooms?.[0]?.description?.[locale],
+      size: pageData.rooms?.[0]?.size?.[locale],
+      capacity:pageData.rooms?.[0]?.capacity?.[locale],
+      text: pageData.rooms?.[0]?.text?.[locale],
+      link: pageData.rooms?.[0]?.link,
+    },
+    {
+      id: 2,
+     img: options1,
+      title: pageData.rooms?.[1]?.title?.[locale],
+      description: pageData.rooms?.[1]?.description?.[locale],
+      size: pageData.rooms?.[1]?.size?.[locale],
+      capacity:pageData.rooms?.[1]?.capacity?.[locale],
+      text: pageData.rooms?.[1]?.text?.[locale],
+      link: pageData.rooms?.[1]?.link,
+    },
+    {
+      id: 3,
+      img: options1,
+      title: pageData.rooms?.[2]?.title?.[locale],
+      description: pageData.rooms?.[2]?.description?.[locale],
+      size: pageData.rooms?.[2]?.size?.[locale],
+      capacity:pageData.rooms?.[2]?.capacity?.[locale],
+      text: pageData.rooms?.[2]?.text?.[locale],
+      link: pageData.rooms?.[2]?.link,
+    },
+  ];
+
   return (
     <div className="flex w-screen h-auto items-center justify-center max-w-[1440px]">
       <div className="flex flex-col w-[87.79%] md:w-[91.4%] lg:w-[76.8%] items-start justify-center gap-[30px] lg:gap-[50px] lg:min-w-[960px]">
         <div className="flex flex-col items-start justify-center w-full text-black gap-[15px] md:gap-[25px] lg:gap-[35px]">
           <span className="text-[12px] font-medium uppercase tracking-[0.48px] leading-[14px] font-jost">
-          {t("span")}
+          {pageData.span?.[locale]}
           </span>
           <h2 className="text-[28px] md:text-[36px] lg:text-[48px] font-marcellus font-normal leading-[120%] lg:leading-[57.6px] lg:capsizedText2">
-          {t("title")}
+          {pageData.title?.[locale]}
           </h2>
         </div>
 
@@ -154,7 +156,7 @@ const OtherOptions = () => {
                     href={room.link}
                     className="flex text-lagoBrown leading-[30px] uppercase font-medium text-[12px] lg:text-[14px] px-[40px] py-[20px] border border-lagoBrown text-center justify-center items-center h-[41px]"
                   >
-                  {t("buttonText")}
+                  {pageData.buttonText?.[locale]}
                   </Link>
                 </div>
               </div>

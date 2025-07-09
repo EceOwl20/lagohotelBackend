@@ -7,6 +7,7 @@ import { useLocale, useTranslations } from 'next-intl';
 const RoomsBanner = ({roomsBanner}) => {
   const t = useTranslations('Accommodation');
   const locale = useLocale(); // "tr", "en", "de", "ru"
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
     const header = roomsBanner?.header?.[locale] || t('header');
   const buttonText1 = roomsBanner?.buttons?.[0]?.header?.[locale] || t('buttonText1');
@@ -27,7 +28,7 @@ const RoomsBanner = ({roomsBanner}) => {
         
   const bannerImgSrc = roomsBanner?.bannerImage
     ? roomsBanner.bannerImage.startsWith("/uploads")
-      ? "http://localhost:5001" + roomsBanner.bannerImage
+      ? apiUrl + roomsBanner.bannerImage
       : roomsBanner.bannerImage
     : "";
 

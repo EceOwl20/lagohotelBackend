@@ -31,6 +31,38 @@ export default function ClinaryInfoEdit({ data, setData, langs }) {
     }
   };
 
+    const texts = Array.isArray(data.clinaryInfo?.texts) && data.clinaryInfo.texts.length > 0
+    ? data.clinaryInfo.texts
+    : [{ tr: "", en: "", de: "", ru: "" }];
+
+     // texts dizisine yeni bir satır ekle
+  const handleAddText = () => {
+    const yeni = [...texts, { tr: "", en: "", de: "", ru: "" }];
+    setData((prev) => ({
+      ...prev,
+      clinaryInfo: { ...prev.clinaryInfo, texts: yeni },
+    }));
+  };
+  // texts dizisinden bir satırı sil
+  const handleRemoveText = (idx) => {
+    const yeni = texts.filter((_, i) => i !== idx);
+    setData((prev) => ({
+      ...prev,
+      clinaryInfo: { ...prev.clinaryInfo, texts: yeni },
+    }));
+  };
+  // texts içindeki bir alanı güncelle
+  const handleTextChange = (idx, lang, value) => {
+    const yeni = texts.map((item, i) =>
+      i === idx ? { ...item, [lang]: value } : item
+    );
+    setData((prev) => ({
+      ...prev,
+      clinaryInfo: { ...prev.clinaryInfo, texts: yeni },
+    }));
+  };
+
+
   return (
     <div className="mb-8">
       <h3 className="font-bold text-2xl mb-2">Clinary Info Section</h3>
@@ -133,35 +165,49 @@ export default function ClinaryInfoEdit({ data, setData, langs }) {
         </div>
 
         {/* Açıklamalar */}
+         {/* Açıklamalar (Array olarak düzenleniyor) */}
         <div>
-          <label className="block font-semibold mb-2 text-[18px]">Açıklamalar (her satır ayrı)</label>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {langs.map((lang) => (
-              <div key={lang} className="flex flex-col">
-                <label className="text-xs mb-1 text-gray-600">
-                  {dilAdlari[lang] || lang.toUpperCase()}
-                </label>
-                <textarea
-                  rows={3}
-                  placeholder={`Açıklama (${lang.toUpperCase()})`}
-                  value={data.clinaryInfo?.texts?.[lang]?.join("\n") || ""}
-                  onChange={e =>
-                    setData({
-                      ...data,
-                      clinaryInfo: {
-                        ...data.clinaryInfo,
-                        texts: {
-                          ...data.clinaryInfo?.texts,
-                          [lang]: e.target.value.split("\n"),
-                        },
-                      },
-                    })
-                  }
-                  className="w-full border p-2 rounded"
-                />
+          <label className="block font-semibold mb-2 text-[18px]">
+            Açıklamalar
+          </label>
+          {texts.map((txt, idx) => (
+            <div key={idx} className="mb-4 border p-4 rounded bg-white">
+              <div className="flex justify-between items-center mb-2">
+                <strong>Metin #{idx + 1}</strong>
+                {texts.length > 1 && (
+                  <button
+                    onClick={() => handleRemoveText(idx)}
+                    className="text-red-600 hover:underline text-sm"
+                  >
+                    Sil
+                  </button>
+                )}
               </div>
-            ))}
-          </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {langs.map((lang) => (
+                  <div key={lang}>
+                    <label className="text-xs text-gray-600">
+                      {dilAdlari[lang]}
+                    </label>
+                    <textarea
+                      rows={2}
+                      value={txt[lang] || ""}
+                      onChange={(e) =>
+                        handleTextChange(idx, lang, e.target.value)
+                      }
+                      className="w-full border p-2 rounded"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+          <button
+            onClick={handleAddText}
+            className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+          >
+            + Yeni Metin Ekle
+          </button>
         </div>
       </div>
     </div>
