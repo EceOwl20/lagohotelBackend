@@ -46,7 +46,7 @@ export default function RestaurantPanelPage() {
       <MainRestaurantSectionEdit data={data} setData={setData} langs={langs} />
       <CuisinesEdit data={data} setData={setData} langs={langs} blockName="cuisines" />
       <ClinaryReverseInfoEdit data={data} setData={setData} langs={langs} />
-      <CuisinesEdit data={data} setData={setData} langs={langs} blockName="cuisines2" />
+      {/* <CuisinesEdit data={data} setData={setData} langs={langs} blockName="cuisines2" /> */}
       <DiscoverBackgroundEdit data={data} setData={setData} langs={langs} />
       <button
         className="mt-6 px-6 py-3 rounded bg-blue-600 text-white font-bold"
