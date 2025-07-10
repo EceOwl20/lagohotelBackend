@@ -68,7 +68,7 @@ const page = () => {
        title: pageData.otherOptions?.[0]?.cuisine?.[1]?.title?.[locale],
         description: pageData.otherOptions?.[0]?.cuisine?.[1]?.subtitle?.[locale],
         text:pageData.otherOptions?.[0]?.cuisine?.[1]?.text?.[locale],
-        link:pageData.otherOptions?.[0]?.cuisine?.[1]?.link,
+        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
         buttonText:pageData.otherOptions?.[0]?.cuisine?.[1]?.buttonText?.[locale]
       },
       {
@@ -77,7 +77,7 @@ const page = () => {
         title: pageData.otherOptions?.[0]?.cuisine?.[2]?.title?.[locale],
         description: pageData.otherOptions?.[0]?.cuisine?.[2]?.subtitle?.[locale],
         text:pageData.otherOptions?.[0]?.cuisine?.[2]?.text?.[locale],
-        link:pageData.otherOptions?.[0]?.cuisine?.[2]?.link,
+        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
         buttonText:pageData.otherOptions?.[0]?.cuisine?.[2]?.buttonText?.[locale]
       },
       {
@@ -86,7 +86,7 @@ const page = () => {
          title: pageData.otherOptions?.[0]?.cuisine?.[3]?.title?.[locale],
         description: pageData.otherOptions?.[0]?.cuisine?.[3]?.subtitle?.[locale],
         text:pageData.otherOptions?.[0]?.cuisine?.[3]?.text?.[locale],
-        link:pageData.otherOptions?.[0]?.cuisine?.[3]?.link,
+        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
         buttonText:pageData.otherOptions?.[0]?.cuisine?.[3]?.buttonText?.[locale]
       }
   ];
@@ -95,38 +95,38 @@ const page = () => {
     {
         id: 1,
         img: piano,
-       title: pageData.otherOptions?.[1]?.cuisine?.[0]?.title?.[locale],
-        description: pageData.otherOptions?.[1]?.cuisine?.[0]?.subtitle?.[locale],
-        text:pageData.otherOptions?.[1]?.cuisine?.[0]?.text?.[locale],
-        link:pageData.otherOptions?.[1]?.cuisine?.[0]?.link,
-        buttonText:pageData.otherOptions?.[1]?.cuisine?.[0]?.buttonText?.[locale]
+       title: pageData.otherOptions2?.[0]?.cuisine?.[0]?.title?.[locale],
+        description: pageData.otherOptions2?.[0]?.cuisine?.[0]?.subtitle?.[locale],
+        text:pageData.otherOptions2?.[0]?.cuisine?.[0]?.text?.[locale],
+        link:pageData.otherOptions2?.[0]?.cuisine?.[0]?.link,
+        buttonText:pageData.otherOptions2?.[0]?.cuisine?.[0]?.buttonText?.[locale]
       },
     {
         id: 2,
         img: abella,
-        title: pageData.otherOptions?.[1]?.cuisine?.[1]?.title?.[locale],
-        description: pageData.otherOptions?.[1]?.cuisine?.[1]?.subtitle?.[locale],
-        text:pageData.otherOptions?.[1]?.cuisine?.[1]?.text?.[locale],
-        link:pageData.otherOptions?.[1]?.cuisine?.[1]?.link,
-        buttonText:pageData.otherOptions?.[1]?.cuisine?.[1]?.buttonText?.[locale]
+        title: pageData.otherOptions2?.[0]?.cuisine?.[1]?.title?.[locale],
+        description: pageData.otherOptions2?.[0]?.cuisine?.[1]?.subtitle?.[locale],
+        text:pageData.otherOptions2?.[0]?.cuisine?.[1]?.text?.[locale],
+        link:pageData.otherOptions2?.[0]?.cuisine?.[1]?.link,
+        buttonText:pageData.otherOptions2?.[0]?.cuisine?.[1]?.buttonText?.[locale]
       },
       {
         id: 3,
         img: lago,
-         title: pageData.otherOptions?.[1]?.cuisine?.[2]?.title?.[locale],
-        description: pageData.otherOptions?.[1]?.cuisine?.[2]?.subtitle?.[locale],
-        text:pageData.otherOptions?.[1]?.cuisine?.[2]?.text?.[locale],
-        link:pageData.otherOptions?.[1]?.cuisine?.[2]?.link,
-        buttonText:pageData.otherOptions?.[1]?.cuisine?.[2]?.buttonText?.[locale]
+         title: pageData.otherOptions2?.[0]?.cuisine?.[2]?.title?.[locale],
+        description: pageData.otherOptions2?.[0]?.cuisine?.[2]?.subtitle?.[locale],
+        text:pageData.otherOptions2?.[0]?.cuisine?.[2]?.text?.[locale],
+        link:pageData.otherOptions2?.[0]?.cuisine?.[2]?.link,
+        buttonText:pageData.otherOptions2?.[0]?.cuisine?.[2]?.buttonText?.[locale]
       },
       {
         id: 4,
         img: house,
-         title: pageData.otherOptions?.[1]?.cuisine?.[3]?.title?.[locale],
-        description: pageData.otherOptions?.[1]?.cuisine?.[3]?.subtitle?.[locale],
-        text:pageData.otherOptions?.[1]?.cuisine?.[3]?.text?.[locale],
-        link:pageData.otherOptions?.[1]?.cuisine?.[3]?.link,
-        buttonText:pageData.otherOptions?.[1]?.cuisine?.[3]?.buttonText?.[locale]
+         title: pageData.otherOptions2?.[0]?.cuisine?.[3]?.title?.[locale],
+        description: pageData.otherOptions2?.[0]?.cuisine?.[3]?.subtitle?.[locale],
+        text:pageData.otherOptions2?.[0]?.cuisine?.[3]?.text?.[locale],
+        link:pageData.otherOptions2?.[0]?.cuisine?.[3]?.link,
+        buttonText:pageData.otherOptions2?.[0]?.cuisine?.[3]?.buttonText?.[locale]
       }
   ];
 

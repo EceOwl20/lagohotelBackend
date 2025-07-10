@@ -61,7 +61,12 @@ const barCafesSchema = new mongoose.Schema({
     subtitle: langObj,
     title: langObj,
     text: langObj,
-    buttonText: langObj
+    buttonText: langObj,
+    link:String,
+    lists: {
+      type: [langObj],
+      default: []
+    }
   },
   discoverBackground: {
     image: String,
