@@ -24,7 +24,7 @@ export default function BarCarouselEdit({ data, setData }) {
     for (const file of files) {
       const formData = new FormData();
       formData.append("image", file);
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
       const result = await res.json();
       if (res.ok && result.imageUrl) uploaded.push(result.imageUrl);
     }
@@ -94,6 +94,15 @@ export default function BarCarouselEdit({ data, setData }) {
       }
     });
   };
+
+   const handleGlobalLinkChange = value =>
+    setData({
+      ...data,
+      barCarousel: {
+        ...data.barCarousel,
+        link: value
+      }
+    });
 
   return (
     <div className="mb-8">
@@ -189,6 +198,18 @@ export default function BarCarouselEdit({ data, setData }) {
         >
           Madde Ekle
         </button>
+
+        {/* Global Link */}
+        <div className="mt-4">
+          <label className="block font-semibold mb-1">Ortak Link</label>
+          <input
+            type="text"
+            className="w-full border rounded p-2"
+            placeholder="link"
+            value={data.barCarousel?.link || ""}
+            onChange={e => handleGlobalLinkChange(e.target.value)}
+          />
+        </div>
       </div>
     </div>
   );
