@@ -9,6 +9,7 @@ const langs = [
 export default function BackgroundSectionEdit({ data, setData }) {
   const arr = data.backgroundSections || [];
   const [uploading, setUploading] = useState([]);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
   const uploadImage = async (e, idx) => {
     const file = e.target.files?.[0];
@@ -16,11 +17,14 @@ export default function BackgroundSectionEdit({ data, setData }) {
     setUploading(v => ({ ...v, [idx]: true }));
     const formData = new FormData();
     formData.append("image", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
+    const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
     const result = await res.json();
-    if (res.ok && result.imageUrl) {
+    // backend'in döndürdüğü yolu al
+    const imagePath = result.path || result.imageUrl;
+    if (res.ok && imagePath) {
       const updated = [...arr];
-      updated[idx].img = result.imageUrl;
+      // modeldeki alan adı ne ise ona göre kaydet (örneğin `image`)
+      updated[idx].image = imagePath;
       setData({ ...data, backgroundSections: updated });
     }
     setUploading(v => ({ ...v, [idx]: false }));
@@ -39,7 +43,7 @@ export default function BackgroundSectionEdit({ data, setData }) {
   };
 
   const addBg = () =>
-    setData({ ...data, backgroundSections: [...arr, { img: "", subtitle: {}, title: {}, texts: {}, link: "", buttonText: {} }] });
+     setData({ ...data, backgroundSections: [...arr, { image: "", subtitle: {}, title: {}, texts: {}, link: "", buttonText: {} }] });
   const removeBg = (idx) =>
     setData({ ...data, backgroundSections: arr.filter((_, i) => i !== idx) });
 
@@ -53,8 +57,8 @@ export default function BackgroundSectionEdit({ data, setData }) {
           {/* Görsel */}
           <label className="block font-semibold mb-2">Arka Plan Görseli</label>
           <div className="flex items-center gap-4 mb-2">
-            {item.img && (
-              <img src={`http://localhost:5001${item.img}`} alt="bg" className="w-[120px] h-[80px] object-cover rounded" />
+            {item.image && (
+              <img src={`${apiUrl}${item.image}`} alt="bg" className="w-[120px] h-[80px] object-cover rounded" />
             )}
             <input type="file" accept="image/*" onChange={e => uploadImage(e, idx)} disabled={uploading[idx]} />
             {uploading[idx] && <span className="text-blue-500">Yükleniyor...</span>}

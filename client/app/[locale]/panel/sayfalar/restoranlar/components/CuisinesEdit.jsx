@@ -6,6 +6,7 @@ const dilAdlari = { tr: "Türkçe", en: "İngilizce", de: "Almanca", ru: "Rusça
 export default function CuisinesEdit({ data, setData, langs, blockName = "cuisines" }) {
   const cuisines = data[blockName] || [];
   const [uploadingInfo, setUploadingInfo] = useState({}); // { `${idx}-main`: bool, `${idx}-sub-${j}`: bool }
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Yemek ekle
   const addCuisine = () => {
@@ -41,7 +42,7 @@ export default function CuisinesEdit({ data, setData, langs, blockName = "cuisin
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData
       });
@@ -181,7 +182,7 @@ export default function CuisinesEdit({ data, setData, langs, blockName = "cuisin
                       )}
                       {sub.image && (
                         <img
-                          src={`http://localhost:5001${sub.image}`}
+                          src={`${apiUrl}${sub.image}`}
                           alt="sub-cuisine"
                           className="w-24 h-16 object-cover border rounded"
                         />

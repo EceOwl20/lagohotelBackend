@@ -56,38 +56,38 @@ const page = () => {
     {
         id: 1,
         img: mignon,
-        title: t4("cuisines1title"),
-        description: t4("cuisines1subtitle"),
-        text:t4("cuisines1text"),
-        link:"/barcafes/mignonbar",
-        buttonText:t4("buttonText")
+        title: pageData.otherOptions?.[0]?.cuisine?.[0]?.title?.[locale],
+        description: pageData.otherOptions?.[0]?.cuisine?.[0]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[0]?.cuisine?.[0]?.text?.[locale],
+        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
+        buttonText:pageData.otherOptions?.[0]?.cuisine?.[0]?.buttonText?.[locale]
       },
     {
         id: 2,
         img: joie,
-        title: t4("cuisines2title"),
-        description: t4("cuisines2subtitle"),
-        text:t4("cuisines2text"),
-        link:"/barcafes/joiebar",
-        buttonText:t4("buttonText")
+       title: pageData.otherOptions?.[0]?.cuisine?.[1]?.title?.[locale],
+        description: pageData.otherOptions?.[0]?.cuisine?.[1]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[0]?.cuisine?.[1]?.text?.[locale],
+        link:pageData.otherOptions?.[0]?.cuisine?.[1]?.link,
+        buttonText:pageData.otherOptions?.[0]?.cuisine?.[1]?.buttonText?.[locale]
       },
       {
         id: 3,
         img: maldiva,
-        title: t4("cuisines3title"),
-        description: t4("cuisines3subtitle"),
-        text:t4("cuisines3text"),
-         link:"/barcafes/maldivabar",
-         buttonText:t4("buttonText")
+        title: pageData.otherOptions?.[0]?.cuisine?.[2]?.title?.[locale],
+        description: pageData.otherOptions?.[0]?.cuisine?.[2]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[0]?.cuisine?.[2]?.text?.[locale],
+        link:pageData.otherOptions?.[0]?.cuisine?.[2]?.link,
+        buttonText:pageData.otherOptions?.[0]?.cuisine?.[2]?.buttonText?.[locale]
       },
       {
         id: 4,
         img: vagobar,
-        title: t4("cuisines4title"),
-        description: t4("cuisines4subtitle"),
-        text:t4("cuisines4text"),
-         link:"/barcafes/vagobar",
-         buttonText:t4("buttonText")
+         title: pageData.otherOptions?.[0]?.cuisine?.[3]?.title?.[locale],
+        description: pageData.otherOptions?.[0]?.cuisine?.[3]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[0]?.cuisine?.[3]?.text?.[locale],
+        link:pageData.otherOptions?.[0]?.cuisine?.[3]?.link,
+        buttonText:pageData.otherOptions?.[0]?.cuisine?.[3]?.buttonText?.[locale]
       }
   ];
 
@@ -95,55 +95,94 @@ const page = () => {
     {
         id: 1,
         img: piano,
-        title: t6("cuisines1title"),
-        description: t6("cuisines1subtitle"),
-        text:t6("cuisines1text"),
-        link:"/barcafes/pianobar",
-        buttonText:t6("buttonText")
+       title: pageData.otherOptions?.[1]?.cuisine?.[0]?.title?.[locale],
+        description: pageData.otherOptions?.[1]?.cuisine?.[0]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[1]?.cuisine?.[0]?.text?.[locale],
+        link:pageData.otherOptions?.[1]?.cuisine?.[0]?.link,
+        buttonText:pageData.otherOptions?.[1]?.cuisine?.[0]?.buttonText?.[locale]
       },
     {
         id: 2,
         img: abella,
-        title: t6("cuisines2title"),
-        description: t6("cuisines2subtitle"),
-        text:t6("cuisines2text"),
-        link:"/barcafes/abellapatisserie",
-        buttonText:t6("buttonText")
+        title: pageData.otherOptions?.[1]?.cuisine?.[1]?.title?.[locale],
+        description: pageData.otherOptions?.[1]?.cuisine?.[1]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[1]?.cuisine?.[1]?.text?.[locale],
+        link:pageData.otherOptions?.[1]?.cuisine?.[1]?.link,
+        buttonText:pageData.otherOptions?.[1]?.cuisine?.[1]?.buttonText?.[locale]
       },
       {
         id: 3,
         img: lago,
-        title: t6("cuisines3title"),
-        description: t6("cuisines3subtitle"),
-        text:t6("cuisines3text"),
-         link:"/barcafes/cafedelago",
-         buttonText:t6("buttonText")
+         title: pageData.otherOptions?.[1]?.cuisine?.[2]?.title?.[locale],
+        description: pageData.otherOptions?.[1]?.cuisine?.[2]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[1]?.cuisine?.[2]?.text?.[locale],
+        link:pageData.otherOptions?.[1]?.cuisine?.[2]?.link,
+        buttonText:pageData.otherOptions?.[1]?.cuisine?.[2]?.buttonText?.[locale]
       },
       {
         id: 4,
         img: house,
-        title: t6("cuisines4title"),
-        description: t6("cuisines4subtitle"),
-        text:t6("cuisines4text"),
-         link:"/barcafes/cafedehouse",
-         buttonText:t6("buttonText")
+         title: pageData.otherOptions?.[1]?.cuisine?.[3]?.title?.[locale],
+        description: pageData.otherOptions?.[1]?.cuisine?.[3]?.subtitle?.[locale],
+        text:pageData.otherOptions?.[1]?.cuisine?.[3]?.text?.[locale],
+        link:pageData.otherOptions?.[1]?.cuisine?.[3]?.link,
+        buttonText:pageData.otherOptions?.[1]?.cuisine?.[3]?.buttonText?.[locale]
       }
   ];
 
-  const clinaryTexts=[t2("text1")]
-const backgroundTexts=[t3("text")]
-const backgroundTexts2=[t5("text1") ]
+  const clinaryTexts=[pageData.clinaryInfo?.texts?.[0]?.[locale]]
+const backgroundTexts=[pageData.backgroundSections?.[0]?.texts?.[locale]]
+const backgroundTexts2=[pageData.backgroundSections?.[1]?.texts?.[locale] ]
+
+  const bannerImg = pageData.mainBanner?.image
+    ? pageData.mainBanner.image.startsWith("/")
+      ? `${apiUrl}${pageData.mainBanner.image}`
+      : pageData.mainBanner.image
+    : "";
+
+
+      const leftImage = pageData.clinaryInfo?.image1
+    ? pageData.clinaryInfo.image1.startsWith("/")
+      ? `${apiUrl}${pageData.clinaryInfo.image1}`
+      : pageData.clinaryInfo.image1
+    : "";
+
+    const rightImage = pageData.clinaryInfo?.image2
+    ? pageData.clinaryInfo.image2.startsWith("/")
+      ? `${apiUrl}${pageData.clinaryInfo.image2}`
+      : pageData.clinaryInfo.image2
+    : "";
+
+
+       const backImage = pageData.backgroundSections?.[0]?.image
+    ? pageData.backgroundSections[0].image.startsWith("/")
+      ? `${apiUrl}${pageData.backgroundSections[0].image}`
+      : pageData.backgroundSections[0].image
+    : "";
+
+     const backImage2 = pageData.backgroundSections?.[1]?.image
+    ? pageData.backgroundSections[1].image.startsWith("/")
+      ? `${apiUrl}${pageData.backgroundSections[1].image}`
+      : pageData.backgroundSections[1].image
+    : "";
+
+         const discoverImage = pageData.discoverBackground?.image
+    ? pageData.discoverBackground.image.startsWith("/")
+      ? `${apiUrl}${pageData.discoverBackground.image}`
+      : pageData.discoverBackground.image
+    : "";
+
 
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-hidden'>
-      <RestaurantMainBanner  img={imgBanner} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
-      <ClinaryInfoSection img1={cafebar1} img2={cafebar2} span={t2("subtitle")} header={t("title")} texts={clinaryTexts}/>
-      <BackgroundSection span={t3("subtitle")} header={t3("title")} texts={backgroundTexts} link="/barcafes/mignonbar" img={backgroundImg2} buttonText={t3("title")}/>
-      <OtherOptions4 span={t4("subtitle")} header={t4("title")} text={t4("text")} images={otherOptions} />
-      <BackgroundSection span={t5("subtitle")}  header={t5("title")}  texts={backgroundTexts2} link="/" img={backgroundImg3}/>
+      <RestaurantMainBanner  img={bannerImg} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
+      <ClinaryInfoSection img1={rightImage} img2={leftImage} span={pageData.clinaryInfo?.subtitle?.[locale]} header={pageData.clinaryInfo?.title?.[locale]} texts={clinaryTexts}/>
+      <BackgroundSection span={pageData.backgroundSections?.[0]?.subtitle?.[locale]} header={pageData.backgroundSections?.[0]?.title?.[locale]} texts={backgroundTexts} link={pageData.backgroundSections?.[0]?.link} img={backImage} buttonText={pageData.backgroundSections?.[0]?.buttonText?.[locale]}/>
+      <OtherOptions4 span={pageData.otherOptions?.[0]?.subtitle?.[locale]} header={pageData.otherOptions?.[0]?.title?.[locale]} text={pageData.otherOptions?.[0]?.text?.[locale]} images={otherOptions} />
+      <BackgroundSection span={pageData.backgroundSections?.[1]?.subtitle?.[locale]} header={pageData.backgroundSections?.[1]?.title?.[locale]}  link={pageData.backgroundSections?.[1]?.link}  texts={backgroundTexts2}  img={backImage2}/>
       <OtherOptions4 span={t6("subtitle")} header={t6("title")} text={t6("text")} images={otherOptions2} />
       <BarCarouselSection/>
-      <DiscoverBackground span={t7("subtitle")} header={t7("title")} text={t7("text")} link="/barcafes" img={backgroundImg} buttonText={t7("buttonText")}/>
+      <DiscoverBackground span={pageData.discoverBackground?.subtitle?.[locale]} header={pageData.discoverBackground?.title?.[locale]} text={pageData.discoverBackground?.text?.[locale]} link={pageData.discoverBackground?.link} img={discoverImage} buttonText={pageData.discoverBackground?.buttonText?.[locale]}/>
       <ContactSection2/>
     </div>
   )

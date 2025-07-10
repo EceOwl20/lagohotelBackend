@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+
 const langs = [
   { key: "tr", label: "Türkçe" },
   { key: "en", label: "İngilizce" },
@@ -9,32 +10,47 @@ const langs = [
 
 export default function MainBannerEdit({ data, setData }) {
   const [uploading, setUploading] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
 
-  const handleImageUpload = async (e) => {
+const handleImageUpload = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    setUploading(true);
+
     const formData = new FormData();
     formData.append("image", file);
+
+    setUploading(true);
     try {
-      const res = await fetch("/api/upload", { method: "POST", body: formData });
+      const res = await fetch("http://localhost:5001/api/upload", {
+        method: "POST",
+        body: formData,
+      });
       const result = await res.json();
-      if (res.ok && result.imageUrl) {
-        setData({ ...data, mainBanner: { ...data.mainBanner, image: result.imageUrl } });
-      }
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+
+      setData({
+        ...data,
+        mainBanner: { ...data.mainBanner, image: result.imageUrl },
+      });
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
     } finally {
       setUploading(false);
     }
   };
 
+
   const handleLangChange = (field, lang, value) => {
-    setData({
-      ...data,
+    setData(prev => ({
+      ...prev,
       mainBanner: {
-        ...data.mainBanner,
-        [field]: { ...(data.mainBanner?.[field] || {}), [lang]: value }
+        ...prev.mainBanner,
+        [field]: {
+          ...(prev.mainBanner?.[field] || {}),
+          [lang]: value
+        }
       }
-    });
+    }));
   };
 
   return (
@@ -45,12 +61,27 @@ export default function MainBannerEdit({ data, setData }) {
         <label className="font-semibold">Banner Görseli</label>
         <div className="flex items-center gap-4 mb-2">
           {data.mainBanner?.image && (
-            <img src={`http://localhost:5001${data.mainBanner.image}`} alt="Banner" className="w-[140px] h-[90px] object-cover rounded" />
+            <img
+              src={`${apiUrl}${data.mainBanner.image}`}
+              alt="Banner"
+              className="w-[140px] h-[90px] object-cover rounded"
+            />
           )}
-          <input type="file" accept="image/*" onChange={handleImageUpload} disabled={uploading} className="block" />
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            disabled={uploading}
+            className="block"
+          />
           {uploading && <span className="text-blue-500 ml-2">Yükleniyor...</span>}
         </div>
-        <input type="text" value={data.mainBanner?.image || ""} readOnly className="w-full border p-2 rounded mb-2 bg-gray-100 cursor-not-allowed" />
+        <input
+          type="text"
+          value={data.mainBanner?.image || ""}
+          readOnly
+          className="w-full border p-2 rounded mb-4 bg-gray-100 cursor-not-allowed"
+        />
 
         {/* Alt Başlık */}
         <label className="font-semibold mt-2 mb-1 block">Alt Başlık</label>

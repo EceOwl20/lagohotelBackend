@@ -1,5 +1,7 @@
+// components/OtherOptions4Edit.jsx
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
+
 const langs = [
   { key: "tr", label: "Türkçe" },
   { key: "en", label: "İngilizce" },
@@ -9,72 +11,230 @@ const langs = [
 
 export default function OtherOptions4Edit({ data, setData, blockName }) {
   const arr = data[blockName] || [];
-  const [uploading, setUploading] = useState([]);
+  const [uploading, setUploading] = useState({});
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  const uploadImage = async (e, idx) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(v => ({ ...v, [idx]: true }));
-    const formData = new FormData();
-    formData.append("image", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
-    const result = await res.json();
-    if (res.ok && result.imageUrl) {
-      const updated = [...arr];
-      updated[idx].img = result.imageUrl;
-      setData({ ...data, [blockName]: updated });
-    }
-    setUploading(v => ({ ...v, [idx]: false }));
+  // Alt öğe şablonu (cuisinesItemSchema'ye göre)
+  const makeEmptySub = () => {
+    const sub = { image: "", link: "" };
+    langs.forEach(({ key }) => {
+      sub.title    = { ...(sub.title    || {}), [key]: "" };
+      sub.subtitle = { ...(sub.subtitle || {}), [key]: "" };
+      sub.text     = { ...(sub.text     || {}), [key]: "" };
+    });
+    return sub;
   };
 
-  const handleChange = (idx, field, lang, value) => {
+  // Alt öge görsel yükleme - CuisinesEdit mantığına göre düzeltildi
+  const handleSubImageUpload = async (e, idx, subIdx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    
+    const key = `${idx}-${subIdx}`;
+    setUploading(u => ({ ...u, [key]: true }));
+    
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData
+      });
+      const result = await res.json();
+      
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+      
+      // Local state güncelleme
+      const updated = [...arr];
+      // Alt öğe dizisini her zaman 4 elemanlı tut
+      if (!Array.isArray(updated[idx].cuisine) || updated[idx].cuisine.length !== 4) {
+        updated[idx].cuisine = Array.from({ length: 4 }, makeEmptySub);
+      }
+      
+      // CuisinesEdit'teki gibi imageUrl kullan
+      updated[idx].cuisine[subIdx].image = result.imageUrl;
+      
+      // State'i güncelle
+      setData({ ...data, [blockName]: updated });
+      
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(u => ({ ...u, [key]: false }));
+    }
+  };
+
+  // Ana seviye çokdilli alan değişimi
+  const handleMainLangChange = (idx, field, lang, value) => {
     const updated = [...arr];
     updated[idx][field] = { ...(updated[idx][field] || {}), [lang]: value };
     setData({ ...data, [blockName]: updated });
   };
 
-  const addCuisine = () =>
-    setData({ ...data, [blockName]: [...arr, { img: "", title: {}, description: {}, text: {}, buttonText: {}, link: "" }] });
-  const removeCuisine = (idx) =>
+  // Alt öğe çokdilli değişimi
+  const handleSubLangChange = (idx, subIdx, field, lang, value) => {
+    const updated = [...arr];
+    if (!Array.isArray(updated[idx].cuisine) || updated[idx].cuisine.length !== 4) {
+      updated[idx].cuisine = Array.from({ length: 4 }, makeEmptySub);
+    }
+    updated[idx].cuisine[subIdx][field] = {
+      ...(updated[idx].cuisine[subIdx][field] || {}),
+      [lang]: value
+    };
+    setData({ ...data, [blockName]: updated });
+  };
+
+  // Alt öğe link değişimi
+  const handleSubLinkChange = (idx, subIdx, value) => {
+    const updated = [...arr];
+    if (!Array.isArray(updated[idx].cuisine) || updated[idx].cuisine.length !== 4) {
+      updated[idx].cuisine = Array.from({ length: 4 }, makeEmptySub);
+    }
+    updated[idx].cuisine[subIdx].link = value;
+    setData({ ...data, [blockName]: updated });
+  };
+
+  // Yeni ana öğe ekle
+  const addItem = () => {
+    const empty = {
+      title:    {},
+      subtitle: {},
+      text:     {},
+      cuisine:  Array.from({ length: 4 }, makeEmptySub)
+    };
+    langs.forEach(({ key }) => {
+      empty.title[key]    = "";
+      empty.subtitle[key] = "";
+      empty.text[key]     = "";
+    });
+    setData({ ...data, [blockName]: [...arr, empty] });
+  };
+
+  // Ana öğe sil
+  const removeItem = idx => {
     setData({ ...data, [blockName]: arr.filter((_, i) => i !== idx) });
+  };
 
   return (
     <div className="mb-8">
-      <h3 className="font-bold text-lg mb-2">{blockName === "otherOptions" ? "Diğer Bar&Cafe Alanı" : "Diğer Bar&Cafe Alanı 2"}</h3>
-      <button type="button" className="mb-3 px-4 py-1 bg-green-600 text-white rounded" onClick={addCuisine}>+ Alan Ekle</button>
-      {arr.map((item, idx) => (
-        <div key={idx} className="border rounded p-3 mb-4 bg-gray-50">
-          <button type="button" className="mb-2 px-3 py-1 bg-red-500 text-white rounded" onClick={() => removeCuisine(idx)}>Sil</button>
-          <label className="block font-semibold mb-2">Görsel</label>
-          <div className="flex items-center gap-4 mb-2">
-            {item.img && (
-              <img src={`http://localhost:5001${item.img}`} alt="" className="w-[90px] h-[60px] object-cover rounded" />
-            )}
-            <input type="file" accept="image/*" onChange={e => uploadImage(e, idx)} disabled={uploading[idx]} />
-            {uploading[idx] && <span className="text-blue-500">Yükleniyor...</span>}
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {langs.map(({ key, label }) => (
-              <div key={key} className="bg-white rounded p-2">
-                <label className="text-xs block">{label} Başlık</label>
-                <input type="text" value={item.title?.[key] || ""} onChange={e => handleChange(idx, "title", key, e.target.value)} className="border rounded p-2 w-full mb-1" />
-                <label className="text-xs block">{label} Alt Başlık</label>
-                <input type="text" value={item.description?.[key] || ""} onChange={e => handleChange(idx, "description", key, e.target.value)} className="border rounded p-2 w-full mb-1" />
-                <label className="text-xs block">{label} Açıklama</label>
-                <textarea value={item.text?.[key] || ""} onChange={e => handleChange(idx, "text", key, e.target.value)} className="border rounded p-2 w-full mb-1" />
-                <label className="text-xs block">{label} Buton Metni</label>
-                <input type="text" value={item.buttonText?.[key] || ""} onChange={e => handleChange(idx, "buttonText", key, e.target.value)} className="border rounded p-2 w-full mb-1" />
+      <h3 className="font-bold text-lg mb-2">{blockName}</h3>
+      <button
+        type="button"
+        className="mb-3 px-4 py-1 bg-green-600 text-white rounded"
+        onClick={addItem}
+      >
+        + Ekle
+      </button>
+
+      {arr.map((item, idx) => {
+        // Alt öğe dizisini her zaman 4 elemanlı tut
+        const subs = Array.isArray(item.cuisine) && item.cuisine.length === 4
+          ? item.cuisine
+          : Array.from({ length: 4 }, makeEmptySub);
+
+        return (
+          <div key={idx} className="border rounded p-4 mb-6 bg-gray-50">
+            <div className="flex justify-between mb-4">
+              <strong>Öğe #{idx + 1}</strong>
+              <button
+                className="px-2 py-1 bg-red-500 text-white rounded"
+                onClick={() => removeItem(idx)}
+              >
+                Sil
+              </button>
+            </div>
+
+            {/* Ana metin alanları */}
+            {["title","subtitle","text"].map(field => (
+              <div key={field} className="mb-4">
+                <label className="font-semibold block mb-1">
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {langs.map(({ key, label }) => (
+                    <input
+                      key={key}
+                      type="text"
+                      placeholder={label}
+                      value={item[field]?.[key] || ""}
+                      onChange={e => handleMainLangChange(idx, field, key, e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  ))}
+                </div>
               </div>
             ))}
+
+            {/* Alt öğeler */}
+            <div className="mt-6 space-y-6">
+              <h4 className="font-semibold mb-2">Alt Öğeler (Tam 4 adet)</h4>
+              {subs.map((sub, subIdx) => (
+                <div key={subIdx} className="p-3 bg-white rounded border">
+                  <strong className="block mb-2">Alt #{subIdx + 1}</strong>
+
+                  {/* Görsel - CuisinesEdit mantığına göre düzeltildi */}
+                  <div className="mb-3">
+                    <label className="font-semibold block mb-1">Görsel Yükle</label>
+                    <div className="flex items-center gap-4">
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={e => handleSubImageUpload(e, idx, subIdx)}
+                        disabled={uploading[`${idx}-${subIdx}`]}
+                      />
+                      {uploading[`${idx}-${subIdx}`] && (
+                        <span className="text-blue-500">Yükleniyor...</span>
+                      )}
+                      {sub.image && (
+                        <img
+                          src={`${apiUrl}${sub.image}`}
+                          alt="sub-item"
+                          className="w-24 h-16 object-cover border rounded"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Alt metin alanları */}
+                  {["title","subtitle","text"].map(field => (
+                    <div key={field} className="mb-3">
+                      <label className="font-semibold block mb-1">
+                        {field.charAt(0).toUpperCase() + field.slice(1)}
+                      </label>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                        {langs.map(({ key, label }) => (
+                          <input
+                            key={key}
+                            type="text"
+                            placeholder={label}
+                            value={sub[field]?.[key] || ""}
+                            onChange={e =>
+                              handleSubLangChange(idx, subIdx, field, key, e.target.value)
+                            }
+                            className="border p-2 rounded w-full"
+                          />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+
+                  {/* Alt link */}
+                  <div className="mb-3">
+                    <label className="font-semibold block mb-1">Link</label>
+                    <input
+                      type="text"
+                      value={sub.link || ""}
+                      onChange={e => handleSubLinkChange(idx, subIdx, e.target.value)}
+                      className="border p-2 rounded w-full"
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <label className="block mt-2">Link</label>
-          <input type="text" value={item.link || ""} onChange={e => {
-            const updated = [...arr];
-            updated[idx].link = e.target.value;
-            setData({ ...data, [blockName]: updated });
-          }} className="w-full border p-2 rounded" />
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }

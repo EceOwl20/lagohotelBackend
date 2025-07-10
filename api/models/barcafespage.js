@@ -9,13 +9,26 @@ const multiText = {
   ru: [String]
 };
 
-const cuisineSchema = new mongoose.Schema({
+const cuisinesItemSchema = new mongoose.Schema({
   image: String,
-  title: langObj,
-  description: langObj,
-  text: langObj,
-  link: String,
-  buttonText: langObj
+  title:       { tr: String, en: String, de: String, ru: String },
+  text: { tr: String, en: String, de: String, ru: String },
+  subtitle:    { tr: String, en: String, de: String, ru: String },
+  link:        String,
+  buttonText:{tr: String, en: String, de: String, ru: String }
+});
+
+const cuisineSchema = new mongoose.Schema({
+  title:       { tr: String, en: String, de: String, ru: String },
+  subtitle: { tr: String, en: String, de: String, ru: String },
+  text:        { tr: String, en: String, de: String, ru: String },
+  cuisine:    { 
+    type: [cuisinesItemSchema],
+    validate: {
+      validator: arr => arr.length === 4,
+      message:      'Her cuisine öğesi tam olarak 3 alt item içermeli'
+    }
+  }
 });
 
 const barCafesSchema = new mongoose.Schema({
@@ -42,6 +55,7 @@ const barCafesSchema = new mongoose.Schema({
   }],
   otherOptions: [cuisineSchema],
   otherOptions2: [cuisineSchema],
+
   barCarousel: {
     images: [String],
     subtitle: langObj,

@@ -10,12 +10,12 @@ const BackgroundSection = ({
   buttonText
 }) => {
   // img objesi verilmediyse veya içinde src yoksa, arkaplanı boş bırakalım.
-  const backgroundImage = img?.src ? `url(${img.src})` : "none";
+  
 
   return (
     <div
       className="flex w-screen h-[45vh] min-h-[453px] items-end justify-end bg-cover bg-center"
-      style={{ backgroundImage }}
+     style={{ backgroundImage: `url(${img})` }}
     >
       <div className="flex h-full w-[100%] md:w-[43%] lg:w-[46%] max-w-[840px] items-center justify-start bg-[#2D2D26]/50">
         <div className="flex flex-col items-start justify-center h-full w-[87.79%] md:w-[91.4%] lg:w-[66%] lg:min-w-[443px]  gap-[20px] lg:gap-[30px] ml-[6.10%] md:ml-[4.3%] lg:ml-[10%]  lg:mb-[8%] lg:mt-[9%]  text-white font-jost text-start">

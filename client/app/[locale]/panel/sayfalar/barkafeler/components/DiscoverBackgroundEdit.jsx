@@ -8,6 +8,7 @@ const langs = [
 ];
 export default function DiscoverBackgroundEdit({ data, setData }) {
   const [uploading, setUploading] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleUpload = async e => {
     const file = e.target.files?.[0];
@@ -15,7 +16,7 @@ export default function DiscoverBackgroundEdit({ data, setData }) {
     setUploading(true);
     const formData = new FormData();
     formData.append("image", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
+    const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
     const json = await res.json();
     if (res.ok && json.imageUrl) {
       setData({ ...data, discoverBackground: { ...data.discoverBackground, image: json.imageUrl } });
