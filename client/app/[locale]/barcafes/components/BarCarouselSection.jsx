@@ -16,13 +16,14 @@ import hungry7 from "../images/hungry7.webp";
 import hungry8 from "../images/hungry8.webp";
 
 // Single slide component
-const Slide = ({ slide, index }) => (
+const Slide = ({ src, index }) => (
   <div className="flex-[0_0_90%] md:flex-[0_0_79%] lg:flex-[0_0_85%] xl:flex-[0_0_auto] min-w-0 mr-[1.8%]">
     <Image
-      src={slide.src}
+     src={src}
       alt={`Slide ${index + 1}`}
-      width={slide.width}
-      height={slide.height}
+      width={src.width || 533}
+      height={src.height || 434}
+      unoptimized={true}  // remote host için
       style={{ objectPosition: "center" }}
       className="flex h-full w-full object-cover"
     />
@@ -58,7 +59,7 @@ const BarCarouselSection = () => {
   }, [emblaApi]);
 
     const [pageData, setPageData] = useState(null);
-        const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
         
           useEffect(() => {
             const fetchPageData = async () => {
@@ -76,23 +77,10 @@ const BarCarouselSection = () => {
         
           if (!pageData) return <p className="p-10">Yükleniyor...</p>;
 
-    //       const bannerImg = pageData.barCarousel?.images[0]
-    // ? pageData.barCarousel.images[0].startsWith("/")
-    //   ? `${apiUrl}${pageData.barCarousel.images[0]}`
-    //   : pageData.barCarousel.images[0]
-    // : "";
 
-         
-const images = [
- hungry,
-  hungry2,
-  hungry3,
-  hungry4,
-  hungry5,
-  hungry6,
-  hungry7,
-  hungry8,
-];
+  const images = (pageData.barCarousel?.images || []).map(path =>
+    path.startsWith("/") ? `${apiUrl}${path}` : path
+  );
 
   return (
     <div className="flex flex-col md:flex-row w-screen h-auto items-center justify-center md:justify-between gap-[30px] lg:gap-0">
@@ -129,8 +117,8 @@ const images = [
           ref={emblaRef}
         >
           <div className="flex grid-flow-col  h-full md:w-[50vw] ">
-            {images.map((img, index) => (
-              <Slide key={index} slide={img} index={index} />
+            {images.map((src, i) => (
+              <Slide key={i} src={src} index={i} />
             ))}
           </div>
         </div>
