@@ -12,9 +12,10 @@ const langs = ["tr", "en", "de", "ru"];
 export default function SpaPanelPage() {
   const [data, setData] = useState(null);
   const [saving, setSaving] = useState(false);
+   const apiUrl  = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/spa")
+    fetch(`${apiUrl}/api/pages/spa`)
       .then(res => res.json())
       .then(setData)
       .catch(() => setData({ error: "Veri alınamadı" }));
@@ -22,7 +23,7 @@ export default function SpaPanelPage() {
 
   const handleSave = async () => {
     setSaving(true);
-    await fetch("http://localhost:5001/api/pages/spa", {
+    await fetch(`${apiUrl}/api/pages/spa`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

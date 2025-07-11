@@ -1,4 +1,6 @@
 
+"use client";
+import React, { useCallback, useEffect, useState } from "react";
 import mainImg from "./images/mainSpa.webp"
 import SpaInfoSection from './components/SpaInfoSection'
 import SpaHeaderSection from './components/SpaHeaderSection'
@@ -28,7 +30,7 @@ import clasmassage from "./images/clasmassage.webp"
 import facial from "./images/masagefaci.webp"
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
 import RestaurantMainBanner from '../restaurants/components/RestaurantMainBanner'
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const sliderMassage = [
   {
@@ -58,21 +60,36 @@ const galleryImages=[gallery12,gallery3,gallery1,gallery4,gallery5,gallery6,gall
 const massageImages=[aromatic, oriental, clasmassage, facial,]
 
 const page = () => {
+    const locale = useLocale(); // "tr", "en", "de", "ru"
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const t = useTranslations('Spa');
   const t2 = useTranslations('Spa.InfoSection');
   const t3 = useTranslations('Spa.SpaGallery');
   const t4 = useTranslations('Spa.Carousel');
   const t5 = useTranslations('Spa.SpaType');
+  
+    // sayfa verisini çek
+    const [pageData, setPageData] = useState(null);
+    useEffect(() => {
+      fetch(`${apiUrl}/api/pages/spa`)
+        .then(r => r.json())
+        .then(json => setPageData(json))
+        .catch(console.error);
+    }, [apiUrl]);
+  
+    if (!pageData) return <p className="p-10">Yükleniyor…</p>;
 
-  const spaTextsInfo1=[t2("subtitle"),t2("title"),t2("text")]
-  const  spaTextsInfo2=[t2("subtitle2"),t2("title2"),t2("text2")]
-  const spaTextsInfo3=[t2("subtitle3"),t2("title3"),t2("text3"),t2("list1"),t2("list2"),t2("list3"),t2("list4"),t2("list5")]
+  const spaTextsInfo1=[pageData.SpaInfoSection?.subtitle?.[locale],pageData.SpaInfoSection?.title?.[locale],pageData.SpaInfoSection?.text?.[locale]]
+  const  spaTextsInfo2=[pageData.SpaInfoSection?.left?.subtitle?.[locale],pageData.SpaInfoSection?.left?.title?.[locale],pageData.SpaInfoSection?.left?.text?.[locale]]
+  const spaTextsInfo3=[pageData.SpaInfoSection?.right?.subtitle?.[locale],pageData.SpaInfoSection?.right?.title?.[locale],pageData.SpaInfoSection?.right?.text?.[locale],pageData.SpaInfoSection?.right?.lists[0]?.[locale],pageData.SpaInfoSection?.right?.lists[1]?.pageData.SpaInfoSection?.right?.lists[2]?.[locale],pageData.SpaInfoSection?.right?.lists[3]?.[locale],pageData.SpaInfoSection?.right?.lists[4]?.[locale]]
 
   const massageHeaders=[t4("massage1"),t4("massage2"),t4("massage3"),t4("massage4")]
 
+
+
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-hidden'>
-      <RestaurantMainBanner span={t("subtitle")} header={t("title")} text={t("text")} img={mainImg}  />
+      <RestaurantMainBanner span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]} img={mainImg}  />
       <SpaInfoSection img1={img1} img2={img2} texts={spaTextsInfo1} texts2={spaTextsInfo2} texts3={spaTextsInfo3}/> 
       <SpaHeaderSection span={t3("subtitle")} header={t3("title")} text={t3("text")}  images={galleryImages}/>
       <MassageCarousel span={t4("subtitle")} header={t4("title")} text={t4("text")} headers={massageHeaders} images={massageImages}/>

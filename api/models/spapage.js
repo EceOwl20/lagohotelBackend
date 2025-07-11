@@ -7,6 +7,13 @@ const multiLang = {
   ru: { type: String, default: "" }
 };
 
+const listItemSchema = new mongoose.Schema({
+  tr: String,
+  en: String,
+  de: String,
+  ru: String,
+}, { _id: false }); // _i
+
 // Galeri resmi path'leri string, massage carousel için img ve başlık, link
 const SpaPageSchema = new mongoose.Schema({
   mainBanner: {
@@ -15,13 +22,32 @@ const SpaPageSchema = new mongoose.Schema({
     title: multiLang,
     text: multiLang
   },
-  spaInfoSection: {
-    img1: String,
-    img2: String,
-    texts: [multiLang],
-    texts2: [multiLang],
-    texts3: [multiLang]
+  SpaInfoSection: {
+    subtitle: multiLang,
+  title:    multiLang,
+  text:     multiLang,
+
+  // The two background images
+  img1: String,
+  img2: String,
+
+  // Overlay on the left image
+  left: {
+    subtitle: multiLang,
+    title:    multiLang,
+    text:     multiLang,
   },
+
+  // Overlay on the right image, plus dynamic lists
+  right: {
+    subtitle: multiLang,
+    title:    multiLang,
+    text:     multiLang,
+    lists:    [listItemSchema],
+  },
+  },
+
+
   spaHeaderSection: {
     subtitle: multiLang,
     title: multiLang,
