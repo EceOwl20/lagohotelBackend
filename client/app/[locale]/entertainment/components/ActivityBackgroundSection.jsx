@@ -12,12 +12,13 @@ import L2Svg from './L2Svg'
 import A2Svg from './A2Svg'
 import G2Svg from './G2Svg'
 import O2Svg from './O2Svg'
-import {useTranslations} from 'next-intl';
-
-const images=[img1,img2,img3,img4,img5,img6]
+import {useLocale, useTranslations} from 'next-intl';
 
 const ActivityBackgroundSection = () => {
   const t = useTranslations('Entertainment.Gallery');
+   const locale = useLocale(); // "tr", "en", "de", "ru"
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  
 
   const [emblaRef, emblaApi] = useCarousel({
     loop: true,
@@ -44,12 +45,37 @@ const ActivityBackgroundSection = () => {
     }
   }, [emblaApi]);
 
+  useEffect(() => {
+      if (!emblaApi) return;
+      const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+      emblaApi.on("select", onSelect);
+      onSelect();
+      return () => emblaApi.off("select", onSelect);
+    }, [emblaApi]);
+  
+    // sayfa verisini çek
+    const [pageData, setPageData] = useState(null);
+    useEffect(() => {
+      fetch(`${apiUrl}/api/pages/entertainment`)
+        .then(r => r.json())
+        .then(json => setPageData(json))
+        .catch(console.error);
+    }, [apiUrl]);
+  
+    if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+
+    const rawImages = pageData.activityBackground?.images || [];
+    const images = rawImages.map(path =>
+  path.startsWith("/") ? `${apiUrl}${path}` : path
+);
+  
+
   return (
     <div className='flex flex-col w-screen items-center justify-center gap-[30px] lg:gap-[50px] ' >
       <div className='flex flex-col w-[87.79%] md:w-[91.4%] lg:w-[65%] items-center justify-center text-center font-jost text-black gap-[15px] md:gap-[25px] lg:gap-[35px] xl:max-w-[1440px]'>
-      <span className='text-[12px] leading-[14px] font-medium uppercase tracking-[0.48px]'>{t("subtitle")}</span>
-            <h2 className='text-[28px] md:text-[32px] lg:text-[48px] leading-normal lg:leading-[57.6px] font-normal font-marcellus capsizedText2'>{t("title")}</h2>
-            <p className='text-[14px] lg:text-[16px] font-normal leading-normal lg:leading-[24px] lg:w-[43%] lg:min-w-[608px]'>{t("text")} </p>
+      <span className='text-[12px] leading-[14px] font-medium uppercase tracking-[0.48px]'>{pageData.activityBackground?.subtitle?.[locale]}</span>
+            <h2 className='text-[28px] md:text-[32px] lg:text-[48px] leading-normal lg:leading-[57.6px] font-normal font-marcellus capsizedText2'>{pageData.activityBackground?.title?.[locale]}</h2>
+            <p className='text-[14px] lg:text-[16px] font-normal leading-normal lg:leading-[24px] lg:w-[43%] lg:min-w-[608px]'>{pageData.activityBackground?.text?.[locale]} </p>
       </div>
 
        <div className="flex flex-col w-full justify-center items-center  lg:min-h-[650px] ">
@@ -64,11 +90,9 @@ const ActivityBackgroundSection = () => {
                 className="flex-[0_0_auto] min-w-0 lg:h-[650px] -mx-[2px]"
                 key={index}
               >
-                <Image
-                  src={image.src}
+                <img
+                  src={image}
                   layout="cover"
-                  width={image.width}
-                  height={image.height}
                   alt={`Slide ${index + 1}`}
                   objectPosition="center"
                   className="flex h-full w-auto"
@@ -96,7 +120,7 @@ const ActivityBackgroundSection = () => {
         </div>
       </div>
       <div className='flex w-[87.79%] md:w-[91.4%] lg:w-[42%] items-center text-center justify-center -mt-[25px]'>
-          <span className='text-[12px] lg:text-[14px] font-jost text-lagoGray font-normal leading-normal lg:w-[43%] lg:min-w-[608px]'>*{t("span")}</span>
+          <span className='text-[12px] lg:text-[14px] font-jost text-lagoGray font-normal leading-normal lg:w-[43%] lg:min-w-[608px]'>*{pageData.activityBackground?.span?.[locale]}</span>
         </div>
     </div>
   )

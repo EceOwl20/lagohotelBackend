@@ -27,7 +27,14 @@ const entertainmentSchema = new mongoose.Schema({
       text: { tr: String, en: String, de: String, ru: String }
     }
   },
-  entertainmentTypes: [activitySchema],
+
+  entertainmentTypes: {
+     subtitle: { tr: String, en: String, de: String, ru: String },
+    title: { tr: String, en: String, de: String, ru: String },
+    text: { tr: String, en: String, de: String, ru: String },
+    activities: [activitySchema],
+  },
+  
   activityBackground: {
     subtitle: { tr: String, en: String, de: String, ru: String },
     title: { tr: String, en: String, de: String, ru: String },
