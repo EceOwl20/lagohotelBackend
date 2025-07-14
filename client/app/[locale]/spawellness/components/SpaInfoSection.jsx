@@ -21,8 +21,8 @@ const SpaInfoSection = ({img1,img2, texts=[],texts2=[],texts3=[]}) => {
             <Image
               src={img2}
               layout="cover"
-              width={img2.width}
-              height={img2.height}
+              width={img2.width || 597}
+              height={img2.height || 411}
               alt="spa"
               className="w-full"
             />
@@ -43,8 +43,8 @@ const SpaInfoSection = ({img1,img2, texts=[],texts2=[],texts3=[]}) => {
         <Image
           src={img1}
           layout="cover"
-          width={img1.width}
-          height={img1.height}
+          width={img1.width || 462}
+          height={img1.height || 682}
           alt="spa"
           className="flex w-full "
         />

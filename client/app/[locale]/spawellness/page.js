@@ -32,7 +32,28 @@ import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
 import RestaurantMainBanner from '../restaurants/components/RestaurantMainBanner'
 import { useLocale, useTranslations } from 'next-intl';
 
-const sliderMassage = [
+const page = () => {
+  const locale = useLocale(); // "tr", "en", "de", "ru"
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const t = useTranslations('Spa');
+  const t2 = useTranslations('Spa.InfoSection');
+  const t3 = useTranslations('Spa.SpaGallery');
+  const t4 = useTranslations('Spa.Carousel');
+  const t5 = useTranslations('Spa.SpaType');
+  
+    // sayfa verisini çek
+    const [pageData, setPageData] = useState(null);
+    useEffect(() => {
+      fetch(`${apiUrl}/api/pages/spa`)
+        .then(r => r.json())
+        .then(json => setPageData(json))
+        .catch(console.error);
+    }, [apiUrl]);
+  
+    if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+      const spaSection = pageData?.SpaInfoSection;
+
+      const sliderMassage = [
   {
     src: aromatic,
     title: "Aromatherapy Massage",
@@ -59,43 +80,48 @@ const galleryImages=[gallery12,gallery3,gallery1,gallery4,gallery5,gallery6,gall
 
 const massageImages=[aromatic, oriental, clasmassage, facial,]
 
-const page = () => {
-    const locale = useLocale(); // "tr", "en", "de", "ru"
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const t = useTranslations('Spa');
-  const t2 = useTranslations('Spa.InfoSection');
-  const t3 = useTranslations('Spa.SpaGallery');
-  const t4 = useTranslations('Spa.Carousel');
-  const t5 = useTranslations('Spa.SpaType');
-  
-    // sayfa verisini çek
-    const [pageData, setPageData] = useState(null);
-    useEffect(() => {
-      fetch(`${apiUrl}/api/pages/spa`)
-        .then(r => r.json())
-        .then(json => setPageData(json))
-        .catch(console.error);
-    }, [apiUrl]);
-  
-    if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+  const right = spaSection.right || {};
+  const lists = right.lists || [];
 
   const spaTextsInfo1=[pageData.SpaInfoSection?.subtitle?.[locale],pageData.SpaInfoSection?.title?.[locale],pageData.SpaInfoSection?.text?.[locale]]
   const  spaTextsInfo2=[pageData.SpaInfoSection?.left?.subtitle?.[locale],pageData.SpaInfoSection?.left?.title?.[locale],pageData.SpaInfoSection?.left?.text?.[locale]]
-  const spaTextsInfo3=[pageData.SpaInfoSection?.right?.subtitle?.[locale],pageData.SpaInfoSection?.right?.title?.[locale],pageData.SpaInfoSection?.right?.text?.[locale],pageData.SpaInfoSection?.right?.lists[0]?.[locale],pageData.SpaInfoSection?.right?.lists[1]?.pageData.SpaInfoSection?.right?.lists[2]?.[locale],pageData.SpaInfoSection?.right?.lists[3]?.[locale],pageData.SpaInfoSection?.right?.lists[4]?.[locale]]
+
+  // 4) spaTextsInfo3: önce sağ overlay metinleri, sonra en fazla 4 liste maddesini alın
+const headerTexts = [
+  right.subtitle[locale] || "",
+  right.title[locale]    || "",
+  right.text[locale]     || "",
+];
+
+  const listTexts = [0,1,2,3].map(i => lists[i]?.[locale] || "");
+
+   // Sonuç:
+   const spaTextsInfo3 = [...headerTexts, ...listTexts];
 
   const massageHeaders=[t4("massage1"),t4("massage2"),t4("massage3"),t4("massage4")]
 
 
+  const infoImage1 = pageData.SpaInfoSection?.img1
+    ? pageData.SpaInfoSection.img1.startsWith("/")
+      ? `${apiUrl}${pageData.SpaInfoSection.img1}`
+      : pageData.SpaInfoSection.img1
+    : "";
+
+      const infoImage2 = pageData.SpaInfoSection?.img2
+    ? pageData.SpaInfoSection.img2.startsWith("/")
+      ? `${apiUrl}${pageData.SpaInfoSection.img2}`
+      : pageData.SpaInfoSection.img2
+    : "";
 
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-hidden'>
       <RestaurantMainBanner span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]} img={mainImg}  />
-      <SpaInfoSection img1={img1} img2={img2} texts={spaTextsInfo1} texts2={spaTextsInfo2} texts3={spaTextsInfo3}/> 
-      <SpaHeaderSection span={t3("subtitle")} header={t3("title")} text={t3("text")}  images={galleryImages}/>
+      <SpaInfoSection img1={infoImage1} img2={infoImage2} texts={spaTextsInfo1} texts2={spaTextsInfo2} texts3={spaTextsInfo3}/> 
+      <SpaHeaderSection span={pageData.spaHeaderSection?.subtitle?.[locale]} header={pageData.spaHeaderSection?.title?.[locale]} text={pageData.spaHeaderSection?.text?.[locale]}  images={galleryImages}/>
       <MassageCarousel span={t4("subtitle")} header={t4("title")} text={t4("text")} headers={massageHeaders} images={massageImages}/>
       <div className='flex flex-col gap-[40px] lg:gap-[50px]'>
-      <SpaTypesInfoSection span={t5("subtitle")} header={t5("title")} text={t5("text")} isImageLeft={true} showLink={false}  img={indoorImg} buttonText={t5("buttonText")}/>
-      <SpaReverse isImageLeft={false} showLink={false} span={t5("subtitle2")} header={t5("title2")} text={t5("text2")} img={turkishImg}/>
+      <SpaTypesInfoSection span={pageData.spaTypesInfoSection?.subtitle?.[locale]} header={pageData.spaTypesInfoSection?.title?.[locale]} text={pageData.spaTypesInfoSection?.text?.[locale]} isImageLeft={true} showLink={false}  img={indoorImg} buttonText={pageData.spaTypesInfoSection?.buttonText?.[locale]}/>
+      <SpaReverse isImageLeft={false} showLink={false} span={pageData.spaReverse?.subtitle?.[locale]} header={pageData.spaReverse?.title?.[locale]} text={pageData.spaReverse?.text?.[locale]} img={turkishImg}/>
       </div>
       <ContactSection2/>
     </div>

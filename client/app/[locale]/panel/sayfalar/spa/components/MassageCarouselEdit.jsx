@@ -1,121 +1,180 @@
+// components/MassageCarouselEdit.jsx
 "use client";
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function MassageCarouselEdit({ data, setData, langs }) {
-  const value = data.massageCarousel || {};
+const langs = [
+  { key: "tr", label: "Türkçe" },
+  { key: "en", label: "English" },
+  { key: "de", label: "Deutsch" },
+  { key: "ru", label: "Русский" },
+];
 
-  // Massage images ve başlıklarını ekle/sil
-  const handleAddMassage = (e) => {
-    const file = e.target.files[0];
+export default function MassageCarouselEdit({ data, setData }) {
+  const section = data.massageCarousel || {};
+  const cards   = section.carouselCards || [];
+  const apiUrl  = process.env.NEXT_PUBLIC_API_URL;
+  const [uploading, setUploading] = useState({}); // { idx: bool }
+
+  // genel güncelleme
+  const updateSection = updates =>
+    setData({ ...data, massageCarousel: { ...section, ...updates } });
+
+  // dosya yükleme
+  const handleImageUpload = async (e, idx) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-    // Yükleme sonrası url ile ekleme:
-    // setData({ ...data, massageCarousel: { ...value, images: [...(value.images || []), uploadedUrl], headers: [...(value.headers || []), {}] } })
+    setUploading(u => ({ ...u, [idx]: true }));
+    const form = new FormData();
+    form.append("image", file);
+    try {
+      const res    = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json   = await res.json();
+      if (!res.ok) throw new Error(json.error||"Yükleme başarısız");
+      const path   = json.path || json.imageUrl;
+      const updated = [...cards];
+      updated[idx].image = path;
+      updateSection({ carouselCards: updated });
+    } catch (err) {
+      alert("Yükleme hatası: "+err.message);
+    } finally {
+      setUploading(u => ({ ...u, [idx]: false }));
+    }
   };
 
-  const handleRemoveMassage = (idx) => {
-    setData({
-      ...data,
-      massageCarousel: {
-        ...value,
-        images: (value.images || []).filter((_, i) => i !== idx),
-        headers: (value.headers || []).filter((_, i) => i !== idx),
-      },
-    });
+  const handleLangChange = (idx, field, lang, val) => {
+    const updated = [...cards];
+    updated[idx][field] = { ...(updated[idx][field]||{}), [lang]: val };
+    updateSection({ carouselCards: updated });
+  };
+
+  const addCard = () => {
+    const empty = {
+      image: "",
+      title: langs.reduce((o,{key})=>(o[key]="",o),{}),
+      text:  langs.reduce((o,{key})=>(o[key]="",o),{})
+    };
+    updateSection({ carouselCards: [...cards, empty] });
+  };
+
+  const removeCard = idx => {
+    const updated = cards.filter((_,i)=>i!==idx);
+    updateSection({ carouselCards: updated });
   };
 
   return (
-    <div className="mb-8 bg-gray-50 rounded p-4">
-      <h4 className="font-bold text-lg mb-2">Massage Carousel</h4>
-      {/* Diller */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        {langs.map((lang) => (
-          <div key={lang}>
-            <label className="font-semibold">Alt Başlık ({lang.toUpperCase()})</label>
-            <input
-              type="text"
-              className="w-full border rounded p-2 mb-1"
-              value={value.subtitle?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  massageCarousel: {
-                    ...value,
-                    subtitle: { ...value.subtitle, [lang]: e.target.value },
-                  },
-                })
-              }
-            />
-            <label className="font-semibold">Başlık ({lang.toUpperCase()})</label>
-            <input
-              type="text"
-              className="w-full border rounded p-2 mb-1"
-              value={value.title?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  massageCarousel: {
-                    ...value,
-                    title: { ...value.title, [lang]: e.target.value },
-                  },
-                })
-              }
-            />
-            <label className="font-semibold">Açıklama ({lang.toUpperCase()})</label>
-            <textarea
-              className="w-full border rounded p-2"
-              value={value.text?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  massageCarousel: {
-                    ...value,
-                    text: { ...value.text, [lang]: e.target.value },
-                  },
-                })
-              }
-            />
-          </div>
-        ))}
-      </div>
-      <div>
-        <label className="font-semibold">Masaj Kartları</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleAddMassage}
-          className="block my-2"
-        />
-        <div className="flex flex-wrap gap-2">
-          {(value.images || []).map((img, idx) => (
-            <div key={idx} className="relative w-[120px] h-[80px] border rounded">
-              <img src={img} className="w-full h-full object-cover rounded" />
-              <button
-                className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded"
-                onClick={() => handleRemoveMassage(idx)}
-                type="button"
-              >Sil</button>
-              <div className="mt-1">
-                {langs.map((lang) => (
-                  <input
-                    key={lang}
-                    type="text"
-                    placeholder={`Başlık (${lang.toUpperCase()})`}
-                    className="w-full border p-1 rounded mb-1 text-xs"
-                    value={value.headers?.[idx]?.[lang] || ""}
-                    onChange={e => {
-                      const headers = [...(value.headers || [])];
-                      headers[idx] = { ...(headers[idx] || {}), [lang]: e.target.value };
-                      setData({
-                        ...data,
-                        massageCarousel: { ...value, headers }
-                      });
-                    }}
+    <div className="mb-8">
+      <h3 className="font-bold text-lg mb-4">Massage Carousel Kartları</h3>
+      
+      {/* Subtitle/Title/Text */}
+      {["subtitle","title","text"].map(field=>(
+        <div key={field} className="mb-4">
+          <label className="font-semibold block mb-1">
+            {field.charAt(0).toUpperCase()+field.slice(1)}
+          </label>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+            {langs.map(({key,label})=>(
+              <div key={key}>
+                <span className="text-xs text-gray-600">{label}</span>
+                {field==="text" ? (
+                  <textarea
+                    className="border p-2 rounded w-full"
+                    rows={2}
+                    value={section[field]?.[key]||""}
+                    onChange={e=>updateSection({
+                      [field]: { ...(section[field]||{}), [key]: e.target.value }
+                    })}
                   />
-                ))}
+                ) : (
+                  <input
+                    type="text"
+                    className="border p-2 rounded w-full"
+                    value={section[field]?.[key]||""}
+                    onChange={e=>updateSection({
+                      [field]: { ...(section[field]||{}), [key]: e.target.value }
+                    })}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+
+      {/* Kartlar */}
+      <div className="space-y-6">
+        {cards.map((card, idx)=>(
+          <div key={idx} className="border p-4 rounded bg-white">
+            <div className="flex justify-between mb-3">
+              <strong>Kart #{idx+1}</strong>
+              <button
+                className="text-red-600"
+                onClick={()=>removeCard(idx)}
+              >
+                Sil
+              </button>
+            </div>
+
+            {/* Resim */}
+            <div className="mb-3">
+              <label className="font-medium block mb-1">Resim</label>
+              <div className="flex items-center gap-3">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={e=>handleImageUpload(e, idx)}
+                  disabled={uploading[idx]}
+                />
+                {uploading[idx] && <span className="text-blue-600">Yükleniyor…</span>}
+                {card.image && (
+                  <img
+                    src={`${apiUrl}${card.image}`}
+                    alt=""
+                    className="w-24 h-16 object-cover rounded border"
+                  />
+                )}
               </div>
             </div>
-          ))}
-        </div>
+
+            {/* Title/Text */}
+            {["title","text"].map(field=>(
+              <div key={field} className="mb-3">
+                <label className="font-medium block mb-1">
+                  {field.charAt(0).toUpperCase()+field.slice(1)}
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {langs.map(({key,label})=>(
+                    <div key={key}>
+                      <span className="text-xs text-gray-600">{label}</span>
+                      {field==="text" ? (
+                        <textarea
+                          className="border p-2 rounded w-full"
+                          rows={2}
+                          value={card[field]?.[key]||""}
+                          onChange={e=>handleLangChange(idx, field, key, e.target.value)}
+                        />
+                      ) : (
+                        <input
+                          type="text"
+                          className="border p-2 rounded w-full"
+                          value={card[field]?.[key]||""}
+                          onChange={e=>handleLangChange(idx, field, key, e.target.value)}
+                        />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        ))}
+
+        <button
+          type="button"
+          className="px-4 py-2 bg-green-600 text-white rounded"
+          onClick={addCard}
+        >
+          Kart Ekle
+        </button>
       </div>
     </div>
   );
