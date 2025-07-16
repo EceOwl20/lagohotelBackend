@@ -72,6 +72,8 @@ const SpaPageSchema = new mongoose.Schema({
 
 
   spaTypesInfoSection: {
+     isImageLeft: Boolean,
+      showLink: Boolean,
     subtitle: multiLang,
     title: multiLang,
     text: multiLang,

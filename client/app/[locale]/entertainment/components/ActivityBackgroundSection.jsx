@@ -94,7 +94,7 @@ const ActivityBackgroundSection = () => {
                   src={image}
                   layout="cover"
                   alt={`Slide ${index + 1}`}
-                  objectPosition="center"
+                 
                   className="flex h-full w-auto"
                 />
                  

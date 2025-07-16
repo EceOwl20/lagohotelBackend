@@ -9,21 +9,22 @@ const langs = [
   { key: "ru", label: "Русский" },
 ];
 
-export default function SpaInfoSectionEdit({ data, setData }) {
+export default function SpaInfoSectionEdit({ data, setData, blockName }) {
   // Modelde 'SpaInfoSection' olarak tanımlı
-  const section = data.SpaInfoSection || {};
+  const section = data[blockName] || {};
+
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [uploading, setUploading] = useState({ img1: false, img2: false });
 
   // Genel updater fonksiyonu
-  const updateSection = (updates) =>
-    setData({
-      ...data,
-      SpaInfoSection: {
-        ...section,
-        ...updates,
-      },
-    });
+const updateSection = (updates) =>
+  setData({
+    ...data,
+    [blockName]: {
+      ...section,
+      ...updates,
+    },
+  });
 
   // Dosya yükleme handler'ı
   const handleImageUpload = async (e, key) => {

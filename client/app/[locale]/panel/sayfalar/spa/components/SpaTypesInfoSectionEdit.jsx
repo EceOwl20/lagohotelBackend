@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 
-export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
-  const value = data.spaTypesInfoSection || {};
+export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockName }) {
+  const value = data[blockName] || {};
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [uploading, setUploading] = useState(false);
 
@@ -24,7 +24,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
       const imageUrl = result.imageUrl || result.path;
       setData({
         ...data,
-        spaTypesInfoSection: {
+        [blockName]: {
           ...value,
           img: imageUrl,
         },
@@ -38,7 +38,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
 
   return (
     <div className="mb-8 bg-gray-50 rounded p-4">
-      <h4 className="font-bold text-lg mb-2">Spa Türleri Bilgi Alanı</h4>
+      <h4 className="font-bold text-lg mb-2">Spa/Fitness Türleri Bilgi Alanı</h4>
 
       {/* — Dosya yükleme alanı — */}
       <label className="block font-semibold mb-1">Görsel</label>
@@ -72,7 +72,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaTypesInfoSection: {
+                   [blockName]: {
                     ...value,
                     subtitle: { ...value.subtitle, [lang]: e.target.value },
                   },
@@ -87,7 +87,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaTypesInfoSection: {
+                   [blockName]: {
                     ...value,
                     title: { ...value.title, [lang]: e.target.value },
                   },
@@ -101,7 +101,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaTypesInfoSection: {
+                   [blockName]: {
                     ...value,
                     text: { ...value.text, [lang]: e.target.value },
                   },
@@ -116,7 +116,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaTypesInfoSection: {
+                   [blockName]: {
                     ...value,
                     buttonText: { ...value.buttonText, [lang]: e.target.value },
                   },

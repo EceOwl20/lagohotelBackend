@@ -8,6 +8,13 @@ const langFields = {
   ru: { type: String, default: "" }
 };
 
+const listItemSchema = new mongoose.Schema({
+  tr: String,
+  en: String,
+  de: String,
+  ru: String,
+}, { _id: false }); // _i
+
 const FitnessSchema = new mongoose.Schema({
   // MainBanner
   mainBanner: {
@@ -18,11 +25,28 @@ const FitnessSchema = new mongoose.Schema({
   },
   // Info Section
   infoSection: {
-    img1: String,
-    img2: String,
-    texts: [langFields],   // [subtitle, title, text]
-    texts2: [langFields],  // [subtitle2, title2, text2]
-    texts3: [langFields],  // [subtitle3, title3, text3, list1, list2, ...]
+   subtitle: langFields,
+  title:    langFields,
+  text:     langFields,
+
+  // The two background images
+  img1: String,
+  img2: String,
+
+  // Overlay on the left image
+  left: {
+    subtitle: langFields,
+    title:    langFields,
+    text:     langFields,
+  },
+
+  // Overlay on the right image, plus dynamic lists
+  right: {
+    subtitle: langFields,
+    title:    langFields,
+    text:     langFields,
+    lists:    [listItemSchema],
+  },
   },
   // Spa Gallery
   spaGallery: {
@@ -44,10 +68,11 @@ const FitnessSchema = new mongoose.Schema({
     {
       isImageLeft: Boolean,
       showLink: Boolean,
-      span: langFields,
-      header: langFields,
+      subtitle: langFields,
+      title: langFields,
       text: langFields,
       img: String,
+      buttonText: langFields
     }
   ]
 });

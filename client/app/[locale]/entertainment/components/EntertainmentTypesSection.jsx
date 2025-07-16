@@ -32,7 +32,7 @@ const EntertainmentTypesSection = () => {
   // sayfa verisini çek
   const [pageData, setPageData] = useState(null);
   useEffect(() => {
-    fetch(`${apiUrl}/api/pages/barcafes`)
+    fetch(`${apiUrl}/api/pages/entertainment`)
       .then(r => r.json())
       .then(json => setPageData(json))
       .catch(console.error);

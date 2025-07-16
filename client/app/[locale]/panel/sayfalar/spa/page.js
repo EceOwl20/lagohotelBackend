@@ -37,12 +37,12 @@ export default function SpaPanelPage() {
   return (
     <div className="max-w-5xl mx-auto p-6 flex flex-col gap-10">
       <h2 className="font-bold text-3xl mb-4">SPA Paneli</h2>
-      <MainBannerEdit data={data} setData={setData} langs={langs} />
-      <SpaInfoSectionEdit data={data} setData={setData} langs={langs} />
-      <SpaHeaderSectionEdit data={data} setData={setData} langs={langs} />
-      <MassageCarouselEdit data={data} setData={setData} langs={langs} />
-      <SpaTypesInfoSectionEdit data={data} setData={setData} langs={langs} />
-      <SpaReverseEdit data={data} setData={setData} langs={langs} />
+      <MainBannerEdit data={data} setData={setData} langs={langs} blockName="mainBanner"/>
+      <SpaInfoSectionEdit data={data} setData={setData} langs={langs} blockName="SpaInfoSection"/>
+      <SpaHeaderSectionEdit data={data} setData={setData} langs={langs} blockName="spaHeaderSection"/>
+      <MassageCarouselEdit data={data} setData={setData} langs={langs} blockName="massageCarousel"/>
+      <SpaTypesInfoSectionEdit data={data} setData={setData} langs={langs} blockName="spaTypesInfoSection"/>
+      <SpaReverseEdit data={data} setData={setData} langs={langs} blockName="spaReverse"/>
       <button
         className="mt-8 px-6 py-2 bg-blue-600 text-white rounded text-lg max-w-[200px]"
         onClick={handleSave}

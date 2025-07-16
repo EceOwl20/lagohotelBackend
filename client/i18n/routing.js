@@ -274,7 +274,7 @@ export const routing = defineRouting({
       ru: "/spetsial",
     },
   
-    "/sport": {
+    "/spor": {
       en: "/sport",
       tr: "/spor",
       de: "/sport",

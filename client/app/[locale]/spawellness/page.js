@@ -116,10 +116,16 @@ const headerTexts = [
     : "";
 
 
-    const massage1 = pageData.massageCarousel?.img2
-    ? pageData.massageCarousel.img2.startsWith("/")
-      ? `${apiUrl}${pageData.massageCarousel.img2}`
-      : pageData.massageCarousel.img2
+    const indoor = pageData.spaTypesInfoSection?.img
+    ? pageData.spaTypesInfoSection.img.startsWith("/")
+      ? `${apiUrl}${pageData.spaTypesInfoSection.img}`
+      : pageData.spaTypesInfoSection.img
+    : "";
+
+        const hamam = pageData.spaReverse?.img
+    ? pageData.spaReverse.img.startsWith("/")
+      ? `${apiUrl}${pageData.spaReverse.img}`
+      : pageData.spaReverse.img
     : "";
 
 const raw = pageData.massageCarousel?.carouselCards || [];
@@ -140,8 +146,8 @@ const massageImages = [0,1,2,3].map(i => {
       <SpaHeaderSection span={pageData.spaHeaderSection?.subtitle?.[locale]} header={pageData.spaHeaderSection?.title?.[locale]} text={pageData.spaHeaderSection?.text?.[locale]}  images={galleryImages}/>
       <MassageCarousel span={pageData.massageCarousel?.subtitle?.[locale]} header={pageData.massageCarousel?.title?.[locale]} text={pageData.massageCarousel?.text?.[locale]} headers={massageHeaders} images={massageImages} time={massageTime}/>
       <div className='flex flex-col gap-[40px] lg:gap-[50px]'>
-      <SpaTypesInfoSection span={pageData.spaTypesInfoSection?.subtitle?.[locale]} header={pageData.spaTypesInfoSection?.title?.[locale]} text={pageData.spaTypesInfoSection?.text?.[locale]} isImageLeft={true} showLink={false}  img={indoorImg} buttonText={pageData.spaTypesInfoSection?.buttonText?.[locale]}/>
-      <SpaReverse isImageLeft={false} showLink={false} span={pageData.spaReverse?.subtitle?.[locale]} header={pageData.spaReverse?.title?.[locale]} text={pageData.spaReverse?.text?.[locale]} img={turkishImg}/>
+      <SpaTypesInfoSection span={pageData.spaTypesInfoSection?.subtitle?.[locale]} header={pageData.spaTypesInfoSection?.title?.[locale]} text={pageData.spaTypesInfoSection?.text?.[locale]} isImageLeft={true} showLink={false}  img={indoor} buttonText={pageData.spaTypesInfoSection?.buttonText?.[locale]}/>
+      <SpaReverse isImageLeft={false} showLink={false} span={pageData.spaReverse?.subtitle?.[locale]} header={pageData.spaReverse?.title?.[locale]} text={pageData.spaReverse?.text?.[locale]} img={hamam}/>
       </div>
       <ContactSection2/>
     </div>
