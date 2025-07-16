@@ -1,17 +1,64 @@
 "use client";
+import { useState } from "react";
+
 export default function SpaReverseEdit({ data, setData, langs }) {
   const value = data.spaReverse || {};
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [uploading, setUploading] = useState(false);
+
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+      const imageUrl = result.imageUrl || result.path;
+      setData({
+        ...data,
+        spaReverse: {
+          ...value,
+          img: imageUrl,
+        },
+      });
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
 
   return (
     <div className="mb-8 bg-gray-50 rounded p-4">
       <h4 className="font-bold text-lg mb-2">Spa Reverse Alanı</h4>
-      <label>Görsel</label>
-      <input
-        type="text"
-        value={value.img || ""}
-        onChange={e => setData({ ...data, spaReverse: { ...value, img: e.target.value }})}
-        className="w-full border p-2 rounded mb-2"
-      />
+
+      {/* Görsel dosya yükleme */}
+      <label className="block font-semibold mb-1">Görsel</label>
+      <div className="flex items-center gap-4 mb-4">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          disabled={uploading}
+          className="border p-2 rounded"
+        />
+        {uploading && <span className="text-blue-600">Yükleniyor…</span>}
+        {value.img && (
+          <img
+            src={value.img.startsWith("/") ? `${apiUrl}${value.img}` : value.img}
+            alt="Preview"
+            className="h-20 w-32 object-cover rounded border"
+          />
+        )}
+      </div>
+
+      {/* Çok dilli alt başlık, başlık, açıklama */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {langs.map((lang) => (
           <div key={lang}>
@@ -20,7 +67,7 @@ export default function SpaReverseEdit({ data, setData, langs }) {
               type="text"
               className="w-full border rounded p-2 mb-1"
               value={value.subtitle?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaReverse: {
@@ -35,7 +82,7 @@ export default function SpaReverseEdit({ data, setData, langs }) {
               type="text"
               className="w-full border rounded p-2 mb-1"
               value={value.title?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaReverse: {
@@ -49,7 +96,7 @@ export default function SpaReverseEdit({ data, setData, langs }) {
             <textarea
               className="w-full border rounded p-2"
               value={value.text?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaReverse: {

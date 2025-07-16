@@ -4,7 +4,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 
-const MassageCarousel = ({ span, header, text, headers = [], images = [] }) => {
+const MassageCarousel = ({ span, header, text, headers = [], images = [], time=[] }) => {
   const imagesOriginal = images || DEFAULT_SLIDES;
   const imagesCombined = [...imagesOriginal, ...imagesOriginal];
   const [emblaRef, emblaApi] = useEmblaCarousel(
@@ -74,7 +74,7 @@ const MassageCarousel = ({ span, header, text, headers = [], images = [] }) => {
          h-[266px] w-[177.3px]"
               >
                 <Image
-                  src={image.src}
+                  src={image}
                   width={360}
                   height={540}
                   alt={`Slide ${index + 1}`}
@@ -87,7 +87,7 @@ const MassageCarousel = ({ span, header, text, headers = [], images = [] }) => {
                     </h3>
                     <div className="flex w-[50%] h-[1px] bg-white"></div>
                     <p className="text-[12px] font-medium leading-[14px] uppercase tracking-[0.48px] font-jost text-white mt-[10px]">
-                      DURATION: 60 MIN
+                      {time[index % headers.length]}
                     </p>
                   </div>
                 </div>

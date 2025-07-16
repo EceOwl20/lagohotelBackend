@@ -78,8 +78,6 @@ const page = () => {
 
 const galleryImages=[gallery12,gallery3,gallery1,gallery4,gallery5,gallery6,gallery7,gallery8,gallery9,gallery10,gallery10,gallery11,gallery13,gallery2]
 
-const massageImages=[aromatic, oriental, clasmassage, facial,]
-
   const right = spaSection.right || {};
   const lists = right.lists || [];
 
@@ -98,8 +96,12 @@ const headerTexts = [
    // Sonuç:
    const spaTextsInfo3 = [...headerTexts, ...listTexts];
 
-  const massageHeaders=[t4("massage1"),t4("massage2"),t4("massage3"),t4("massage4")]
 
+    const bannerImg = pageData.mainBanner?.image
+    ? pageData.mainBanner.image.startsWith("/")
+      ? `${apiUrl}${pageData.mainBanner.image}`
+      : pageData.mainBanner.image
+    : "";
 
   const infoImage1 = pageData.SpaInfoSection?.img1
     ? pageData.SpaInfoSection.img1.startsWith("/")
@@ -113,12 +115,30 @@ const headerTexts = [
       : pageData.SpaInfoSection.img2
     : "";
 
+
+    const massage1 = pageData.massageCarousel?.img2
+    ? pageData.massageCarousel.img2.startsWith("/")
+      ? `${apiUrl}${pageData.massageCarousel.img2}`
+      : pageData.massageCarousel.img2
+    : "";
+
+const raw = pageData.massageCarousel?.carouselCards || [];
+const massageImages = [0,1,2,3].map(i => {
+  const img = raw[i]?.image;
+  if (!img) return null;
+  return img.startsWith("/") ? `${apiUrl}${img}` : img;
+}).filter(Boolean);
+
+  const massageHeaders=[pageData.massageCarousel?.carouselCards?.[0]?.title?.[locale],pageData.massageCarousel?.carouselCards?.[1]?.title?.[locale],pageData.massageCarousel?.carouselCards?.[2]?.title?.[locale],pageData.massageCarousel?.carouselCards?.[3]?.title?.[locale]]
+
+  const massageTime=[pageData.massageCarousel?.carouselCards?.[0]?.text?.[locale],pageData.massageCarousel?.carouselCards?.[1]?.text?.[locale],pageData.massageCarousel?.carouselCards?.[2]?.text?.[locale],pageData.massageCarousel?.carouselCards?.[3]?.text?.[locale]]
+
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-hidden'>
-      <RestaurantMainBanner span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]} img={mainImg}  />
+      <RestaurantMainBanner span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]} img={bannerImg}  />
       <SpaInfoSection img1={infoImage1} img2={infoImage2} texts={spaTextsInfo1} texts2={spaTextsInfo2} texts3={spaTextsInfo3}/> 
       <SpaHeaderSection span={pageData.spaHeaderSection?.subtitle?.[locale]} header={pageData.spaHeaderSection?.title?.[locale]} text={pageData.spaHeaderSection?.text?.[locale]}  images={galleryImages}/>
-      <MassageCarousel span={t4("subtitle")} header={t4("title")} text={t4("text")} headers={massageHeaders} images={massageImages}/>
+      <MassageCarousel span={pageData.massageCarousel?.subtitle?.[locale]} header={pageData.massageCarousel?.title?.[locale]} text={pageData.massageCarousel?.text?.[locale]} headers={massageHeaders} images={massageImages} time={massageTime}/>
       <div className='flex flex-col gap-[40px] lg:gap-[50px]'>
       <SpaTypesInfoSection span={pageData.spaTypesInfoSection?.subtitle?.[locale]} header={pageData.spaTypesInfoSection?.title?.[locale]} text={pageData.spaTypesInfoSection?.text?.[locale]} isImageLeft={true} showLink={false}  img={indoorImg} buttonText={pageData.spaTypesInfoSection?.buttonText?.[locale]}/>
       <SpaReverse isImageLeft={false} showLink={false} span={pageData.spaReverse?.subtitle?.[locale]} header={pageData.spaReverse?.title?.[locale]} text={pageData.spaReverse?.text?.[locale]} img={turkishImg}/>

@@ -1,18 +1,66 @@
 "use client";
+import { useState } from "react";
+
 export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
   const value = data.spaTypesInfoSection || {};
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [uploading, setUploading] = useState(false);
 
-  // Görsel upload eklenebilir
+  // Görsel upload handler
+  const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+      // result.imageUrl ya da result.path olduğu duruma göre:
+      const imageUrl = result.imageUrl || result.path;
+      setData({
+        ...data,
+        spaTypesInfoSection: {
+          ...value,
+          img: imageUrl,
+        },
+      });
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
     <div className="mb-8 bg-gray-50 rounded p-4">
       <h4 className="font-bold text-lg mb-2">Spa Türleri Bilgi Alanı</h4>
-      <label>Görsel</label>
-      <input
-        type="text"
-        value={value.img || ""}
-        onChange={e => setData({ ...data, spaTypesInfoSection: { ...value, img: e.target.value }})}
-        className="w-full border p-2 rounded mb-2"
-      />
+
+      {/* — Dosya yükleme alanı — */}
+      <label className="block font-semibold mb-1">Görsel</label>
+      <div className="flex items-center gap-4 mb-4">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={handleImageUpload}
+          disabled={uploading}
+          className="border p-2 rounded"
+        />
+        {uploading && <span className="text-blue-600">Yükleniyor…</span>}
+        {value.img && (
+          <img
+            src={value.img.startsWith("/") ? `${apiUrl}${value.img}` : value.img}
+            alt="Preview"
+            className="h-20 w-32 object-cover rounded border"
+          />
+        )}
+      </div>
+
+      {/* — Diğer çok dilli metin alanları aynı kaldı — */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {langs.map((lang) => (
           <div key={lang}>
@@ -21,7 +69,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               type="text"
               className="w-full border rounded p-2 mb-1"
               value={value.subtitle?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaTypesInfoSection: {
@@ -36,7 +84,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               type="text"
               className="w-full border rounded p-2 mb-1"
               value={value.title?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaTypesInfoSection: {
@@ -48,9 +96,9 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
             />
             <label className="font-semibold">Açıklama ({lang.toUpperCase()})</label>
             <textarea
-              className="w-full border rounded p-2"
+              className="w-full border rounded p-2 mb-1"
               value={value.text?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaTypesInfoSection: {
@@ -65,7 +113,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs }) {
               type="text"
               className="w-full border rounded p-2"
               value={value.buttonText?.[lang] || ""}
-              onChange={e =>
+              onChange={(e) =>
                 setData({
                   ...data,
                   spaTypesInfoSection: {
