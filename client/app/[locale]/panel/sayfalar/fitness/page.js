@@ -37,9 +37,9 @@ export default function FitnessPanelPage() {
       <MainBannerEdit data={data} setData={setData} langs={langs} blockName="mainBanner" />
       <SpaInfoSectionEdit data={data} setData={setData} langs={langs} blockName="infoSection" />
       <SpaHeaderSectionEdit data={data} setData={setData} langs={langs} blockName="spaGallery" />
-      <MassageCarouselEdit data={data} setData={setData} langs={langs} blockName="activities" />
-      <SpaTypesInfoSectionEdit data={data} setData={setData} langs={langs} blockName="spaTypes" />
-      <SpaReverseEdit data={data} setData={setData} langs={langs} />
+      <MassageCarouselEdit data={data} setData={setData} langs={langs} blockName="massageCarousel" />
+      <SpaTypesInfoSectionEdit data={data} setData={setData} langs={langs} blockName="fitnessTypesInfoSection" />
+      <SpaReverseEdit data={data} setData={setData} langs={langs} blockName="fitnessReverse"/>
       <button
         className="mt-8 px-6 py-2 bg-lagoBlack text-white rounded text-lg"
         onClick={handleSave}

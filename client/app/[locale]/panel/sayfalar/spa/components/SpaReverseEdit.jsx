@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 
-export default function SpaReverseEdit({ data, setData, langs }) {
-  const value = data.spaReverse || {};
+export default function SpaReverseEdit({ data, setData, langs, blockName }) {
+  const value = data[blockName] || {};
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [uploading, setUploading] = useState(false);
 
@@ -22,7 +22,7 @@ export default function SpaReverseEdit({ data, setData, langs }) {
       const imageUrl = result.imageUrl || result.path;
       setData({
         ...data,
-        spaReverse: {
+        [blockName]: {
           ...value,
           img: imageUrl,
         },
@@ -34,9 +34,19 @@ export default function SpaReverseEdit({ data, setData, langs }) {
     }
   };
 
+  const handleBooleanChange = (field) => (e) => {
+    setData({
+      ...data,
+      [blockName]: {
+        ...value,
+        [field]: e.target.checked,
+      },
+    });
+  };
+
   return (
     <div className="mb-8 bg-gray-50 rounded p-4">
-      <h4 className="font-bold text-lg mb-2">Spa Reverse Alanı</h4>
+      <h4 className="font-bold text-lg mb-2">Spa/Fitness Reverse Alanı</h4>
 
       {/* Görsel dosya yükleme */}
       <label className="block font-semibold mb-1">Görsel</label>
@@ -70,13 +80,14 @@ export default function SpaReverseEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaReverse: {
+                  [blockName]: {
                     ...value,
-                    subtitle: { ...value.subtitle, [lang]: e.target.value },
+                    subtitle: { ...(value.subtitle || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
+
             <label className="font-semibold">Başlık ({lang.toUpperCase()})</label>
             <input
               type="text"
@@ -85,13 +96,14 @@ export default function SpaReverseEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaReverse: {
+                  [blockName]: {
                     ...value,
-                    title: { ...value.title, [lang]: e.target.value },
+                    title: { ...(value.title || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
+
             <label className="font-semibold">Açıklama ({lang.toUpperCase()})</label>
             <textarea
               className="w-full border rounded p-2"
@@ -99,15 +111,52 @@ export default function SpaReverseEdit({ data, setData, langs }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                  spaReverse: {
+                  [blockName]: {
                     ...value,
-                    text: { ...value.text, [lang]: e.target.value },
+                    text: { ...(value.text || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
+
+            <label className="font-semibold">Buton Metni ({lang.toUpperCase()})</label>
+            <input
+              type="text"
+              className="w-full border rounded p-2"
+              value={value.buttonText?.[lang] || ""}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                   [blockName]: {
+                    ...value,
+                    buttonText: { ...value.buttonText, [lang]: e.target.value },
+                  },
+                })
+              }
+            />
+            
           </div>
         ))}
+      </div>
+
+      {/* Yeni eklenen boolean alanlar */}
+      <div className="flex items-center gap-6 mt-4">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={!!value.isImageLeft}
+            onChange={handleBooleanChange("isImageLeft")}
+          />
+          Resmi Solda Göster
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={!!value.showLink}
+            onChange={handleBooleanChange("showLink")}
+          />
+          Link Göster
+        </label>
       </div>
     </div>
   );

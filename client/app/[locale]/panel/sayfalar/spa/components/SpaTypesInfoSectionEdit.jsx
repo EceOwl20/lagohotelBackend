@@ -6,7 +6,6 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [uploading, setUploading] = useState(false);
 
-  // Görsel upload handler
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -20,7 +19,6 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
       });
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      // result.imageUrl ya da result.path olduğu duruma göre:
       const imageUrl = result.imageUrl || result.path;
       setData({
         ...data,
@@ -36,11 +34,21 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
     }
   };
 
+  const handleBooleanChange = (field) => (e) => {
+    setData({
+      ...data,
+      [blockName]: {
+        ...value,
+        [field]: e.target.checked,
+      },
+    });
+  };
+
   return (
     <div className="mb-8 bg-gray-50 rounded p-4">
-      <h4 className="font-bold text-lg mb-2">Spa/Fitness Türleri Bilgi Alanı</h4>
+      <h4 className="font-bold text-lg mb-2">Spa/Fitness Reverse Alanı</h4>
 
-      {/* — Dosya yükleme alanı — */}
+      {/* Görsel dosya yükleme */}
       <label className="block font-semibold mb-1">Görsel</label>
       <div className="flex items-center gap-4 mb-4">
         <input
@@ -60,7 +68,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
         )}
       </div>
 
-      {/* — Diğer çok dilli metin alanları aynı kaldı — */}
+      {/* Çok dilli alt başlık, başlık, açıklama */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
         {langs.map((lang) => (
           <div key={lang}>
@@ -72,13 +80,14 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
               onChange={(e) =>
                 setData({
                   ...data,
-                   [blockName]: {
+                  [blockName]: {
                     ...value,
-                    subtitle: { ...value.subtitle, [lang]: e.target.value },
+                    subtitle: { ...(value.subtitle || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
+
             <label className="font-semibold">Başlık ({lang.toUpperCase()})</label>
             <input
               type="text"
@@ -87,27 +96,29 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
               onChange={(e) =>
                 setData({
                   ...data,
-                   [blockName]: {
+                  [blockName]: {
                     ...value,
-                    title: { ...value.title, [lang]: e.target.value },
+                    title: { ...(value.title || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
+
             <label className="font-semibold">Açıklama ({lang.toUpperCase()})</label>
             <textarea
-              className="w-full border rounded p-2 mb-1"
+              className="w-full border rounded p-2"
               value={value.text?.[lang] || ""}
               onChange={(e) =>
                 setData({
                   ...data,
-                   [blockName]: {
+                  [blockName]: {
                     ...value,
-                    text: { ...value.text, [lang]: e.target.value },
+                    text: { ...(value.text || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
+
             <label className="font-semibold">Buton Metni ({lang.toUpperCase()})</label>
             <input
               type="text"
@@ -123,8 +134,29 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
                 })
               }
             />
+            
           </div>
         ))}
+      </div>
+
+      {/* Yeni eklenen boolean alanlar */}
+      <div className="flex items-center gap-6 mt-4">
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={!!value.isImageLeft}
+            onChange={handleBooleanChange("isImageLeft")}
+          />
+          Resmi Solda Göster
+        </label>
+        <label className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            checked={!!value.showLink}
+            onChange={handleBooleanChange("showLink")}
+          />
+          Link Göster
+        </label>
       </div>
     </div>
   );

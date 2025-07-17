@@ -8,6 +8,12 @@ const langFields = {
   ru: { type: String, default: "" }
 };
 
+const carouselCardSchema = new mongoose.Schema({
+  image: String,
+  title: langFields,
+  text: langFields
+}, { _id: false });
+
 const listItemSchema = new mongoose.Schema({
   tr: String,
   en: String,
@@ -29,18 +35,17 @@ const FitnessSchema = new mongoose.Schema({
   title:    langFields,
   text:     langFields,
 
-  // The two background images
+
   img1: String,
   img2: String,
 
-  // Overlay on the left image
+
   left: {
     subtitle: langFields,
     title:    langFields,
     text:     langFields,
   },
 
-  // Overlay on the right image, plus dynamic lists
   right: {
     subtitle: langFields,
     title:    langFields,
@@ -48,33 +53,38 @@ const FitnessSchema = new mongoose.Schema({
     lists:    [listItemSchema],
   },
   },
-  // Spa Gallery
+ 
   spaGallery: {
-    span: langFields,
-    header: langFields,
+    subtitle: langFields,
+    title: langFields,
     text: langFields,
-    images: [String], // gallery image urls
+    images: [String], 
   },
-  // Carousel/Activities
-  activities: {
-    span: langFields,
-    header: langFields,
+  
+  massageCarousel: {
+    subtitle: langFields,
+    title: langFields,
     text: langFields,
-    images: [String],         // activity img urls (yoga, zumba, ...)
-    headers: [langFields],    // carousel başlıkları
+    headers: [langFields],
+     carouselCards: [carouselCardSchema] 
   },
-  // Spa Types Info
-  spaTypes: [
-    {
-      isImageLeft: Boolean,
+  
+  fitnessTypesInfoSection: {
+     isImageLeft: Boolean,
       showLink: Boolean,
-      subtitle: langFields,
-      title: langFields,
-      text: langFields,
-      img: String,
-      buttonText: langFields
-    }
-  ]
+    subtitle: langFields,
+    title: langFields,
+    text: langFields,
+    img: String,
+    buttonText: langFields
+  },
+
+    fitnessReverse: {
+    subtitle: langFields,
+    title: langFields,
+    text: langFields,
+    img: String
+  }
 });
 
 module.exports = mongoose.models.Fitness || mongoose.model('Fitness', FitnessSchema);

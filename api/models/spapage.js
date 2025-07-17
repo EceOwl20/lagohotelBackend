@@ -20,7 +20,7 @@ const carouselCardSchema = new mongoose.Schema({
   text: multiLang
 }, { _id: false });
 
-// Galeri resmi path'leri string, massage carousel için img ve başlık, link
+
 const SpaPageSchema = new mongoose.Schema({
   mainBanner: {
     image: String,
@@ -33,18 +33,18 @@ const SpaPageSchema = new mongoose.Schema({
   title:    multiLang,
   text:     multiLang,
 
-  // The two background images
+
   img1: String,
   img2: String,
 
-  // Overlay on the left image
+
   left: {
     subtitle: multiLang,
     title:    multiLang,
     text:     multiLang,
   },
 
-  // Overlay on the right image, plus dynamic lists
+
   right: {
     subtitle: multiLang,
     title:    multiLang,
@@ -58,7 +58,7 @@ const SpaPageSchema = new mongoose.Schema({
     subtitle: multiLang,
     title: multiLang,
     text: multiLang,
-    images: [String] // Galeri görselleri
+    images: [String] 
   },
 
   
@@ -80,6 +80,7 @@ const SpaPageSchema = new mongoose.Schema({
     img: String,
     buttonText: multiLang
   },
+  
   spaReverse: {
     subtitle: multiLang,
     title: multiLang,

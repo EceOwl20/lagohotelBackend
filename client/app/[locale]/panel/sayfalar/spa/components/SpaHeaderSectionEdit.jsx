@@ -101,13 +101,13 @@ const moveImage = (fromIndex, toIndex) => {
             <input
               type="text"
               className="w-full border rounded p-2 mb-1"
-              value={value.span?.[lang] || ""}
+              value={value.subtitle?.[lang] || ""}
               onChange={e =>
                 setData({
                   ...data,
                   [blockName]: {
                     ...value,
-                    span: { ...value.span, [lang]: e.target.value },
+                    subtitle: { ...value.subtitle, [lang]: e.target.value },
                   },
                 })
               }
@@ -116,13 +116,13 @@ const moveImage = (fromIndex, toIndex) => {
             <input
               type="text"
               className="w-full border rounded p-2 mb-1"
-              value={value.header?.[lang] || ""}
+              value={value.title?.[lang] || ""}
               onChange={e =>
                 setData({
                   ...data,
                   [blockName]: {
                     ...value,
-                    header: { ...value.header, [lang]: e.target.value },
+                    title: { ...value.title, [lang]: e.target.value },
                   },
                 })
               }

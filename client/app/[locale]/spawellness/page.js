@@ -136,7 +136,6 @@ const massageImages = [0,1,2,3].map(i => {
 }).filter(Boolean);
 
   const massageHeaders=[pageData.massageCarousel?.carouselCards?.[0]?.title?.[locale],pageData.massageCarousel?.carouselCards?.[1]?.title?.[locale],pageData.massageCarousel?.carouselCards?.[2]?.title?.[locale],pageData.massageCarousel?.carouselCards?.[3]?.title?.[locale]]
-
   const massageTime=[pageData.massageCarousel?.carouselCards?.[0]?.text?.[locale],pageData.massageCarousel?.carouselCards?.[1]?.text?.[locale],pageData.massageCarousel?.carouselCards?.[2]?.text?.[locale],pageData.massageCarousel?.carouselCards?.[3]?.text?.[locale]]
 
   return (
