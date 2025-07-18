@@ -1,10 +1,25 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function SpaReverseEdit({ data, setData, langs, blockName }) {
   const value = data[blockName] || {};
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [uploading, setUploading] = useState(false);
+
+  // --- 1. İlk render'da default false atama ---
+  useEffect(() => {
+    if (value.isImageLeft === undefined || value.showLink === undefined) {
+      setData({
+        ...data,
+        [blockName]: {
+          ...value,
+          isImageLeft: value.isImageLeft ?? false,
+          showLink:   value.showLink   ?? false,
+        },
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleImageUpload = async (e) => {
     const file = e.target.files?.[0];
@@ -34,12 +49,12 @@ export default function SpaReverseEdit({ data, setData, langs, blockName }) {
     }
   };
 
-  const handleBooleanChange = (field) => (e) => {
+  const handleBooleanSelect = (field) => (e) => {
     setData({
       ...data,
       [blockName]: {
         ...value,
-        [field]: e.target.checked,
+        [field]: e.target.value === "true",
       },
     });
   };
@@ -127,36 +142,41 @@ export default function SpaReverseEdit({ data, setData, langs, blockName }) {
               onChange={(e) =>
                 setData({
                   ...data,
-                   [blockName]: {
+                  [blockName]: {
                     ...value,
-                    buttonText: { ...value.buttonText, [lang]: e.target.value },
+                    buttonText: { ...(value.buttonText || {}), [lang]: e.target.value },
                   },
                 })
               }
             />
-            
           </div>
         ))}
       </div>
 
-      {/* Yeni eklenen boolean alanlar */}
-      <div className="flex items-center gap-6 mt-4">
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={!!value.isImageLeft}
-            onChange={handleBooleanChange("isImageLeft")}
-          />
-          Resmi Solda Göster
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={!!value.showLink}
-            onChange={handleBooleanChange("showLink")}
-          />
-          Link Göster
-        </label>
+      {/* Boolean alanlar için Evet/Hayır */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+        <div>
+          <label className="block font-semibold mb-1">Resmi Solda Göster</label>
+          <select
+            value={value.isImageLeft ? "true" : "false"}
+            onChange={handleBooleanSelect("isImageLeft")}
+            className="w-full border p-2 rounded"
+          >
+            <option value="true">Evet</option>
+            <option value="false">Hayır</option>
+          </select>
+        </div>
+        <div>
+          <label className="block font-semibold mb-1">Link Göster</label>
+          <select
+            value={value.showLink ? "true" : "false"}
+            onChange={handleBooleanSelect("showLink")}
+            className="w-full border p-2 rounded"
+          >
+            <option value="true">Evet</option>
+            <option value="false">Hayır</option>
+          </select>
+        </div>
       </div>
     </div>
   );

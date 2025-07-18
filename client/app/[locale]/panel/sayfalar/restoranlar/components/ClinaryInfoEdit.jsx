@@ -31,8 +31,13 @@ export default function ClinaryInfoEdit({ data, setData, langs }) {
     }
   };
 
-    const texts = Array.isArray(data.clinaryInfo?.texts) && data.clinaryInfo.texts.length > 0
-    ? data.clinaryInfo.texts
+  // Eğer DB'de texts yoksa veya içinde null elemanlar varsa, mutlaka en az bir default satır olsun
+  const texts = Array.isArray(data.clinaryInfo?.texts) && data.clinaryInfo.texts.length > 0
+    ? data.clinaryInfo.texts.map(
+        t => t && typeof t === "object"
+          ? t
+          : { tr: "", en: "", de: "", ru: "" }
+      )
     : [{ tr: "", en: "", de: "", ru: "" }];
 
      // texts dizisine yeni bir satır ekle

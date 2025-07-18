@@ -85,7 +85,9 @@ const SpaPageSchema = new mongoose.Schema({
     subtitle: multiLang,
     title: multiLang,
     text: multiLang,
-    img: String
+    img: String,
+     isImageLeft: Boolean,
+      showLink: Boolean,
   }
 }, { timestamps: true });
 

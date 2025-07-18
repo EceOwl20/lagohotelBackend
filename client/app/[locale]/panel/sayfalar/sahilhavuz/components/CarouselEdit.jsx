@@ -1,6 +1,8 @@
 "use client";
 import { useState } from "react";
 export default function CarouselEdit({ data, setData, langs }) {
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const arr = data.carousel || [];
   const [uploading, setUploading] = useState([]);
 
@@ -10,7 +12,7 @@ export default function CarouselEdit({ data, setData, langs }) {
     setUploading(v => ({ ...v, [idx]: true }));
     const formData = new FormData();
     formData.append("image", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
+    const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
     const result = await res.json();
     if (res.ok && result.imageUrl) {
       const updated = [...arr];

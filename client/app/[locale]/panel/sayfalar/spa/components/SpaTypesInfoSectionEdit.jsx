@@ -25,6 +25,7 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
         [blockName]: {
           ...value,
           img: imageUrl,
+          
         },
       });
     } catch (err) {

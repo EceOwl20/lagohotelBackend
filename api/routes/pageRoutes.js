@@ -250,19 +250,39 @@ router.put('/kidsclub', async (req, res) => {
 
 
 router.get("/beachpools", async (req, res) => {
-  const doc = await req.db.collection("beachpools").findOne({});
-  res.json(doc || BeachPools.empty());
+  try {
+    let doc = await BeachPools.findOne({});
+    if (!doc) {
+      // eğer hiç doküman yoksa boş bir tane oluşturup geri döndür
+      doc = new BeachPools({});
+      await doc.save();
+    }
+    res.json(doc);
+  } catch (err) {
+    console.error("GET /beachpools error:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
+// PUT /api/beachpools
 router.put("/beachpools", async (req, res) => {
-  // (Auth check, validation eklenebilir)
-  const body = req.body;
-  const result = await req.db.collection("beachpools").findOneAndUpdate(
-    {},
-    { $set: body },
-    { returnDocument: "after", upsert: true }
-  );
-  res.json(result.value);
+  try {
+    const updates = req.body;
+    // boş bir filtre ({}) ile ilk dokümanı güncelle veya yoksa oluştur (upsert)
+    const doc = await BeachPools.findOneAndUpdate(
+      {},
+      updates,
+      {
+        new: true,     // güncel dokümanı dön
+        upsert: true,  // yoksa oluştur
+        runValidators: true
+      }
+    );
+    res.json(doc);
+  } catch (err) {
+    console.error("PUT /beachpools error:", err);
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // GET - fetch

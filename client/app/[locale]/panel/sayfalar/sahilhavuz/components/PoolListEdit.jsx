@@ -4,13 +4,15 @@ export default function PoolListEdit({ data, setData, langs }) {
   const arr = data.poolList || [];
   const [uploading, setUploading] = useState([]);
 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const uploadImage = async (e, idx, type) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(v => ({ ...v, [`${idx}-${type}`]: true }));
     const formData = new FormData();
     formData.append("image", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
+   const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
     const result = await res.json();
     if (res.ok && result.imageUrl) {
       const updated = [...arr];

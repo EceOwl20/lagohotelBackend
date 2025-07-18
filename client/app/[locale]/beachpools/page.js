@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import Beach1 from './Components/Beach1'
 import Beach2 from './Components/Beach2'
 import Beach3 from './Components/Beach3'
@@ -28,11 +29,14 @@ import BeachMobile from './Components/BeachMobile'
 import img1 from "./Images/beach1.webp";
 import img2 from "./Images/beach2.webp";
 import ClinaryInfoSection from '../restaurants/components/ClinaryInfoSection'
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const page = () => {
   const t = useTranslations('BeachPools.ClinaryInfoSection');
   const t2 = useTranslations('BeachPools.PoolList');
+
+    const locale = useLocale(); // "tr", "en", "de", "ru"
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const texts = [
     t("text1"),

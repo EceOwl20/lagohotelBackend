@@ -10,6 +10,8 @@ const langList = [
 ];
 
 export default function MainBannerEdit({ data, setData }) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const [uploading, setUploading] = useState({});
   // Upload helper
   const handleImageUpload = async (e, field, device = "desktop") => {
@@ -18,7 +20,7 @@ export default function MainBannerEdit({ data, setData }) {
     setUploading(prev => ({ ...prev, [field]: true }));
     const formData = new FormData();
     formData.append("image", file);
-    const res = await fetch("/api/upload", { method: "POST", body: formData });
+   const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
     const result = await res.json();
     if (res.ok && result.imageUrl) {
       setData({

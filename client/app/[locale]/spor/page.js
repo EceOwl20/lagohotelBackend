@@ -82,14 +82,26 @@ const texts3 = [...headerTexts, ...listTexts];
 
 const galleryImages =[gallery1,gallery2,gallery3]
 
+      const imgBeachVol = pageData.fitnessTypesInfoSection?.img
+      ? pageData.fitnessTypesInfoSection.img.startsWith("/")
+        ? `${apiUrl}${pageData.fitnessTypesInfoSection.img}`
+        : pageData.fitnessTypesInfoSection.img
+      : "";
+
+      const imgPersonal = pageData.fitnessReverse?.img
+      ? pageData.fitnessReverse.img.startsWith("/")
+        ? `${apiUrl}${pageData.fitnessReverse.img}`
+        : pageData.fitnessReverse.img
+      : "";
+
   return (
     <div className='flex flex-col items-center justify-center gap-[100px] bg-[#fbfbfb] overflow-hidden'>
       <MainBannerSection img={mainImg} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
       <SpaInfoSection img1={infoImage2} img2={infoImage1} texts={texts} texts2={texts2} texts3={texts3}/>
       <SpaHeaderSection span={pageData.spaGallery?.subtitle?.[locale]} header={pageData.spaGallery?.title?.[locale]} text={pageData.spaGallery?.text?.[locale]} images={galleryImages}/>
       <MassageCarousel  span={pageData.massageCarousel?.subtitle?.[locale]} header={pageData.massageCarousel?.title?.[locale]} text={pageData.massageCarousel?.text?.[locale]}  images={activitiesImage} headers={activitiesHeaders} time={activitiesTime}/>
-      <SpaTypesInfoSection isImageLeft={true} showLink={false} span={t5("subtitle")} header={t5("title")} text={t5("text")} img={beachvolley}/>
-      <SpaTypesInfoSection isImageLeft={false} showLink={false} span={t5("subtitle2")} header={t5("title2")} text={t5("text2")} img={personal}/>
+      <SpaTypesInfoSection isImageLeft={pageData.fitnessTypesInfoSection?.isImageLeft} showLink={false} span={pageData.fitnessTypesInfoSection?.subtitle?.[locale]} header={pageData.fitnessTypesInfoSection?.title?.[locale]} text={pageData.fitnessTypesInfoSection?.text?.[locale]} img={imgBeachVol}/>
+      <SpaTypesInfoSection isImageLeft={pageData.fitnessReverse?.isImageLeft} showLink={false} span={pageData.fitnessReverse?.subtitle?.[locale]} header={pageData.fitnessReverse?.title?.[locale]} text={pageData.fitnessReverse?.text?.[locale]} img={imgPersonal}/>
       <ContactSection2/>
     </div>
   )

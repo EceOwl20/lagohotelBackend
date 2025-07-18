@@ -83,7 +83,9 @@ const FitnessSchema = new mongoose.Schema({
     subtitle: langFields,
     title: langFields,
     text: langFields,
-    img: String
+    img: String,
+    isImageLeft: Boolean,
+    showLink: Boolean
   }
 });
 
