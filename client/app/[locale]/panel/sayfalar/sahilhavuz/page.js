@@ -48,10 +48,15 @@ export default function BeachPoolsPanelPage() {
   return (
     <div className="max-w-4xl mx-auto py-6">
       <MainBannerEdit data={data} setData={setData} langs={langs} />
+      <div className="flex h-[2px] w-full bg-blue-500 my-6"></div>
       <ClinaryInfoEdit data={data} setData={setData} langs={langs2} />
+       <div className="flex h-[2px] w-full bg-blue-500 my-6"></div>
       <ImageBackgroundEdit data={data} setData={setData} langs={langs} />
+       <div className="flex h-[2px] w-full bg-blue-500 my-6"></div>
       <CarouselEdit data={data} setData={setData} langs={langs} />
+       <div className="flex h-[2px] w-full bg-blue-500 my-6"></div>
       <PoolSectionEdit data={data} setData={setData} langs={langs} />
+       <div className="flex h-[2px] w-full bg-blue-500 my-6"></div>
       <PoolListEdit data={data} setData={setData} langs={langs} />
        <button
         className="mt-6 px-6 py-3 rounded bg-blue-600 text-white font-bold"

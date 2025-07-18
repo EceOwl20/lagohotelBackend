@@ -81,7 +81,13 @@ const BeachPoolsSchema = new mongoose.Schema({
     text:     multiLangSchema,
     video:    String,
   },
-  poolList: [ poolListItemSchema ],
+
+   poolListSection: {
+    subtitle: multiLangSchema,
+    title:    multiLangSchema,
+    text:     multiLangSchema,
+  },
+  poolList:[ poolListItemSchema ],
 }, {
   collection: "beachpools",
   timestamps: true

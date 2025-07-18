@@ -5,13 +5,11 @@ import Girl from "../Images/beach8.webp";
 import Yazı from "../Images/BeachPoolsyazısı.webp";
 import Dalga from "../Images/waves2sonson.webp";
 import ClinaryInfoSection from "@/app/[locale]/restaurants/components/ClinaryInfoSection";
-import img1 from "../Images/beach1.webp";
-import img2 from "../Images/beach2.webp";
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Link from "next/link";
 import BeachClinary from "./BeachClinary";
 
-export default function Beach1() {
+export default function Beach1({subtitle, title, text, buttonText, girlImg, yaziImg, dalgaImg,img1,img2, clinarySpan, clinaryTexts, clinaryHeader}) {
   const t = useTranslations('BeachPools');
   const t2 = useTranslations('BeachPools.ClinaryInfoSection');
   const [scrollAttempt, setScrollAttempt] = useState(0);
@@ -63,6 +61,8 @@ export default function Beach1() {
     ? "top-[25%] transition-all duration-700"
     : "top-[55%] transition-all duration-700";
 
+    
+
   return (
     <>
       {/* HERO BÖLÜMÜ – overflow-visible sayesinde dalga resmi dışarı taşabilir */}
@@ -109,16 +109,16 @@ export default function Beach1() {
         // Arka planı genel kapsayıcıya uyguluyoruz, böylece dalga resmi (z-[50]) kalmaya devam ediyor
       >
         <p className="uppercase text-[12px] leading-[14px] tracking-[0.48px] font-medium font-jost">
-         {t("subtitle")}
+         {subtitle}
         </p>
         <h1 className="font-marcellus text-[28px] md:text-[32px] lg:text-[48px] leading-[120%] lg:leading-[57.6px] font-normal w-[35%]">
-        {t("title")}
+        {title}
         </h1>
         <p className=" text-center font-jost text-[14px] lg:text-[16px] leading-[24px] w-[46%]">
-        {t("text")}
+        {text}
         </p>
         <Link href="/beachpools#pools" className="uppercase text-sm font-medium font-marcellus text-[16px] lg:text-[18px] leading-[30px] underline underline-offset-4 mt-4 z-[999]">
-        {t("buttonText")}
+        {buttonText}
         </Link>
 
         {/* ClinaryInfoSection – negatif margin-top ile dalga resminin üst kısmının görünmesine izin veriyoruz */}
@@ -126,9 +126,9 @@ export default function Beach1() {
           <BeachClinary
             img1={img1}
             img2={img2}
-            span={t2("subtitle")}
-            header={t2("title")}
-            texts={texts}
+            span={clinarySpan}
+            header={clinaryHeader}
+            texts={clinaryTexts}
           />
         </div>
       </div>

@@ -112,20 +112,47 @@ const poolItems = [
     description: t2("poolText9"),
   },
 ]
+
+
+ const [pageData, setPageData] = useState(null);
+    useEffect(() => {
+      fetch(`${apiUrl}/api/pages/beachpools`)
+        .then(r => r.json())
+        .then(json => setPageData(json))
+        .catch(console.error);
+    }, [apiUrl]);
   
+    if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+
+      //const spaSection = pageData?.infoSection;
+
+      const ClinaryImg1 = pageData.clinaryInfo?.image1
+      ? pageData.clinaryInfo.image1.startsWith("/")
+        ? `${apiUrl}${pageData.clinaryInfo.image1}`
+        : pageData.clinaryInfo.image1
+      : "";
+
+      const ClinaryImg2 = pageData.clinaryInfo?.image2
+      ? pageData.clinaryInfo.image2.startsWith("/")
+        ? `${apiUrl}${pageData.clinaryInfo.image2}`
+        : pageData.clinaryInfo.image2
+      : "";
+
+      const clinaryTexts=[pageData.clinaryInfo?.texts?.[0]?.[locale], pageData.clinaryInfo?.texts?.[1]?.[locale], pageData.clinaryInfo?.texts?.[2]?.[locale], pageData.clinaryInfo?.texts?.[3]?.[locale], pageData.clinaryInfo?.texts?.[4]?.[locale]]
+
 
   return (
     <div className='overflow-hidden overflow-y-hidden bg-[#fbfbfb]'>
-      <Beach1 /> 
+      <Beach1 subtitle={pageData.mainBanner?.desktop?.subtitle?.[locale]}  title={pageData.mainBanner?.desktop?.title?.[locale]} text={pageData.mainBanner?.desktop?.text?.[locale]} buttonText={pageData.mainBanner?.desktop?.buttonText?.[locale]} img1={ClinaryImg1} img2={ClinaryImg2} clinarySpan={pageData.clinaryInfo?.subtitle?.[locale]} clinaryHeader={pageData.clinaryInfo?.title?.[locale]} clinaryTexts={clinaryTexts}/> 
      <div className='flex w-screen flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] lg:mt-[100px] bg-[#fbfbfb]'>
      <BeachMobile/>
     <div className='flex lg:hidden'>
     <ClinaryInfoSection
-            img1={img1}
-            img2={img2}
-            span={t("subtitle")}
-            header={t("title")}
-            texts={texts}
+            img1={ClinaryImg1}
+            img2={ClinaryImg2}
+            span={pageData.clinaryInfo?.subtitle?.[locale]}
+            header={pageData.clinaryInfo?.title?.[locale]}
+            texts={clinaryTexts}
           />
     </div>
      <Beach2 />
