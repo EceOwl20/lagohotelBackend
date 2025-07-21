@@ -1,8 +1,22 @@
 "use client";
+import { useState } from "react";
+
 export default function KidsclubCarouselEdit({ data, setData, langs }) {
   const carousel = data.kidsClubCarousel || {};
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // Carousel slides add/remove
+  // Genel alanlar: subtitle, title, text
+  const handleGeneralChange = (field, lang, value) => {
+    setData({
+      ...data,
+      kidsClubCarousel: {
+        ...carousel,
+        [field]: { ...(carousel[field] || {}), [lang]: value },
+      },
+    });
+  };
+
+  // Slide ekle/sil
   const handleAdd = () => {
     setData({
       ...data,
@@ -10,9 +24,9 @@ export default function KidsclubCarouselEdit({ data, setData, langs }) {
         ...carousel,
         slides: [
           ...(carousel.slides || []),
-          { image: "", header: { tr: "", en: "", de: "", ru: "" } }
-        ]
-      }
+          { image: "", header: { tr: "", en: "", de: "", ru: "" } },
+        ],
+      },
     });
   };
   const handleRemove = (i) => {
@@ -20,105 +34,174 @@ export default function KidsclubCarouselEdit({ data, setData, langs }) {
       ...data,
       kidsClubCarousel: {
         ...carousel,
-        slides: (carousel.slides || []).filter((_, idx) => idx !== i)
-      }
+        slides: (carousel.slides || []).filter((_, idx) => idx !== i),
+      },
     });
   };
 
-  const handleChange = (key, lang, value, idx) => {
-    const arr = [...(carousel.slides || [])];
-    arr[idx][key][lang] = value;
+  // Slide içi metin değişimi
+  const handleSlideTextChange = (key, lang, value, idx) => {
+    const slides = [...(carousel.slides || [])];
+    slides[idx][key][lang] = value;
     setData({
       ...data,
-      kidsClubCarousel: { ...carousel, slides: arr }
+      kidsClubCarousel: { ...carousel, slides },
     });
   };
-  const handleImageChange = (value, idx) => {
-    const arr = [...(carousel.slides || [])];
-    arr[idx].image = value;
-    setData({
-      ...data,
-      kidsClubCarousel: { ...carousel, slides: arr }
-    });
+
+  // Slide resmi dosya yükleme
+  const [uploading, setUploading] = useState({});
+  const uploadImage = async (e, idx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(u => ({ ...u, [idx]: true }));
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+      const imageUrl = result.imageUrl || result.path;
+      // slide.image olarak kaydet
+      const slides = [...(carousel.slides || [])];
+      slides[idx].image = imageUrl;
+      setData({
+        ...data,
+        kidsClubCarousel: { ...carousel, slides },
+      });
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(u => ({ ...u, [idx]: false }));
+    }
   };
 
   return (
     <section className="bg-gray-100 rounded-md p-4 mb-6">
-      <h3 className="font-bold text-xl mb-2">Kids Club Carousel</h3>
-      <div className="mb-2 flex flex-col gap-2">
-        <label>Başlık</label>
-        <div className="flex gap-2">
-          {langs.map(lang => (
+      <h3 className="font-bold text-xl mb-4">Kids Club Carousel</h3>
+
+      {/* Subtitle */}
+      <div className="mb-4">
+        <label className="block font-semibold mb-1">Alt Başlıklar</label>
+        <div className="flex gap-2 flex-wrap">
+          {langs.map((lang) => (
             <input
               key={lang}
-              placeholder={lang.toUpperCase()}
-              className="border p-2 rounded w-full"
-              value={carousel?.title?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  kidsClubCarousel: {
-                    ...carousel,
-                    title: { ...(carousel.title || {}), [lang]: e.target.value }
-                  }
-                })
+              placeholder={`Alt Başlık (${lang.toUpperCase()})`}
+              className="border p-2 rounded w-[180px]"
+              value={carousel.subtitle?.[lang] || ""}
+              onChange={(e) =>
+                handleGeneralChange("subtitle", lang, e.target.value)
               }
             />
           ))}
         </div>
       </div>
-      <div className="mb-2 flex flex-col gap-2">
-        <label>Açıklama</label>
-        <div className="flex gap-2">
-          {langs.map(lang => (
+
+      {/* Title */}
+      <div className="mb-4">
+        <label className="block font-semibold mb-1">Başlıklar</label>
+        <div className="flex gap-2 flex-wrap">
+          {langs.map((lang) => (
+            <input
+              key={lang}
+              placeholder={`Başlık (${lang.toUpperCase()})`}
+              className="border p-2 rounded w-[180px]"
+              value={carousel.title?.[lang] || ""}
+              onChange={(e) =>
+                handleGeneralChange("title", lang, e.target.value)
+              }
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Text */}
+      <div className="mb-6">
+        <label className="block font-semibold mb-1">Açıklama</label>
+        <div className="flex gap-2 flex-wrap">
+          {langs.map((lang) => (
             <textarea
               key={lang}
-              placeholder={lang.toUpperCase()}
-              className="border p-2 rounded w-full"
-              value={carousel?.text?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  kidsClubCarousel: {
-                    ...carousel,
-                    text: { ...(carousel.text || {}), [lang]: e.target.value }
-                  }
-                })
+              placeholder={`Açıklama (${lang.toUpperCase()})`}
+              className="border p-2 rounded w-[180px] min-h-[64px]"
+              value={carousel.text?.[lang] || ""}
+              onChange={(e) =>
+                handleGeneralChange("text", lang, e.target.value)
               }
             />
           ))}
         </div>
       </div>
+
       {/* Slides */}
       {(carousel.slides || []).map((slide, idx) => (
-        <div key={idx} className="border p-2 rounded mb-2">
-          <label>Görsel URL</label>
-          <input
-            className="border p-2 rounded w-full mb-2"
-            value={slide.image}
-            onChange={e => handleImageChange(e.target.value, idx)}
-          />
-          <div className="flex gap-2">
-            {langs.map(lang => (
+        <div key={idx} className="border rounded p-3 mb-4 bg-white">
+          <div className="flex justify-between items-center mb-2">
+            <strong>Slide #{idx + 1}</strong>
+            <button
+              type="button"
+              className="px-2 py-1 bg-red-500 text-white rounded"
+              onClick={() => handleRemove(idx)}
+            >
+              Sil
+            </button>
+          </div>
+
+          {/* Görsel Dosya Yükle */}
+          <div className="mb-3">
+            <label className="block font-semibold mb-1">Görsel Yükle</label>
+            <div className="flex items-center gap-4">
               <input
-                key={lang}
-                placeholder={`Başlık (${lang.toUpperCase()})`}
-                className="border p-2 rounded w-full"
-                value={slide.header?.[lang] || ""}
-                onChange={e => handleChange("header", lang, e.target.value, idx)}
+                type="file"
+                accept="image/*"
+                onChange={(e) => uploadImage(e, idx)}
+                disabled={uploading[idx]}
               />
+              {uploading[idx] && (
+                <span className="text-blue-500">Yükleniyor…</span>
+              )}
+              {slide.image && (
+                <img
+                  src={
+                    slide.image.startsWith("/")
+                      ? `${apiUrl}${slide.image}`
+                      : slide.image
+                  }
+                  alt={`Slide ${idx + 1}`}
+                  className="w-24 h-16 object-cover rounded border"
+                />
+              )}
+            </div>
+          </div>
+
+          {/* Slide header */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {langs.map((lang) => (
+              <div key={lang}>
+                <label className="text-xs block mb-1">
+                  Başlık ({lang.toUpperCase()})
+                </label>
+                <input
+                  type="text"
+                  className="w-full border p-2 rounded"
+                  value={slide.header?.[lang] || ""}
+                  onChange={(e) =>
+                    handleSlideTextChange("header", lang, e.target.value, idx)
+                  }
+                />
+              </div>
             ))}
           </div>
-          <button
-            className="text-red-600 hover:underline text-sm mt-1"
-            onClick={() => handleRemove(idx)}
-          >
-            Sil
-          </button>
         </div>
       ))}
+
       <button
-        className="px-4 py-2 bg-green-600 text-white rounded mt-2"
+        type="button"
+        className="px-4 py-2 bg-green-600 text-white rounded"
         onClick={handleAdd}
       >
         + Slide Ekle

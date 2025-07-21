@@ -10,28 +10,43 @@ const clubDefault = {
 
 export default function KidsBambooEdit({ data, setData, langs }) {
   const value = data.kidsBamboo || {};
+  const [uploading, setUploading] = useState({}); // { [idx]: bool }
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // Club kartı ekle/sil
-  const handleClubAdd = () => {
-    setData({
-      ...data,
-      kidsBamboo: {
-        ...value,
-        clubData: [...(value.clubData || []), { ...clubDefault }]
-      }
-    });
+  // Görsel upload handler
+  const handleImageUpload = async (e, idx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(prev => ({ ...prev, [idx]: true }));
+    const formData = new FormData();
+    formData.append("image", file);
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: formData
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+      const imageUrl = result.imageUrl || result.path;
+      // clubData dizisini güncelle
+      const arr = [...(value.clubData || [])];
+      arr[idx].image = imageUrl;
+      // setData ile kaydet
+      setData(prev => ({
+        ...prev,
+        kidsBamboo: {
+          ...prev.kidsBamboo,
+          clubData: arr
+        }
+      }));
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(prev => ({ ...prev, [idx]: false }));
+    }
   };
 
-  const handleClubRemove = (i) => {
-    setData({
-      ...data,
-      kidsBamboo: {
-        ...value,
-        clubData: (value.clubData || []).filter((_, idx) => idx !== i)
-      }
-    });
-  };
-
+  // Diğer alanlar aynı...
   const handleChange = (path, val) => {
     const keys = path.split(".");
     setData(prev => {
@@ -46,10 +61,29 @@ export default function KidsBambooEdit({ data, setData, langs }) {
     });
   };
 
+  const handleClubAdd = () => {
+    setData(prev => ({
+      ...prev,
+      kidsBamboo: {
+        ...prev.kidsBamboo,
+        clubData: [...(prev.kidsBamboo.clubData || []), { ...clubDefault }]
+      }
+    }));
+  };
+  const handleClubRemove = i => {
+    setData(prev => ({
+      ...prev,
+      kidsBamboo: {
+        ...prev.kidsBamboo,
+        clubData: prev.kidsBamboo.clubData.filter((_, idx) => idx !== i)
+      }
+    }));
+  };
+
   return (
     <section className="bg-gray-100 rounded-md p-4 mb-6">
       <h3 className="font-bold text-xl mb-2">Kids Bamboo</h3>
-      {["subtitle", "title", "text", "span", "note"].map((key) => (
+      {["subtitle", "title", "text", "span", "note"].map(key => (
         <div key={key} className="mb-2">
           <label className="block font-semibold mb-1">
             {key[0].toUpperCase() + key.slice(1)}
@@ -58,36 +92,57 @@ export default function KidsBambooEdit({ data, setData, langs }) {
             {langs.map(lang => (
               <input
                 key={lang}
-                placeholder={`${lang.toUpperCase()}`}
+                placeholder={lang.toUpperCase()}
                 className="border p-2 rounded w-full"
                 value={value?.[key]?.[lang] || ""}
-                onChange={e =>
-                  handleChange(`${key}.${lang}`, e.target.value)
-                }
+                onChange={e => handleChange(`${key}.${lang}`, e.target.value)}
               />
             ))}
           </div>
         </div>
       ))}
 
-      {/* Club Cards */}
+      {/* Kulüp Kartları */}
       <h4 className="font-semibold text-lg mt-6 mb-2">Kulüp Kartları</h4>
       {(value.clubData || []).map((club, idx) => (
-        <div key={idx} className="border p-2 rounded mb-2">
+        <div key={idx} className="border p-2 rounded mb-4 bg-white">
+          <button
+            className="text-red-600 hover:underline text-sm mb-2"
+            onClick={() => handleClubRemove(idx)}
+          >
+            Kaldır
+          </button>
+
+          {/* Dosya yükleme input */}
           <label className="block font-semibold mb-1">Görsel</label>
-          <input
-            type="text"
-            className="border p-2 rounded w-full mb-2"
-            value={club.image}
-            onChange={e => {
-              const arr = [...(value.clubData || [])];
-              arr[idx].image = e.target.value;
-              handleChange("clubData", arr);
-            }}
-          />
+          <div className="flex items-center gap-4 mb-3">
+            <input
+              type="file"
+              accept="image/*"
+              onChange={e => handleImageUpload(e, idx)}
+              disabled={uploading[idx]}
+              className="border p-2 rounded"
+            />
+            {uploading[idx] && (
+              <span className="text-blue-600">Yükleniyor…</span>
+            )}
+            {club.image && (
+              <img
+                src={
+                  club.image.startsWith("/")
+                    ? `${apiUrl}${club.image}`
+                    : club.image
+                }
+                alt="Kulüp"
+                className="h-16 w-24 object-cover rounded border"
+              />
+            )}
+          </div>
+
+          {/* Diğer çokdilli alanlar */}
           {["ageGroup", "title", "description"].map(key => (
-            <div key={key} className="mb-1">
-              <label className="block">{key}</label>
+            <div key={key} className="mb-2">
+              <label className="block font-semibold">{key}</label>
               <div className="flex gap-2">
                 {langs.map(lang => (
                   <input
@@ -98,21 +153,22 @@ export default function KidsBambooEdit({ data, setData, langs }) {
                     onChange={e => {
                       const arr = [...(value.clubData || [])];
                       arr[idx][key][lang] = e.target.value;
-                      handleChange("clubData", arr);
+                      setData(prev => ({
+                        ...prev,
+                        kidsBamboo: {
+                          ...prev.kidsBamboo,
+                          clubData: arr
+                        }
+                      }));
                     }}
                   />
                 ))}
               </div>
             </div>
           ))}
-          <button
-            className="text-red-600 hover:underline text-sm mt-1"
-            onClick={() => handleClubRemove(idx)}
-          >
-            Kaldır
-          </button>
         </div>
       ))}
+
       <button
         type="button"
         className="px-4 py-2 bg-green-600 text-white rounded"

@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import MainBannerSection from '../GeneralComponents/MainBannerSection'
 import image from "./images/mainkids.webp"
 import KidsBamboo from './components/KidsBamboo'
@@ -16,13 +17,34 @@ import img2 from "./images/SRF_3813.webp"
 import img3 from "./images/SRF_4487.webp"
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
 import RestaurantMainBanner from '../restaurants/components/RestaurantMainBanner'
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 const momentImages=[img1,img2,img3]
 
 const page = () => {
   const t = useTranslations('KidsClub')
   const t2 = useTranslations('KidsClub.CuisinesCarousel');
+
+   const locale = useLocale(); // "tr", "en", "de", "ru"
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const [pageData, setPageData] = useState(null);
+      useEffect(() => {
+        fetch(`${apiUrl}/api/pages/kidsclub`)
+          .then(r => r.json())
+          .then(json => setPageData(json))
+          .catch(console.error);
+      }, [apiUrl]);
+    
+      if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+  
+        //const spaSection = pageData?.infoSection;
+  
+        const imgBanner = pageData.clinaryInfo?.image1
+        ? pageData.clinaryInfo.image1.startsWith("/")
+          ? `${apiUrl}${pageData.clinaryInfo.image1}`
+          : pageData.clinaryInfo.image1
+        : "";
 
 
 const kids = [

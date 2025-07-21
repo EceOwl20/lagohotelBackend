@@ -224,11 +224,12 @@ router.put('/spa', async (req, res) => {
   }
 });
 
+
 // GET kidsclub page data
 router.get('/kidsclub', async (req, res) => {
   try {
     const page = await KidsClub.findOne({ slug: 'kidsclub' });
-    res.json(page);
+    res.json(page || {});
   } catch (err) {
     res.status(500).json({ error: err.message });
   }

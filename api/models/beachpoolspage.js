@@ -74,7 +74,12 @@ const BeachPoolsSchema = new mongoose.Schema({
     icon1Text: multiLangSchema,
     icon2Text: multiLangSchema,
   },
-  carousel: [ carouselItemSchema ],
+  carousel: {
+    subtitle: multiLangSchema,
+    title:    multiLangSchema,
+    text:     multiLangSchema,
+    carouselItem:[ carouselItemSchema ]
+  },
   poolSection: {
     subtitle: multiLangSchema,
     title:    multiLangSchema,

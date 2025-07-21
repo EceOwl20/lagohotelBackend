@@ -6,24 +6,7 @@ import Beach3 from './Components/Beach3'
 import Beach4 from './Components/Beach4'
 import Beach5 from './Components/Beach5'
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
-import pool1 from "./Images/map/main.webp"
-import pool2 from "./Images/map/relaxpool.webp"
-import pool3 from "./Images/map/maldivas.webp"
-import pool4 from "./Images/map/ınfınıty.webp"
-import pool5 from "./Images/map/maldivaskids.webp"
-import pool6 from "./Images/map/ındoor.webp"
-import pool7 from "./Images/map/aquapool.webp"
-import pool8 from "./Images/map/kıdsaqua.webp"
-import pool9 from "./Images/map/megaaqua.webp"
-import hover1 from "./Images/map/PoolHover1.png"
-import hover2 from "./Images/map/PoolHover2.png"
-import hover3 from "./Images/map/PoolHover3.png"
-import hover4 from "./Images/map/PoolHover4.png"
-import hover5 from "./Images/map/PoolHover5.png"
-import hover6 from "./Images/map/PoolHover6.png"
-import hover7 from "./Images/map/PoolHover7.png"
-import hover8 from "./Images/map/PoolHover8.png"
-import hover9 from "./Images/map/PoolHover9.png"
+
 import Form from '../GeneralComponents/Form'
 import BeachMobile from './Components/BeachMobile'
 import img1 from "./Images/beach1.webp";
@@ -45,74 +28,6 @@ const page = () => {
     t("text4"),
     t("text5")
   ];
-
-
-const poolItems = [
-  {
-    src: pool1,
-    hoverSrc: hover1,
-    subtitle: t2("poolSubTitle1"),
-    title: t2("poolTitle1"),
-    description: t2("poolText1"),
-  },
-  {
-    src: pool2,
-    hoverSrc: hover2,
-    subtitle: t2("poolSubTitle2"),
-    title: t2("poolTitle2"),
-    description: t2("poolText2"),
-  },
-  {
-    src: pool3,
-    hoverSrc: hover3,
-    subtitle: t2("poolSubTitle3"),
-    title: t2("poolTitle3"),
-    description: t2("poolText3"),
-  },
-  {
-    src: pool4,
-    hoverSrc: hover4,
-    subtitle: t2("poolSubTitle4"),
-    title: t2("poolTitle4"),
-    description: t2("poolText4"),
-  },
-  {
-    src: pool5,
-    hoverSrc: hover5,
-    subtitle: t2("poolSubTitle5"),
-    title:t2("poolTitle5"),
-    description: t2("poolText5"),
-  },
-  {
-    src: pool6,
-    hoverSrc: hover6,
-    subtitle:t2("poolSubTitle6"),
-    title: t2("poolTitle6"),
-    description: t2("poolText6"),
-  },
-  {
-    src: pool7,
-    hoverSrc: hover7,
-    subtitle: t2("poolSubTitle7"),
-    title: t2("poolTitle7"),
-    description: t2("poolText7"),
-  },
-  {
-    src: pool8,
-    hoverSrc: hover8,
-    subtitle: t2("poolSubTitle8"),
-    title: t2("poolTitle8"),
-    description: t2("poolText8"), 
-  },
-  {
-    src: pool9,
-    hoverSrc: hover9,
-    subtitle: t2("poolSubTitle9"),
-    title: t2("poolTitle9"),
-    description: t2("poolText9"),
-  },
-]
-
 
  const [pageData, setPageData] = useState(null);
     useEffect(() => {
@@ -140,6 +55,107 @@ const poolItems = [
 
       const clinaryTexts=[pageData.clinaryInfo?.texts?.[0]?.[locale], pageData.clinaryInfo?.texts?.[1]?.[locale], pageData.clinaryInfo?.texts?.[2]?.[locale], pageData.clinaryInfo?.texts?.[3]?.[locale], pageData.clinaryInfo?.texts?.[4]?.[locale]]
 
+ const poolImages = (pageData.poolList || []).map(item => {
+  if (!item.image) return "";                  
+  return item.image.startsWith("/")
+    ? `${apiUrl}${item.image}`                 
+    : item.image;                          
+});
+
+const pool1 = poolImages[0];
+const pool2 = poolImages[1];
+const pool3 = poolImages[2];
+const pool4 = poolImages[3];
+const pool5 = poolImages[4];
+const pool6 = poolImages[5];
+const pool7 = poolImages[6];
+const pool8 = poolImages[7];
+const pool9 = poolImages[8];
+
+
+ const poolhoverImages = (pageData.poolList || []).map(item => {
+  if (!item.hoverImage) return "";                  
+  return item.hoverImage.startsWith("/")
+    ? `${apiUrl}${item.hoverImage}`                 
+    : item.hoverImage;                          
+});
+
+const hover1 = poolhoverImages[0];
+const hover2 = poolhoverImages[1];
+const hover3 = poolhoverImages[2];
+const hover4 = poolhoverImages[3];
+const hover5 = poolhoverImages[4];
+const hover6 = poolhoverImages[5];
+const hover7 = poolhoverImages[6];
+const hover8 = poolhoverImages[7];
+const hover9 = poolhoverImages[8];
+
+const poolItems = [
+  {
+    src: pool1,
+    hoverSrc: hover1,
+    subtitle: pageData.poolList?.[0]?.subtitle?.[locale],
+    title: pageData.poolList?.[0]?.title?.[locale],
+    description: pageData.poolList?.[0]?.description?.[locale],
+  },
+  {
+    src: pool2,
+    hoverSrc: hover2,
+    subtitle: pageData.poolList?.[1]?.subtitle?.[locale],
+    title: pageData.poolList?.[1]?.title?.[locale],
+    description: pageData.poolList?.[1]?.description?.[locale],
+  },
+  {
+    src: pool3,
+    hoverSrc: hover3,
+    subtitle: pageData.poolList?.[2]?.subtitle?.[locale],
+    title: pageData.poolList?.[2]?.title?.[locale],
+    description: pageData.poolList?.[2]?.description?.[locale],
+  },
+  {
+    src: pool4,
+    hoverSrc: hover4,
+     subtitle: pageData.poolList?.[3]?.subtitle?.[locale],
+    title: pageData.poolList?.[3]?.title?.[locale],
+    description: pageData.poolList?.[3]?.description?.[locale],
+  },
+  {
+    src: pool5,
+    hoverSrc: hover5,
+      subtitle: pageData.poolList?.[4]?.subtitle?.[locale],
+    title: pageData.poolList?.[4]?.title?.[locale],
+    description: pageData.poolList?.[4]?.description?.[locale],
+  },
+  {
+    src: pool6,
+    hoverSrc: hover6,
+    subtitle: pageData.poolList?.[5]?.subtitle?.[locale],
+    title: pageData.poolList?.[5]?.title?.[locale],
+    description: pageData.poolList?.[5]?.description?.[locale],
+  },
+  {
+    src: pool7,
+    hoverSrc: hover7,
+    subtitle: pageData.poolList?.[6]?.subtitle?.[locale],
+    title: pageData.poolList?.[6]?.title?.[locale],
+    description: pageData.poolList?.[6]?.description?.[locale],
+  },
+  {
+    src: pool8,
+    hoverSrc: hover8,
+      subtitle: pageData.poolList?.[7]?.subtitle?.[locale],
+    title: pageData.poolList?.[7]?.title?.[locale],
+    description: pageData.poolList?.[7]?.description?.[locale],
+  },
+  {
+    src: pool9,
+    hoverSrc: hover9,
+      subtitle: pageData.poolList?.[8]?.subtitle?.[locale],
+    title: pageData.poolList?.[8]?.title?.[locale],
+    description: pageData.poolList?.[8]?.description?.[locale],
+  },
+]
+
 
   return (
     <div className='overflow-hidden overflow-y-hidden bg-[#fbfbfb]'>
@@ -158,7 +174,7 @@ const poolItems = [
      <Beach2 />
       <Beach3 />
       <Beach4 />
-      <Beach5 id="pools" showLink={false} span={t2("subtitle")} header={t2("title")} text={t2("text")} poolItems={poolItems}/>
+      <Beach5 id="pools" showLink={false} span={pageData.poolListSection?.subtitle?.[locale]} header={pageData.poolListSection?.title?.[locale]} text={pageData.poolListSection?.text?.[locale]} poolItems={poolItems}/>
       <ContactSection2 />
       <Form/>
      </div>

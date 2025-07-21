@@ -14,7 +14,7 @@ export default function KidsClubPanelPage() {
   const [data, setData] = useState(null);
    const [status, setStatus] = useState("");
    useEffect(() => {
-      fetch("http://localhost:5001/api/pages/restaurants")
+      fetch("http://localhost:5001/api/pages/kidsclub")
         .then(res => res.json())
         .then(json => setData(json))
         .catch(() => setData({}));
@@ -23,7 +23,7 @@ export default function KidsClubPanelPage() {
     const handleSave = async () => {
       setStatus("Yükleniyor...");
       try {
-        const res = await fetch("http://localhost:5001/api/pages/restaurants", {
+        const res = await fetch("http://localhost:5001/api/pages/kidsclub", {
           method: "PUT",
           headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
           body: JSON.stringify(data)

@@ -12,9 +12,11 @@ export default function MainBannerEdit({ data, setData, langs }) {
     const formData = new FormData();
     formData.append("image", file);
 
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
     setUploading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -32,6 +34,12 @@ export default function MainBannerEdit({ data, setData, langs }) {
     }
   };
 
+   const mainImg = data.mainBanner?.image1
+      ? data.mainBanner.image1.startsWith("/")
+        ? `${apiUrl}${data.mainBanner.image1}`
+        : data.mainBanner.image1
+      : null;
+
   return (
     <section className="border border-gray-300 rounded-md p-4 bg-slate-50">
       <h2 className="text-[22px] font-semibold mb-4">Banner Ayarları</h2>
@@ -47,13 +55,13 @@ export default function MainBannerEdit({ data, setData, langs }) {
           disabled={uploading}
         />
         {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
-        {data?.mainBanner?.image && (
+       
           <img
-            src={`http://localhost:5001${data.mainBanner.image}`}
+           src={mainImg}
             alt="Banner Preview"
             className="mt-2 h-32 object-cover border"
           />
-        )}
+ 
       </label>
 
       {/* Alt Başlıklar */}
