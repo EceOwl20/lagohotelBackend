@@ -7,6 +7,15 @@ const MultiLang = {
   ru: { type: String, default: "" }
 };
 
+const kidspoolItemSchema = new mongoose.Schema({
+  image: String,
+   subtitle: MultiLang,
+  title: MultiLang,
+  text: MultiLang,
+   buttonText: MultiLang,
+    link: MultiLang,
+}, { _id: false });
+
 const KidsClubSchema = new mongoose.Schema({
   slug: { type: String, default: "kidsclub", unique: true },
 
@@ -22,6 +31,7 @@ const KidsClubSchema = new mongoose.Schema({
     title: MultiLang,
     text: MultiLang,
     span: MultiLang,
+    image:String,
     clubData: [{
       image: String,
       ageGroup: MultiLang,
@@ -61,13 +71,11 @@ const KidsClubSchema = new mongoose.Schema({
     images: [String]
   },
 
-  cuisines: [{
-    image: String,
-    title: MultiLang,
-    description: MultiLang,
-    text: MultiLang,
-    link: String,
-    buttonText: MultiLang
+  kidspool: [{
+     subtitle: MultiLang,
+    title:    MultiLang,
+    text:     MultiLang,
+    carouselItem:[ kidspoolItemSchema ]
   }],
 
   kidsMomentCarousel: {

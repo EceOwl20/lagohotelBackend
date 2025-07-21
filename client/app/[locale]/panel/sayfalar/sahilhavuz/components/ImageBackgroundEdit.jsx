@@ -35,7 +35,7 @@ export default function ImageBackgroundEdit({ data, setData, langs }) {
       <label className="font-semibold">Arka Plan Görseli</label>
       <div className="flex items-center gap-4 mb-2">
         {data.imageBackground?.image && (
-          <img src={`http://localhost:5001${data.imageBackground.image}`} alt="" className="w-[120px] h-[80px] object-cover rounded" />
+          <img src={`${apiUrl}${data.imageBackground.image}`} alt="" className="w-[120px] h-[80px] object-cover rounded" />
         )}
         <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} />
         {uploading && <span className="text-blue-500 ml-2">Yükleniyor...</span>}

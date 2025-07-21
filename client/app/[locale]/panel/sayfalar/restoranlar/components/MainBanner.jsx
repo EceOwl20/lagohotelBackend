@@ -1,43 +1,40 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function MainBannerEdit({ data, setData, langs }) {
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [uploading, setUploading] = useState(false);
 
   // Görsel yükleme fonksiyonu (değişmedi)
-  const handleImageUpload = async (e) => {
-    const file = e.target.files[0];
+    const handleImageUpload = async (e) => {
+    const file = e.target.files?.[0];
     if (!file) return;
-
+    setUploading(true);
     const formData = new FormData();
     formData.append("image", file);
-
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-    setUploading(true);
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-
+     const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
+    const json = await res.json();
+    if (res.ok && json.imageUrl) {
       setData({
         ...data,
-        mainBanner: { ...data.mainBanner, image: result.imageUrl },
+        imageBackground: { ...data.imageBackground, image: json.imageUrl },
       });
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
-    } finally {
-      setUploading(false);
     }
+    setUploading(false);
   };
+  const handleLangChange = (field, lang, value) =>
+    setData({
+      ...data,
+      imageBackground: {
+        ...data.imageBackground,
+        [field]: { ...(data.imageBackground?.[field] || {}), [lang]: value },
+      },
+    });
 
-   const mainImg = data.mainBanner?.image1
-      ? data.mainBanner.image1.startsWith("/")
-        ? `${apiUrl}${data.mainBanner.image1}`
-        : data.mainBanner.image1
+   const mainImg = data.mainBanner?.image
+      ? data.mainBanner.image.startsWith("/")
+        ? `${apiUrl}${data.mainBanner.image}`
+        : data.mainBanner.image
       : null;
 
   return (

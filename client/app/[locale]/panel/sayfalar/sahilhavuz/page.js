@@ -16,13 +16,14 @@ const langs = [
 
 
 const langs2 = ["tr", "en", "de", "ru"];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function BeachPoolsPanelPage() {
   const [data, setData] = useState(null);
     const [status, setStatus] = useState("");
   
     useEffect(() => {
-      fetch("http://localhost:5001/api/pages/beachpools")
+      fetch(`${apiUrl}/api/pages/beachpools`)
         .then(res => res.json())
         .then(json => setData(json))
         .catch(() => setData({}));
@@ -31,7 +32,7 @@ export default function BeachPoolsPanelPage() {
     const handleSave = async () => {
       setStatus("Yükleniyor...");
       try {
-        const res = await fetch("http://localhost:5001/api/pages/beachpools", {
+        const res = await fetch(`${apiUrl}/api/pages/beachpools`, {
           method: "PUT",
           headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
           body: JSON.stringify(data)

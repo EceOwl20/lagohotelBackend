@@ -40,10 +40,10 @@ const page = () => {
   
         //const spaSection = pageData?.infoSection;
   
-        const imgBanner = pageData.clinaryInfo?.image1
-        ? pageData.clinaryInfo.image1.startsWith("/")
-          ? `${apiUrl}${pageData.clinaryInfo.image1}`
-          : pageData.clinaryInfo.image1
+        const imgBanner = pageData.mainBanner?.image
+        ? pageData.mainBanner.image.startsWith("/")
+          ? `${apiUrl}${pageData.mainBanner.image}`
+          : pageData.mainBanner.image
         : "";
 
 
@@ -79,7 +79,7 @@ const kids = [
 
   return (
     <div className='overflow-hidden flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
-      <RestaurantMainBanner img={image} span={t("subtitle")} header={t("title")} text={t("text")}/>
+      <RestaurantMainBanner img={imgBanner} span={pageData.mainBanner?.subtitle?.[locale]} header={pageData.mainBanner?.title?.[locale]} text={pageData.mainBanner?.text?.[locale]}/>
       <KidsBamboo/>
       <KidsIconsSection/>
       <KidsclubCarousel/>

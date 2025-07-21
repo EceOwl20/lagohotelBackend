@@ -1,239 +1,217 @@
 "use client";
 import { useState } from "react";
 
-const dilAdlari = { tr: "Türkçe", en: "İngilizce", de: "Almanca", ru: "Rusça" };
+const dilAdlari = {
+  tr: "Türkçe",
+  en: "İngilizce",
+  de: "Almanca",
+  ru: "Rusça"
+};
 
-export default function CuisinesEdit({ data, setData, langs, blockName = "cuisines" }) {
-  const cuisines = data[blockName] || [];
-  const [uploadingInfo, setUploadingInfo] = useState({}); // { `${idx}-main`: bool, `${idx}-sub-${j}`: bool }
+export default function KidspoolEdit({ data, setData, langs, blockName = "kidspool" }) {
+  const sections = data[blockName] || [];
+  const [uploading, setUploading] = useState({}); // e.g. { "0-2": true } bölüm 0, öğe 2 yükleniyor
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // Yemek ekle
-  const addCuisine = () => {
-    const emptyCuisine = {
-      image: "",
-      title: langs.reduce((o,l)=>(o[l]="",o), {}),
-      description: langs.reduce((o,l)=>(o[l]="",o), {}),
-      text: langs.reduce((o,l)=>(o[l]="",o), {}),
-      link: "",
-      buttonText: langs.reduce((o,l)=>(o[l]="",o), {}),
-      cuisine: Array.from({ length: 3 }, () => ({
-        image: "",
-        title: langs.reduce((o,l)=>(o[l]="",o), {}),
-        description: langs.reduce((o,l)=>(o[l]="",o), {}),
-        subtitle: langs.reduce((o,l)=>(o[l]="",o), {}),
-        link: ""
-      }))
+  // Yeni bölüm ekle
+  const addSection = () => {
+    const emptySection = {
+      subtitle: langs.reduce((o,l)=>(o[l]="",o), {}),
+      title:    langs.reduce((o,l)=>(o[l]="",o), {}),
+      text:     langs.reduce((o,l)=>(o[l]="",o), {}),
+      carouselItem: []
     };
-    setData({ ...data, [blockName]: [...cuisines, emptyCuisine] });
+    setData({ ...data, [blockName]: [...sections, emptySection] });
   };
 
-  // Yemek sil
-  const removeCuisine = i => {
-    setData({ ...data, [blockName]: cuisines.filter((_, idx) => idx !== i) });
+  // Bölüm sil
+  const removeSection = idx => {
+    setData({ ...data, [blockName]: sections.filter((_,i)=>i!==idx) });
   };
 
-  // Görsel yükle (main veya alt)
-  const handleImageUpload = async (e, idx, subIdx = null) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const key = subIdx === null ? `${idx}-main` : `${idx}-sub-${subIdx}`;
-    setUploadingInfo(prev => ({ ...prev, [key]: true }));
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const updated = [...cuisines];
-      if (subIdx === null) {
-        updated[idx].image = result.imageUrl;
-      } else {
-        updated[idx].cuisine[subIdx].image = result.imageUrl;
-      }
-      setData({ ...data, [blockName]: updated });
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
-    } finally {
-      setUploadingInfo(prev => ({ ...prev, [key]: false }));
-    }
+  // Yeni carousel item (bölüm içinde) ekle
+  const addItem = secIdx => {
+    const updated = [...sections];
+    const emptyItem = {
+      image: "",
+      subtitle: langs.reduce((o,l)=>(o[l]="",o), {}),
+      title:    langs.reduce((o,l)=>(o[l]="",o), {}),
+      text:     langs.reduce((o,l)=>(o[l]="",o), {}),
+      buttonText:langs.reduce((o,l)=>(o[l]="",o), {}),
+      link:     langs.reduce((o,l)=>(o[l]="",o), {})
+    };
+    updated[secIdx].carouselItem = [...(updated[secIdx].carouselItem||[]), emptyItem];
+    setData({ ...data, [blockName]: updated });
   };
 
-  // Çok dilli alan güncelle
-  const handleFieldChange = (idx, field, lang, value, subIdx = null) => {
-    const updated = [...cuisines];
-    if (subIdx === null) {
-      updated[idx][field] = { ...updated[idx][field], [lang]: value };
+  // Carousel item sil
+  const removeItem = (secIdx, itemIdx) => {
+    const updated = [...sections];
+    updated[secIdx].carouselItem = updated[secIdx].carouselItem.filter((_,i)=>i!==itemIdx);
+    setData({ ...data, [blockName]: updated });
+  };
+
+  // Çokdilli alan değişimi: hem section-level, hem item-level
+  const handleFieldChange = (secIdx, field, lang, val, itemIdx = null) => {
+    const updated = [...sections];
+    if (itemIdx === null) {
+      // section-level
+      updated[secIdx][field] = { ...(updated[secIdx][field]||{}), [lang]: val };
     } else {
-      updated[idx].cuisine[subIdx][field] = { 
-        ...updated[idx].cuisine[subIdx][field], 
-        [lang]: value 
+      // carouselItem-level
+      updated[secIdx].carouselItem[itemIdx][field] = {
+        ...(updated[secIdx].carouselItem[itemIdx][field]||{}),
+        [lang]: val
       };
     }
     setData({ ...data, [blockName]: updated });
   };
 
-  // Düz string alan güncelle
-  const handleStringChange = (idx, field, value, subIdx = null) => {
-    const updated = [...cuisines];
-    if (subIdx === null) {
-      updated[idx][field] = value;
-    } else {
-      updated[idx].cuisine[subIdx][field] = value;
+  // Görsel yükleme: sadece carouselItem.image
+  const handleImageUpload = async (secIdx, itemIdx, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const key = `${secIdx}-${itemIdx}`;
+    setUploading(u => ({ ...u, [key]: true }));
+    const form = new FormData();
+    form.append("image", file);
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: form
+      });
+      const result = await res.json();
+      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
+      const url = result.imageUrl || result.path;
+      const updated = [...sections];
+      updated[secIdx].carouselItem[itemIdx].image = url;
+      setData({ ...data, [blockName]: updated });
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading(u => ({ ...u, [key]: false }));
     }
-    setData({ ...data, [blockName]: updated });
   };
 
   return (
     <div className="mb-8">
-      <h3 className="font-bold text-lg mb-2">
-        {blockName === "cuisines" ? "Cuisines Carousel" : blockName}
-      </h3>
+      <h3 className="font-bold text-lg mb-4">Kids Pool Bölümleri</h3>
       <button
         type="button"
         className="mb-3 px-4 py-1 bg-green-600 text-white rounded"
-        onClick={addCuisine}
-      >
-        + Cuisine Ekle
-      </button>
+        onClick={addSection}
+      >+ Bölüm Ekle</button>
 
-      {cuisines.map((item, idx) => {
-        // Eğer cuisine alt dizi yok veya uzunluğu 3 değilse başlat
-        if (!Array.isArray(item.cuisine) || item.cuisine.length !== 3) {
-          item.cuisine = Array.from({ length: 3 }, () => ({
-            image: "",
-            title: langs.reduce((o,l)=>(o[l]="",o), {}),
-            description: langs.reduce((o,l)=>(o[l]="",o), {}),
-            subtitle: langs.reduce((o,l)=>(o[l]="",o), {}),
-            link: ""
-          }));
-        }
+      {sections.map((sec, secIdx) => (
+        <div key={secIdx} className="border rounded p-4 mb-6 bg-gray-50">
+          <div className="flex justify-between mb-4">
+            <strong>Bölüm #{secIdx+1}</strong>
+            <button
+              type="button"
+              className="px-2 py-1 bg-red-500 text-white rounded"
+              onClick={()=>removeSection(secIdx)}
+            >Sil</button>
+          </div>
 
-        return (
-          <div key={idx} className="border p-3 rounded mb-6 bg-gray-50 space-y-4">
-            <div className="flex justify-between">
-              <strong>Cuisine #{idx + 1}</strong>
-              <button
-                type="button"
-                className="px-2 py-1 bg-red-500 text-white rounded"
-                onClick={() => removeCuisine(idx)}
-              >
-                Sil
-              </button>
-            </div>
-
-            {/* Ana Görsel */}
-         
-
-            {/* Ana Metinler */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {["title","description","text","buttonText"].map(field =>
-                langs.map(lang => (
-                  <div key={`${field}-${lang}`} className="flex flex-col">
-                    <label className="text-xs text-gray-600">
-                      {dilAdlari[lang]} {field}
-                    </label>
-                    {field === "text" ? (
+          {/* Section-level çokdilli alanlar: subtitle, title, text */}
+          {["subtitle","title","text"].map(field => (
+            <div key={field} className="mb-4">
+              <label className="font-semibold block mb-1">
+                {field.charAt(0).toUpperCase()+field.slice(1)}
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {langs.map(lang => (
+                  <div key={lang} className="flex flex-col">
+                    <span className="text-xs mb-1 text-gray-600">{dilAdlari[lang]}</span>
+                    {field==="text" ? (
                       <textarea
                         rows={2}
-                        value={item.text?.[lang] || ""}
-                        onChange={e =>
-                          handleFieldChange(idx, field, lang, e.target.value)
-                        }
-                        className="w-full border p-2 rounded"
+                        className="border p-2 rounded"
+                        value={sec[field]?.[lang]||""}
+                        onChange={e=>handleFieldChange(secIdx,field,lang,e.target.value)}
                       />
                     ) : (
                       <input
                         type="text"
-                        value={item[field]?.[lang] || ""}
-                        onChange={e =>
-                          handleFieldChange(idx, field, lang, e.target.value)
-                        }
-                        className="w-full border p-2 rounded"
+                        className="border p-2 rounded"
+                        value={sec[field]?.[lang]||""}
+                        onChange={e=>handleFieldChange(secIdx,field,lang,e.target.value)}
                       />
                     )}
                   </div>
-                ))
-              )}
+                ))}
+              </div>
             </div>
+          ))}
 
-            {/* Alt Cuisine Items (tam 3 adet) */}
-            <div className="mt-4 border-t pt-4 space-y-4">
-              <h4 className="font-semibold mb-2">Alt Cuisine Öğeleri</h4>
-              {item.cuisine.map((sub, subIdx) => (
-                <div key={subIdx} className="p-3 bg-white rounded border">
-                  <strong className="block mb-2">Öğe #{subIdx + 1}</strong>
+          {/* Carousel Items */}
+          <h4 className="font-semibold mb-2">Carousel Öğeleri</h4>
+          {(sec.carouselItem||[]).map((item, itemIdx) => {
+            const key = `${secIdx}-${itemIdx}`;
+            return (
+              <div key={itemIdx} className="border rounded p-3 mb-4 bg-white">
+                <div className="flex justify-between mb-2">
+                  <strong>Öğe #{itemIdx+1}</strong>
+                  <button
+                    type="button"
+                    className="text-red-600"
+                    onClick={()=>removeItem(secIdx,itemIdx)}
+                  >Sil</button>
+                </div>
 
-                  {/* Alt Görsel */}
-                  <div className="mb-2">
-                    <label className="font-semibold">Görsel Yükle</label>
-                    <div className="flex items-center gap-4 mt-1">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={e => handleImageUpload(e, idx, subIdx)}
-                        disabled={uploadingInfo[`${idx}-sub-${subIdx}`]}
-                      />
-                      {uploadingInfo[`${idx}-sub-${subIdx}`] && (
-                        <span className="text-blue-500">Yükleniyor...</span>
-                      )}
-                      {sub.image && (
-                        <img
-                          src={`${apiUrl}${sub.image}`}
-                          alt="sub-cuisine"
-                          className="w-24 h-16 object-cover border rounded"
+                {/* Görsel dosya yükle */}
+                <label className="block font-semibold mb-1">Görsel</label>
+                <div className="flex items-center gap-3 mb-3">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    disabled={uploading[key]}
+                    onChange={e=>handleImageUpload(secIdx,itemIdx,e)}
+                    className="border p-2 rounded"
+                  />
+                  {uploading[key] && <span className="text-blue-600">Yükleniyor…</span>}
+                  {item.image && (
+                    <img
+                      src={item.image.startsWith("/")? `${apiUrl}${item.image}`: item.image}
+                      alt=""
+                      className="w-24 h-16 object-cover rounded border"
+                    />
+                  )}
+                </div>
+
+                {/* Çokdilli item-level alanlar */}
+                {["subtitle","title","text","buttonText","link"].map(field => (
+                  <div key={field} className="mb-3">
+                    <label className="font-semibold block mb-1">
+                      {field.charAt(0).toUpperCase()+field.slice(1)}
+                    </label>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                      {langs.map(lang => (
+                        <input
+                          key={lang}
+                          type="text"
+                          className="border p-2 rounded w-full"
+                          placeholder={`${dilAdlari[lang]}`}
+                          value={item[field]?.[lang]||""}
+                          onChange={e=>
+                            handleFieldChange(secIdx,field,lang,e.target.value,itemIdx)
+                          }
                         />
-                      )}
+                      ))}
                     </div>
                   </div>
+                ))}
+              </div>
+            );
+          })}
 
-                  {/* Alt Metinler ve Link */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {["title","description","subtitle"].map(field =>
-                      langs.map(lang => (
-                        <div key={`${field}-${lang}`} className="flex flex-col">
-                          <label className="text-xs text-gray-600">
-                            {dilAdlari[lang]} {field}
-                          </label>
-                          <input
-                            type="text"
-                            value={sub[field]?.[lang] || ""}
-                            onChange={e =>
-                              handleFieldChange(
-                                idx,
-                                field,
-                                lang,
-                                e.target.value,
-                                subIdx
-                              )
-                            }
-                            className="w-full border p-2 rounded"
-                          />
-                        </div>
-                      ))
-                    )}
-                  </div>
-
-                  <div className="mt-2">
-                    <label className="font-semibold">Link</label>
-                    <input
-                      type="text"
-                      value={sub.link || ""}
-                      onChange={e =>
-                        handleStringChange(idx, "link", e.target.value, subIdx)
-                      }
-                      className="w-full border p-2 rounded mt-1"
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-      })}
+          <button
+            type="button"
+            className="px-4 py-2 bg-green-600 text-white rounded"
+            onClick={()=>addItem(secIdx)}
+          >+ Öğeye Resim/Metin Ekle</button>
+        </div>
+      ))}
     </div>
   );
 }

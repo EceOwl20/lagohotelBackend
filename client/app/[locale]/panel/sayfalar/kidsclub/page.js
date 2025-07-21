@@ -45,7 +45,7 @@ export default function KidsClubPanelPage() {
       <KidsIconsEdit data={data} setData={setData} langs={langs} />
       <KidsclubCarouselEdit data={data} setData={setData} langs={langs} />
       <KidsRestaurantCarouselEdit data={data} setData={setData} langs={langs} />
-      <CuisinesEdit data={data} setData={setData} langs={langs} blockName="cuisines" />
+      <CuisinesEdit data={data} setData={setData} langs={langs} blockName="kidspool" />
       <KidsMomentCarouselEdit data={data} setData={setData} langs={langs} />
       <button
         className="mt-6 px-6 py-3 rounded bg-blue-600 text-white font-bold max-w-[200px]"
