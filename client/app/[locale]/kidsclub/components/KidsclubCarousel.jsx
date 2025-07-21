@@ -70,8 +70,8 @@ const KidsclubCarousel = () => {
   const image5 = carouselImages[4];
   const image6 = carouselImages[5];
   const image7 = carouselImages[6];
-  const image8 = carouselImages[7];
-  const image9 = carouselImages[8];
+  // const image8 = carouselImages[7];
+  // const image9 = carouselImages[8];
 
   const headers = [
     pageData.kidsClubCarousel.slides?.[0]?.header?.[locale],
@@ -81,11 +81,11 @@ const KidsclubCarousel = () => {
     pageData.kidsClubCarousel.slides?.[4]?.header?.[locale],
     pageData.kidsClubCarousel.slides?.[5]?.header?.[locale],
     pageData.kidsClubCarousel.slides?.[6]?.header?.[locale],
-    pageData.kidsClubCarousel.slides?.[7]?.header?.[locale],
-    pageData.kidsClubCarousel.slides?.[8]?.header?.[locale],
+    // pageData.kidsClubCarousel.slides?.[7]?.header?.[locale],
+    // pageData.kidsClubCarousel.slides?.[8]?.header?.[locale],
   ];
 
-  const images = [image1, image2, image3, image4, image5, image6, image7, image8, image9];
+  const images = [image1, image2, image3, image4, image5, image6, image7];
 
   return (
     <div className="flex flex-col w-screen items-center justify-center gap-[30px] lg:gap-[50px] pb-[30px] ">

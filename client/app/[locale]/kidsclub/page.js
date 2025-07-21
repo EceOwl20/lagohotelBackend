@@ -19,8 +19,6 @@ import ContactSection2 from '../GeneralComponents/Contact/ContactSection2'
 import RestaurantMainBanner from '../restaurants/components/RestaurantMainBanner'
 import { useLocale, useTranslations } from 'next-intl';
 
-const momentImages=[img1,img2,img3]
-
 const page = () => {
   const t = useTranslations('KidsClub')
   const t2 = useTranslations('KidsClub.CuisinesCarousel');
@@ -51,31 +49,40 @@ const kids = [
   {
     id: 1,
     img: kids1,
-    title: t2("cuisines1title"),
-    description: t2("cuisines1subtitle"),
-    text:t2("cuisines1text"),
-    link:"/",
-    buttonText:t2("buttonText")
+    title: pageData.kidspool?.[0]?.carouselItem?.[0]?.title?.[locale],
+    description: pageData.kidspool?.[0]?.carouselItem?.[0]?.subtitle?.[locale],
+    text:pageData.kidspool?.[0]?.carouselItem?.[0]?.text?.[locale],
+    link:pageData.kidspool?.[0]?.carouselItem?.[0]?.link?.[locale],
+    buttonText:pageData.kidspool?.[0]?.carouselItem?.[0]?.buttonText?.[locale]
   },
   {
     id: 2,
     img: kids2,
-    title: t2("cuisines2title"),
-    description: t2("cuisines2subtitle"),
-    text:t2("cuisines2text"),
-     link:"/",
-     buttonText:t2("buttonText")
+    title: pageData.kidspool?.[0]?.carouselItem?.[1]?.title?.[locale],
+    description: pageData.kidspool?.[0]?.carouselItem?.[1]?.subtitle?.[locale],
+    text:pageData.kidspool?.[0]?.carouselItem?.[1]?.text?.[locale],
+    link:pageData.kidspool?.[0]?.carouselItem?.[1]?.link?.[locale],
+    buttonText:pageData.kidspool?.[0]?.carouselItem?.[1]?.buttonText?.[locale]
   },
   {
     id: 3,
     img: kids3,
-    title: t2("cuisines3title"),
-    description: t2("cuisines3subtitle"),
-    text:t2("cuisines3text"),
-     link:"/",
-     buttonText:t2("buttonText")
+    title: pageData.kidspool?.[0]?.carouselItem?.[2]?.title?.[locale],
+    description: pageData.kidspool?.[0]?.carouselItem?.[2]?.subtitle?.[locale],
+    text:pageData.kidspool?.[0]?.carouselItem?.[2]?.text?.[locale],
+    link:pageData.kidspool?.[0]?.carouselItem?.[2]?.link?.[locale],
+    buttonText:pageData.kidspool?.[0]?.carouselItem?.[2]?.buttonText?.[locale]
   }
 ];
+
+
+const momentImages = (pageData.kidsMomentCarousel?.images || []).map(path => {
+  if (!path) return null
+  return path.startsWith("/")
+    ? `${apiUrl}${path}`
+    : path
+})
+
 
   return (
     <div className='overflow-hidden flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
@@ -84,8 +91,8 @@ const kids = [
       <KidsIconsSection/>
       <KidsclubCarousel/>
       <KidsRestaurantCarousel/>
-      <CuisinesCarousel span={t2("subtitle")} header={t2("title")} text={t2("text")} cuisines={kids}/>
-      <KidsMomentCarousel showheader={true} images={momentImages} header={t("gallerytitle")}/>
+      <CuisinesCarousel span={pageData.kidspool?.[0]?.subtitle?.[locale]} header={pageData.kidspool?.[0]?.title?.[locale]} text={pageData.kidspool?.[0]?.text?.[locale]} cuisines={kids}/>
+      <KidsMomentCarousel showheader={true} images={momentImages} header={pageData.kidsMomentCarousel?.header?.[locale]}/>
       <ContactSection2/>
     </div>
   )

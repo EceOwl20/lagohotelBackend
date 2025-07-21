@@ -1,16 +1,17 @@
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useCarousel from "embla-carousel-react";
-import img from "../images/SRF_3469.webp"
-import img2 from "../images/SRF_3456.webp"
+// import img from "../images/SRF_3469.webp"
+// import img2 from "../images/SRF_3456.webp"
 import Image from "next/image";
 import PlateSvg from "./PlateSvg";
-import {useTranslations} from 'next-intl';
-
-const images =[img,img2]
+import { useLocale, useTranslations } from 'next-intl';
 
 const KidsRestaurantCarousel = () => {
   const t = useTranslations('KidsClub.KidsRestaurant');
+
+    const locale = useLocale(); // "tr", "en", "de", "ru"
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const [emblaRef, emblaApi] = useCarousel({
         loop: true,
@@ -37,17 +38,42 @@ const KidsRestaurantCarousel = () => {
         }
       }, [emblaApi]);
 
+
+       const [pageData, setPageData] = useState(null);
+            useEffect(() => {
+              fetch(`${apiUrl}/api/pages/kidsclub`)
+                .then(r => r.json())
+                .then(json => setPageData(json))
+                .catch(console.error);
+            }, [apiUrl]);
+          
+        if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+
+         const img1 = pageData.kidsRestaurantCarousel?.images?.[0]
+      ? pageData.kidsRestaurantCarousel?.images?.[0].startsWith("/")
+        ? `${apiUrl}${pageData.kidsRestaurantCarousel?.images?.[0]}`
+        : pageData.kidsRestaurantCarousel?.images?.[0]
+      : "";
+
+       const img2 =pageData.kidsRestaurantCarousel?.images?.[1]
+      ? pageData.kidsRestaurantCarousel?.images?.[1].startsWith("/")
+        ? `${apiUrl}${pageData.kidsRestaurantCarousel?.images?.[1]}`
+        : pageData.kidsRestaurantCarousel?.images?.[1]
+      : "";
+
+      const images =[img1,img2]
+
   return (
     <div className='flex flex-col md:flex-row-reverse w-screen justify-between items-center h-auto gap-[30px] lg:gap-[2%]'>
       <div className='flex w-[87.79%] md:w-[45%] md:mr-[4.3%] font-jost items-start justify-start relative'>
        <div className="flex flex-col  font-jost text-lagoBlack gap-[35px] max-w-[469px] items-start justify-center">
-       <span className='text-[12px] font-medium uppercase tracking-[0.48px] leading-[14px]'>{t("subtitle")}</span>
-        <h2 className='text-[28px] md:text-[32px] lg:text-[48px] leading-normal lg:leading-[57.6px] font-marcellus font-normal capsizedText2'>{t("title")}</h2>
-        <p className='text-[12px] lg:text-[14px] leading-[21px] font-normal text-[#24292C] '>{t("text")}</p>
+       <span className='text-[12px] font-medium uppercase tracking-[0.48px] leading-[14px]'>{pageData.kidsRestaurantCarousel?.subtitle?.[locale]}</span>
+        <h2 className='text-[28px] md:text-[32px] lg:text-[48px] leading-normal lg:leading-[57.6px] font-marcellus font-normal capsizedText2'>{pageData.kidsRestaurantCarousel?.title?.[locale]}</h2>
+        <p className='text-[12px] lg:text-[14px] leading-[21px] font-normal text-[#24292C] '>{pageData.kidsRestaurantCarousel?.text?.[locale]}</p>
         <ul className="text-[12px] lg:text-[14px] font-normal leading-[21px] list-disc capsizedText4 pl-5 marker:text-xs marker:text-lagoBlack w-[92%]">
-           <li> {t("list1")} </li>
-          <li> {t("list2")}</li>
-           <li> {t("list3")} </li>
+           <li> {pageData.kidsRestaurantCarousel?.list?.[locale]?.[0]} </li>
+          <li>  {pageData.kidsRestaurantCarousel?.list?.[locale]?.[1]} </li>
+           <li>  {pageData.kidsRestaurantCarousel?.list?.[locale]?.[2]}  </li>
           </ul>
        </div>
        <PlateSvg className="absolute -top-[18%] -right-[6%] md:top-[65%] md:right-[20%]" width={221} height={212}/>
@@ -60,10 +86,10 @@ const KidsRestaurantCarousel = () => {
           {images.map((image, index) => (
            <div className="flex-[0_0_90%] lg:flex-[0_0_74%] xl:flex-[0_0_auto] min-w-0 ml-[1.8%]" key={index}>
               <Image
-                src={image.src}
+                src={image}
                 layout="cover"
-                width={image.width}
-                height={image.height}
+                width={image.width || 533}
+                height={image.height || 434}
                 alt={`Slide ${index + 1}`}
                 objectPosition="center"
                 className="flex h-full md:h-auto lg:h-full w-full"
