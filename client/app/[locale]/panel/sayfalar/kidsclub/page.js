@@ -9,12 +9,13 @@ import CuisinesEdit from "../restoranlar/components/CuisinesEdit";
 import KidsMomentCarouselEdit from "./components/KidsMomentCarouselEdit";
 
 const langs = ["tr", "en", "de", "ru"];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function KidsClubPanelPage() {
   const [data, setData] = useState(null);
    const [status, setStatus] = useState("");
    useEffect(() => {
-      fetch("http://localhost:5001/api/pages/kidsclub")
+      fetch(`${apiUrl}/api/pages/kidsclub`)
         .then(res => res.json())
         .then(json => setData(json))
         .catch(() => setData({}));
@@ -23,7 +24,7 @@ export default function KidsClubPanelPage() {
     const handleSave = async () => {
       setStatus("Yükleniyor...");
       try {
-        const res = await fetch("http://localhost:5001/api/pages/kidsclub", {
+        const res = await fetch(`${apiUrl}/api/pages/kidsclub`, {
           method: "PUT",
           headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
           body: JSON.stringify(data)

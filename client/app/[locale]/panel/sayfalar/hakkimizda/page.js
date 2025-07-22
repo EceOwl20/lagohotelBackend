@@ -7,13 +7,14 @@ import MissionVisionSectionEdit from "./components/MissionVisionSectionEdit";
 import EmblaCarouselEdit from "./components/EmblaCarouselEdit";
 
 const langs = ["tr", "en", "de", "ru"];
+ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function AboutPanelPage() {
  const [data, setData] = useState(null);
   const [status, setStatus] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/about")
+    fetch(`${apiUrl}/api/pages/about`)
       .then(res => res.json())
       .then(json => setData(json))
       .catch(() => setData({}));
@@ -22,7 +23,7 @@ export default function AboutPanelPage() {
   const handleSave = async () => {
     setStatus("Yükleniyor...");
     try {
-      const res = await fetch("http://localhost:5001/api/pages/about", {
+      const res = await fetch(`${apiUrl}/api/pages/about`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
         body: JSON.stringify(data)
