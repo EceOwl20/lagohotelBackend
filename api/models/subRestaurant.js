@@ -8,7 +8,7 @@ const MultiLangString = {
 };
 
 const SubrestaurantSchema = new mongoose.Schema({
-  slug: { type: String, unique: true, required: true }, // anatoliarestaurant gibi
+  slug: { type: String, unique: true, required: true },
   mainBanner: {
     image: { type: String, default: "" },
     subtitle: MultiLangString,

@@ -135,7 +135,7 @@ export default function Header() {
           {/* Sağ Contact & Book Now */}
           <div className="ml-auto flex items-center justify-center space-x-[5px] mr-[4%] z-20 h-full">
             <Link
-               href={headerData.contactLink?.[locale] || "/connect"}
+               href={headerData.contactLink?.[locale] }
               className="
               hidden lg:flex
                 text-white
@@ -151,10 +151,10 @@ export default function Header() {
                 pt-[8px]
                 font-jost
                 h-[41px]">
-           {headerData.contactText?.[locale] || t('contact')}
+           {headerData.contactText?.[locale] }
             </Link>
             <Link
-            href={headerData.contactLink?.[locale] || "/connect"}
+            href={headerData.contactLink?.[locale] }
               rel="norefferer nofollower"
                   target="_blank"
               className="
@@ -177,7 +177,7 @@ export default function Header() {
                  font-jost
               "
             >
-               {headerData.bookNowText?.[locale] || t('booknow')}
+               {headerData.bookNowText?.[locale] }
             </Link>
           </div>
         </div>
@@ -246,7 +246,7 @@ export default function Header() {
                 onClick={() => setIsRoomsOpen(!isRoomsOpen)}
                 className="flex items-center font-normal leading-[26.667px] gap-[11.11px] w-[70%] md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
               >
-                 {headerData.menuItems[0]?.text?.[locale] || t('accommodation')}
+                 {headerData.menuItems[0]?.text?.[locale]}
                 <IoMdArrowDropdown
                   className={`w-4 h-4 transition-transform ${
                     isRoomsOpen ? "rotate-180" : "rotate-0"
@@ -263,52 +263,52 @@ export default function Header() {
               >
                 <div className="mt-2 space-y-2 pl-4  border-white/30 font-jost">
                 <Link
-                      href={headerData.menuItems[1]?.link?.[locale] || "/rooms"}
+                      href={headerData.menuItems[1]?.link?.[locale] }
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                   {headerData.menuItems[1]?.text?.[locale] || t('accommodation')}
+                   {headerData.menuItems[1]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/superiorroom"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                        {headerData.menuItems[2]?.text?.[locale] || t('accommodation')}
+                        {headerData.menuItems[2]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/familyroom"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                       {headerData.menuItems[3]?.text?.[locale] || t('accommodation')}
+                       {headerData.menuItems[3]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/swimuproom"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                     {headerData.menuItems[4]?.text?.[locale] || t('accommodation')}
+                     {headerData.menuItems[4]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/familyswimup"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                         {headerData.menuItems[5]?.text?.[locale] || t('accommodation')}
+                         {headerData.menuItems[5]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/duplexfamilyroom"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                       {headerData.menuItems[6]?.text?.[locale] || t('accommodation')}
+                       {headerData.menuItems[6]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/disableroom"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                         {headerData.menuItems[7]?.text?.[locale] || t('accommodation')}
+                         {headerData.menuItems[7]?.text?.[locale] }
                   </Link>
                   <Link
                     href="/rooms/tinyvilla"
                     className="block text-[14px] text-[#FBFBFB] leading-[29.639px] uppercase"
                   >
-                         {headerData.menuItems[8]?.text?.[locale] || t('accommodation')}
+                         {headerData.menuItems[8]?.text?.[locale] }
                   </Link>
                 </div>
               </div>
@@ -317,62 +317,62 @@ export default function Header() {
               href="/beachpools"
               className="block  font-normal leading-[26.667px] w-[70%] md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-            {headerData.menuItems[9]?.text?.[locale] || t('beachPools')}
+            {headerData.menuItems[9]?.text?.[locale] }
             </Link>
             <Link
               href="/restaurants"
               className="block font-normal leading-[26.667px] w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-              {headerData.menuItems[10]?.text?.[locale] || t('restaurants')}
+              {headerData.menuItems[10]?.text?.[locale] }
             </Link>
             <Link
               href="/barcafes"
               className="block font-normal leading-[26.667px] w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-           {headerData.menuItems[11]?.text?.[locale] || t('barsandcafes')}
+           {headerData.menuItems[11]?.text?.[locale] }
             </Link>
             <Link
               href="/entertainment"
               className="block font-normal leading-[26.667px] w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-              {headerData.menuItems[12]?.text?.[locale] || t('experiences')}
+              {headerData.menuItems[12]?.text?.[locale] }
             </Link>
             <Link
               href="/kidsclub"
               className="font-normal leading-[26.667px] items-center gap-[6px] flex w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-               {headerData.menuItems[13]?.text?.[locale] || t('kids')}
+               {headerData.menuItems[13]?.text?.[locale] }
               <Image src={panda} alt="KidIcon" width={23} height={28} />
             </Link>
             <Link
               href="/spawellness"
               className="block text-white  font-normal leading-normal w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-                {headerData.menuItems[14]?.text?.[locale] || t('spa')}
+                {headerData.menuItems[14]?.text?.[locale] }
             </Link>
             <Link
               href="/special"
               className="block text-white  font-normal leading-normal w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-              {headerData.menuItems[15]?.text?.[locale] || t('special')}
+              {headerData.menuItems[15]?.text?.[locale] }
             </Link>
             <Link
               href="/gallery"
               className="block text-white  font-normal leading-normal w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-             {headerData.menuItems[16]?.text?.[locale] || t('gallery')}
+             {headerData.menuItems[16]?.text?.[locale] }
             </Link>
             <Link
               href="/about"
               className="block text-white font-normal leading-normal w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-                 {headerData.menuItems[17]?.text?.[locale] || t('ourhotel')}
+                 {headerData.menuItems[17]?.text?.[locale] }
             </Link>
             <Link
               href="/connect"
               className="block text-white font-normal leading-normal w-[70%]  md:w-[90%] lg:max-w-[360.114px] py-[11px] border-b border-b-[#A6A6A6] lg:border-none"
             >
-                  {headerData.menuItems[18]?.text?.[locale] || t('contact')}
+                  {headerData.menuItems[18]?.text?.[locale] }
             </Link>
           </nav>
 
@@ -381,7 +381,7 @@ export default function Header() {
             <div className="flex items-center justify-center gap-[15px] text-white">
               <Phone className="flex" width={18} height={18} color="#ffffff" />
               <p className="text-[15px] font-normal leading-[24px]">
-              {headerData.phone || "0242 524 57 87"}
+              {headerData.phone }
               </p>
             </div>
             <span
@@ -401,7 +401,7 @@ export default function Header() {
               leading-[24px]
               py-[15px]
               px-[19px]">
-             {headerData.letUsCallYouText?.[locale] || t("letuscallyou")}
+             {headerData.letUsCallYouText?.[locale] }
             </span>
               {/* Contact Form bileşeni burada çağrılıyor */}
           <Form isOpen={isFormOpen} onClose={() => setIsFormOpen(false)} color="rgba(29, 29, 27, 0.85)" colorText={'#ffffff'}/>

@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import { useEffect, useState } from "react";
 import imgBanner from "./images/mainphoto.webp"
 import img1 from "./images/italian1.webp"
 import img2 from "./images/italian2.webp"
@@ -12,11 +13,11 @@ import DiscoverBackground from '../components/DiscoverBackground'
 import ContactSection2 from '@/app/[locale]/GeneralComponents/Contact/ContactSection2'
 import backgroundImg from "../images/Background.webp"
 import RestaurantMainBanner from '../components/RestaurantMainBanner'
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import KidsMomentCarousel from '../../kidsclub/components/KidsMomentCarousel'
 
 const images=[img1,img2,img1,img2,imgBanner]
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const page = () => {
   const t = useTranslations('GustoRestaurants');
@@ -55,9 +56,32 @@ const page = () => {
       }
   ];
 
+
+   const locale = useLocale(); // "tr", "en", "de", "ru"
+    const [data, setData] = useState(null);
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(
+            `${apiUrl}/api/pages/restaurants/subrestaurants/gustorestaurant?lang=${locale}`
+          );
+          const json = await res.json();
+          setData(json);
+        } catch (e) {
+          setData({ error: "Restaurant verisi alınamadı!" });
+        }
+      };
+      fetchData();
+    }, [locale]);
+  
+    if (!data) return <p className="p-10">Yükleniyor...</p>;
+    if (data.error) return <div className="text-red-500">{data.error}</div>;
+    if (!data.mainBanner) return <div>restaurant verisi eksik!</div>;
+
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
-      <RestaurantMainBanner img={imgBanner} span={t("subtitle")} header={t("title")} text={t("text")}/>
+      <RestaurantMainBanner img={apiUrl + data.mainBanner.image} span={data.mainBanner.subtitle?.[locale]} header={data.mainBanner.title?.[locale]} text={data.mainBanner.text?.[locale]}/>
       <ClinaryReverseInfo img1={img1} img2={img2} span={t2("subtitle")} header={t2("title")} text1={t2("text1")} text2={t2("text2")}/>
       <KidsMomentCarousel images={images} header="" showheader={false}/>
       <CuisinesCarousel span={t4("subtitle")} header={t4("title")} text={t4("text")} cuisines={otherOptions}/>

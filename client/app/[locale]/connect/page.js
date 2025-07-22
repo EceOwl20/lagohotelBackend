@@ -1,9 +1,11 @@
-import React from 'react'
+"use client";
+import React, { useEffect, useState } from "react";
 import Connect1 from "./components/Connect1.jsx"
 import Connect2 from './components/Connect2.jsx'
 import Connect3 from './components/Connect3.jsx'
 import ContactSection2 from '../GeneralComponents/Contact/ContactSection2.jsx'
 import HomePage6 from "../HomePage/Components/HomePage5.jsx"
+import { useLocale, useTranslations } from "next-intl";
 
 const page = () => {
   return (

@@ -232,11 +232,11 @@ export const routing = defineRouting({
     },
 
         
-    "/restaurants/gustorestaurants": {
-      en: "/restaurants/gustorestaurants",
-      tr: "/restoranlar/gustorestaurants",
-      de: "/restaurants/gustorestaurants",
-      ru: "/restorany/gustorestaurants",
+    "/restaurants/gustorestaurant": {
+      en: "/restaurants/gustorestaurant",
+      tr: "/restoranlar/gustorestaurant",
+      de: "/restaurants/gustorestaurant",
+      ru: "/restorany/gustorestaurant",
     },
 
     "/restaurants/mainrestaurant": {

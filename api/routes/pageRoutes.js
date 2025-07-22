@@ -53,9 +53,13 @@ router.put("/barcafes/subbarcafes/:slug", async (req, res) => {
 });
 
 // Tüm restaurantlar (slug listesi)
-router.get("/restaurants/subrestaurants", async (req, res) => {
-  const datas = await Subrestaurant.find({}, "slug mainBanner.title").lean();
-  res.json(datas);
+router.get('/rooms/subroom', async (req, res) => {
+  try {
+    const rooms = await Subrestaurant.find().lean();
+    res.json(rooms);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
 // Tek restaurant detay
@@ -72,7 +76,7 @@ router.put("/restaurants/subrestaurants/:slug", async (req, res) => {
   try {
     const updated = await Subrestaurant.findOneAndUpdate(
       { slug },
-      req.body,
+      { $set: req.body },
       { new: true, upsert: true }
     );
     res.json(updated);

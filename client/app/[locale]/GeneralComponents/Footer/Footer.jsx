@@ -72,21 +72,21 @@ export default function Footer() {
           {/* Alt linkler */}
           <div className="grid-cols-2 xl:grid-cols-3 grid  items-center gap-6 whitespace-nowrap text-lagoGray2 w-full">
             <a href="/terms-of-use" className="hover:underline">
-            {footerData.bottomLinks[0].text?.[locale] || t('termsuse')}
+            {footerData.bottomLinks[0].text?.[locale]}
             </a>
             <a href="#" className="hover:underline">
-            {footerData.bottomLinks[2].text?.[locale] || t('notice')}
+            {footerData.bottomLinks[2].text?.[locale] }
             </a>
             <a href="/sustainability" className="hover:underline">
-            {footerData.bottomLinks[4].text?.[locale] || t('sustainability')}
+            {footerData.bottomLinks[4].text?.[locale] }
             </a>
             <Link href="/ourpolicies" className="hover:underline">
-           {footerData.bottomLinks[1].text?.[locale] || t('ourpolicies')} 
+           {footerData.bottomLinks[1].text?.[locale] } 
             </Link>
             <a href="/certificates" className="hover:underline">
-            {footerData.bottomLinks[5].text?.[locale] || "Certificate"}
+            {footerData.bottomLinks[5].text?.[locale] }
             </a>
-          <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] || t('blog')}</Link>
+          <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] }</Link>
 
           </div>
         </div>
@@ -173,7 +173,7 @@ export default function Footer() {
                 {footerData.contact.emailLabel?.[locale] || "E-mail"} {footerData.contact.email || "info@lagohotel.com"} 
                 </p>
                 <p className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] ">
-                 {footerData.contact.addressLabel?.[locale] || "Address"}  {footerData.contact.address?.[locale] || "Address"}  
+                 {footerData.contact.addressLabel?.[locale] }  {footerData.contact.address?.[locale] }  
                 </p>
               </div>
             </div>
@@ -262,13 +262,13 @@ export default function Footer() {
         <div className="flex gap-[30px] items-start justify-center w-[90%] ml-[10%]">
           <div className="flex flex-col items-start justify-start text-start gap-[40px] w-[33%]">
             <h4 className="text-[15px] text-white font-marcellus font-normal leading-[26px] tracking-[0.6px] uppercase ">
-            <Link href="/rooms">{t('category1')}</Link>
+            <Link href="/rooms">{footerData.quickMenu[0].title?.[locale]}</Link>
             </h4>
             <ul className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] space-y-6">
-               <li className="hover:text-white cursor-pointer"><Link href="/rooms/superiorroom">{footerData.quickMenu[0].links[1].text?.[locale] || t("superiorroom")}</Link></li>
-                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyroom"> {footerData.quickMenu[0].links[2].text?.[locale] || t("familyroom")}</Link></li>
-                <li className="hover:text-white cursor-pointer"><Link href="/rooms/swimuproom"> {footerData.quickMenu[0].links[3].text?.[locale] || t("swimup")}</Link></li>
-                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyswimup"> {footerData.quickMenu[0].links[4].text?.[locale] || t("familyswimup")}</Link></li>
+               <li className="hover:text-white cursor-pointer"><Link href="/rooms/superiorroom">{footerData.quickMenu[0].links[1].text?.[locale] }</Link></li>
+                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyroom"> {footerData.quickMenu[0].links[2].text?.[locale] }</Link></li>
+                <li className="hover:text-white cursor-pointer"><Link href="/rooms/swimuproom"> {footerData.quickMenu[0].links[3].text?.[locale] }</Link></li>
+                <li className="hover:text-white cursor-pointer"><Link href="/rooms/familyswimup"> {footerData.quickMenu[0].links[4].text?.[locale] }</Link></li>
              
 
             </ul>
@@ -277,21 +277,21 @@ export default function Footer() {
           {/* TERM & CONDITIONS */}
           <div className="flex flex-col items-start justify-start text-start gap-[40px] w-[33%]">
             <h4 className="text-[15px] text-white font-marcellus font-normal leading-[26px] tracking-[0.6px] uppercase ">
-            <Link href="/restaurants"> {footerData.quickMenu[4].title?.[locale] || t("category2")}</Link>
+            <Link href="/restaurants"> {footerData.quickMenu[4].title?.[locale] }</Link>
             </h4>
             <ul className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] space-y-6">
             <li className="hover:text-white cursor-pointer">
-                <Link href="/restaurants/mainrestaurant">{footerData.quickMenu[4].links[0].text?.[locale] || t("mainrestaurant")}</Link>
+                <Link href="/restaurants/mainrestaurant">{footerData.quickMenu[4].links[0].text?.[locale] }</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-               <Link href="/restaurants/gustorestaurant"> {footerData.quickMenu[4].links[1].text?.[locale] || t("gusto")}</Link>
+               <Link href="/restaurants/gustorestaurant"> {footerData.quickMenu[4].links[1].text?.[locale] }</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-              <Link href="/barcafes"> {footerData.quickMenu[4].links[2].text?.[locale] || t("barcafes")}</Link>
+              <Link href="/barcafes"> {footerData.quickMenu[4].links[2].text?.[locale] }</Link>
                 </li>
                 
                 <li className="hover:text-white cursor-pointer">
-                <Link href="/barcafes/maldivabar"> {footerData.quickMenu[4].links[3].text?.[locale] || t("maldiva")}</Link>
+                <Link href="/barcafes/maldivabar"> {footerData.quickMenu[4].links[3].text?.[locale] }</Link>
                 </li>
             
              
@@ -301,20 +301,20 @@ export default function Footer() {
           {/* COMPANY */}
           <div className="flex flex-col items-start justify-start text-start gap-[40px] w-[33%]">
             <h4 className="text-[15px] text-white font-marcellus font-normal leading-[26px] tracking-[0.6px] uppercase ">
-            <Link href="/entertainment"> {footerData.quickMenu[5].title?.[locale] || t("category3")}</Link>
+            <Link href="/entertainment"> {footerData.quickMenu[5].title?.[locale] }</Link>
             </h4>
             <ul className="text-lagoGray2 font-jost text-[16px] font-normal leading-[20px] space-y-6">
               <li className="hover:text-white cursor-pointer">
-              <Link href="/spor"> {footerData.quickMenu[5].links[0].text?.[locale] || t("spor")}</Link>
+              <Link href="/spor"> {footerData.quickMenu[5].links[0].text?.[locale] }</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-                <Link href="/kidsclub">{footerData.quickMenu[5].links[1].text?.[locale] || t("kidsclub")}</Link> 
+                <Link href="/kidsclub">{footerData.quickMenu[5].links[1].text?.[locale] }</Link> 
                 </li>
                 <li className="hover:text-white cursor-pointer">
-                  <Link href="/entertainment">{footerData.quickMenu[5].links[2].text?.[locale] || t("entertainment")}</Link>
+                  <Link href="/entertainment">{footerData.quickMenu[5].links[2].text?.[locale] }</Link>
                 </li>
                 <li className="hover:text-white cursor-pointer">
-                <Link href="/spawellness">{footerData.quickMenu[5].links[3].text?.[locale] || t("spa")}</Link>
+                <Link href="/spawellness">{footerData.quickMenu[5].links[3].text?.[locale] }</Link>
                 </li>
                
             </ul>
@@ -337,21 +337,21 @@ export default function Footer() {
           {/* Alt linkler */}
           <div className="grid grid-cols-3 items-center gap-6 font-jost whitespace-nowrap font-normal leading-[20px] text-[16px] text-lagoGray2">
             <Link href="/terms-of-use" className="hover:underline">
-             {footerData.bottomLinks[0].text?.[locale] || t('termsuse')}
+             {footerData.bottomLinks[0].text?.[locale] }
             </Link>
             <Link href="#" className="hover:underline">
-          {footerData.bottomLinks[2].text?.[locale] || t('notice')}
+          {footerData.bottomLinks[2].text?.[locale] }
             </Link>
             <Link href="/sustainability" className="hover:underline">
-             {footerData.bottomLinks[4].text?.[locale] || t('sustainability')}
+             {footerData.bottomLinks[4].text?.[locale] }
             </Link>
             <Link href="/ourpolicies" className="hover:underline">
-           {footerData.bottomLinks[1].text?.[locale] || t('ourpolicies')} 
+           {footerData.bottomLinks[1].text?.[locale] } 
             </Link>
             <Link href="/certificates" className="hover:underline">
-            {footerData.bottomLinks[5].text?.[locale] || "Certificate"}
+            {footerData.bottomLinks[5].text?.[locale] }
             </Link>
-            <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] || t('blog')}</Link>
+            <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] }</Link>
           </div>
         </div>
       </div>
@@ -435,7 +435,7 @@ export default function Footer() {
               onClick={() => setIsRoomsOpen(!isRoomsOpen)}
               className="flex w-[98%] p-[10px] md:max-w-[306px] items-center justify-between border border-white leading-[26.667px] uppercase"
             >
-              {footerData.quickMenu[0].title?.[locale] || t('accommodation')}  <ArrawDown className="flex" width={25} height={25} />
+              {footerData.quickMenu[0].title?.[locale] }  <ArrawDown className="flex" width={25} height={25} />
             </div>
             <div
               className={`overflow-hidden transition-all duration-500 ease-in-out ${
@@ -447,37 +447,37 @@ export default function Footer() {
                   href="/rooms"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                {footerData.quickMenu[0].links[0].text?.[locale] || "All rooms"}
+                {footerData.quickMenu[0].links[0].text?.[locale] }
                 </Link>
                 <Link
                   href="/rooms/superiorroom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                 {footerData.quickMenu[0].links[1].text?.[locale] || t("superiorroom")}
+                 {footerData.quickMenu[0].links[1].text?.[locale] }
                 </Link>
                 <Link
                   href="/rooms/familyroom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                  {footerData.quickMenu[0].links[2].text?.[locale] || t("familyroom")}
+                  {footerData.quickMenu[0].links[2].text?.[locale] }
                 </Link>
                 <Link
                   href="/rooms/swimuproom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                    {footerData.quickMenu[0].links[3].text?.[locale] || t("swimuproom")}
+                    {footerData.quickMenu[0].links[3].text?.[locale] }
                 </Link>
                 <Link
                   href="/rooms/familyswimuproom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                 {footerData.quickMenu[0].links[4].text?.[locale] || t("familyswimuproom")}
+                 {footerData.quickMenu[0].links[4].text?.[locale] }
                 </Link>
                 <Link
                   href="/rooms/duplexfamilyroom"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                 {footerData.quickMenu[0].links[5].text?.[locale] || t("duplexfamilyroom")}
+                 {footerData.quickMenu[0].links[5].text?.[locale] }
                 </Link>
                 {/* <Link
                   href="/rooms/tinyvilla"
@@ -492,7 +492,7 @@ export default function Footer() {
               href="/special"
               className="flex w-[98%] p-[10px] md:max-w-[306px] mt-[15px] items-center justify-between border border-white leading-[26.667px] uppercase"
             >
-               {footerData.quickMenu[1].title?.[locale] || t('experiences')} 
+               {footerData.quickMenu[1].title?.[locale] } 
             </Link>
             <Link
               href="/connect"
@@ -504,7 +504,7 @@ export default function Footer() {
                 onClick={() => setIsMoreOpen(!isMoreOpen)}
               className="flex w-[98%] p-[10px] md:max-w-[306px] mt-[15px] items-center justify-between border border-white leading-[26.667px]"
             >
-               {footerData.quickMenu[3].title?.[locale] || "More"}  <ArrawDown className="flex" width={25} height={25} />
+               {footerData.quickMenu[3].title?.[locale] }  <ArrawDown className="flex" width={25} height={25} />
             </div>
             <div
               className={`overflow-hidden transition-all duration-500 ease-in-out ${
@@ -516,19 +516,19 @@ export default function Footer() {
                   href="/kidsclub"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                  {footerData.quickMenu[3].links[0].text?.[locale] || t('kidsclub')} 
+                  {footerData.quickMenu[3].links[0].text?.[locale] } 
                 </Link>
                 <Link
                   href="/special"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                  {footerData.quickMenu[3].links[1].text?.[locale] || t('special')} 
+                  {footerData.quickMenu[3].links[1].text?.[locale] } 
                 </Link>
                 <Link
                   href="/gallery"
                   className="block text-[14px] text-[#A6A6A6] leading-[29.639px] uppercase"
                 >
-                   {footerData.quickMenu[3].links[2].text?.[locale] || "Gallery"} 
+                   {footerData.quickMenu[3].links[2].text?.[locale] } 
                 </Link>
                 
               
@@ -549,21 +549,21 @@ export default function Footer() {
 
           <div className="grid-cols-2 grid items-center justify-center text-center gap-[10px] whitespace-nowrap text-lagoGray2 w-full text-[14px]">
             <a href="/terms-of-use" >
-             {footerData.bottomLinks[0].text?.[locale] || t('termsuse')}
+             {footerData.bottomLinks[0].text?.[locale] }
             </a>
             <a href="#" >
-           {footerData.bottomLinks[2].text?.[locale] || t('notice')}
+           {footerData.bottomLinks[2].text?.[locale] }
             </a>
             <a href="/sustainability" >
-           {footerData.bottomLinks[4].text?.[locale] || t('sustainability')}
+           {footerData.bottomLinks[4].text?.[locale] }
             </a>
             <Link href="/ourpolicies" >
-            {footerData.bottomLinks[1].text?.[locale] || t('ourpolicies')} 
+            {footerData.bottomLinks[1].text?.[locale] } 
             </Link>
             <a href="/certificates" >
-            {footerData.bottomLinks[5].text?.[locale] || "Certificate"}
+            {footerData.bottomLinks[5].text?.[locale] }
             </a>
-          <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale] || t('blog')}</Link>
+          <Link className="hover:text-white cursor-pointer" href="/news">{footerData.bottomLinks[3].text?.[locale]}</Link>
 
           </div>
         </div>

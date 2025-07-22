@@ -6,7 +6,7 @@ const restaurantSlugs = [
   "anatoliarestaurant",
   "despinarestaurant",
   "fuego",
-  "gustorestaurants",
+  "gustorestaurant",
   "mainrestaurant",
   "tapazrestaurant",
   "wasabi"
@@ -29,6 +29,8 @@ const defaultRestaurantData = {
 const langs = ["tr", "en", "de", "ru"];
 
 export default function RestaurantPanelPage() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   const [restaurants, setRestaurants] = useState([]);
   const [selectedSlug, setSelectedSlug] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -36,7 +38,7 @@ export default function RestaurantPanelPage() {
 
   // API'den restoran datalarını çek
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/restaurants/subrestaurants")
+    fetch(`${apiUrl}/api/pages/restaurants/subrestaurants`)
       .then(res => res.json())
       .then(data => {
         setRestaurants(data || []);
@@ -79,7 +81,7 @@ export default function RestaurantPanelPage() {
       || { ...defaultRestaurantData, slug: selectedSlug };
     setSaving(true);
     try {
-      const response = await fetch(`http://localhost:5001/api/pages/restaurants/subrestaurants/${selectedSlug}`, {
+      const response = await fetch(`${apiUrl}/api/pages/restaurants/subrestaurants/${selectedSlug}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(restaurantToSave)
@@ -120,7 +122,7 @@ export default function RestaurantPanelPage() {
           />
           <button
             onClick={handleSave}
-            className="px-6 py-2 bg-lagoBlack text-white rounded text-lg mt-4"
+            className="px-6 py-2 bg-green-600 text-white rounded text-lg mt-4 w-[250px]"
             disabled={saving}
           >
             {saving ? "Kaydediliyor..." : "Kaydet"}

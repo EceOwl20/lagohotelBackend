@@ -1,9 +1,22 @@
 
-import React from 'react'
-import {useTranslations} from 'next-intl';
+"use client";
+import React, { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
 
 const Connect3 = () => {
   const t = useTranslations('Contact.Form');
+  const locale = useLocale(); // "tr", "en", "de", "ru"
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  
+    const [pageData, setPageData] = useState(null);
+    useEffect(() => {
+      fetch(`${apiUrl}/api/pages/contact`)
+        .then((r) => r.json())
+        .then((json) => setPageData(json))
+        .catch(console.error);
+    }, [apiUrl]);
+  
+    if (!pageData) return <p className="p-10">Yükleniyor…</p>;
 
   return (
     <div className="flex flex-col items-center w-full px-4 py-8">
@@ -11,7 +24,7 @@ const Connect3 = () => {
 
       {/* Başlık */}
       <h2 className="text-[32px] lg:text-[40px] font-marcellus font-normal text-center mt-5 mb-5">
-        {t("address")}
+        {pageData.connect3?.addressHeader?.[locale]}
       </h2>
 
       {/* Yatay çizgi: Başlığın hemen altında */}
@@ -19,13 +32,13 @@ const Connect3 = () => {
 
       {/* Adres Metni */}
       <p className="text-center text-lagoBlack font-normal font-jost text-[14px] lg:text-[16px] leading-[24px] mb-12 underline">
-        Sorgun, Titreyengöl Mevkii, 07600 Manavgat/Antalya
+        {pageData.connect3?.addressText?.[locale]}
       </p>
 
       {/* Harita Alanı */}
       <div className="w-full max-w-4xl h-[500px]">
         <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12859.987375908045!2d31.45037963141668!3d36.75130499248053!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c350ad5d61c917%3A0x532259cb1682b4c2!2sLago%20Hotel!5e0!3m2!1str!2str!4v1692023311945!5m2!1str!2str"
+          src={pageData.connect3?.mapEmbedUrl}
           width="100%"
           height="100%"
           style={{ border: 0 }}

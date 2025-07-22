@@ -2,8 +2,9 @@
 import { useState } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-// Multi-language input helper
+// Çok dilli input bileşeni
 function MultiLangInputs({ label, value = {}, onChange }) {
   return (
     <div className="mb-2">
@@ -14,7 +15,7 @@ function MultiLangInputs({ label, value = {}, onChange }) {
             key={lang}
             className="border p-1 rounded w-1/4"
             placeholder={`${label} (${lang})`}
-            value={value?.[lang] || ""}
+            value={value[lang] ?? ""}
             onChange={(e) => onChange(lang, e.target.value)}
           />
         ))}
@@ -23,11 +24,11 @@ function MultiLangInputs({ label, value = {}, onChange }) {
   );
 }
 
-// Image upload helper
+// Görsel yükleme helper
 async function uploadImage(file) {
   const formData = new FormData();
   formData.append("image", file);
-  const res = await fetch("http://localhost:5001/api/upload", {
+  const res = await fetch(`${apiUrl}/api/upload`, {
     method: "POST",
     body: formData,
   });
@@ -39,39 +40,42 @@ async function uploadImage(file) {
 export default function SubrestaurantEdit({ data, setData }) {
   const [uploading, setUploading] = useState({});
 
-  // Genel alanı güncelle (deep merge)
-  const setField = (section, field, langOrValue, value) => {
-    setData(prev => ({
+  // Çok dilli alan güncelleme
+  const setField = (section, field, lang, val) => {
+    setData((prev) => ({
       ...prev,
       [section]: {
         ...prev[section],
-        [field]:
-          value !== undefined
-            ? { ...(prev[section]?.[field] || {}), [langOrValue]: value }
-            : langOrValue,
+        [field]: {
+          ...(prev[section]?.[field] || { tr: "", en: "", de: "", ru: "" }),
+          [lang]: val,
+        },
       },
     }));
   };
 
-  // Tek görsel alanı yükle (ör: mainBanner.image)
+  // Tek görsel alanı yükle
   const handleImage = async (section, field, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading(prev => ({ ...prev, [section + field]: true }));
+    const key = `${section}.${field}`;
+    setUploading((u) => ({ ...u, [key]: true }));
     try {
-      const imageUrl = await uploadImage(file);
-      setData(prev => ({
+      const url = await uploadImage(file);
+      setData((prev) => ({
         ...prev,
-        [section]: { ...prev[section], [field]: imageUrl }
+        [section]: { ...prev[section], [field]: url },
       }));
+    } catch (err) {
+      alert(err.message);
     } finally {
-      setUploading(prev => ({ ...prev, [section + field]: false }));
+      setUploading((u) => ({ ...u, [key]: false }));
     }
   };
 
-  // Carousel fonksiyonları
+  // Carousel işlemleri
   const handleCarouselChange = (idx, url) => {
-    setData(prev => {
+    setData((prev) => {
       const arr = Array.isArray(prev.carousel) ? [...prev.carousel] : [];
       arr[idx] = url;
       return { ...prev, carousel: arr };
@@ -80,34 +84,34 @@ export default function SubrestaurantEdit({ data, setData }) {
   const handleCarouselImage = async (idx, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading(prev => ({ ...prev, ["carousel-" + idx]: true }));
+    const key = `carousel-${idx}`;
+    setUploading((u) => ({ ...u, [key]: true }));
     try {
-      const imageUrl = await uploadImage(file);
-      handleCarouselChange(idx, imageUrl);
+      const url = await uploadImage(file);
+      handleCarouselChange(idx, url);
+    } catch (err) {
+      alert(err.message);
     } finally {
-      setUploading(prev => ({ ...prev, ["carousel-" + idx]: false }));
+      setUploading((u) => ({ ...u, [key]: false }));
     }
   };
-  const handleCarouselAdd = () =>
-    setData(prev => ({
-      ...prev,
-      carousel: [...(prev.carousel || []), ""],
-    }));
-  const handleCarouselRemove = (idx) =>
-    setData(prev => ({
+  const addCarousel = () =>
+    setData((prev) => ({ ...prev, carousel: [...(prev.carousel || []), ""] }));
+  const removeCarousel = (idx) =>
+    setData((prev) => ({
       ...prev,
       carousel: (prev.carousel || []).filter((_, i) => i !== idx),
     }));
 
-  // Cuisine fonksiyonları
-  const handleCuisineChange = (idx, field, langOrValue, value) => {
-    setData(prev => {
+  // Cuisines işlemleri
+  const handleCuisineChange = (idx, field, lang, val) => {
+    setData((prev) => {
       const arr = Array.isArray(prev.cuisines) ? [...prev.cuisines] : [];
       if (!arr[idx]) arr[idx] = {};
       if (["title", "description", "text", "buttonText"].includes(field)) {
-        arr[idx][field] = { ...(arr[idx][field] || {}), [langOrValue]: value };
+        arr[idx][field] = { ...(arr[idx][field] || {}), [lang]: val };
       } else {
-        arr[idx][field] = langOrValue;
+        arr[idx][field] = val;
       }
       return { ...prev, cuisines: arr };
     });
@@ -115,271 +119,317 @@ export default function SubrestaurantEdit({ data, setData }) {
   const handleCuisineImage = async (idx, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    setUploading(prev => ({ ...prev, ["cuisine-" + idx]: true }));
+    const key = `cuisine-${idx}`;
+    setUploading((u) => ({ ...u, [key]: true }));
     try {
-      const imageUrl = await uploadImage(file);
-      handleCuisineChange(idx, "image", imageUrl);
+      const url = await uploadImage(file);
+      handleCuisineChange(idx, "image", null, url);
+    } catch (err) {
+      alert(err.message);
     } finally {
-      setUploading(prev => ({ ...prev, ["cuisine-" + idx]: false }));
+      setUploading((u) => ({ ...u, [key]: false }));
     }
   };
-  const handleCuisineAdd = () =>
-    setData(prev => ({
-      ...prev,
-      cuisines: [...(prev.cuisines || []), {}],
-    }));
-  const handleCuisineRemove = (idx) =>
-    setData(prev => ({
+  const addCuisine = () =>
+    setData((prev) => ({ ...prev, cuisines: [...(prev.cuisines || []), {}] }));
+  const removeCuisine = (idx) =>
+    setData((prev) => ({
       ...prev,
       cuisines: (prev.cuisines || []).filter((_, i) => i !== idx),
     }));
 
-  // Panel render
+  // Banner verilerini hazırla
+  const banner = data.mainBanner || {};
+  const bannerSubtitle = banner.subtitle   || { tr: "", en: "", de: "", ru: "" };
+  const bannerTitle    = banner.title      || { tr: "", en: "", de: "", ru: "" };
+  const bannerText     = banner.text       || { tr: "", en: "", de: "", ru: "" };
+  const bannerButton   = banner.buttonText|| { tr: "", en: "", de: "", ru: "" };
+  const bannerImage    = banner.image      || "";
+
+  // Info Section
+  const info = data.infoSection || {};
+  const infoSubtitle = info.subtitle || { tr: "", en: "", de: "", ru: "" };
+  const infoTitle    = info.title    || { tr: "", en: "", de: "", ru: "" };
+  const infoText1    = info.text1    || { tr: "", en: "", de: "", ru: "" };
+  const infoText2    = info.text2    || { tr: "", en: "", de: "", ru: "" };
+  const infoImg1     = info.image1   || "";
+  const infoImg2     = info.image2   || "";
+
+  // Background Section
+  const bg = data.background || {};
+  const bgSubtitle = bg.subtitle   || { tr: "", en: "", de: "", ru: "" };
+  const bgTitle    = bg.title      || { tr: "", en: "", de: "", ru: "" };
+  const bgText     = bg.text       || { tr: "", en: "", de: "", ru: "" };
+  const bgButton   = bg.buttonText || { tr: "", en: "", de: "", ru: "" };
+  const bgLink     = bg.link       || "";
+  const bgImage    = bg.image      || "";
+
   return (
     <div className="flex flex-col gap-6">
-      <h2 className="font-bold text-xl mb-3">Restoran Düzenle</h2>
-      {/* --- Banner --- */}
-      <div className="p-4 border rounded mb-2">
+
+      {/* --- Ana Banner --- */}
+      <section className="p-4 border rounded bg-gray-50">
         <h3 className="font-semibold mb-2">Ana Banner</h3>
         <MultiLangInputs
           label="Banner Subtitle"
-          value={data.mainBanner?.subtitle}
+          value={bannerSubtitle}
           onChange={(lang, v) => setField("mainBanner", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Banner Title"
-          value={data.mainBanner?.title}
+          value={bannerTitle}
           onChange={(lang, v) => setField("mainBanner", "title", lang, v)}
         />
         <MultiLangInputs
           label="Banner Text"
-          value={data.mainBanner?.text}
+          value={bannerText}
           onChange={(lang, v) => setField("mainBanner", "text", lang, v)}
         />
-        <div className="flex items-center gap-3 mt-2">
+        <MultiLangInputs
+          label="Banner Button Text"
+          value={bannerButton}
+          onChange={(lang, v) => setField("mainBanner", "buttonText", lang, v)}
+        />
+        <div className="mt-2 flex items-center gap-3">
           <input
             type="file"
             accept="image/*"
-            onChange={e => handleImage("mainBanner", "image", e)}
-            disabled={uploading.mainBannerimage}
+            onChange={e => handleImage("mainBanner","image",e)}
+            disabled={uploading["mainBanner.image"]}
           />
-          {data.mainBanner?.image && (
+          {bannerImage && (
             <img
               src={
-                data.mainBanner.image.startsWith("/uploads")
-                  ? "http://localhost:5001" + data.mainBanner.image
-                  : data.mainBanner.image
+                bannerImage.startsWith("/uploads")
+                  ? `${apiUrl}` + bannerImage
+                  : bannerImage
               }
               alt="Banner"
               className="w-32 h-auto rounded border"
             />
           )}
         </div>
-      </div>
+      </section>
+
       {/* --- Info Section --- */}
-      <div className="p-4 border rounded mb-2">
-        <h3 className="font-semibold mb-2">Bilgi Bölümü (Info Section)</h3>
+      <section className="p-4 border rounded bg-gray-50">
+        <h3 className="font-semibold mb-2">Info Section</h3>
         <MultiLangInputs
           label="Subtitle"
-          value={data.infoSection?.subtitle}
-          onChange={(lang, v) => setField("infoSection", "subtitle", lang, v)}
+          value={infoSubtitle}
+          onChange={(lang, v) => setField("infoSection","subtitle",lang,v)}
         />
         <MultiLangInputs
           label="Title"
-          value={data.infoSection?.title}
-          onChange={(lang, v) => setField("infoSection", "title", lang, v)}
+          value={infoTitle}
+          onChange={(lang, v) => setField("infoSection","title",lang,v)}
         />
         <MultiLangInputs
           label="Text 1"
-          value={data.infoSection?.text1}
-          onChange={(lang, v) => setField("infoSection", "text1", lang, v)}
+          value={infoText1}
+          onChange={(lang, v) => setField("infoSection","text1",lang,v)}
         />
         <MultiLangInputs
           label="Text 2"
-          value={data.infoSection?.text2}
-          onChange={(lang, v) => setField("infoSection", "text2", lang, v)}
+          value={infoText2}
+          onChange={(lang, v) => setField("infoSection","text2",lang,v)}
         />
-        <div className="flex items-center gap-3 mt-2">
-          <span>Resim 1</span>
+        <div className="mt-2 flex items-center gap-3">
+          <label className="font-medium">Resim 1</label>
           <input
             type="file"
             accept="image/*"
-            onChange={e => handleImage("infoSection", "image1", e)}
-            disabled={uploading.infoSectionimage1}
+            onChange={e => handleImage("infoSection","image1",e)}
+            disabled={uploading["infoSection.image1"]}
           />
-          {data.infoSection?.image1 && (
+          {infoImg1 && (
             <img
               src={
-                data.infoSection.image1.startsWith("/uploads")
-                  ? "http://localhost:5001" + data.infoSection.image1
-                  : data.infoSection.image1
+                infoImg1.startsWith("/uploads")
+                  ? `${apiUrl}` + infoImg1
+                  : infoImg1
               }
-              alt="img1"
+              alt="Info1"
               className="w-16 h-auto rounded border"
             />
           )}
         </div>
-        <div className="flex items-center gap-3 mt-2">
-          <span>Resim 2</span>
+        <div className="mt-2 flex items-center gap-3">
+          <label className="font-medium">Resim 2</label>
           <input
             type="file"
             accept="image/*"
-            onChange={e => handleImage("infoSection", "image2", e)}
-            disabled={uploading.infoSectionimage2}
+            onChange={e => handleImage("infoSection","image2",e)}
+            disabled={uploading["infoSection.image2"]}
           />
-          {data.infoSection?.image2 && (
+          {infoImg2 && (
             <img
               src={
-                data.infoSection.image2.startsWith("/uploads")
-                  ? "http://localhost:5001" + data.infoSection.image2
-                  : data.infoSection.image2
+                infoImg2.startsWith("/uploads")
+                  ? `${apiUrl}` + infoImg2
+                  : infoImg2
               }
-              alt="img2"
+              alt="Info2"
               className="w-16 h-auto rounded border"
             />
           )}
         </div>
-      </div>
+      </section>
+
       {/* --- Carousel --- */}
-      <div className="p-4 border rounded mb-2">
+      <section className="p-4 border rounded bg-gray-50">
         <h3 className="font-semibold mb-2">Carousel</h3>
-        {(data.carousel || []).map((img, idx) => (
-          <div key={idx} className="flex items-center gap-3 mb-1">
+        {(data.carousel || []).map((url, idx) => (
+          <div key={idx} className="flex items-center gap-2 mb-2">
             <input
-              className="border p-1 rounded w-full"
+              className="border p-1 rounded flex-1"
               placeholder="Görsel URL"
-              value={img || ""}
+              value={url}
               onChange={e => handleCarouselChange(idx, e.target.value)}
             />
             <input
               type="file"
               accept="image/*"
               onChange={e => handleCarouselImage(idx, e)}
-              disabled={uploading["carousel-" + idx]}
+              disabled={uploading[`carousel-${idx}`]}
             />
-            <button onClick={() => handleCarouselRemove(idx)} className="text-red-500">Sil</button>
-            {img && (
+            <button onClick={() => removeCarousel(idx)} className="text-red-500">
+              Sil
+            </button>
+            {url && (
               <img
                 src={
-                  img.startsWith("/uploads")
-                    ? "http://localhost:5001" + img
-                    : img
+                  url.startsWith("/uploads")
+                    ? `${apiUrl}` + url
+                    : url
                 }
-                alt="carousel"
+                alt="Carousel"
                 className="w-16 h-auto rounded border"
               />
             )}
           </div>
         ))}
-        <button onClick={handleCarouselAdd} className="px-2 py-1 bg-blue-500 text-white rounded">
-          + Yeni Carousel Görseli
+        <button onClick={addCarousel} className="px-2 py-1 bg-green-600 text-white rounded">
+          + Yeni Görsel Ekle
         </button>
-      </div>
-      {/* --- Cuisines (3 lü array gibi) --- */}
-      <div className="p-4 border rounded mb-2">
-        <h3 className="font-semibold mb-2">Cuisines (Diğer restoran opsiyonları)</h3>
-        {(data.cuisines || []).map((cuisine, idx) => (
-          <div key={idx} className="border rounded p-2 mb-2">
+      </section>
+
+      {/* --- Cuisines --- */}
+      <section className="p-4 border rounded bg-gray-50">
+        <h3 className="font-semibold mb-2">Cuisines</h3>
+        {(data.cuisines || []).map((c, idx) => (
+          <div key={idx} className="border rounded p-3 mb-3 bg-white">
             <MultiLangInputs
               label="Başlık"
-              value={cuisine.title}
+              value={c.title}
               onChange={(lang, v) => handleCuisineChange(idx, "title", lang, v)}
             />
             <MultiLangInputs
               label="Açıklama"
-              value={cuisine.description}
+              value={c.description}
               onChange={(lang, v) => handleCuisineChange(idx, "description", lang, v)}
             />
             <MultiLangInputs
               label="Ekstra Text"
-              value={cuisine.text}
+              value={c.text}
               onChange={(lang, v) => handleCuisineChange(idx, "text", lang, v)}
             />
             <MultiLangInputs
               label="Button Text"
-              value={cuisine.buttonText}
+              value={c.buttonText}
               onChange={(lang, v) => handleCuisineChange(idx, "buttonText", lang, v)}
             />
             <input
-              className="border p-1 rounded w-full my-1"
+              type="text"
               placeholder="Link"
-              value={cuisine.link || ""}
-              onChange={e => handleCuisineChange(idx, "link", e.target.value)}
+              className="border p-1 rounded w-full mb-2"
+              value={c.link || ""}
+              onChange={(e) => handleCuisineChange(idx, "link", null, e.target.value)}
             />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={e => handleCuisineImage(idx, e)}
-              disabled={uploading["cuisine-" + idx]}
-            />
-            {cuisine.image && (
-              <img
-                src={
-                  cuisine.image.startsWith("/uploads")
-                    ? "http://localhost:5001" + cuisine.image
-                    : cuisine.image
-                }
-                alt="cuisine"
-                className="w-20 h-auto rounded border mt-2"
+            <div className="flex items-center gap-2">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleCuisineImage(idx, e)}
+                disabled={uploading[`cuisine-${idx}`]}
               />
-            )}
-            <button onClick={() => handleCuisineRemove(idx)} className="text-red-500">Sil</button>
+              {c.image && (
+                <img
+                  src={
+                    c.image.startsWith("/uploads")
+                      ? `${apiUrl}` + c.image
+                      : c.image
+                  }
+                  alt="Cuisine"
+                  className="w-20 h-auto rounded border"
+                />
+              )}
+            </div>
+            <button onClick={() => removeCuisine(idx)} className="text-red-600 mt-2">
+              Sil
+            </button>
           </div>
         ))}
-        <button onClick={handleCuisineAdd} className="px-2 py-1 bg-blue-500 text-white rounded">
+        <button onClick={addCuisine} className="px-2 py-1 bg-green-600 text-white rounded">
           + Yeni Cuisine
         </button>
-      </div>
+      </section>
+
       {/* --- Background --- */}
-      <div className="p-4 border rounded mb-2">
+      <section className="p-4 border rounded bg-gray-50 mb-6">
         <h3 className="font-semibold mb-2">Background Section</h3>
         <MultiLangInputs
-          label="Arkaplan Subtitle"
-          value={data.background?.subtitle}
+          label="Subtitle"
+          value={bgSubtitle}
           onChange={(lang, v) => setField("background", "subtitle", lang, v)}
         />
         <MultiLangInputs
-          label="Arkaplan Title"
-          value={data.background?.title}
+          label="Title"
+          value={bgTitle}
           onChange={(lang, v) => setField("background", "title", lang, v)}
         />
         <MultiLangInputs
-          label="Arkaplan Text"
-          value={data.background?.text}
+          label="Text"
+          value={bgText}
           onChange={(lang, v) => setField("background", "text", lang, v)}
         />
         <MultiLangInputs
           label="Button Text"
-          value={data.background?.buttonText}
+          value={bgButton}
           onChange={(lang, v) => setField("background", "buttonText", lang, v)}
         />
         <input
-          className="border p-1 rounded w-full my-1"
+          type="text"
           placeholder="Link"
-          value={data.background?.link || ""}
-          onChange={e => setData(prev => ({
-            ...prev,
-            background: { ...prev.background, link: e.target.value }
-          }))}
+          className="border p-1 rounded w-full mb-2"
+          value={bgLink}
+          onChange={e =>
+            setData((prev) => ({
+              ...prev,
+              background: { ...prev.background, link: e.target.value },
+            }))
+          }
         />
-        <input
-          type="file"
-          accept="image/*"
-          onChange={e => handleImage("background", "image", e)}
-          disabled={uploading.backgroundimage}
-        />
-        {data.background?.image && (
-          <img
-            src={
-              data.background.image.startsWith("/uploads")
-                ? "http://localhost:5001" + data.background.image
-                : data.background.image
-            }
-            alt="background"
-            className="w-32 h-auto rounded border mt-2"
+        <div className="flex items-center gap-2">
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => handleImage("background","image",e)}
+            disabled={uploading["background.image"]}
           />
-        )}
-      </div>
+          {bgImage && (
+            <img
+              src={
+                bgImage.startsWith("/uploads")
+                  ? `${apiUrl}` + bgImage
+                  : bgImage
+              }
+              alt="Background"
+              className="w-32 h-auto rounded border"
+            />
+          )}
+        </div>
+      </section>
     </div>
   );
 }
