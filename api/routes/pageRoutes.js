@@ -132,15 +132,12 @@ router.get("/about", async (req, res) => {
 });
 
 // PUT - update page data
-router.put("/about", verifyToken, async (req, res) => {
+router.put('/about', async (req, res) => {
   try {
-    const updated = await About.findOneAndUpdate({}, req.body, {
-      new: true,
-      upsert: true
-    });
+    const updated = await About.findOneAndUpdate({}, req.body, { upsert: true, new: true });
     res.json(updated);
   } catch (err) {
-    res.status(500).json({ error: "Güncelleme başarısız" });
+    res.status(500).json({ error: 'Güncelleme başarısız' });
   }
 });
 

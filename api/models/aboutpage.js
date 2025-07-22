@@ -20,8 +20,8 @@ const emblaSlideSchema = new mongoose.Schema({
 
 // Ana şema
 const AboutSchema = new mongoose.Schema({
-  mainBanner2: {
-    img: { type: String, default: "" },
+  mainBanner: {
+    image: { type: String, default: "" },
     span: MultiLangString,
     header: MultiLangString,
     opacity: { type: Boolean, default: true }
@@ -42,13 +42,18 @@ const AboutSchema = new mongoose.Schema({
     images: [{ type: String }]
   },
   missionVisionSection: {
-    texts: [{ type: MultiLangString }],
-    texts2: [{ type: MultiLangString }],
-    texts3: [{ type: MultiLangString }],
+    span: MultiLangString,
+    header: MultiLangString,
+    text: MultiLangString,
+    span2: MultiLangString,
+    header2: MultiLangString,
+    text2: MultiLangString,
+    span3: MultiLangString,
+    header3: MultiLangString,
+    text3: MultiLangString,
     leftImg: { type: String, default: "" },
     rightImg: { type: String, default: "" },
-    showLink: { type: Boolean, default: false },
-    buttonText: MultiLangString
+
   },
   emblaCarousel: [emblaSlideSchema]
 });
