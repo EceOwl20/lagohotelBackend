@@ -58,7 +58,7 @@ const locale = useLocale(); // "tr", "en", "de", "ru"
     if (!data.mainBanner) return <div>bar verisi eksik!</div>;
 
     const cafes = data.otheroptions?.cafes || [];
-
+ 
       const otherOptions = cafes.map((cafe, idx) => ({
     id: idx + 1,
     // Resim yolunu tam URL’e dönüştür
