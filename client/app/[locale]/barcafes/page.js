@@ -68,7 +68,7 @@ const page = () => {
        title: pageData.otherOptions?.[0]?.cuisine?.[1]?.title?.[locale],
         description: pageData.otherOptions?.[0]?.cuisine?.[1]?.subtitle?.[locale],
         text:pageData.otherOptions?.[0]?.cuisine?.[1]?.text?.[locale],
-        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
+        link:pageData.otherOptions?.[0]?.cuisine?.[1]?.link,
         buttonText:pageData.otherOptions?.[0]?.cuisine?.[1]?.buttonText?.[locale]
       },
       {
@@ -77,7 +77,7 @@ const page = () => {
         title: pageData.otherOptions?.[0]?.cuisine?.[2]?.title?.[locale],
         description: pageData.otherOptions?.[0]?.cuisine?.[2]?.subtitle?.[locale],
         text:pageData.otherOptions?.[0]?.cuisine?.[2]?.text?.[locale],
-        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
+        link:pageData.otherOptions?.[0]?.cuisine?.[2]?.link,
         buttonText:pageData.otherOptions?.[0]?.cuisine?.[2]?.buttonText?.[locale]
       },
       {
@@ -86,7 +86,7 @@ const page = () => {
          title: pageData.otherOptions?.[0]?.cuisine?.[3]?.title?.[locale],
         description: pageData.otherOptions?.[0]?.cuisine?.[3]?.subtitle?.[locale],
         text:pageData.otherOptions?.[0]?.cuisine?.[3]?.text?.[locale],
-        link:pageData.otherOptions?.[0]?.cuisine?.[0]?.link,
+        link:pageData.otherOptions?.[0]?.cuisine?.[3]?.link,
         buttonText:pageData.otherOptions?.[0]?.cuisine?.[3]?.buttonText?.[locale]
       }
   ];

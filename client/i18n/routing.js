@@ -102,56 +102,56 @@ export const routing = defineRouting({
     },
 
     "/barcafes/abellapatisserie": {
-      en: "//barcafes/abellapatisserie",
+      en: "/barcafes/abellapatisserie",
       tr: "/bar-kafeler/abellapatisserie",
       de: "/bars-und-cafes/abellapatisserie",
       ru: "/bary-i-kafe/abellapatisserie",
     },
 
     "/barcafes/cafedehouse": {
-      en: "//barcafes/cafedehouse",
+      en: "/barcafes/cafedehouse",
       tr: "/bar-kafeler/cafedehouse",
       de: "/bars-und-cafes/cafedehouse",
       ru: "/bary-i-kafe/cafedehouse",
     },
 
     "/barcafes/cafedelago": {
-      en: "//barcafes/cafedelago",
+      en: "/barcafes/cafedelago",
       tr: "/bar-kafeler/cafedelago",
       de: "/bars-und-cafes/cafedelago",
       ru: "/bary-i-kafe/cafedelago",
     },
 
     "/barcafes/joiebar": {
-      en: "//barcafes/joiebar",
+      en: "/barcafes/joiebar",
       tr: "/bar-kafeler/joiebar",
       de: "/bars-und-cafes/joiebar",
       ru: "/bary-i-kafe/joiebar",
     },
     
     "/barcafes/maldivabar": {
-      en: "//barcafes/maldivabar",
+      en: "/barcafes/maldivabar",
       tr: "/bar-kafeler/maldivabar",
       de: "/bars-und-cafes/maldivabar",
       ru: "/bary-i-kafe/maldivabar",
     },
 
     "/barcafes/mignonbar": {
-      en: "//barcafes/mignonbar",
+      en: "/barcafes/mignonbar",
       tr: "/bar-kafeler/mignonbar",
       de: "/bars-und-cafes/mignonbar",
       ru: "/bary-i-kafe/mignonbar",
     },
 
     "/barcafes/pianobar": {
-      en: "//barcafes/pianobar",
+      en: "/barcafes/pianobar",
       tr: "/bar-kafeler/pianobar",
       de: "/bars-und-cafes/pianobar",
       ru: "/bary-i-kafe/pianobar",
     },
 
     "/barcafes/vagobar": {
-      en: "//barcafes/vagobar",
+      en: "/barcafes/vagobar",
       tr: "/bar-kafeler/vagobar",
       de: "/bars-und-cafes/vagobar",
       ru: "/bary-i-kafe/vagobar",

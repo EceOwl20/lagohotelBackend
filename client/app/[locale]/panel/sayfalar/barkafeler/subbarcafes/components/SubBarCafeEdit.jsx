@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 const langs = ["tr", "en", "de", "ru"];
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function MultiLangInputs({ label, value = {}, onChange }) {
   return (
@@ -124,6 +125,30 @@ export default function SubBarCafeEdit({ data, setData }) {
       cafes: (prev.cafes || []).filter((_, i) => i !== idx),
     }));
 
+    const handleImageUpload = async (idx, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(prev => ({ ...prev, [idx]: true }));
+    const form = new FormData();
+    form.append("image", file);
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: form,
+      });
+      const { imageUrl } = await res.json();
+      setData(prev => {
+        const arr = [...(prev.otheroptions?.cafes || [])];
+        arr[idx].image = imageUrl;
+        return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setUploading(prev => ({ ...prev, [idx]: false }));
+    }
+  };
+
   // Panel render
   return (
     <div className="flex flex-col gap-6">
@@ -230,6 +255,8 @@ export default function SubBarCafeEdit({ data, setData }) {
           )}
         </div>
       </div>
+
+      {/* img carousel */}
       {/* Carousel */}
       <div className="p-4 border rounded mb-2">
         <h3 className="font-semibold mb-2">Carousel</h3>
@@ -265,8 +292,195 @@ export default function SubBarCafeEdit({ data, setData }) {
           + Yeni Carousel Görseli
         </button>
       </div>
+      
+
+      <section className="p-4 border rounded bg-gray-50">
+  <h3 className="font-semibold mb-2">Other Options</h3>
+
+  {/* Üst seviye title / subtitle / text */}
+  <MultiLangInputs
+    label="Başlık"
+    value={data.otheroptions?.title}
+    onChange={(lang, v) =>
+      setData(prev => ({
+        ...prev,
+        otheroptions: {
+          ...prev.otheroptions,
+          title: { ...(prev.otheroptions?.title || {}), [lang]: v },
+        },
+      }))
+    }
+  />
+  <MultiLangInputs
+    label="Alt Başlık"
+    value={data.otheroptions?.subtitle}
+    onChange={(lang, v) =>
+      setData(prev => ({
+        ...prev,
+        otheroptions: {
+          ...prev.otheroptions,
+          subtitle: { ...(prev.otheroptions?.subtitle || {}), [lang]: v },
+        },
+      }))
+    }
+  />
+  <MultiLangInputs
+    label="Açıklama"
+    value={data.otheroptions?.text}
+    onChange={(lang, v) =>
+      setData(prev => ({
+        ...prev,
+        otheroptions: {
+          ...prev.otheroptions,
+          text: { ...(prev.otheroptions?.text || {}), [lang]: v },
+        },
+      }))
+    }
+  />
+
+  {/* Cafes dizisi */}
+  {(data.otheroptions?.cafes || []).map((cafe, idx) => (
+    <div key={idx} className="border rounded p-3 mb-3 bg-white">
+      <div className="flex justify-between items-center mb-2">
+        <strong>Cafe #{idx + 1}</strong>
+        <button
+          onClick={() =>
+            setData(prev => ({
+              ...prev,
+              otheroptions: {
+                ...prev.otheroptions,
+                cafes: prev.otheroptions.cafes.filter((_, i) => i !== idx),
+              },
+            }))
+          }
+          className="text-red-600"
+        >
+          Sil
+        </button>
+      </div>
+
+      <MultiLangInputs
+        label="Cafe Başlığı"
+        value={cafe.title}
+        onChange={(lang, v) =>
+          setData(prev => {
+            const arr = [...(prev.otheroptions?.cafes || [])];
+            arr[idx].title = { ...(arr[idx].title || {}), [lang]: v };
+            return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+          })
+        }
+      />
+      <MultiLangInputs
+        label="Açıklama"
+        value={cafe.description}
+        onChange={(lang, v) =>
+          setData(prev => {
+            const arr = [...(prev.otheroptions?.cafes || [])];
+            arr[idx].description = { ...(arr[idx].description || {}), [lang]: v };
+            return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+          })
+        }
+      />
+      <MultiLangInputs
+        label="Ekstra Metin"
+        value={cafe.text}
+        onChange={(lang, v) =>
+          setData(prev => {
+            const arr = [...(prev.otheroptions?.cafes || [])];
+            arr[idx].text = { ...(arr[idx].text || {}), [lang]: v };
+            return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+          })
+        }
+      />
+      <MultiLangInputs
+        label="Buton Metni"
+        value={cafe.buttonText}
+        onChange={(lang, v) =>
+          setData(prev => {
+            const arr = [...(prev.otheroptions?.cafes || [])];
+            arr[idx].buttonText = { ...(arr[idx].buttonText || {}), [lang]: v };
+            return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+          })
+        }
+      />
+
+      <input
+        type="text"
+        placeholder="Link"
+        className="border p-1 rounded w-full mb-2"
+        value={cafe.link || ""}
+        onChange={e =>
+          setData(prev => {
+            const arr = [...(prev.otheroptions?.cafes || [])];
+            arr[idx].link = e.target.value;
+            return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+          })
+        }
+      />
+
+      <div className="flex items-center gap-2">
+        <input
+          type="file"
+          accept="image/*"
+          onChange={async e => {
+            const file = e.target.files?.[0];
+            if (!file) return;
+            // uploading state’i kendinize göre yönetin
+            const form = new FormData();
+            form.append("image", file);
+            const res = await fetch(`${apiUrl}/api/upload`, {
+              method: "POST",
+              body: form,
+            });
+            const { imageUrl } = await res.json();
+            setData(prev => {
+              const arr = [...(prev.otheroptions?.cafes || [])];
+              arr[idx].image = imageUrl;
+              return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+            });
+          }}
+        />
+        {cafe.image && (
+          <img
+            src={
+              cafe.image.startsWith("/uploads")
+                ? `${apiUrl}${cafe.image}`
+                : cafe.image
+            }
+            alt={`Cafe ${idx + 1}`}
+            className="w-20 h-auto rounded border"
+          />
+        )}
+      </div>
+    </div>
+  ))}
+
+  <button
+    onClick={() =>
+      setData(prev => ({
+        ...prev,
+        otheroptions: {
+          ...prev.otheroptions,
+          cafes: [
+            ...(prev.otheroptions?.cafes || []),
+            {
+              title: {}, description: {}, text: {}, buttonText: {},
+              link: "", image: ""
+            },
+          ],
+        },
+      }))
+    }
+    className="px-2 py-1 bg-green-600 text-white rounded"
+  >
+    + Yeni Cafe Ekle
+  </button>
+</section>
+
+
+
       {/* Cafes */}
-      <div className="p-4 border rounded mb-2">
+      {/* <div className="p-4 border rounded mb-2">
         <h3 className="font-semibold mb-2">Bar/Cafe Seçenekleri (Diğer opsiyonlar)</h3>
         {(data.cafes || []).map((cafe, idx) => (
           <div key={idx} className="border rounded p-2 mb-2">
@@ -319,7 +533,9 @@ export default function SubBarCafeEdit({ data, setData }) {
         <button onClick={handleCafeAdd} className="px-2 py-1 bg-blue-500 text-white rounded">
           + Yeni Cafe
         </button>
-      </div>
+      </div> */}
+
+
       {/* Background */}
       <div className="p-4 border rounded mb-2">
         <h3 className="font-semibold mb-2">Background Section</h3>

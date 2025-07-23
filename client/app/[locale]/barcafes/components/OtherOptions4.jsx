@@ -26,8 +26,8 @@ const OtherOptionSlide = ({ room }) => (
       <Image 
         src={room.img} 
         alt={room.title} 
-        width={room.img.width} 
-        height={room.img.height}
+        width={room.img.width || 756} 
+        height={room.img.height || 699}
         className="object-cover"
       />
       <span className="text-[12px] font-medium leading-normal tracking-[0.48px] uppercase">

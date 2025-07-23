@@ -1,7 +1,6 @@
-import React from 'react'
+"use client";
+import { useEffect, useState } from "react";
 import mainImg from "./images/main.webp"
-import img1 from "./images/fresh1.webp"
-import img2 from "./images/fresh2.webp"
 import RoomTour from '@/app/[locale]/rooms/familyswimup/components/RoomTour'
 import KidsMomentCarousel from '@/app/[locale]/kidsclub/components/KidsMomentCarousel'
 import gallery2 from "./images/gallery1.jpg"
@@ -18,16 +17,13 @@ import gallery11 from "./images/SRF_4713.jpg"
 import gallery12 from "./images/SRF_4715.jpg"
 import gallery13 from "./images/SRF_4728.jpg"
 import ClinaryReverseInfo from '@/app/[locale]/restaurants/components/ClinaryReverseInfo'
-import backgroundImg from "../images/BackgroundCafes.webp"
-import mignon from "../images/mignon.webp"
-import joie from "../images/joie.webp"
-import maldiva from "../images/maldiva.webp"
-import vagobar from "../images/vagobar.webp"
 import DiscoverBackground from '../../restaurants/components/DiscoverBackground'
 import OtherOptions4 from '../components/OtherOptions4'
 import ContactSection2 from '@/app/[locale]/GeneralComponents/Contact/ContactSection2'
 import RestaurantMainBanner from '@/app/[locale]/restaurants/components/RestaurantMainBanner'
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const galleryImages=[gallery1,gallery2,gallery3,gallery4,gallery5,gallery6,gallery7,gallery8,gallery9,gallery10,gallery11,gallery12,gallery13];
 
@@ -39,52 +35,79 @@ const page = () => {
   const t5 = useTranslations('JoieBar.DiscoverBackground');
 
 
-const otherOptions = [
-  {
-      id: 1,
-      img: mignon,
-      title: t4("cuisines1title"),
-      description: t4("cuisines1subtitle"),
-      text:t4("cuisines1text"),
-      link:"/barcafes/mignonbar",
-      buttonText:t4("buttonText")
-    },
-  {
-      id: 2,
-      img: joie,
-      title: t4("cuisines2title"),
-      description: t4("cuisines2subtitle"),
-      text:t4("cuisines2text"),
-      link:"/barcafes/joiebar",
-      buttonText:t4("buttonText")
-    },
-    {
-      id: 3,
-      img: maldiva,
-      title: t4("cuisines3title"),
-      description: t4("cuisines3subtitle"),
-      text:t4("cuisines3text"),
-       link:"/barcafes/maldivabar",
-       buttonText:t4("buttonText")
-    },
-    {
-      id: 4,
-      img: vagobar,
-      title: t4("cuisines4title"),
-      description: t4("cuisines4subtitle"),
-      text:t4("cuisines4text"),
-       link:"/barcafes/vagobar",
-       buttonText:t4("buttonText")
-    }
-];
+const locale = useLocale(); // "tr", "en", "de", "ru"
+    const [data, setData] = useState(null);
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const res = await fetch(
+            `${apiUrl}/api/pages/barcafes/subbarcafes/joiebar?lang=${locale}`
+          );
+          const json = await res.json();
+          setData(json);
+        } catch (e) {
+          setData({ error: "Bar verisi alınamadı!" });
+        }
+      };
+      fetchData();
+    }, [locale]);
+  
+    if (!data) return <p className="p-10">Yükleniyor...</p>;
+    if (data.error) return <div className="text-red-500">{data.error}</div>;
+    if (!data.mainBanner) return <div>bar verisi eksik!</div>;
+
+    const cafes = data.otheroptions?.cafes || [];
+
+      const otherOptions = cafes.map((cafe, idx) => ({
+    id: idx + 1,
+    // Resim yolunu tam URL’e dönüştür
+    img: cafe.image
+      ? cafe.image.startsWith("/")
+        ? `${apiUrl}${cafe.image}`
+        : cafe.image
+      : "",
+    // Çok dilli alanlardan locale’e göre al
+    title: cafe.title?.[locale] || "",
+    description: cafe.description?.[locale] || "",
+    text: cafe.text?.[locale] || "",
+    link: cafe.link || "",
+    buttonText: cafe.buttonText?.[locale] || "",
+  }));
+
+
+    const bannerImg = data.mainBanner?.image
+    ? data.mainBanner.image.startsWith("/")
+      ? `${apiUrl}${data.mainBanner.image}`
+      : data.mainBanner.image
+    : "";
+
+       const img1 = data.infoSection?.image1
+    ? data.infoSection.image1.startsWith("/")
+      ? `${apiUrl}${data.infoSection.image1}`
+      : data.infoSection.image1
+    : "";
+
+       const img2 = data.infoSection?.image2
+    ? data.infoSection.image2.startsWith("/")
+      ? `${apiUrl}${data.infoSection.image2}`
+      : data.infoSection.image2
+    : "";
+
+         const backgroundImg = data.background?.image
+    ? data.background.image.startsWith("/")
+      ? `${apiUrl}${data.background.image}`
+      : data.background.image
+    : "";
+
 
   return (
     <div className='flex flex-col items-center justify-center gap-[100px] bg-[#fbfbfb] overflow-hidden'>
-      <RestaurantMainBanner img={mainImg} span={t("subtitle")} header={t("title")} text={t("text")}/>
-      <ClinaryReverseInfo img1={img1} img2={img2} span={t2("subtitle")} header={t2("title")} text1={t2("text1")} text2={t2("text2")}/>
+      <RestaurantMainBanner img={bannerImg} span={data.mainBanner?.subtitle?.[locale]} header={data.mainBanner?.title?.[locale]} text={data.mainBanner?.text?.[locale]}/>
+      <ClinaryReverseInfo img1={img2} img2={img1} span={data.infoSection?.subtitle?.[locale]} header={data.infoSection?.title?.[locale]} text1={data.infoSection?.text1?.[locale]} text2={data.infoSection?.text2?.[locale]}/>
       <KidsMomentCarousel images={galleryImages} header="" showheader={false}/>
-      <OtherOptions4 span={t4("subtitle")} header={t4("subtitle")} text={t4("text")} images={otherOptions}/>
-      <DiscoverBackground span={t5("subtitle")} header={t5("subtitle")} text={t5("text")} link="/barcafes" img={backgroundImg}/>
+      <OtherOptions4 span={data.otheroptions?.cafes?.[0]?.description?.[locale]} header={data.otheroptions?.cafes?.[0]?.title?.[locale]} text={data.otheroptions?.cafes?.[0]?.text?.[locale]} images={otherOptions}/>
+      <DiscoverBackground span={data.background?.subtitle?.[locale]} header={data.background?.title?.[locale]} text={data.background?.text?.[locale]} link="/barcafes" img={backgroundImg}/>
       <ContactSection2/>
     </div>
   )

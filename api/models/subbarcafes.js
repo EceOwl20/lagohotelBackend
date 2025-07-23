@@ -24,6 +24,10 @@ const BarCafeSchema = new mongoose.Schema({
   carousel: [String], // image url array
 
   // Alt cafe/bar opsiyonları
+  otheroptions: {
+    title: multiLang,
+    subtitle: multiLang,
+    text: multiLang,
   cafes: [
     {
       title: multiLang,
@@ -34,6 +38,7 @@ const BarCafeSchema = new mongoose.Schema({
       image: String,
     }
   ],
+  },
 
   background: {
     subtitle: multiLang,
