@@ -60,4 +60,16 @@ router.post("/video", uploadVideo.single("video"), (req, res) => {
   res.json({ videoUrl });
 });
 
+
+
+router.get("/list", (req, res) => {
+  const dir = path.join(__dirname, "../public/uploads");
+  fs.readdir(dir, (err, files) => {
+    if (err) return res.status(500).json({ error: "Liste okunamadı" });
+    // sadece .png/.jpg/.webp uzantılılar
+    const images = files.filter(f => /\.(jpe?g|png|webp|gif)$/.test(f));
+    res.json(images);
+  });
+});
+
 module.exports = router;

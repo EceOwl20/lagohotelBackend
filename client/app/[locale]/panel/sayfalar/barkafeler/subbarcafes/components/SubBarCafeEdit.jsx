@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const langs = ["tr", "en", "de", "ru"];
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -30,7 +30,17 @@ async function uploadImage(file) {
   throw new Error(result.error || "Upload failed");
 }
 export default function SubBarCafeEdit({ data, setData }) {
+  const [existingImages, setExistingImages] = useState([]);
   const [uploading, setUploading] = useState({});
+
+  // 1) Mevcut resimleri yükle
+  useEffect(() => {
+    fetch(`${apiUrl}/api/upload/list`)
+      .then(r => r.json())
+      .then(files => setExistingImages(files))
+      .catch(console.error);
+  }, []);
+
 
   const setField = (section, field, langOrValue, value) => {
     setData(prev => ({
@@ -418,7 +428,7 @@ export default function SubBarCafeEdit({ data, setData }) {
         }
       />
 
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 mb-2">
         <input
           type="file"
           accept="image/*"
@@ -452,6 +462,30 @@ export default function SubBarCafeEdit({ data, setData }) {
           />
         )}
       </div>
+       <div className="mb-4">
+            <label className="block font-semibold mb-1">Mevcut Resim Seç</label>
+            <select
+              className="border p-2 rounded w-full"
+              value={cafe.image || ""}
+              onChange={e =>
+                setData(prev => {
+                  const arr = [...(prev.otheroptions?.cafes || [])];
+                  arr[idx].image = e.target.value;
+                  return { ...prev, otheroptions: { ...prev.otheroptions, cafes: arr } };
+                })
+              }
+            >
+              <option value="">— Seçin —</option>
+              {existingImages.map(file => {
+                const url = `/uploads/${file}`;
+                return (
+                  <option key={file} value={url}>
+                    {file}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
     </div>
   ))}
 

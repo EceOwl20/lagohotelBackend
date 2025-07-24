@@ -17,7 +17,6 @@ import ContactSection2 from '@/app/[locale]/GeneralComponents/Contact/ContactSec
 import BannerDark from '@/app/[locale]/GeneralComponents/BannerDark'
 import { useLocale, useTranslations } from "next-intl";
 
-const galleryImages=[gallery1,gallery2,gallery1,gallery2];
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const page = () => {
@@ -92,12 +91,18 @@ const locale = useLocale(); // "tr", "en", "de", "ru"
       : data.background.image
     : "";
 
+        const carouselImages = (data.carousel || []).map(path =>
+  path.startsWith("/")
+    ? `${apiUrl}${path}`
+    : path
+);
+
 
   return (
     <div className='flex flex-col items-center justify-center gap-[100px] bg-[#fbfbfb] overflow-hidden'>
      <BannerDark img={bannerImg} span={data.mainBanner?.subtitle?.[locale]} header={data.mainBanner?.title?.[locale]} text={data.mainBanner?.text?.[locale]}/>
       <ClinaryReverseInfo img1={img1} img2={img2} span={data.infoSection?.subtitle?.[locale]} header={data.infoSection?.title?.[locale]} text1={data.infoSection?.text1?.[locale]} text2={data.infoSection?.text2?.[locale]}/>
-      <KidsMomentCarousel images={galleryImages} header="" showheader={false}/>
+      <KidsMomentCarousel images={carouselImages} header="" showheader={false}/>
      <OtherOptions4 span={data.otheroptions?.cafes?.[0]?.description?.[locale]} header={data.otheroptions?.cafes?.[0]?.title?.[locale]} text={data.otheroptions?.cafes?.[0]?.text?.[locale]} images={otherOptions}/>
        <DiscoverBackground span={data.background?.subtitle?.[locale]} header={data.background?.title?.[locale]} text={data.background?.text?.[locale]} link="/barcafes" img={backgroundImg}/>
       <ContactSection2/>
