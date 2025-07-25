@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -14,8 +14,8 @@ function MultiLangInputs({ label, value = {}, onChange }) {
           <input
             key={lang}
             className="border p-1 rounded w-1/4"
-            defaultValue={value[lang] ?? ""}
-            placeholder={value[lang] != null ? value[lang] : `${label} (${lang})`}
+            placeholder={`${label} (${lang})`}
+            value={value?.[lang] || ""}
             onChange={(e) => onChange(lang, e.target.value)}
           />
         ))}
@@ -32,13 +32,22 @@ async function uploadImage(file) {
     method: "POST",
     body: formData,
   });
-  const result = await res.json();
-  if (res.ok && result.imageUrl) return result.imageUrl;
-  throw new Error(result.error || "Upload failed");
+  const { imageUrl } = await res.json();
+  if (res.ok && imageUrl) return imageUrl;
+  throw new Error("Upload failed");
 }
 
 export default function SubrestaurantEdit({ data, setData }) {
+  const [existingImages, setExistingImages] = useState([]);
   const [uploading, setUploading] = useState({});
+
+  // Mevcut resimleri yükle (isteğe bağlı)
+  useEffect(() => {
+    fetch(`${apiUrl}/api/upload/list`)
+      .then((r) => r.json())
+      .then((files) => setExistingImages(files))
+      .catch(console.error);
+  }, []);
 
   // Çok dilli alan güncelleme
   const setField = (section, field, lang, val) => {
@@ -103,45 +112,12 @@ export default function SubrestaurantEdit({ data, setData }) {
       carousel: (prev.carousel || []).filter((_, i) => i !== idx),
     }));
 
-  // Cuisines işlemleri
-  const handleCuisineChange = (idx, field, lang, val) => {
+  // OtherOptions(Restaurants) işlemleri
+  const handleOptionChange = (idx, field, lang, val) => {
     setData((prev) => {
-      const arr = Array.isArray(prev.cuisines) ? [...prev.cuisines] : [];
-      if (!arr[idx]) arr[idx] = {};
-      if (["title", "description", "text", "buttonText"].includes(field)) {
-        arr[idx][field] = { ...(arr[idx][field] || {}), [lang]: val };
-      } else {
-        arr[idx][field] = val;
-      }
-      return { ...prev, cuisines: arr };
-    });
-  };
-  const handleCuisineImage = async (idx, e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const key = `cuisine-${idx}`;
-    setUploading((u) => ({ ...u, [key]: true }));
-    try {
-      const url = await uploadImage(file);
-      handleCuisineChange(idx, "image", null, url);
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setUploading((u) => ({ ...u, [key]: false }));
-    }
-  };
-  const addCuisine = () =>
-    setData((prev) => ({ ...prev, cuisines: [...(prev.cuisines || []), {}] }));
-  const removeCuisine = (idx) =>
-    setData((prev) => ({
-      ...prev,
-      cuisines: (prev.cuisines || []).filter((_, i) => i !== idx),
-    }));
-
-
-    const handleOptionChange = (idx, field, lang, val) => {
-    setData((prev) => {
-      const arr = [...(prev.otheroptions?.restaurants || [])];
+      const arr = Array.isArray(prev.otheroptions?.restaurants)
+        ? [...prev.otheroptions.restaurants]
+        : [];
       if (!arr[idx]) arr[idx] = {};
       if (["title", "description", "text", "buttonText"].includes(field)) {
         arr[idx][field] = { ...(arr[idx][field] || {}), [lang]: val };
@@ -154,7 +130,6 @@ export default function SubrestaurantEdit({ data, setData }) {
       };
     });
   };
-
   const handleOptionImage = async (idx, e) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -162,7 +137,6 @@ export default function SubrestaurantEdit({ data, setData }) {
     setUploading((u) => ({ ...u, [key]: true }));
     try {
       const url = await uploadImage(file);
-      // metodu yukarıdakine benzer şekilde çağır
       handleOptionChange(idx, "image", null, url);
     } catch (err) {
       alert(err.message);
@@ -170,8 +144,7 @@ export default function SubrestaurantEdit({ data, setData }) {
       setUploading((u) => ({ ...u, [key]: false }));
     }
   };
-
-  const addOption = () => {
+  const addOption = () =>
     setData((prev) => ({
       ...prev,
       otheroptions: {
@@ -182,10 +155,7 @@ export default function SubrestaurantEdit({ data, setData }) {
         ],
       },
     }));
-  };
-  const opts = data.otheroptions || {};
-
-  const removeOption = (idx) => {
+  const removeOption = (idx) =>
     setData((prev) => ({
       ...prev,
       otheroptions: {
@@ -193,74 +163,50 @@ export default function SubrestaurantEdit({ data, setData }) {
         restaurants: prev.otheroptions.restaurants.filter((_, i) => i !== idx),
       },
     }));
-  };
 
-
-  // Banner verilerini hazırla
+  const opts = data.otheroptions || {};
   const banner = data.mainBanner || {};
-  const bannerSubtitle = banner.subtitle   || { tr: "", en: "", de: "", ru: "" };
-  const bannerTitle    = banner.title      || { tr: "", en: "", de: "", ru: "" };
-  const bannerText     = banner.text       || { tr: "", en: "", de: "", ru: "" };
-  const bannerButton   = banner.buttonText|| { tr: "", en: "", de: "", ru: "" };
-  const bannerImage    = banner.image      || "";
-
-  // Info Section
   const info = data.infoSection || {};
-  const infoSubtitle = info.subtitle || { tr: "", en: "", de: "", ru: "" };
-  const infoTitle    = info.title    || { tr: "", en: "", de: "", ru: "" };
-  const infoText1    = info.text1    || { tr: "", en: "", de: "", ru: "" };
-  const infoText2    = info.text2    || { tr: "", en: "", de: "", ru: "" };
-  const infoImg1     = info.image1   || "";
-  const infoImg2     = info.image2   || "";
-
-  // Background Section
   const bg = data.background || {};
-  const bgSubtitle = bg.subtitle   || { tr: "", en: "", de: "", ru: "" };
-  const bgTitle    = bg.title      || { tr: "", en: "", de: "", ru: "" };
-  const bgText     = bg.text       || { tr: "", en: "", de: "", ru: "" };
-  const bgButton   = bg.buttonText || { tr: "", en: "", de: "", ru: "" };
-  const bgLink     = bg.link       || "";
-  const bgImage    = bg.image      || "";
 
   return (
     <div className="flex flex-col gap-6">
-
-      {/* --- Ana Banner --- */}
+      {/* Ana Banner */}
       <section className="p-4 border rounded bg-gray-50">
         <h3 className="font-semibold mb-2">Ana Banner</h3>
         <MultiLangInputs
           label="Banner Subtitle"
-          value={bannerSubtitle}
+          value={banner.subtitle}
           onChange={(lang, v) => setField("mainBanner", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Banner Title"
-          value={bannerTitle}
+          value={banner.title}
           onChange={(lang, v) => setField("mainBanner", "title", lang, v)}
         />
         <MultiLangInputs
           label="Banner Text"
-          value={bannerText}
+          value={banner.text}
           onChange={(lang, v) => setField("mainBanner", "text", lang, v)}
         />
         <MultiLangInputs
           label="Banner Button Text"
-          value={bannerButton}
+          value={banner.buttonText}
           onChange={(lang, v) => setField("mainBanner", "buttonText", lang, v)}
         />
         <div className="mt-2 flex items-center gap-3">
           <input
             type="file"
             accept="image/*"
-            onChange={e => handleImage("mainBanner","image",e)}
+            onChange={(e) => handleImage("mainBanner", "image", e)}
             disabled={uploading["mainBanner.image"]}
           />
-          {bannerImage && (
+          {banner.image && (
             <img
               src={
-                bannerImage.startsWith("/uploads")
-                  ? `${apiUrl}` + bannerImage
-                  : bannerImage
+                banner.image.startsWith("/uploads")
+                  ? `${apiUrl}${banner.image}`
+                  : banner.image
               }
               alt="Banner"
               className="w-32 h-auto rounded border"
@@ -269,43 +215,43 @@ export default function SubrestaurantEdit({ data, setData }) {
         </div>
       </section>
 
-      {/* --- Info Section --- */}
+      {/* Info Section */}
       <section className="p-4 border rounded bg-gray-50">
         <h3 className="font-semibold mb-2">Info Section</h3>
         <MultiLangInputs
           label="Subtitle"
-          value={infoSubtitle}
-          onChange={(lang, v) => setField("infoSection","subtitle",lang,v)}
+          value={info.subtitle}
+          onChange={(lang, v) => setField("infoSection", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Title"
-          value={infoTitle}
-          onChange={(lang, v) => setField("infoSection","title",lang,v)}
+          value={info.title}
+          onChange={(lang, v) => setField("infoSection", "title", lang, v)}
         />
         <MultiLangInputs
           label="Text 1"
-          value={infoText1}
-          onChange={(lang, v) => setField("infoSection","text1",lang,v)}
+          value={info.text1}
+          onChange={(lang, v) => setField("infoSection", "text1", lang, v)}
         />
         <MultiLangInputs
           label="Text 2"
-          value={infoText2}
-          onChange={(lang, v) => setField("infoSection","text2",lang,v)}
+          value={info.text2}
+          onChange={(lang, v) => setField("infoSection", "text2", lang, v)}
         />
         <div className="mt-2 flex items-center gap-3">
           <label className="font-medium">Resim 1</label>
           <input
             type="file"
             accept="image/*"
-            onChange={e => handleImage("infoSection","image1",e)}
+            onChange={(e) => handleImage("infoSection", "image1", e)}
             disabled={uploading["infoSection.image1"]}
           />
-          {infoImg1 && (
+          {info.image1 && (
             <img
               src={
-                infoImg1.startsWith("/uploads")
-                  ? `${apiUrl}` + infoImg1
-                  : infoImg1
+                info.image1.startsWith("/uploads")
+                  ? `${apiUrl}${info.image1}`
+                  : info.image1
               }
               alt="Info1"
               className="w-16 h-auto rounded border"
@@ -317,15 +263,15 @@ export default function SubrestaurantEdit({ data, setData }) {
           <input
             type="file"
             accept="image/*"
-            onChange={e => handleImage("infoSection","image2",e)}
+            onChange={(e) => handleImage("infoSection", "image2", e)}
             disabled={uploading["infoSection.image2"]}
           />
-          {infoImg2 && (
+          {info.image2 && (
             <img
               src={
-                infoImg2.startsWith("/uploads")
-                  ? `${apiUrl}` + infoImg2
-                  : infoImg2
+                info.image2.startsWith("/uploads")
+                  ? `${apiUrl}${info.image2}`
+                  : info.image2
               }
               alt="Info2"
               className="w-16 h-auto rounded border"
@@ -334,7 +280,7 @@ export default function SubrestaurantEdit({ data, setData }) {
         </div>
       </section>
 
-      {/* --- Carousel --- */}
+      {/* Carousel */}
       <section className="p-4 border rounded bg-gray-50">
         <h3 className="font-semibold mb-2">Carousel</h3>
         {(data.carousel || []).map((url, idx) => (
@@ -343,12 +289,12 @@ export default function SubrestaurantEdit({ data, setData }) {
               className="border p-1 rounded flex-1"
               placeholder="Görsel URL"
               value={url}
-              onChange={e => handleCarouselChange(idx, e.target.value)}
+              onChange={(e) => handleCarouselChange(idx, e.target.value)}
             />
             <input
               type="file"
               accept="image/*"
-              onChange={e => handleCarouselImage(idx, e)}
+              onChange={(e) => handleCarouselImage(idx, e)}
               disabled={uploading[`carousel-${idx}`]}
             />
             <button onClick={() => removeCarousel(idx)} className="text-red-500">
@@ -357,9 +303,7 @@ export default function SubrestaurantEdit({ data, setData }) {
             {url && (
               <img
                 src={
-                  url.startsWith("/uploads")
-                    ? `${apiUrl}` + url
-                    : url
+                  url.startsWith("/uploads") ? `${apiUrl}${url}` : url
                 }
                 alt="Carousel"
                 className="w-16 h-auto rounded border"
@@ -372,148 +316,141 @@ export default function SubrestaurantEdit({ data, setData }) {
         </button>
       </section>
 
-      {/* --- Cuisines --- */}
+      {/* Other Options */}
       <section className="p-4 border rounded bg-gray-50">
-      <h3 className="font-semibold mb-2">Other Options</h3>
+        <h3 className="font-semibold mb-2">Other Options</h3>
+        <MultiLangInputs
+          label="Başlık"
+          value={opts.title}
+          onChange={(lang, v) => setField("otheroptions", "title", lang, v)}
+        />
+        <MultiLangInputs
+          label="Alt Başlık"
+          value={opts.subtitle}
+          onChange={(lang, v) => setField("otheroptions", "subtitle", lang, v)}
+        />
+        <MultiLangInputs
+          label="Açıklama"
+          value={opts.text}
+          onChange={(lang, v) => setField("otheroptions", "text", lang, v)}
+        />
 
-      {/* Üst seviye başlık/alt başlık/text */}
-      <MultiLangInputs
-        label="Başlık"
-        value={opts.title}
-        onChange={(lang, v) => setField("otheroptions", "title", lang, v)}
-      />
-      <MultiLangInputs
-        label="Alt Başlık"
-        value={opts.subtitle}
-        onChange={(lang, v) => setField("otheroptions", "subtitle", lang, v)}
-      />
-      <MultiLangInputs
-        label="Açıklama"
-        value={opts.text}
-        onChange={(lang, v) => setField("otheroptions", "text", lang, v)}
-      />
+        {(opts.restaurants || []).map((item, idx) => (
+          <div key={idx} className="border rounded p-3 mb-4 bg-white">
+            <div className="flex justify-between items-center mb-2">
+              <strong>Restaurant #{idx + 1}</strong>
+              <button className="text-red-600" onClick={() => removeOption(idx)}>
+                Sil
+              </button>
+            </div>
+            <MultiLangInputs
+              label="Başlık"
+              value={item.title}
+              onChange={(lang, v) => handleOptionChange(idx, "title", lang, v)}
+            />
+            <MultiLangInputs
+              label="Açıklama"
+              value={item.description}
+              onChange={(lang, v) => handleOptionChange(idx, "description", lang, v)}
+            />
+            <MultiLangInputs
+              label="Ekstra Metin"
+              value={item.text}
+              onChange={(lang, v) => handleOptionChange(idx, "text", lang, v)}
+            />
+            <MultiLangInputs
+              label="Buton Metni"
+              value={item.buttonText}
+              onChange={(lang, v) => handleOptionChange(idx, "buttonText", lang, v)}
+            />
 
-      {/* Alt öğeler */}
-      {(opts.restaurants || []).map((item, idx) => (
-        <div key={idx} className="border rounded p-3 mb-4 bg-white">
-          <div className="flex justify-between items-center mb-2">
-            <strong>Restaurant #{idx + 1}</strong>
-            <button
-              className="text-red-600"
-              onClick={() => removeOption(idx)}
-            >
-              Sil
-            </button>
-          </div>
-          <MultiLangInputs
-            label="Başlık"
-            value={item.title}
-            onChange={(lang, v) => handleOptionChange(idx, "title", lang, v)}
-          />
-          <MultiLangInputs
-            label="Açıklama"
-            value={item.description}
-            onChange={(lang, v) => handleOptionChange(idx, "description", lang, v)}
-          />
-          <MultiLangInputs
-            label="Ekstra Metin"
-            value={item.text}
-            onChange={(lang, v) => handleOptionChange(idx, "text", lang, v)}
-          />
-          <MultiLangInputs
-            label="Buton Metni"
-            value={item.buttonText}
-            onChange={(lang, v) => handleOptionChange(idx, "buttonText", lang, v)}
-          />
-          <div className="mb-2">
-            <label className="block font-semibold">Link</label>
-            <input
-              type="text"
-              className="border p-2 rounded w-full"
-              value={item.link || ""}
-              onChange={(e) =>
-                handleOptionChange(idx, "link", null, e.target.value)
-              }
-            />
-          </div>
-          <div className="flex items-center gap-3">
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleOptionImage(idx, e)}
-              disabled={uploading[`opt-img-${idx}`]}
-            />
-            {item.image && (
-              <img
-                src={
-                  item.image.startsWith("/uploads")
-                    ? `${apiUrl}${item.image}`
-                    : item.image
-                }
-                alt={`Option ${idx}`}
-                className="w-24 h-auto rounded border"
+            <div className="mb-2">
+              <label className="block font-semibold">Link</label>
+              <input
+                type="text"
+                className="border p-2 rounded w-full"
+                value={item.link || ""}
+                onChange={(e) => handleOptionChange(idx, "link", null, e.target.value)}
               />
-            )}
+            </div>
+
+            <div className="flex items-center gap-3">
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleOptionImage(idx, e)}
+                disabled={uploading[`opt-img-${idx}`]}
+              />
+              {item.image && (
+                <img
+                  src={
+                    item.image.startsWith("/uploads")
+                      ? `${apiUrl}${item.image}`
+                      : item.image
+                  }
+                  alt={`Option ${idx}`}
+                  className="w-24 h-auto rounded border"
+                />
+              )}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
 
-      <button
-        className="px-4 py-2 bg-green-600 text-white rounded"
-        onClick={addOption}
-      >
-        + Yeni Restaurant Ekle
-      </button>
-    </section>
+        <button onClick={addOption} className="px-4 py-2 bg-green-600 text-white rounded">
+          + Yeni Restaurant Ekle
+        </button>
+      </section>
 
-      {/* --- Background --- */}
+      {/* Background */}
       <section className="p-4 border rounded bg-gray-50 mb-6">
         <h3 className="font-semibold mb-2">Background Section</h3>
         <MultiLangInputs
           label="Subtitle"
-            value={data.background?.subtitle}
+          value={bg.subtitle}
           onChange={(lang, v) => setField("background", "subtitle", lang, v)}
         />
         <MultiLangInputs
           label="Title"
-          value={bgTitle}
+          value={bg.title}
           onChange={(lang, v) => setField("background", "title", lang, v)}
         />
         <MultiLangInputs
           label="Text"
-          value={bgText}
+          value={bg.text}
           onChange={(lang, v) => setField("background", "text", lang, v)}
         />
         <MultiLangInputs
           label="Button Text"
-          value={bgButton}
+          value={bg.buttonText}
           onChange={(lang, v) => setField("background", "buttonText", lang, v)}
         />
+
         <input
           type="text"
           placeholder="Link"
           className="border p-1 rounded w-full mb-2"
-          value={bgLink}
-          onChange={e =>
+          value={bg.link || ""}
+          onChange={(e) =>
             setData((prev) => ({
               ...prev,
               background: { ...prev.background, link: e.target.value },
             }))
           }
         />
+
         <div className="flex items-center gap-2">
           <input
             type="file"
             accept="image/*"
-            onChange={(e) => handleImage("background","image",e)}
+            onChange={(e) => handleImage("background", "image", e)}
             disabled={uploading["background.image"]}
           />
-          {bgImage && (
+          {bg.image && (
             <img
               src={
-                bgImage.startsWith("/uploads")
-                  ? `${apiUrl}` + bgImage
-                  : bgImage
+                bg.image.startsWith("/uploads")
+                  ? `${apiUrl}${bg.image}`
+                  : bg.image
               }
               alt="Background"
               className="w-32 h-auto rounded border"

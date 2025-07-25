@@ -53,10 +53,10 @@ router.put("/barcafes/subbarcafes/:slug", async (req, res) => {
 });
 
 // Tüm restaurantlar (slug listesi)
-router.get('/rooms/subroom', async (req, res) => {
+router.get('/restaurants/subrestaurants', async (req, res) => {
   try {
-    const rooms = await Subrestaurant.find().lean();
-    res.json(rooms);
+    const restaurants = await Subrestaurant.find().lean();
+    res.json(restaurants);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -74,6 +74,7 @@ router.get("/restaurants/subrestaurants/:slug", async (req, res) => {
 router.put("/restaurants/subrestaurants/:slug", async (req, res) => {
   const { slug } = req.params;
   try {
+    // req.body içindeki alanları $set ile ekle/güncelle, diğerlerini koru
     const updated = await Subrestaurant.findOneAndUpdate(
       { slug },
       { $set: req.body },
