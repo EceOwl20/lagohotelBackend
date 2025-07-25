@@ -79,6 +79,12 @@ const page = () => {
     if (data.error) return <div className="text-red-500">{data.error}</div>;
     if (!data.mainBanner) return <div>restaurant verisi eksik!</div>;
 
+  const carouselImages = (data.carousel || []).map(path =>
+  path.startsWith("/")
+    ? `${apiUrl}${path}`
+    : path
+);
+
   return (
     <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
       <RestaurantMainBanner img={apiUrl + data.mainBanner.image} span={data.mainBanner.subtitle?.[locale]} header={data.mainBanner.title?.[locale]} text={data.mainBanner.text?.[locale]}/>

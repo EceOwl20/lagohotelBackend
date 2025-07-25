@@ -24,7 +24,7 @@ function MultiLangInputs({ label, value = {}, onChange }) {
 async function uploadImage(file) {
   const formData = new FormData();
   formData.append("image", file);
-  const res = await fetch("http://localhost:5001/api/upload", { method: "POST", body: formData });
+  const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
   const result = await res.json();
   if (res.ok && result.imageUrl) return result.imageUrl;
   throw new Error(result.error || "Upload failed");

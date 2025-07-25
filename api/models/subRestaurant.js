@@ -24,6 +24,24 @@ const SubrestaurantSchema = new mongoose.Schema({
     image2: { type: String, default: "" }
   },
   carousel: [{ type: String, default: "" }],
+
+
+    otheroptions: {
+    title: MultiLangString,
+    subtitle: MultiLangString,
+    text: MultiLangString,
+  restaurants: [
+    {
+      title: MultiLangString,
+      description: MultiLangString,
+      text: MultiLangString,
+      buttonText: MultiLangString,
+      link: String,
+      image: String,
+    }
+  ],
+  },
+
   cuisines: [
     {
       image: { type: String, default: "" },
@@ -34,6 +52,8 @@ const SubrestaurantSchema = new mongoose.Schema({
       buttonText: MultiLangString,
     }
   ],
+
+  
   background: {
     subtitle: MultiLangString,
     title: MultiLangString,

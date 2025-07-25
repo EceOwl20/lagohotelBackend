@@ -48,7 +48,7 @@ const CuisinesCarousel = ({span,header,text, cuisines}) => {
             className="flex-[0_0_80%] md:flex-[0_0_50%] lg:flex-[0_0_32%] xl:flex-[0_0_31.5%] min-w-0 mr-[1.8%]" 
           >
             <div className="flex flex-col w-full items-start text-start justify-center gap-[15px] md:gap-[25px] font-jost text-black ">
-              <Image src={room.img} alt={room.title} width={room.img.width} height={room.img.height}  />
+              <Image src={room.img} alt={room.title} width={room.img.width || 348} height={room.img.height || 232}  />
               <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
                 {room.description}
               </span>
