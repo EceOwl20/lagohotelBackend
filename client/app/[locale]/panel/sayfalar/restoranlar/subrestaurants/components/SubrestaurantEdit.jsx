@@ -374,25 +374,40 @@ export default function SubrestaurantEdit({ data, setData }) {
               />
             </div>
 
-            <div className="flex items-center gap-3">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => handleOptionImage(idx, e)}
-                disabled={uploading[`opt-img-${idx}`]}
-              />
-              {item.image && (
-                <img
-                  src={
-                    item.image.startsWith("/uploads")
-                      ? `${apiUrl}${item.image}`
-                      : item.image
-                  }
-                  alt={`Option ${idx}`}
-                  className="w-24 h-auto rounded border"
-                />
-              )}
-            </div>
+          <div className="flex items-center gap-4">
+  {/* 1) Upload new file */}
+  <div>
+    <label className="block font-medium mb-1">Upload New Image</label>
+    <input
+      type="file"
+      accept="image/*"
+      onChange={(e) => handleOptionImage(idx, e)}
+      disabled={uploading[`opt-img-${idx}`]}
+    />
+  </div>
+
+  {/* 2) Select from already‐uploaded */}
+  <div>
+    <label className="block font-medium mb-1">Select Existing Image</label>
+    <select
+      className="border p-2 rounded"
+      value={item.image || ""}
+      onChange={(e) =>
+        handleOptionChange(idx, "image", null, e.target.value)
+      }
+    >
+      <option value="">— Seçin —</option>
+      {existingImages.map((fileName) => {
+        const url = `/uploads/${fileName}`;
+        return (
+          <option key={fileName} value={url}>
+            {fileName}
+          </option>
+        );
+      })}
+    </select>
+  </div>
+</div>
           </div>
         ))}
 
@@ -425,38 +440,70 @@ export default function SubrestaurantEdit({ data, setData }) {
           onChange={(lang, v) => setField("background", "buttonText", lang, v)}
         />
 
-        <input
-          type="text"
-          placeholder="Link"
-          className="border p-1 rounded w-full mb-2"
-          value={bg.link || ""}
-          onChange={(e) =>
-            setData((prev) => ({
-              ...prev,
-              background: { ...prev.background, link: e.target.value },
-            }))
-          }
-        />
+ <div className="mb-4">
+    <label className="block font-semibold mb-1">Link</label>
+    <input
+      type="text"
+      className="border p-2 rounded w-full"
+      placeholder="Yetkilendirme bağlantısı"
+      value={bg.link || ""}
+      onChange={(e) =>
+        setData((prev) => ({
+          ...prev,
+          background: { ...prev.background, link: e.target.value },
+        }))
+      }
+    />
+  </div>
 
-        <div className="flex items-center gap-2">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => handleImage("background", "image", e)}
-            disabled={uploading["background.image"]}
-          />
-          {bg.image && (
-            <img
-              src={
-                bg.image.startsWith("/uploads")
-                  ? `${apiUrl}${bg.image}`
-                  : bg.image
-              }
-              alt="Background"
-              className="w-32 h-auto rounded border"
-            />
-          )}
-        </div>
+  <div className="flex items-center gap-4">
+    {/* 1) File upload */}
+    <div>
+      <label className="block font-medium mb-1">Upload New Image</label>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={(e) => handleImage("background", "image", e)}
+        disabled={uploading["background.image"]}
+      />
+    </div>
+
+    {/* 2) Select existing */}
+    <div>
+      <label className="block font-medium mb-1">Select Existing Image</label>
+      <select
+        className="border p-2 rounded"
+        value={bg.image || ""}
+        onChange={(e) =>
+          setData((prev) => ({
+            ...prev,
+            background: { ...prev.background, image: e.target.value },
+          }))
+        }
+      >
+        <option value="">— Seçin —</option>
+        {existingImages.map((fileName) => {
+          const url = `/uploads/${fileName}`;
+          return (
+            <option key={fileName} value={url}>
+              {fileName}
+            </option>
+          );
+        })}
+      </select>
+    </div>
+  </div>
+
+  {/* Preview */}
+  {bg.image && (
+    <div className="mt-4">
+      <img
+        src={bg.image.startsWith("/uploads") ? `${apiUrl}${bg.image}` : bg.image}
+        alt="Background preview"
+        className="w-32 h-auto rounded border"
+      />
+    </div>
+  )}
       </section>
     </div>
   );

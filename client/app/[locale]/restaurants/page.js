@@ -89,30 +89,30 @@ const page = () => {
     {
       id: 1,
       img: wasabi,
-      title: t5("cuisines1title"),
-      description: t5("cuisines1subtitle"),
-      text:t5("cuisines1text"),
-      link:"restaurants/wasabi",
-      buttonText:t5("buttonText")
+        title: pageData.cuisines?.[1]?.cuisine?.[0]?.title?.[locale],
+      description: pageData.cuisines?.[1]?.cuisine?.[0]?.subtitle?.[locale],
+      text:pageData.cuisines?.[1]?.cuisine?.[0]?.description?.[locale],
+      link:pageData.cuisines?.[1]?.cuisine?.[0]?.link,
+      buttonText:pageData.cuisines?.[1]?.buttonText?.[locale],
     },
     {
       id: 2,
       img: fuego,
-      title: t5("cuisines2title"),
-      description: t5("cuisines2subtitle"),
-      text:t5("cuisines2text"),
-       link:"/restaurants/fuego",
-       buttonText:t5("buttonText")
+      title: pageData.cuisines?.[1]?.cuisine?.[1]?.title?.[locale],
+      description: pageData.cuisines?.[1]?.cuisine?.[1]?.subtitle?.[locale],
+      text:pageData.cuisines?.[1]?.cuisine?.[1]?.description?.[locale],
+      link:pageData.cuisines?.[1]?.cuisine?.[1]?.link,
+      buttonText:pageData.cuisines?.[1]?.buttonText?.[locale],
        
     },
     {
       id: 3,
       img: tapaz,
-      title: t5("cuisines3title"),
-      description: t5("cuisines3subtitle"),
-      text:t5("cuisines3text"),
-       link:"/restaurants/tapazrestaurant",
-       buttonText:t5("buttonText")
+     title: pageData.cuisines?.[1]?.cuisine?.[2]?.title?.[locale],
+      description: pageData.cuisines?.[1]?.cuisine?.[2]?.subtitle?.[locale],
+      text:pageData.cuisines?.[1]?.cuisine?.[2]?.description?.[locale],
+      link:pageData.cuisines?.[1]?.cuisine?.[2]?.link,
+      buttonText:pageData.cuisines?.[1]?.buttonText?.[locale],
     }
   ];
 
@@ -165,7 +165,7 @@ const page = () => {
       <ClinaryReverseInfo img1={rightImage2} img2={leftImage2} span={pageData.clinaryReverseInfo?.subtitle?.[locale]} header={pageData.clinaryReverseInfo?.title?.[locale]} text1={pageData.clinaryReverseInfo?.text1?.[locale]} text2={pageData.clinaryReverseInfo?.text2?.[locale]}/>
      <div className='flex flex-col relative'>
      <Image src={bistro} width={bistro.width} height={bistro.header} className='hidden lg:flex absolute right-0 w-[172px] h-[203px] sm:w-[252px] sm:h-[304px] md:w-[343px] md:h-[407px] top-0 md:-top-[12%]  xl:right-[190px] lg:-top-[30%]' alt='bistro'/>
-     <CuisinesCarousel span={pageData.cuisines?.[0]?.description?.[locale]} header={pageData.cuisines?.[0]?.title?.[locale]} text={pageData.cuisines?.[0]?.text?.[locale]} cuisines={cuisines}/>
+     <CuisinesCarousel span={pageData.cuisines?.[0]?.description?.[locale]} header={pageData.cuisines?.[0]?.title?.[locale]} text={pageData.cuisines?.[0]?.text?.[locale]} cuisines={cuisines2}/>
      </div>
       <DiscoverBackground span={pageData.discoverBackground?.subtitle?.[locale]} header={pageData.discoverBackground?.title?.[locale]} text={pageData.discoverBackground?.text?.[locale]} link={pageData.discoverBackground?.link} img={discoverBanner} buttonText={pageData.discoverBackground?.buttonText?.[locale]}/>
       <ContactSection2/>

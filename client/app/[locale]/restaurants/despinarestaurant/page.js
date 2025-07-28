@@ -21,13 +21,11 @@ import anatolia from "../images/anatolia.webp"
 import RoomTour from '@/app/[locale]/rooms/familyswimup/components/RoomTour'
 import DiscoverBackground from '../components/DiscoverBackground'
 import ContactSection2 from '@/app/[locale]/GeneralComponents/Contact/ContactSection2'
-import backgroundImg from "../images/Background.webp"
 import BannerDark from '@/app/[locale]/GeneralComponents/BannerDark'
 import KidsMomentCarousel from '../../kidsclub/components/KidsMomentCarousel'
 import { useLocale, useTranslations } from "next-intl";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-const images=[img1,img2,img3,img4,img5,img6,img7,img8,img9,img10]
 
 const page = () => {
   const t = useTranslations('DespinaRestaurants');
@@ -120,10 +118,28 @@ const carouselImages = (data.carousel || []).map(path =>
       : data.mainBanner.image
     : "";
 
+        const backgroundImg = data.background?.image
+    ? data.background.image.startsWith("/")
+      ? `${apiUrl}${data.background.image}`
+      : data.background.image
+    : "";
+
+    const img11 = data.infoSection?.image1
+    ? data.infoSection.image1.startsWith("/")
+      ? `${apiUrl}${data.infoSection.image1}`
+      : data.infoSection.image1
+    : "";
+
+        const img22 = data.infoSection?.image2
+    ? data.infoSection.image2.startsWith("/")
+      ? `${apiUrl}${data.infoSection.image2}`
+      : data.infoSection.image2
+    : "";
+
   return (
-    <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
+    <div className='flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb] overflow-hidden'>
      <BannerDark img={bannerImg} span={data.mainBanner.subtitle?.[locale]} header={data.mainBanner.title?.[locale]} text={data.mainBanner.text?.[locale]}/>
-      <ClinaryReverseInfo img1={img2} img2={img1} span={data.infoSection?.subtitle?.[locale]} header={data.infoSection?.title?.[locale]} text1={data.infoSection?.text1?.[locale]} text2={data.infoSection?.text2?.[locale]}/>
+      <ClinaryReverseInfo img1={img11} img2={img22} span={data.infoSection?.subtitle?.[locale]} header={data.infoSection?.title?.[locale]} text1={data.infoSection?.text1?.[locale]} text2={data.infoSection?.text2?.[locale]}/>
       <KidsMomentCarousel images={carouselImages} header="" showheader={false}/>
       <CuisinesCarousel span={data.otheroptions?.restaurants?.[0]?.description?.[locale]} header={data.otheroptions?.restaurants?.[0]?.title?.[locale]} text={data.otheroptions?.restaurants?.[0]?.text?.[locale]} cuisines={otherOptions}/>
       <DiscoverBackground  span={data.background?.subtitle?.[locale]} header={data.background?.title?.[locale]} text={data.background?.text?.[locale]} link="/barcafes" img={backgroundImg}/>

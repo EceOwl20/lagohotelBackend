@@ -39,9 +39,9 @@ export default function FamilySwimupRoomPage() {
       <div className="flex flex-col">
         <SubRoomBanner
           img={apiUrl + data.banner.image}
-          span={data.banner.subtitle?.[locale] || ""}
-          header={data.banner.title?.[locale] || ""}
-          texts={(data.banner.texts || []).map(t => t?.[locale] || "")}
+          span={data.banner.subtitle?.[locale] }
+          header={data.banner.title?.[locale] }
+          texts={(data.banner.texts || []).map(t => t?.[locale] )}
           baby={data.banner.baby}
         />
         <SubroomCarousel
@@ -49,29 +49,29 @@ export default function FamilySwimupRoomPage() {
         />
       </div>
       <RoomFeatures
-        span={data.features.subtitle?.[locale] || ""}
-        header={data.features.title?.[locale] || ""}
-        text={data.features.text?.[locale] || ""}
-        header2={data.features.header2?.[locale] || ""}
-        header3={data.features.header3?.[locale] || ""}
-        text2={data.features.text2?.[locale] || ""}
-        iconsTexts={(data.features.iconsTexts || []).map(icon => icon?.[locale] || "")}
+        span={data.features.span?.[locale] }
+        header={data.features.header?.[locale] }
+        text={data.features.text?.[locale] }
+        header2={data.features.header2?.[locale] }
+        header3={data.features.header3?.[locale] }
+        text2={data.features.text2?.[locale] }
+      iconsTexts={data.features.iconsTexts.map(({ text }) => text[locale] || "")}
         roomName="FamilySwimupRoom"
         pool={data.features.pool}
       />
       <BackgroundSection
-        span={data.background.subtitle?.[locale] || ""}
-        header={data.background.title?.[locale] || ""}
-        texts={(data.background.texts || []).map(t => t?.[locale] || "")}
+        span={data.background.subtitle?.[locale] }
+        header={data.background.title?.[locale] }
+        texts={(data.background.texts || []).map(t => t?.[locale] )}
         link={data.background.link}
         img={apiUrl + data.background.image}
       />
       {(data.tours || []).map((tour, i) => (
         <RoomTour
           key={i}
-          span={tour.subtitle?.[locale] || ""}
-          header={tour.title?.[locale] || ""}
-          text={tour.text?.[locale] || ""}
+          span={tour.subtitle?.[locale] }
+          header={tour.title?.[locale] }
+          text={tour.text?.[locale] }
           link={tour.link}
         />
       ))}

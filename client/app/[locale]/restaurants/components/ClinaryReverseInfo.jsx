@@ -44,10 +44,10 @@ const ClinaryReverseInfo = ({img1,img2,span,header,text1,text2}) => {
         </div>
 
         <div  className="flex w-[65%] sm:w-[50%] min-w-[310px] md:w-[48.8%] items-end justify-end md:items-end md:justify-end relative h-full mt-[67px]">
-            <Image style={{ objectFit: "cover" }}  src={img2} alt="art" width={img2.width || 300} height={img2.height || 450} className={`absolute bottom-[60px] right-[125px] md:bottom-[70px] md:right-[135px] lg:bottom-[105px] lg:right-[215px] z-10 w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
+            <Image style={{ objectFit: "cover" }}  src={img2} alt="art" width={img2.width || 3000} height={img2.height || 1600} className={`absolute bottom-[60px] right-[125px] md:bottom-[70px] md:right-[135px] lg:bottom-[105px] lg:right-[215px] z-10 w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
               animate ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0"
             }`}/>
-            <Image style={{ objectFit: "cover" }} src={img1} alt="art" width={img1.width || 300} height={img1.height || 450} className={`z-50 w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
+            <Image style={{ objectFit: "cover" }} src={img1} alt="art" width={img1.width || 3000} height={img1.height || 1600} className={`z-50 w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
               animate ? "-translate-y-0 opacity-100" : "translate-y-5 opacity-0"
             }`}/>
         </div>
