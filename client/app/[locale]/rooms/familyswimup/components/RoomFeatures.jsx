@@ -28,7 +28,7 @@ const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, 
   const t = useTranslations(`${roomName}.RoomInfo`);
   const t2 = useTranslations(`SuperiorRoom.ReservationWidget`);
   const dropdownRef = useRef(null);
-
+const locale = useLocale(); // "tr", "en", "de", "ru"
     const slug = roomName;
   
     const [pageData, setPageData] = useState(null);
@@ -104,18 +104,18 @@ const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, 
       }
 
   const items = [
-    { text:pageData.features.iconTexts?.[0].text?.[locale] || t("madde1"), icon: PoolSvg2 },
-    { text: pageData.features.iconTexts?.[1].text?.[locale] || t("madde2"), icon: AreaSvg },
-    { text:pageData.features.iconTexts?.[2].text?.[locale] || t("madde3"), icon: DresserSvg },
-    { text:pageData.features.iconTexts?.[3].text?.[locale] || t("madde4"), icon: SmokingSvg },
-    { text:pageData.features.iconTexts?.[4].text?.[locale] || t("madde5"), icon: FridgeSvg },
-    { text:pageData.features.iconTexts?.[5].text?.[locale] || t("madde6"), icon: SafeboxSvg },
-    { text:pageData.features.iconTexts?.[6].text?.[locale] || t("madde7"), icon: HairdryerSvg },
-    { text:pageData.features.iconTexts?.[7].text?.[locale] || t("madde8"), icon: HandsoapSvg },
-    { text:pageData.features.iconTexts?.[8].text?.[locale] || t("madde9"), icon: TeaCoffeeSvg },
-    { text:pageData.features.iconTexts?.[9].text?.[locale] || t("madde10"), icon: LedTvSvg },
-    { text:pageData.features.iconTexts?.[10].text?.[locale] || t("madde11"), icon: BalconySvg },
-    { text:pageData.features.iconTexts?.[11].text?.[locale] || t("madde12"), icon: ShowerSvg },
+    { text:pageData.features.items?.[0]?.text?.[locale] , icon: PoolSvg2 },
+    { text: pageData.features.items?.[1]?.text?.[locale] , icon: AreaSvg },
+    { text:pageData.features.items?.[2]?.text?.[locale] , icon: DresserSvg },
+    { text:pageData.features.items?.[3]?.text?.[locale] , icon: SmokingSvg },
+    { text:pageData.features.items?.[4]?.text?.[locale] , icon: FridgeSvg },
+    { text:pageData.features.items?.[5]?.text?.[locale], icon: SafeboxSvg },
+    { text:pageData.features.items?.[6]?.text?.[locale] , icon: HairdryerSvg },
+    { text:pageData.features.items?.[7]?.text?.[locale] , icon: HandsoapSvg },
+    { text:pageData.features.items?.[8]?.text?.[locale] , icon: TeaCoffeeSvg },
+    { text:pageData.features.items?.[9]?.text?.[locale] , icon: LedTvSvg },
+    { text:pageData.features.items?.[10]?.text?.[locale] , icon: BalconySvg },
+    { text:pageData.features.items?.[11]?.text?.[locale] , icon: ShowerSvg },
   ];
    const filteredItems = pool ? items : items.slice(1);
 
