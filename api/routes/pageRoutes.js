@@ -17,6 +17,36 @@ const About = require("../models/aboutpage");
 const SubRoom = require('../models/subroom');
 const Subrestaurant = require("../models/subRestaurant");
 const BarCafe = require("../models/subbarcafes");
+import Special from "../models/Special.js";
+
+router.get("/special", async (req, res) => {
+  try {
+    let doc = await Special.findOne().lean();
+    // Eğer henüz yoksa boş şema dönebiliriz
+    if (!doc) {
+      doc = new Special();
+      await doc.save();
+      doc = doc.toObject();
+    }
+    res.json(doc);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// --- Tek dokümanı güncelle / oluştur ---
+router.put("/special", async (req, res) => {
+  try {
+    const updated = await Special.findOneAndUpdate(
+      {},           // filtre yok: ilk bulunanı güncelle
+      { $set: req.body },
+      { new: true, upsert: true }
+    ).lean();
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // Tüm barcafe sayfalarını getir
 router.get("/barcafes/subbarcafes", async (req, res) => {

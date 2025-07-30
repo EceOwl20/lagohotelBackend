@@ -137,10 +137,9 @@ export default function PagesPanel() {
           </Link>
           </li>
 
-
-          <li>
-              <Link href="/panel/sayfalar/superioroda" className="text-blue-600 hover:underline">
-            🏠 Superior Oda 
+              <li>
+              <Link href="/panel/sayfalar/special" className="text-blue-600 hover:underline">
+              🌠 Özel günler Special
           </Link>
           </li>
 
