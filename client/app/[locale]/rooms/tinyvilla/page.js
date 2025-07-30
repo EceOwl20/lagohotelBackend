@@ -1,4 +1,5 @@
-import React from 'react'
+"use client";
+import { useEffect, useState } from "react";
 import SubRoomBanner from '../familyswimup/components/SubRoomBanner'
 import SubroomCarousel from '../familyswimup/components/SubroomCarousel'
 import RoomFeatures from '../familyswimup/components/RoomFeatures'
@@ -25,31 +26,76 @@ import img14 from "./images/SRF_6783.jpg";
 import img15 from "./images/SRF_6830.jpg";
 import img16 from "./images/SRF_7175.jpg";
 import img17 from "./images/SRF_7207.jpg";
-import {useTranslations} from 'next-intl';
+import {useLocale, useTranslations} from 'next-intl';
+
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const page = () => {
-  const t = useTranslations('TinyVilla');
-  const t2 = useTranslations('TinyVilla.RoomInfo');
-  const t3 = useTranslations('TinyVilla.RoomTour');
-  const t4 = useTranslations('TinyVilla.BackgroundSection');
+ const locale = useLocale(); // "tr", "en", "de", "ru"
+  const [data, setData] = useState(null);
 
-  const backgroundTexts=[t4("text1"),t4("text2"),t4("text3")]
-  const subroomBannerText=[t("text1"),t("text2"),t("text3")]
-  const iconTexts=[t2("list1"),t2("list2"),t2("list3")];
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(
+          `${apiUrl}/api/pages/rooms/subroom/FamilySwimupRoom?lang=${locale}`
+        );
+        const json = await res.json();
+        setData(json);
+      } catch (e) {
+        setData({ error: "Oda verisi alınamadı!" });
+      }
+    };
+    fetchData();
+  }, [locale]);
 
-  const carouselImages = [img1,img2,img3,img4,img5,img6,img7,img8,img9,img10,img11,img12,img13,img14,img15,img16,img17];
+  if (!data) return <p className="p-10">Yükleniyor...</p>;
+  if (data.error) return <div className="text-red-500">{data.error}</div>;
+  if (!data.banner) return <div>Oda verisi eksik!</div>;
 
   return (
     <div className=' overflow-hidden flex flex-col items-center justify-center gap-[60px] md:gap-[80px] lg:gap-[100px] bg-[#fbfbfb]'>
      <div className='flex flex-col'>
-     <SubRoomBanner img={img1} span={t("subtitle")} header={t("title")} texts={subroomBannerText} baby={true}/>
-     <SubroomCarousel images={carouselImages}/>
-     </div>
-      <RoomFeatures span={t2("subtitle")} header={t2("title")} text={t2("text")} header2={t2("title2")} header3={t2("title3")}  text2={t2("text2")} iconsTexts={iconTexts} roomName="TinyVilla" pool={true}/>
-       <BackgroundSection span={t4("subtitle")} header={t4("title")} texts={backgroundTexts} link="/" img={backgroundImg}/>
-       <RoomTour span={t3("subtitle")} header={t3("title")} text={t3("text")} link="https://kuula.co/share/collection/7bQNW?logo=1&info=0&fs=1&vr=1&autorotate=0.22&autop=10&autopalt=1&thumbs=4&margin=2&alpha=0.72"/>
-      <OtherOptions/>
-      <ContactSection2/>
+     <SubRoomBanner
+          img={apiUrl + data.banner.image}
+          span={data.banner.subtitle?.[locale] }
+          header={data.banner.title?.[locale] }
+          texts={(data.banner.texts || []).map(t => t?.[locale] )}
+          baby={data.banner.baby}
+        />
+        <SubroomCarousel
+          images={(data.carousel || []).map(url => apiUrl + url)}
+        />
+      </div>
+      <RoomFeatures
+        span={data.features.span?.[locale] }
+        header={data.features.header?.[locale] }
+        text={data.features.text?.[locale] }
+        header2={data.features.header2?.[locale] }
+        header3={data.features.header3?.[locale] }
+        text2={data.features.text2?.[locale] }
+      iconsTexts={data.features.iconsTexts.map(({ text }) => text[locale] || "")}
+        roomName="TinyVilla"
+        pool={data.features.pool}
+      />
+      <BackgroundSection
+        span={data.background.subtitle?.[locale] }
+        header={data.background.title?.[locale] }
+        texts={(data.background.texts || []).map(t => t?.[locale] )}
+        link={data.background.link}
+        img={apiUrl + data.background.image}
+      />
+      {(data.tours || []).map((tour, i) => (
+        <RoomTour
+          key={i}
+          span={tour.subtitle?.[locale] }
+          header={tour.title?.[locale] }
+          text={tour.text?.[locale] }
+          link={tour.link}
+        />
+      ))}
+      <OtherOptions />
+      <ContactSection2 />
     </div>
   )
 }

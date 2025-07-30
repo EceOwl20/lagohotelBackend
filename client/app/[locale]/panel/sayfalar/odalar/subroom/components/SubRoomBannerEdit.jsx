@@ -17,7 +17,7 @@ export default function SubRoomBannerEdit({ data, setData, langs }) {
     : [{ ...emptyLangs }];
 
   const handleChange = (field, langOrValue, value, idx) => {
-    if (field === "title" || field === "span" || field === "subtitle") {
+    if (field === "title" || field === "subtitle") {
       setData({
         ...data,
         banner: {
@@ -117,14 +117,14 @@ export default function SubRoomBannerEdit({ data, setData, langs }) {
         </div>
       ))}
 
-      {/* Çoklu dil: span/subtitle */}
+      {/* Çoklu dil: subtitle */}
       {langs.map(lang => (
-        <div key={`span-${lang}`} className="mb-2">
+        <div key={`subtitle-${lang}`} className="mb-2">
           <input
             className="border p-2 w-full"
-            placeholder={`Span/SubTitle (${lang})`}
-            value={banner.span?.[lang] || ""}
-            onChange={e => handleChange("span", lang, e.target.value)}
+            placeholder={`SubTitle (${lang})`}
+            value={banner.subtitle?.[lang] || ""}
+            onChange={e => handleChange("subtitle", lang, e.target.value)}
           />
         </div>
       ))}

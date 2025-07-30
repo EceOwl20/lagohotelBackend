@@ -8,7 +8,7 @@ const RoomContentSchema = new mongoose.Schema({
   title: { tr: String, en: String, de: String, ru: String },
   texts: [{ tr: String, en: String, de: String, ru: String }],
   image: String, // Ana banner görseli (dosya yolu)
-    baby:     { type: Boolean, default: false }  // 🌟 Buraya eklendi
+    baby:     { type: Boolean, default: false } 
 });
 
 const FeatureItemSchema = new mongoose.Schema({
