@@ -17,7 +17,7 @@ const About = require("../models/aboutpage");
 const SubRoom = require('../models/subroom');
 const Subrestaurant = require("../models/subRestaurant");
 const BarCafe = require("../models/subbarcafes");
-import Special from "../models/Special.js";
+const Special = require("../models/specialpage");
 
 router.get("/special", async (req, res) => {
   try {

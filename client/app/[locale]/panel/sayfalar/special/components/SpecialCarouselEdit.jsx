@@ -1,59 +1,149 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export default function SpecialCarouselEdit() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [carousel, setCarousel] = useState(null);
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  useEffect(() => {
-    fetch(`${apiUrl}/api/pages/special`)
-      .then(r=>r.json()).then(json=>setCarousel(json.carousel))
-      .catch(console.error);
-  }, []);
+export default function SpecialCarouselEdit({ data, setData, langs }) {
+  const [uploading, setUploading] = useState({});
+  const carousel = data.carousel || { title: {}, images: [] };
 
-  const upd = () => {
-    setCarousel(prev=> {
-      const a = prev ? [...prev] : [];
-      a[i] = v;
-      return a;
-    });
+  // Title alanı değiştir
+  const handleTitleChange = (lang, value) => {
+    setData((prev) => ({
+      ...prev,
+      carousel: {
+        ...carousel,
+        title: {
+          ...carousel.title,
+          [lang]: value,
+        },
+      },
+    }));
   };
 
-  const save = async() => {
-    await fetch(`${apiUrl}/api/pages/special`, {
-      method:"PUT", headers:{"Content-Type":"application/json"},
-       headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
-      body: JSON.stringify({ carousel })
-    });
-    alert("Carousel kaydedildi");
+  // Images dizisi değiştir
+  const handleImageChange = (index, value) => {
+    const newImages = [...(carousel.images || [])];
+    newImages[index] = value;
+    setData((prev) => ({
+      ...prev,
+      carousel: {
+        ...carousel,
+        images: newImages,
+      },
+    }));
   };
 
-  if (!carousel) return <p>Yükleniyor…</p>;
+  const addImage = () => {
+    setData((prev) => ({
+      ...prev,
+      carousel: {
+        ...carousel,
+        images: [...(carousel.images || []), ""],
+      },
+    }));
+  };
+
+  const removeImage = (index) => {
+    const newImages = [...(carousel.images || [])];
+    newImages.splice(index, 1);
+    setData((prev) => ({
+      ...prev,
+      carousel: {
+        ...carousel,
+        images: newImages,
+      },
+    }));
+  };
+
+  const handleImageUpload = async (e, idx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading((u) => ({ ...u, [idx]: true }));
+
+    const form = new FormData();
+    form.append("image", file);
+
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Yükleme başarısız");
+
+      const path = json.path || json.imageUrl;
+      handleImageChange(idx, path);
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading((u) => ({ ...u, [idx]: false }));
+    }
+  };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded space-y-4">
-      <h2 className="text-2xl font-bold">Carousel Düzenle</h2>
-      {carousel.map((u,i)=>(
-        <div key={i} className="flex gap-2">
+    <div className="border p-4 rounded-lg">
+      <h3 className="font-bold text-2xl mb-4">Special Carousel</h3>
+
+      {/* Carousel title */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        {langs.map((lang) => (
+          <div key={lang}>
+            <h4 className="font-semibold mb-1">Title ({lang})</h4>
+            <input
+              type="text"
+              className="border rounded w-full p-2 mb-2"
+              value={carousel.title?.[lang] || ""}
+              onChange={(e) => handleTitleChange(lang, e.target.value)}
+            />
+          </div>
+        ))}
+      </div>
+
+      <hr className="my-6" />
+
+      {/* Images */}
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="font-semibold text-xl">Images</h4>
+        <button
+          className="px-4 py-2 rounded bg-green-600 text-white"
+          onClick={addImage}
+        >
+          + Resim Ekle
+        </button>
+      </div>
+
+      {(carousel.images || []).map((image, index) => (
+        <div key={index} className="border p-4 mb-4 rounded">
+          <div className="flex justify-between items-center mb-4">
+            <span>Image {index + 1}</span>
+            <button
+              className="px-3 py-1 bg-red-500 text-white rounded"
+              onClick={() => removeImage(index)}
+            >
+              Sil
+            </button>
+          </div>
           <input
-            className="border p-1 flex-1"
-            value={u||""}
-            onChange={e=>upd(i,e.target.value)}
+            type="text"
+            className="border rounded w-full p-2 mb-2"
+            placeholder="Image URL"
+            value={image || ""}
+            onChange={(e) => handleImageChange(index, e.target.value)}
           />
-          <button
-            onClick={()=>setCarousel(c=>c?.filter((_,j)=>j!==i)||[])}
-            className="text-red-600"
-          >Sil</button>
+          <input
+            type="file"
+            accept="image/*"
+            className="mt-2"
+            onChange={(e) => handleImageUpload(e, index)}
+          />
+          {uploading[index] && <p className="text-blue-600 text-sm">Yükleniyor...</p>}
+          {image && (
+            <img
+              src={image}
+              alt={`Carousel ${index}`}
+              className="mt-2 max-h-32 border rounded"
+            />
+          )}
         </div>
       ))}
-      <button
-        onClick={()=>setCarousel(c => c ? [...c,""] : [""])}
-        className="px-3 py-1 bg-green-600 text-white rounded"
-      >+ Ekle</button>
-      <button
-        onClick={save}
-        className="mt-4 px-4 py-2 bg-blue-600 text-white rounded"
-      >Kaydet</button>
     </div>
   );
 }

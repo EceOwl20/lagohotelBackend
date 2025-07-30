@@ -1,56 +1,206 @@
 "use client";
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 
-export default function SpecialGridEdit() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [grid, setGrid] = useState(null);
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  useEffect(() => {
-    fetch(`${apiUrl}/api/pages/special`)
-      .then(r=>r.json())
-      .then(json=>setGrid(json.grid || []))
-      .catch(console.error);
-  }, []);
+export default function SpecialGridEdit({ data, setData, langs }) {
+  const [uploading, setUploading] = useState({});
+  const grid = data.gridItems || { subtitle: {}, title: {}, text: {}, items: [] };
 
-  const update = () => {
-    setGrid(prev=>{
-      const a = [...prev];
-      a[idx][field] = v;
-      return a;
-    });
+  // Üst alan değişikliği
+  const handleChange = (field, lang, value) => {
+    setData((prev) => ({
+      ...prev,
+      gridItems: {
+        ...grid,
+        [field]: {
+          ...grid[field],
+          [lang]: value,
+        },
+      },
+    }));
   };
 
-  const save = async() => {
-    await fetch(`${apiUrl}/api/pages/special`, {
-      method:"PUT", headers:{"Content-Type":"application/json"},
-      body: JSON.stringify({ grid })
-    });
-    alert("Grid kaydedildi");
+  // Item alan değişikliği
+  const handleItemChange = (index, field, lang, value) => {
+    const newItems = [...(grid.items || [])];
+    if (["subtitle", "title", "text"].includes(field)) {
+      newItems[index] = {
+        ...newItems[index],
+        [field]: {
+          ...(newItems[index][field] || {}),
+          [lang]: value,
+        },
+      };
+    } else if (field === "image") {
+      newItems[index] = {
+        ...newItems[index],
+        image: value,
+      };
+    }
+
+    setData((prev) => ({
+      ...prev,
+      gridItems: {
+        ...grid,
+        items: newItems,
+      },
+    }));
   };
 
-  if (!grid) return <p>Yükleniyor…</p>;
+  const addItem = () => {
+    const emptyLang = langs.reduce((acc, l) => ({ ...acc, [l]: "" }), {});
+    const newItem = {
+      subtitle: { ...emptyLang },
+      title: { ...emptyLang },
+      text: { ...emptyLang },
+      image: "",
+    };
+    setData((prev) => ({
+      ...prev,
+      gridItems: {
+        ...grid,
+        items: [...(grid.items || []), newItem],
+      },
+    }));
+  };
+
+  const removeItem = (index) => {
+    const newItems = [...(grid.items || [])];
+    newItems.splice(index, 1);
+    setData((prev) => ({
+      ...prev,
+      gridItems: {
+        ...grid,
+        items: newItems,
+      },
+    }));
+  };
+
+  // --- handleImageUpload (senin formatında) ---
+  const handleImageUpload = async (e, idx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading((u) => ({ ...u, [idx]: true }));
+
+    const form = new FormData();
+    form.append("image", file);
+
+    try {
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: form,
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Yükleme başarısız");
+
+      const path = json.path || json.imageUrl;
+      handleItemChange(idx, "image", null, path);
+    } catch (err) {
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading((u) => ({ ...u, [idx]: false }));
+    }
+  };
 
   return (
-    <div className="max-w-xl mx-auto p-6 bg-white rounded space-y-4">
-      <h2 className="text-2xl font-bold">Grid Düzenle</h2>
-      {grid.map((item,i) => (
-        <div key={i} className="border p-4 rounded space-y-2">
-          <h3 className="font-semibold"># {i+1}</h3>
-          {["span","title","description","image"].map(f => (
-            <div key={f}>
-              <label className="font-medium">{f}</label>
+    <div className="border p-4 rounded-lg">
+      <h3 className="font-bold text-2xl mb-4">Special Grid Section</h3>
+
+      {/* Üst alan */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        {["subtitle", "title", "text"].map((field) => (
+          <div key={field}>
+            <h4 className="font-semibold mb-2">{field}</h4>
+            {langs.map((lang) => (
               <input
-                className="border p-1 w-full"
-                value={item[f]||""}
-                onChange={e=>update()}
+                key={lang}
+                type="text"
+                className="border rounded w-full p-2 mb-2"
+                placeholder={`${field} (${lang})`}
+                value={grid[field]?.[lang] || ""}
+                onChange={(e) => handleChange(field, lang, e.target.value)}
               />
+            ))}
+          </div>
+        ))}
+      </div>
+
+      <hr className="my-6" />
+
+      {/* Items */}
+      <div className="flex justify-between items-center mb-4">
+        <h4 className="font-semibold text-xl">Grid Items</h4>
+        <button
+          className="px-4 py-2 rounded bg-green-600 text-white"
+          onClick={addItem}
+        >
+          + Item Ekle
+        </button>
+      </div>
+
+      {(grid.items || []).map((item, index) => (
+        <div key={index} className="border p-4 mb-4 rounded">
+          <div className="flex justify-between items-center mb-4">
+            <h5 className="font-semibold">Item {index + 1}</h5>
+            <button
+              className="px-3 py-1 bg-red-500 text-white rounded"
+              onClick={() => removeItem(index)}
+            >
+              Sil
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {["subtitle", "title", "text"].map((field) => (
+              <div key={field}>
+                <h6 className="font-semibold mb-1">{field}</h6>
+                {langs.map((lang) => (
+                  <input
+                    key={lang}
+                    type="text"
+                    className="border rounded w-full p-2 mb-2"
+                    placeholder={`${field} (${lang})`}
+                    value={item[field]?.[lang] || ""}
+                    onChange={(e) =>
+                      handleItemChange(index, field, lang, e.target.value)
+                    }
+                  />
+                ))}
+              </div>
+            ))}
+
+            <div>
+              <h6 className="font-semibold mb-1">Image</h6>
+              <input
+                type="text"
+                className="border rounded w-full p-2 mb-2"
+                placeholder="Image URL"
+                value={item.image || ""}
+                onChange={(e) =>
+                  handleItemChange(index, "image", null, e.target.value)
+                }
+              />
+              <input
+                type="file"
+                accept="image/*"
+                className="mt-2"
+                onChange={(e) => handleImageUpload(e, index)}
+              />
+              {uploading[index] && (
+                <p className="text-sm text-blue-600 mt-1">Yükleniyor...</p>
+              )}
+              {item.image && (
+                <img
+                  src={item.image}
+                  alt="Preview"
+                  className="mt-2 max-h-32 rounded border"
+                />
+              )}
             </div>
-          ))}
+          </div>
         </div>
       ))}
-      <button onClick={save} className="px-4 py-2 bg-blue-600 text-white rounded">
-        Kaydet
-      </button>
     </div>
   );
 }

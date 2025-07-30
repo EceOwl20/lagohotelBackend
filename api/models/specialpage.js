@@ -55,11 +55,17 @@ const SpecialSchema = new mongoose.Schema({
   infoSection: {
     subtitle: MultiLang,
     title: MultiLang,
-    texts: [MultiLang]
+    texts: [MultiLang],
+    image1:String,
+    image2:String
+    
   },
 
   // SpecialCarousel
-  carousel: [String],
+  carousel: {
+    title: MultiLang,
+    images: [String]
+  },
 
   // BackgroundSection
   background: {

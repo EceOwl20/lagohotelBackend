@@ -48,9 +48,9 @@ export default function SpecialPanelPage() {
 
       <BannerEdit data={data} setData={setData} langs={langs} />
       <SpecialTypesEdit data={data} setData={setData} langs={langs} />
-      {/* <SpecialGridEdit data={data} setData={setData} langs={langs} />
-      <SpecialInfoEdit data={data} setData={setData} langs={langs} />
-      <SpecialCarouselEdit data={data} setData={setData} langs={langs} /> */}
+      <SpecialGridEdit data={data} setData={setData} langs={langs} />
+       <SpecialInfoEdit data={data} setData={setData} langs={langs} />
+      <SpecialCarouselEdit data={data} setData={setData} langs={langs} />
 
       <button
         className="mt-6 px-6 py-3 rounded bg-blue-600 text-white font-bold max-w-[200px]"

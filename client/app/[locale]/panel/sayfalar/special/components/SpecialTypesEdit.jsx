@@ -1,28 +1,10 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
-const uploadFile = async (file) => {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  // API URL
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  const res = await fetch(`${apiUrl}/api/upload`, {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + localStorage.getItem("token"),
-    },
-    body: formData,
-  });
-
-  if (!res.ok) throw new Error("Dosya yüklenemedi");
-
-  const json = await res.json();
-  return json.url; // backend'in response'unda url döndüğünü varsayıyoruz
-};
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function SpecialTypesEdit({ data, setData, langs }) {
+  const [uploading, setUploading] = useState({});
   const types = data.types || { subtitle: {}, title: {}, text: {}, items: [] };
 
   // Genel alan değişiklikleri
@@ -95,12 +77,29 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
     }));
   };
 
-  const handleFileUpload = async (index, file) => {
+  // --- YENİ: handleImageUpload ---
+  const handleImageUpload = async (e, idx) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading((u) => ({ ...u, [idx]: true }));
+
+    const form = new FormData();
+    form.append("image", file);
+
     try {
-      const url = await uploadFile(file);
-      handleItemChange(index, "image", null, url);
+      const res = await fetch(`${apiUrl}/api/upload`, {
+        method: "POST",
+        body: form,
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error || "Yükleme başarısız");
+
+      const path = json.path || json.imageUrl; // backend'in döndürdüğü isimlerden biri
+      handleItemChange(idx, "image", null, path);
     } catch (err) {
-      alert("Dosya yüklenirken hata oluştu!");
+      alert("Yükleme hatası: " + err.message);
+    } finally {
+      setUploading((u) => ({ ...u, [idx]: false }));
     }
   };
 
@@ -120,9 +119,7 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
                 className="border rounded w-full p-2 mb-2"
                 placeholder={`${field} (${lang})`}
                 value={types[field]?.[lang] || ""}
-                onChange={(e) =>
-                  handleChange(field, lang, e.target.value)
-                }
+                onChange={(e) => handleChange(field, lang, e.target.value)}
               />
             ))}
           </div>
@@ -188,11 +185,11 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
                 type="file"
                 accept="image/*"
                 className="mt-2"
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  if (file) handleFileUpload(index, file);
-                }}
+                onChange={(e) => handleImageUpload(e, index)}
               />
+              {uploading[index] && (
+                <p className="text-sm text-blue-600 mt-1">Yükleniyor...</p>
+              )}
               {item.image && (
                 <img
                   src={item.image}
