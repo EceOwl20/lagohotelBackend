@@ -143,6 +143,12 @@ export default function PagesPanel() {
           </Link>
           </li>
 
+          <li>
+              <Link href="/panel/sayfalar/galeri" className="text-blue-600 hover:underline">
+              🏞️ Galeri
+          </Link>
+          </li>
+
 
       </ul>
     </div>

@@ -31,7 +31,8 @@ const SpecialSchema = new mongoose.Schema({
       subtitle: MultiLang,
       title: MultiLang,
       text: MultiLang,
-      image: String
+      image: String,
+      key:MultiLang
     }
   ]
   },

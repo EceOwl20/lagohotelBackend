@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from "react"
-import {useTranslations} from 'next-intl';
+import { useLocale, useTranslations} from 'next-intl';
 import { MdArrowBackIosNew, MdArrowForwardIos } from "react-icons/md";
 
 import Image from "next/image"
@@ -280,23 +280,26 @@ const GalleryScrollSection = () => {
   const [modalIndex, setModalIndex] = useState(null);
   const t = useTranslations('Gallery');
 
-  // Kategorilere göre resimler
-const imageCategories = {
-  [t("general")]: [img1,img2, img3, img7, img11, img12, img19, img25, img26, img27, img28, img29, img30, img32, img35, img39, img42, img44, img45,img46,img47,img65,img66,img72,img91, img92, img93,img94,img95,img96,img77,img78,img79,img89,img90],
-  [t("rooms")]: [rooms1, rooms2, rooms3, rooms4, rooms5,rooms6,rooms7,rooms8,rooms9,rooms10,rooms11,rooms12,rooms13,rooms14,rooms15,rooms16,rooms17,rooms18,rooms19,rooms20,rooms21,rooms22,rooms23,rooms24,rooms25],
-  [t("villa")]: [villa1, villa2, villa3, villa4, villa5,villa6,villa7,villa8,villa9,villa10,villa11,villa12,villa13],
-  [t("pool")]: [pool1, pool2, pool3, pool4, pool5,pool6,pool7,pool8,pool9,pool10,pool11,pool12,pool13,pool14,pool15,pool16,pool17,pool18,pool19,pool20,pool21,pool22,pool23,pool24,pool25,pool26,pool27,pool28,pool29],
-  [t("flavours")]: [flavours1, flavours2, flavours3, flavours4, flavours5,flavours6,flavours7,flavours8,flavours9,flavours10,flavours11,flavours12,flavours13,flavours14,flavours15,flavours16,flavours17,flavours18,flavours19,flavours20,flavours21,flavours22,flavours23,flavours24,flavours25,flavours26,flavours27,flavours28,flavours29,flavours30,flavours31,flavours32,flavours33,flavours34],
-  [t("spa")]: [spa1, spa2, spa3, spa4, spa5,spa6,spa7,spa8,spa9,spa10,spa11,spa12,spa13,spa14,spa15],
-  [t("kidsclub")]: [kidsclub1, kidsclub2, kidsclub3, kidsclub4, kidsclub5,kidsclub6,kidsclub7,kidsclub8,kidsclub9,kidsclub10,kidsclub11,kidsclub12,kidsclub13,kidsclub14,kidsclub15,kidsclub16,kidsclub17,kidsclub18,kidsclub19,kidsclub20],
-  [t("entertainment")]: [entertainment1, entertainment2, entertainment3, entertainment4, entertainment5,entertainment6,entertainment7],
-  [t("bar")]: [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10, bar11, bar12, bar13, bar14, bar15, bar16, bar17, bar18],
-  [t("lobby")]: [lobby1, lobby2, lobby3, lobby4, lobby5, lobby6, lobby7, lobby8, lobby9, lobby10]
-}
+     const locale = useLocale(); // "tr", "en", "de", "ru"
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-const categories = Object.keys(imageCategories)
-  // Seçili kategori (başlangıçta "GENERAL VIEW")
-  const [selectedCategory, setSelectedCategory] = useState(categories[0])
+    const [pageData, setPageData] = useState(null);
+            useEffect(() => {
+              fetch(`${apiUrl}/api/pages/gallery`)
+                .then(r => r.json())
+                .then(json => setPageData(json))
+                .catch(console.error);
+            }, [apiUrl]);
+        
+    // const conceptImages = (pageData?.categories?.items || []).map(item => {
+    //   if (!item.image) return "";
+    //   return item.image.startsWith("/")
+    //     ? `${apiUrl}${item.image}`
+    //     : item.image;
+    // });
+
+     
+
   const [modalImage, setModalImage] = useState(null) 
 
   const openModal = (img, index) => {
@@ -336,6 +339,49 @@ const categories = Object.keys(imageCategories)
     return () => document.removeEventListener("keydown", handleKeyDown);
   }, [modalImage, scrollPrev, scrollNext]);
 
+
+const generalKey = pageData?.categories?.[0]?.key || t("general");
+
+const [selectedCategory, setSelectedCategory] = useState("");
+
+    // Kategorilere göre resimler
+const imageCategories = {
+  [generalKey]: [img1,img2, img3, img7, img11, img12, img19, img25, img26, img27, img28, img29, img30, img32, img35, img39, img42, img44, img45,img46,img47,img65,img66,img72,img91, img92, img93,img94,img95,img96,img77,img78,img79,img89,img90],
+  [t("rooms")]: [rooms1, rooms2, rooms3, rooms4, rooms5,rooms6,rooms7,rooms8,rooms9,rooms10,rooms11,rooms12,rooms13,rooms14,rooms15,rooms16,rooms17,rooms18,rooms19,rooms20,rooms21,rooms22,rooms23,rooms24,rooms25],
+  [t("villa")]: [villa1, villa2, villa3, villa4, villa5,villa6,villa7,villa8,villa9,villa10,villa11,villa12,villa13],
+  [t("pool")]: [pool1, pool2, pool3, pool4, pool5,pool6,pool7,pool8,pool9,pool10,pool11,pool12,pool13,pool14,pool15,pool16,pool17,pool18,pool19,pool20,pool21,pool22,pool23,pool24,pool25,pool26,pool27,pool28,pool29],
+  [t("flavours")]: [flavours1, flavours2, flavours3, flavours4, flavours5,flavours6,flavours7,flavours8,flavours9,flavours10,flavours11,flavours12,flavours13,flavours14,flavours15,flavours16,flavours17,flavours18,flavours19,flavours20,flavours21,flavours22,flavours23,flavours24,flavours25,flavours26,flavours27,flavours28,flavours29,flavours30,flavours31,flavours32,flavours33,flavours34],
+  [t("spa")]: [spa1, spa2, spa3, spa4, spa5,spa6,spa7,spa8,spa9,spa10,spa11,spa12,spa13,spa14,spa15],
+  [t("kidsclub")]: [kidsclub1, kidsclub2, kidsclub3, kidsclub4, kidsclub5,kidsclub6,kidsclub7,kidsclub8,kidsclub9,kidsclub10,kidsclub11,kidsclub12,kidsclub13,kidsclub14,kidsclub15,kidsclub16,kidsclub17,kidsclub18,kidsclub19,kidsclub20],
+  [t("entertainment")]: [entertainment1, entertainment2, entertainment3, entertainment4, entertainment5,entertainment6,entertainment7],
+  [t("bar")]: [bar1, bar2, bar3, bar4, bar5, bar6, bar7, bar8, bar9, bar10, bar11, bar12, bar13, bar14, bar15, bar16, bar17, bar18],
+  [t("lobby")]: [lobby1, lobby2, lobby3, lobby4, lobby5, lobby6, lobby7, lobby8, lobby9, lobby10]
+}
+
+
+const categories = Object.keys(imageCategories);
+// 3) State bu noktadan sonra kullanılabilir
+
+useEffect(() => {
+  if (categories.length > 0 && !selectedCategory) {
+    setSelectedCategory(categories[0]);
+  }
+}, [categories, selectedCategory]);
+
+useEffect(() => {
+  if (pageData) {
+    const firstKey = pageData.categories?.[0]?.key || t("general");
+    setSelectedCategory(firstKey);
+  }
+}, [pageData, t]);
+
+// Eğer pageData yoksa sadece loading göster
+if (!pageData) {
+  return <p className="p-10">Yükleniyor…</p>;
+}
+
+
+
   return (
     <div className="flex w-screen items-center justify-center mt-[50px] max-w-[1440px]">
       <div className="flex flex-col items-center justify-between w-[87.79%] md:w-[91.4%] lg:w-[76.8%] gap-[40px]">
@@ -358,11 +404,11 @@ const categories = Object.keys(imageCategories)
         <div className="flex lg:w-[1006px] h-[500px] md:h-[1000px] lg:h-[1700px]">
           <div className="flex flex-col w-full overflow-auto hover:overflow-scroll custom-scroll h-auto">
             <div className="columns-2 lg:columns-3 gap-[16px] lg:gap-[0px] transition-all duration-[350ms] ease-in-out cursor-pointer">
-              {imageCategories[selectedCategory].map((imgSrc, index) => (
+              {(imageCategories[selectedCategory] || []).map((imgSrc, index) => (
                 <div
                   className="mb-[19.16px] transition-all duration-[350ms] ease-in-out cursor-pointer"
                   key={index}
-                  onClick={() => openModal(imgSrc,index)} // Resme tıklandığında modal açılır
+                  onClick={() => openModal(imgSrc,index)}
                 >
                   <Image src={imgSrc} alt="gallery" className="lg:w-[322px] h-full" />
                 </div>

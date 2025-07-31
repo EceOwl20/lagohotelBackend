@@ -1,6 +1,5 @@
 // /app/[locale]/panel/special/page.js
 "use client";
-
 import { useState, useEffect } from "react";
 import BannerEdit from "./components/SpecialBannerEdit";
 import SpecialTypesEdit from "./components/SpecialTypesEdit";

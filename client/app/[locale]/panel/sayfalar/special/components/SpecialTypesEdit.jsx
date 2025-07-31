@@ -24,7 +24,8 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
   // Item alan değişiklikleri
   const handleItemChange = (index, field, lang, value) => {
     const newItems = [...(types.items || [])];
-    if (["subtitle", "title", "text"].includes(field)) {
+    // çok dilli alanlar
+    if (["subtitle", "title", "text", "key"].includes(field)) {
       newItems[index] = {
         ...newItems[index],
         [field]: {
@@ -32,7 +33,9 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
           [lang]: value,
         },
       };
-    } else if (field === "image") {
+    }
+    // tekil alanlar
+    else if (field === "image") {
       newItems[index] = {
         ...newItems[index],
         image: value,
@@ -54,6 +57,7 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
       subtitle: { ...emptyLang },
       title: { ...emptyLang },
       text: { ...emptyLang },
+      key: { ...emptyLang },
       image: "",
     };
     setData((prev) => ({
@@ -77,7 +81,7 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
     }));
   };
 
-  // --- YENİ: handleImageUpload ---
+  // --- handleImageUpload ---
   const handleImageUpload = async (e, idx) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -152,7 +156,7 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {["subtitle", "title", "text"].map((field) => (
+            {["subtitle", "title", "text", "key"].map((field) => (
               <div key={field}>
                 <h6 className="font-semibold mb-1">{field}</h6>
                 {langs.map((lang) => (

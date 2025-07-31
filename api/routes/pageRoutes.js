@@ -18,6 +18,38 @@ const SubRoom = require('../models/subroom');
 const Subrestaurant = require("../models/subRestaurant");
 const BarCafe = require("../models/subbarcafes");
 const Special = require("../models/specialpage");
+const Gallery = require("../models/gallery");
+
+
+
+// GET
+router.get("/gallery", async (req, res) => {
+  try {
+    let gallery = await Gallery.findOne({ slug: "gallery" });
+    if (!gallery) {
+      gallery = await Gallery.create({ slug: "gallery" });
+    }
+    res.json(gallery);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT (update)
+router.put("/gallery", async (req, res) => {
+  try {
+    const updated = await Gallery.findOneAndUpdate(
+      { slug: "gallery" },
+      req.body,
+      { new: true, upsert: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+module.exports = router;
 
 router.get("/special", async (req, res) => {
   try {
