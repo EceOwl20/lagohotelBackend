@@ -4,6 +4,7 @@ import Reservation from './Reservation'
 
 export default function HomePage() {
   const [hero, setHero] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchHero = async () => {

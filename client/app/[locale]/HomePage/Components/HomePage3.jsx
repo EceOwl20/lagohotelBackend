@@ -12,6 +12,7 @@ export default function HomePage3({ accommodation }) {
   const t = useTranslations('HomePage.Accommodation');
   const locale = useLocale();
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Eğer veri yoksa fallback
   if (!accommodation || !accommodation.rooms) return null;

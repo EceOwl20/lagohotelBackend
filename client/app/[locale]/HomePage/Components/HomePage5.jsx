@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 
 export default function HomePage5({banner}) {
   const t = useTranslations('HomePage.Banner');
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
    const locale = useLocale();
 
   return (

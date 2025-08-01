@@ -8,6 +8,7 @@ import {useTranslations} from 'next-intl';
 import { MdArrowBackIosNew,MdArrowForwardIos } from "react-icons/md";
 import Link from "next/link";
 import { useLocale } from "next-intl";
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 // Varsayılan slaytlar
 const DEFAULT_SLIDES = [

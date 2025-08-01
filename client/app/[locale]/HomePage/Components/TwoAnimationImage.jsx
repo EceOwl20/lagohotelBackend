@@ -8,6 +8,7 @@ export default function TwoAnimationImage({ animationData }) {
   const [animate, setAnimate] = useState(false);
   const sectionRef = useRef(null);
   const locale = useLocale(); // tr, en, de, ru
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const observer = new IntersectionObserver(

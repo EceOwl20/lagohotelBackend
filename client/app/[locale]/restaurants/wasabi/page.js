@@ -45,7 +45,7 @@ const page = () => {
            const fetchData = async () => {
              try {
                const res = await fetch(
-                 `${apiUrl}/api/pages/restaurants/subrestaurants/despinarestaurant?lang=${locale}`
+                 `${apiUrl}/api/pages/restaurants/subrestaurants/wasabi?lang=${locale}`
                );
                const json = await res.json();
                setData(json);
