@@ -16,6 +16,8 @@ export default function OtherOptionsEdit() {
   });
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState({});
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   // Resim upload
   const handleImageUpload = async (idx, file) => {
@@ -23,7 +25,7 @@ export default function OtherOptionsEdit() {
     formData.append("image", file);
     setUploading(prev => ({ ...prev, [idx]: true }));
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -42,7 +44,7 @@ export default function OtherOptionsEdit() {
 
   // Panel veri çek
   useEffect(() => {
-    fetch("http://localhost:5001/api/otherOptions")
+    fetch(`${apiUrl}/api/otherOptions`)
       .then(res => res.json())
       .then(resData => {
         // rooms sayısı 3'ten fazlaysa ilk 3'ü al!
@@ -93,7 +95,7 @@ export default function OtherOptionsEdit() {
 
   // Kaydet
   const handleSave = async () => {
-    await fetch("http://localhost:5001/api/otherOptions", {
+    await fetch(`${apiUrl}/api/otherOptions`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -142,7 +144,7 @@ export default function OtherOptionsEdit() {
               <img
                 src={
                   room.img.startsWith("/uploads")
-                    ? "http://localhost:5001" + room.img
+                    ? apiUrl + room.img
                     : room.img
                 }
                 className="w-20 h-14 rounded border"

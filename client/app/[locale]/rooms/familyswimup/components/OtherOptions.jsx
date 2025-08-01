@@ -11,9 +11,9 @@ import { useLocale, useTranslations } from 'next-intl';
 
 const OtherOptions = () => {
   const t = useTranslations('SuperiorRoom.OtherOptions');
-    const locale = useLocale(); // "tr", "en", "de", "ru"
+    const locale = useLocale(); 
     const [pageData, setPageData] = useState(null);
-     const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+     const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
       useEffect(() => {
                 const fetchPageData = async () => {

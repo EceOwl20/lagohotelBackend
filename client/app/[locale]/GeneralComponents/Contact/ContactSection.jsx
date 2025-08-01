@@ -11,7 +11,7 @@ import { useLocale } from "next-intl";
 
 const ContactSection = ({contact}) => {
   const t = useTranslations('ContactSection');
- 
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const locale = useLocale();
   const scrollRef = useRef(null);
   // if (!contact) return null;
@@ -46,7 +46,7 @@ const ContactSection = ({contact}) => {
   return (
     <div className='flex w-screen h-screen md:h-[497px] lg:h-[750px] 2xl:h-[850px] items-center md:justify-start bg-cover bg-center relative  max-w-[1920px] overflow-hidden justify-center z-10' style={{
   backgroundImage: contact.backgroundImage
-    ? `url(http://localhost:5001${contact.backgroundImage})`
+    ? `url(${apiUrl}${contact.backgroundImage})`
     : undefined
 }}>
       <LeafSvg className="absolute top-6 -left-24 z-20" width={498} height={652}/>
@@ -88,7 +88,7 @@ const ContactSection = ({contact}) => {
             [minigallery].map((img, index) => (
               <Image
                 key={`${loopIndex}-${index}`}
-                src={`http://localhost:5001${contact.galleryImage}`}
+                src={`${apiUrl}${contact.galleryImage}`}
                 height={img.height}
                 width={img.width}
                 alt="Minigallery"

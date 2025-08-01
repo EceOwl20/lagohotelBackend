@@ -21,8 +21,8 @@ import {useLocale, useTranslations} from 'next-intl';
 
 export default function Header() {
   const locale = useLocale();
-   const [headerData, setHeaderData] = useState(null);
-
+  const [headerData, setHeaderData] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
      const t = useTranslations('Header');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef(null);
@@ -35,7 +35,7 @@ export default function Header() {
   useEffect(() => {
     const fetchPageData = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/header");
+        const res = await fetch(`${apiUrl}/api/header`);
         const json = await res.json();
         setHeaderData(json);
       } catch (err) {

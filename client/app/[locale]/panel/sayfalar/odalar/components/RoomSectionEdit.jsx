@@ -4,6 +4,7 @@ const sectionFields = ["title", "subtitle", "m", "view", "buttonText", "buttonLi
 
 export default function RoomSectionEdit({ sectionKey, data, setData }) {
   const [uploading, setUploading] = useState({});
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Alan yoksa otomatik boş obje olarak ata!
   const sectionData = {
@@ -46,7 +47,7 @@ export default function RoomSectionEdit({ sectionKey, data, setData }) {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -98,7 +99,7 @@ export default function RoomSectionEdit({ sectionKey, data, setData }) {
           {uploading.img && <p className="text-sm text-gray-500">Yükleniyor...</p>}
           {data?.[sectionKey]?.img && (
             <img
-              src={`http://localhost:5001${data[sectionKey].img}`}
+              src={`${apiUrl}${data[sectionKey].img}`}
               alt="img"
               className="mt-2 h-32 object-cover border rounded"
             />
@@ -117,7 +118,7 @@ export default function RoomSectionEdit({ sectionKey, data, setData }) {
           {uploading.img2 && <p className="text-sm text-gray-500">Yükleniyor...</p>}
           {data?.[sectionKey]?.img2 && (
             <img
-              src={`http://localhost:5001${data[sectionKey].img2}`}
+              src={`${apiUrl}${data[sectionKey].img2}`}
               alt="img2"
               className="mt-2 h-32 object-cover border rounded"
             />

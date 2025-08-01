@@ -46,7 +46,7 @@ function Slide({ slide, marginClass, lang = "tr" }) {
     <div className={`relative shrink-0 flex justify-center items-center ${marginClass} flex-[0_0_auto]`}>
       {imageSrc ? (
         <Image
-          src={imageSrc.startsWith("/") ? `http://localhost:5001${imageSrc}` : imageSrc}
+          src={imageSrc.startsWith("/") ? `${apiUrl}${imageSrc}` : imageSrc}
           alt={slide.title?.[lang] || "Slider Görseli"}
           width={360}
           height={540}

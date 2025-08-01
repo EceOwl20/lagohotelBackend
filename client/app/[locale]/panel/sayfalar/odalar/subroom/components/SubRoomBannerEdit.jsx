@@ -10,6 +10,7 @@ export default function SubRoomBannerEdit({ data, setData, langs }) {
 
   // Çoklu dil için nesne şablonu
   const emptyLangs = langs.reduce((acc, lang) => ({ ...acc, [lang]: "" }), {});
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // texts alanı hazır yoksa boş diziye çekelim
   const texts = Array.isArray(banner.texts) && banner.texts.length > 0
@@ -66,7 +67,7 @@ export default function SubRoomBannerEdit({ data, setData, langs }) {
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -98,7 +99,7 @@ export default function SubRoomBannerEdit({ data, setData, langs }) {
       {uploading && <p className="text-blue-600">Yükleniyor...</p>}
       {banner.image && (
         <img
-          src={`http://localhost:5001${banner.image}`}
+          src={`${apiUrl}${banner.image}`}
           alt="Banner"
           className="w-32 h-24 object-cover rounded my-2"
         />

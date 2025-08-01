@@ -10,9 +10,10 @@ import RoomTourEdit from './components/RoomTourEdit';
 export default function SuperiorRoomEdit() {
   const [data, setData] = useState(null);
   const [status, setStatus] = useState({ success: '', error: '' });
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch('http://localhost:5001/api/pages/rooms/superiorroom')
+    fetch(`${apiUrl}/api/pages/rooms/superioroom`)
       .then(r => r.json())
       .then(setData)
       .catch(() => setStatus(s => ({ ...s, error: 'Veri alınamadı' })));
@@ -21,7 +22,7 @@ export default function SuperiorRoomEdit() {
   const handleSubmit = async e => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5001/api/pages/rooms/superiorroom', { 
+      const res = await fetch(`${apiUrl}/api/pages/rooms/superioroom`, { 
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)

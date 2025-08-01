@@ -1,22 +1,21 @@
 "use client";
 
 export default function SectionHero({ data, setData }) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+
   const handleVideoUpload = async (e, type) => {
     const file = e.target.files[0];
     if (!file) return;
-
     const formData = new FormData();
     formData.append("video", file);
-
     try {
-      const res = await fetch("http://localhost:5001/api/upload/video", {
+      const res = await fetch(`${apiUrl}/api/upload/video`, {
         method: "POST",
         body: formData,
       });
-
       const result = await res.json();
       if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-
       setData({
         ...data,
         hero: {

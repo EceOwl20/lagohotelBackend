@@ -34,9 +34,11 @@ export default function BarCafesPanelPage() {
   const [selectedSlug, setSelectedSlug] = useState(null);
   const [saving, setSaving] = useState(false);
   const [loading, setLoading] = useState(true);
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
+   //api/pages/barcafes/subbarcafes
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/barcafes/subbarcafes")
+    fetch(`${apiUrl}/api/pages/barcafes/subbarcafes`)
       .then(res => res.json())
       .then(data => {
         setBarcafes(data || []);
@@ -74,7 +76,7 @@ export default function BarCafesPanelPage() {
       || { ...defaultBarCafeData, slug: selectedSlug };
     setSaving(true);
     try {
-      const response = await fetch(`http://localhost:5001/api/pages/barcafes/subbarcafes/${selectedSlug}`, {
+      const response = await fetch(`${apiUrl}/api/pages/barcafes/subbarcafes/${selectedSlug}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(toSave)

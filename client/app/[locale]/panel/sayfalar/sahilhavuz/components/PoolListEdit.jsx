@@ -111,7 +111,7 @@ export default function PoolListEdit({ data, setData, langs }) {
           <div className="flex items-center gap-4 mb-2">
             {item.image && (
               <img
-                src={`http://localhost:5001${item.image}`}
+                src={`${apiUrl}${item.image}`}
                 alt=""
                 className="w-[90px] h-[60px] object-cover rounded"
               />
@@ -130,7 +130,7 @@ export default function PoolListEdit({ data, setData, langs }) {
           <div className="flex items-center gap-4 mb-4">
             {item.hoverImage && (
               <img
-                src={`http://localhost:5001${item.hoverImage}`}
+                src={`${apiUrl}${item.hoverImage}`}
                 alt=""
                 className="w-[90px] h-[60px] object-cover rounded"
               />

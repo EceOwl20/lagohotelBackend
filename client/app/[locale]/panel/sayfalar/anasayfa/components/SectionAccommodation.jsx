@@ -3,6 +3,8 @@ import { useState } from "react";
 const langs = ["tr", "en", "de", "ru"];
 
 export default function SectionAccommodation({ data, setData }) {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  
   // Oda ekle
   const addRoom = () => {
     const emptyRoom = {
@@ -41,7 +43,7 @@ export default function SectionAccommodation({ data, setData }) {
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -136,7 +138,7 @@ export default function SectionAccommodation({ data, setData }) {
             {/* Önizleme */}
             {room.image && (
               <img
-                src={`http://localhost:5001${room.image}`}
+                src={`${apiUrl}${room.image}`}
                 alt="Oda görseli"
                 className="w-[180px] h-[120px] object-cover rounded mb-2"
               />

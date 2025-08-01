@@ -5,6 +5,7 @@ const dilAdlari = { tr: "Türkçe", en: "İngilizce", de: "Almanca", ru: "Rusça
 
 export default function ClinaryInfoEdit({ data, setData, langs }) {
   const [uploading, setUploading] = useState({ image1: false, image2: false });
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Görsel upload fonksiyonu
   const handleImageUpload = async (e, key) => {
@@ -14,7 +15,7 @@ export default function ClinaryInfoEdit({ data, setData, langs }) {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -86,7 +87,7 @@ export default function ClinaryInfoEdit({ data, setData, langs }) {
         )}
         {data.clinaryInfo?.image1 && (
           <img
-            src={`http://localhost:5001${data.clinaryInfo.image1}`}
+            src={`${apiUrl}${data.clinaryInfo.image1}`}
             alt="Sol görsel"
             className="h-24 mb-2 mt-1 border rounded object-cover"
           />
@@ -105,7 +106,7 @@ export default function ClinaryInfoEdit({ data, setData, langs }) {
         )}
         {data.clinaryInfo?.image2 && (
           <img
-            src={`http://localhost:5001${data.clinaryInfo.image2}`}
+            src={`${apiUrl}${data.clinaryInfo.image2}`}
             alt="Sağ görsel"
             className="h-24 mb-2 mt-1 border rounded object-cover"
           />

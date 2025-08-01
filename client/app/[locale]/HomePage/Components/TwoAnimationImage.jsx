@@ -72,7 +72,7 @@ export default function TwoAnimationImage({ animationData }) {
         <div className="flex w-[65%] min-w-[310px] md:w-[50%] lg:w-[43.8%] h-[327px] md:h-full items-end justify-end relative mt-[67px] md:mt-0">
           {animationData?.imageRight && (
             <Image
-              src={`http://localhost:5001${animationData.imageRight}`}
+              src={`${apiUrl}${animationData.imageRight}`}
               alt="Sağ görsel"
               width={300}
               height={450}
@@ -84,7 +84,7 @@ export default function TwoAnimationImage({ animationData }) {
 
           {animationData?.imageLeft && (
             <Image
-              src={`http://localhost:5001${animationData.imageLeft}`}
+              src={`${apiUrl}${animationData.imageLeft}`}
               alt="Sol görsel"
               width={300}
               height={450}

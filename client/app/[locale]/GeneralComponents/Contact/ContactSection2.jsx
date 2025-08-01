@@ -10,7 +10,7 @@ const ContactDetails = () => {
   const locale = useLocale(); // "tr", "en", "de", "ru"
   const t = useTranslations('ContactSection2');
   const [pageData, setPageData] = useState(null);
-   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
     useEffect(() => {
            const fetchPageData = async () => {
@@ -120,7 +120,7 @@ const GallerySection = ({pageData}) => {
     return () => clearInterval(scrollInterval);
   }, []);
 
-   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
    const imggallery  = pageData.image
      const backgroundImgSrc = imggallery
@@ -159,7 +159,7 @@ const GallerySection = ({pageData}) => {
 
 const ContactSection2 = () => {
   const [pageData, setPageData] = useState(null);
-   const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
     useEffect(() => {
            const fetchPageData = async () => {

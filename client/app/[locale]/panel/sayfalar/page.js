@@ -5,18 +5,6 @@ import Link from "next/link";
 export default function PagesPanel() {
  const [roomSlugs, setRoomSlugs] = useState([]);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:5001/api/pages/rooms/subrooms")
-  //     .then((res) => {
-  //       if (!res.ok) throw new Error("Failed to fetch subroom slugs");
-  //       return res.json();
-  //     })
-  //     .then((slugs) => setRoomSlugs(slugs))
-  //     .catch((err) => console.error(err));
-  // }, []);
-
-
-
   return (
     <div className="p-6 space-y-4 max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold">📄 Sayfalar Yönetimi</h1>

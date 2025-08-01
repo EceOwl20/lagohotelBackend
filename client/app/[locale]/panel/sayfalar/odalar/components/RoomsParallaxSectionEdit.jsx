@@ -2,6 +2,8 @@
 "use client";
 import React, { useState } from 'react';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 const langsParallax = ['tr', 'en', 'de', 'ru'];
 const parallaxFields = [
   'subtitle', 'title',
@@ -46,7 +48,7 @@ export default function RoomsParallaxSectionEdit({ data, setData }) {
     try {
       const formData = new FormData();
       formData.append("image", file);
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -79,7 +81,7 @@ export default function RoomsParallaxSectionEdit({ data, setData }) {
           {error && <p className="text-sm text-red-600">{error}</p>}
           {data?.roomsParallaxSection?.backgroundImage && (
             <img
-              src={`http://localhost:5001${data.roomsParallaxSection.backgroundImage}`}
+              src={`${apiUrl}${data.roomsParallaxSection.backgroundImage}`}
               alt="Background Preview"
               className="mt-2 h-32 object-cover border rounded"
             />

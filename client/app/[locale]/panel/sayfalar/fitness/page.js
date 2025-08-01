@@ -12,16 +12,17 @@ const langs = ["tr", "en", "de", "ru"];
 export default function FitnessPanelPage() {
   const [data, setData] = useState({});
   const [saving, setSaving] = useState(false);
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/fitness")
+    fetch(`${apiUrl}/api/pages/fitness`)
       .then((res) => res.json())
       .then(setData);
   }, []);
 
   const handleSave = async () => {
     setSaving(true);
-    await fetch("http://localhost:5001/api/pages/fitness", {
+    await fetch(`${apiUrl}/api/pages/fitness`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),

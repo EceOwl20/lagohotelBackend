@@ -14,11 +14,12 @@ export default function HomePageEdit() {
   const [data, setData] = useState(null);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchPage = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/pages/homepage");
+        const res = await fetch(`${apiUrl}/api/pages/homepage`);
         const json = await res.json();
         if (!json.slider || json.slider.length === 0) {
             json.slider = [
@@ -48,7 +49,7 @@ export default function HomePageEdit() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch("http://localhost:5001/api/pages/homepage", {
+      const res = await fetch(`${apiUrl}/api/pages/homepage`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

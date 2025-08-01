@@ -115,7 +115,7 @@ export default function BarCarouselEdit({ data, setData }) {
         {images.map((img, idx) => (
           <div key={idx} className="relative">
             <img
-              src={`http://localhost:5001${img}`}
+              src={`${apiUrl}${img}`}
               alt=""
               className="w-[80px] h-[60px] object-cover rounded"
             />

@@ -10,7 +10,7 @@ const langs = [
 
 export default function MainBannerEdit({ data, setData }) {
   const [uploading, setUploading] = useState(false);
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL ;
 
 const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -21,7 +21,7 @@ const handleImageUpload = async (e) => {
 
     setUploading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });

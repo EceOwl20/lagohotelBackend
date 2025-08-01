@@ -6,6 +6,7 @@ const langs = ["tr", "en", "de", "ru"];
 export default function RoomsBannerEdit({ data, setData }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const handleImageUpload = async (e) => {
     const file = e.target.files[0];
@@ -16,7 +17,7 @@ export default function RoomsBannerEdit({ data, setData }) {
 
     setUploading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -89,7 +90,7 @@ export default function RoomsBannerEdit({ data, setData }) {
 
   const bannerImgSrc = data?.roomsBanner?.bannerImage
     ? data.roomsBanner.bannerImage.startsWith("/uploads")
-      ? "http://localhost:5001" + data.roomsBanner.bannerImage
+      ? apiUrl + data.roomsBanner.bannerImage
       : data.roomsBanner.bannerImage
     : "";
 
@@ -111,7 +112,7 @@ export default function RoomsBannerEdit({ data, setData }) {
         {error && <p className="text-sm text-red-600">{error}</p>}
        {data?.roomsBanner?.bannerImage && (
           <img
-            src={`http://localhost:5001${data.roomsBanner.bannerImage}`}
+            src={`${apiUrl}${data.roomsBanner.bannerImage}`}
             alt="Banner Preview"
             className="mt-2 h-32 object-cover border rounded"
           />

@@ -17,6 +17,7 @@ export default function ContactSection2Edit() {
   });
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Tek görsel yükleme
   const handleImageUpload = async (e) => {
@@ -26,7 +27,7 @@ export default function ContactSection2Edit() {
     formData.append("image", file);
     setUploading(true);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -43,9 +44,8 @@ export default function ContactSection2Edit() {
     }
   };
 
-
   useEffect(() => {
-    fetch("http://localhost:5001/api/contactSection2")
+    fetch(`${apiUrl}/api/contactSection2`)
       .then(res => res.json())
       .then(resData => {
         setData(prev => ({ ...prev, ...resData }));
@@ -71,7 +71,7 @@ export default function ContactSection2Edit() {
 
   // Kaydet
   const handleSave = async () => {
-    await fetch("http://localhost:5001/api/contactSection2", {
+    await fetch(`${apiUrl}/api/contactSection2`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)
@@ -134,7 +134,7 @@ export default function ContactSection2Edit() {
           <img
             src={
               data.image.startsWith("/uploads")
-                ? "http://localhost:5001" + data.image
+                ? apiUrl + data.image
                 : data.image
             }
             alt="İletişim görseli"

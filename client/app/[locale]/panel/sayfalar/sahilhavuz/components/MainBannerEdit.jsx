@@ -103,7 +103,7 @@ export default function MainBannerEdit({ data, setData }) {
       <div className="flex items-center gap-4 mb-2">
         {data.mainBanner?.desktop?.girlImage && (
           <img
-            src={`http://localhost:5001${data.mainBanner.desktop.girlImage}`}
+            src={`${apiUrl}${data.mainBanner.desktop.girlImage}`}
             alt="Girl"
             className="w-[120px] h-[80px] object-cover rounded"
           />
@@ -122,7 +122,7 @@ export default function MainBannerEdit({ data, setData }) {
       <div className="flex items-center gap-4 mb-2">
         {data.mainBanner?.desktop?.textImage && (
           <img
-            src={`http://localhost:5001${data.mainBanner.desktop.textImage}`}
+            src={`${apiUrl}${data.mainBanner.desktop.textImage}`}
             alt="Yazı"
             className="w-[120px] h-[80px] object-contain rounded"
           />
@@ -141,7 +141,7 @@ export default function MainBannerEdit({ data, setData }) {
       <div className="flex items-center gap-4 mb-2">
         {data.mainBanner?.desktop?.waveImage && (
           <img
-            src={`http://localhost:5001${data.mainBanner.desktop.waveImage}`}
+            src={`${apiUrl}${data.mainBanner.desktop.waveImage}`}
             alt="Dalga"
             className="w-[120px] h-[80px] object-contain rounded"
           />
@@ -168,7 +168,7 @@ export default function MainBannerEdit({ data, setData }) {
       <div className="flex items-center gap-4 mb-2">
         {data.mainBanner?.mobile?.bgImage && (
           <img
-            src={`http://localhost:5001${data.mainBanner.mobile.bgImage}`}
+            src={`${apiUrl}${data.mainBanner.mobile.bgImage}`}
             alt="Mobile BG"
             className="w-[120px] h-[80px] object-cover rounded"
           />

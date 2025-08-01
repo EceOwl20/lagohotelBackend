@@ -8,7 +8,7 @@ export default function HomePage() {
   useEffect(() => {
     const fetchHero = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/pages/homepage");
+        const res = await fetch(`${apiUrl}/api/pages/homepage`);
         const data = await res.json();
         setHero(data.hero);
       } catch (err) {
@@ -32,7 +32,7 @@ export default function HomePage() {
         className="absolute top-0 left-0 w-full h-full object-cover hidden lg:flex"
       >
         <source
-          src={`http://localhost:5001${hero.videoDesktop}`}
+          src={`${apiUrl}${hero.videoDesktop}`}
           type="video/mp4"
         />
         Tarayıcınız bu videoyu desteklemiyor.
@@ -47,7 +47,7 @@ export default function HomePage() {
         className="absolute top-0 left-0 w-full h-full object-cover flex lg:hidden"
       >
         <source
-          src={`http://localhost:5001${hero.videoMobile}`}
+          src={`${apiUrl}${hero.videoMobile}`}
           type="video/mp4"
         />
         Tarayıcınız bu videoyu desteklemiyor.

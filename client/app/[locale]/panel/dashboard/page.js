@@ -12,11 +12,13 @@ export default function DashboardPage() {
     const token = localStorage.getItem("token");
     const currentUser = JSON.parse(localStorage.getItem("user"));
     setUser(currentUser);
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
     const fetchStats = async () => {
         const token = localStorage.getItem("token");
         try {
-          const res = await fetch("http://localhost:5001/api/users/stats", {
+         
+          const res = await fetch(`${apiUrl}/api/users/stats`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -40,7 +42,8 @@ export default function DashboardPage() {
       const fetchLatestUser = async () => {
         const token = localStorage.getItem("token");
         try {
-          const res = await fetch("http://localhost:5001/api/users/latest", {
+          //api/users/latest
+          const res = await fetch(`${apiUrl}/api/users/latest`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },

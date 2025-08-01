@@ -21,7 +21,7 @@ export default function SideBar() {
             <img
               src={
                 user.profileImage
-                  ? `http://localhost:5001${user.profileImage}`
+                  ? `${apiUrl}${user.profileImage}`
                   : "/default-avatar.png" // varsayılan görsel
               }
               alt="Profil"

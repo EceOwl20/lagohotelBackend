@@ -22,7 +22,7 @@ import {useLocale, useTranslations} from 'next-intl';
 export default function HeaderWhite() {
   const locale = useLocale();
    const [headerData, setHeaderData] = useState(null);
-  
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
    
   const t = useTranslations('Header');
     // 1 ekran scrolldan sonra headerin gözükmesi için
@@ -33,7 +33,7 @@ export default function HeaderWhite() {
     useEffect(() => {
         const fetchPageData = async () => {
           try {
-            const res = await fetch("http://localhost:5001/api/header");
+            const res = await fetch(`${apiUrl}/api/header`);
             const json = await res.json();
             setHeaderData(json);
           } catch (err) {

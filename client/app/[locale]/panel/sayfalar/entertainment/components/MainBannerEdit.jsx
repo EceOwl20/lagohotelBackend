@@ -5,7 +5,7 @@ export default function MainBannerEdit({ data, setData }) {
   const value = data.mainBanner || {};
   const [uploading, setUploading] = useState(false);
   const fileInputRef = useRef(null);
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL; // e.g. "http://localhost:5001"
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleUpload = async (e) => {
     const file = e.target.files?.[0];

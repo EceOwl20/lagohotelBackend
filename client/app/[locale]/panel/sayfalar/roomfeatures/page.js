@@ -14,6 +14,7 @@ function makeEmptyItem(icon = "") {
 
 export default function RoomFeaturesPanelEdit() {
   const [saved, setSaved] = useState(false);
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   
   const [data, setData] = useState({
     span: {}, header: {}, text: {},
@@ -30,7 +31,7 @@ export default function RoomFeaturesPanelEdit() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/roomFeatures")
+    fetch(`${apiUrl}/api/roomFeatures`)
       .then(res => res.json())
       .then(resData => {
         // Eğer eksik item varsa tamamla
@@ -95,7 +96,7 @@ export default function RoomFeaturesPanelEdit() {
 
   // Kaydet
  const handleSave = async () => {
-    await fetch("http://localhost:5001/api/roomFeatures", {
+    await fetch(`${apiUrl}/api/roomFeatures`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data)

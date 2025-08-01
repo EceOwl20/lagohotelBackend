@@ -2,6 +2,7 @@
 
 export default function SectionSlider({ data, setData }) {
   const languages = ["tr", "en", "de", "ru"];
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleImageUpload = async (e, index) => {
     const file = e.target.files[0];
@@ -11,7 +12,7 @@ export default function SectionSlider({ data, setData }) {
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -38,7 +39,7 @@ export default function SectionSlider({ data, setData }) {
 
     {slide.image && (
       <img
-        src={`http://localhost:5001${slide.image}`}
+        src={`${apiUrl}${slide.image}`}
         alt="Slider görseli"
         className="w-full h-40 object-cover rounded mb-2"
       />

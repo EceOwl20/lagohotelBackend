@@ -192,7 +192,7 @@ export default function SubBarCafeEdit({ data, setData }) {
             <img
               src={
                 data.mainBanner.image.startsWith("/uploads")
-                  ? "http://localhost:5001" + data.mainBanner.image
+                  ? apiUrl + data.mainBanner.image
                   : data.mainBanner.image
               }
               alt="Banner"
@@ -236,7 +236,7 @@ export default function SubBarCafeEdit({ data, setData }) {
             <img
               src={
                 data.infoSection.image1.startsWith("/uploads")
-                  ? "http://localhost:5001" + data.infoSection.image1
+                  ? apiUrl + data.infoSection.image1
                   : data.infoSection.image1
               }
               alt="img1"
@@ -256,7 +256,7 @@ export default function SubBarCafeEdit({ data, setData }) {
             <img
               src={
                 data.infoSection.image2.startsWith("/uploads")
-                  ? "http://localhost:5001" + data.infoSection.image2
+                  ? apiUrl + data.infoSection.image2
                   : data.infoSection.image2
               }
               alt="img2"
@@ -289,7 +289,7 @@ export default function SubBarCafeEdit({ data, setData }) {
               <img
                 src={
                   img.startsWith("/uploads")
-                    ? "http://localhost:5001" + img
+                    ? apiUrl + img
                     : img
                 }
                 alt="carousel"
@@ -511,65 +511,6 @@ export default function SubBarCafeEdit({ data, setData }) {
   </button>
 </section>
 
-
-
-      {/* Cafes */}
-      {/* <div className="p-4 border rounded mb-2">
-        <h3 className="font-semibold mb-2">Bar/Cafe Seçenekleri (Diğer opsiyonlar)</h3>
-        {(data.cafes || []).map((cafe, idx) => (
-          <div key={idx} className="border rounded p-2 mb-2">
-            <MultiLangInputs
-              label="Başlık"
-              value={cafe.title}
-              onChange={(lang, v) => handleCafeChange(idx, "title", lang, v)}
-            />
-            <MultiLangInputs
-              label="Açıklama"
-              value={cafe.description}
-              onChange={(lang, v) => handleCafeChange(idx, "description", lang, v)}
-            />
-            <MultiLangInputs
-              label="Ekstra Text"
-              value={cafe.text}
-              onChange={(lang, v) => handleCafeChange(idx, "text", lang, v)}
-            />
-            <MultiLangInputs
-              label="Button Text"
-              value={cafe.buttonText}
-              onChange={(lang, v) => handleCafeChange(idx, "buttonText", lang, v)}
-            />
-            <input
-              className="border p-1 rounded w-full my-1"
-              placeholder="Link"
-              value={cafe.link || ""}
-              onChange={e => handleCafeChange(idx, "link", e.target.value)}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              onChange={e => handleCafeImage(idx, e)}
-              disabled={uploading["cafe-" + idx]}
-            />
-            {cafe.image && (
-              <img
-                src={
-                  cafe.image.startsWith("/uploads")
-                    ? "http://localhost:5001" + cafe.image
-                    : cafe.image
-                }
-                alt="cafe"
-                className="w-20 h-auto rounded border mt-2"
-              />
-            )}
-            <button onClick={() => handleCafeRemove(idx)} className="text-red-500">Sil</button>
-          </div>
-        ))}
-        <button onClick={handleCafeAdd} className="px-2 py-1 bg-blue-500 text-white rounded">
-          + Yeni Cafe
-        </button>
-      </div> */}
-
-
       {/* Background */}
       <div className="p-4 border rounded mb-2">
         <h3 className="font-semibold mb-2">Background Section</h3>
@@ -612,7 +553,7 @@ export default function SubBarCafeEdit({ data, setData }) {
           <img
             src={
               data.background.image.startsWith("/uploads")
-                ? "http://localhost:5001" + data.background.image
+                ? apiUrl + data.background.image
                 : data.background.image
             }
             alt="background"

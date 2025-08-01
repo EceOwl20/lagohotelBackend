@@ -14,9 +14,10 @@ export default function RestaurantPanelPage() {
   
   const [data, setData] = useState(null);
   const [status, setStatus] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
-    fetch("http://localhost:5001/api/pages/restaurants")
+    fetch(`${apiUrl}/api/pages/restaurants`)
       .then(res => res.json())
       .then(json => setData(json))
       .catch(() => setData({}));
@@ -25,7 +26,7 @@ export default function RestaurantPanelPage() {
   const handleSave = async () => {
     setStatus("Yükleniyor...");
     try {
-      const res = await fetch("http://localhost:5001/api/pages/restaurants", {
+      const res = await fetch(`${apiUrl}/api/pages/restaurants`, {
         method: "PUT",
         headers: { "Content-Type": "application/json", "Authorization": "Bearer " + localStorage.getItem("token") },
         body: JSON.stringify(data)

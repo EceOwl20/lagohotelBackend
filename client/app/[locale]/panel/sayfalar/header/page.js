@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 const langs = ["tr", "en", "de", "ru"];
+ const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const defaultHeader = {
   logo: "",
@@ -29,7 +30,7 @@ export default function SectionHeader() {
   useEffect(() => {
     const fetchHeader = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/header");
+        const res = await fetch(`${apiUrl}/api/header`);
         const json = await res.json();
         setData(json || defaultHeader);
       } catch (err) {
@@ -47,7 +48,7 @@ export default function SectionHeader() {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -80,7 +81,7 @@ export default function SectionHeader() {
     e.preventDefault();
     const token = localStorage.getItem("token");
     try {
-      const res = await fetch("http://localhost:5001/api/header", {
+      const res = await fetch(`${apiUrl}/api/header`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -108,7 +109,7 @@ export default function SectionHeader() {
         <label>Logo Yükle</label>
         <input type="file" accept="image/*" onChange={e => handleImageUpload(e, "logo")} className="mb-2" />
         {data.logo && (
-          <img src={`http://localhost:5001${data.logo}`} alt="Logo" className="w-28 h-20 object-contain mb-2" />
+          <img src={`${apiUrl}${data.logo}`} alt="Logo" className="w-28 h-20 object-contain mb-2" />
         )}
 
         <label>Telefon</label>

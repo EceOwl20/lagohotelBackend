@@ -9,6 +9,7 @@ export default function RegisterForm() {
   const [role, setRole] = useState("personel");
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleRegister = async (e) => {
     e.preventDefault();
@@ -16,7 +17,8 @@ export default function RegisterForm() {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/register", {
+      //api/auth/register
+      const res = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

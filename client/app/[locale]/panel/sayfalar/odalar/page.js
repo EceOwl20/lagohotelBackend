@@ -11,11 +11,13 @@ export default function RoomsPageEdit() {
   const [sections, setSections] = useState([]);
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 
   useEffect(() => {
     const fetchPage = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/pages/rooms");
+        const res = await fetch(`${apiUrl}/api/pages/rooms`);
         const json = await res.json();
         setData(json);
         const keys = Object.keys(json)
@@ -37,7 +39,7 @@ export default function RoomsPageEdit() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch("http://localhost:5001/api/pages/rooms", {
+      const res = await fetch(`${apiUrl}/api/pages/rooms`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

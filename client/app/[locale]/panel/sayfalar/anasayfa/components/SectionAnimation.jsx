@@ -2,7 +2,8 @@
 
 export default function SectionAnimation({ data, setData }) {
   const langs = ["tr", "en", "de", "ru"];
-
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+   
   // Görsel yükleme fonksiyonu aynı şekilde çalışıyor
   const handleImageUpload = async (e, key) => {
     const file = e.target.files[0];
@@ -11,7 +12,7 @@ export default function SectionAnimation({ data, setData }) {
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -159,7 +160,7 @@ export default function SectionAnimation({ data, setData }) {
       />
       {data.animationSection?.imageLeft && (
         <img
-          src={`http://localhost:5001${data.animationSection.imageLeft}`}
+          src={`${apiUrl}${data.animationSection.imageLeft}`}
           alt="Sol Görsel"
           className="w-32 h-24 object-cover rounded mb-2"
         />
@@ -174,7 +175,7 @@ export default function SectionAnimation({ data, setData }) {
       />
       {data.animationSection?.imageRight && (
         <img
-          src={`http://localhost:5001${data.animationSection.imageRight}`}
+          src={`${apiUrl}${data.animationSection.imageRight}`}
           alt="Sağ Görsel"
           className="w-32 h-24 object-cover rounded mb-2"
         />

@@ -54,7 +54,7 @@ export default function HomePage3({ accommodation }) {
                 <Image
                   src={
                     room.image.startsWith("/uploads")
-                      ? `http://localhost:5001${room.image}`
+                      ? `${apiUrl}${room.image}`
                       : room.image
                   }
                   alt={room.title?.[locale] || ""}

@@ -20,7 +20,7 @@ export default function ImageUploadInput({
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -53,7 +53,7 @@ export default function ImageUploadInput({
           src={
             value.startsWith("http") // Eğer tam url ise direkt kullan
               ? value
-              : `http://localhost:5001${value.startsWith("/") ? "" : "/"}${value}`
+              : `${apiUrl}${value.startsWith("/") ? "" : "/"}${value}`
           }
           alt="Yüklenen görsel"
           className="w-32 h-24 object-cover rounded shadow mb-2"

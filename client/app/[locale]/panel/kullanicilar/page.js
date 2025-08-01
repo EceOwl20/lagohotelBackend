@@ -9,13 +9,14 @@ export default function KullaniciListesi() {
   const router = useRouter();
   const [editingUser, setEditingUser] = useState(null); // modal açmak için
   const [showModal, setShowModal] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchUsers = async () => {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await fetch("http://localhost:5001/api/users", {
+        const res = await fetch(`${apiUrl}/api/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -79,7 +80,7 @@ export default function KullaniciListesi() {
           const token = localStorage.getItem("token");
 
           try {
-            const res = await fetch(`http://localhost:5001/api/users/${editingUser._id}`, {
+            const res = await fetch(`${apiUrl}/api/users/${editingUser._id}`, {
               method: "PUT",
               headers: {
                 "Content-Type": "application/json",

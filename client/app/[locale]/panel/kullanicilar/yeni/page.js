@@ -11,6 +11,7 @@ export default function KullaniciEkle() {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
   const [authorized, setAuthorized] = useState(null); // null = henüz kontrol edilmedi
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const router = useRouter();
 
@@ -37,7 +38,8 @@ export default function KullaniciEkle() {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/register", {
+      //api/auth/register
+      const res = await fetch(`${apiUrl}/api/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

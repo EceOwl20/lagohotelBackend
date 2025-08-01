@@ -28,11 +28,11 @@ const RoomFeatures = ({span, header, text, header2, header3, text2, iconsTexts, 
   const t = useTranslations(`${roomName}.RoomInfo`);
   const t2 = useTranslations(`SuperiorRoom.ReservationWidget`);
   const dropdownRef = useRef(null);
-const locale = useLocale(); // "tr", "en", "de", "ru"
+const locale = useLocale(); 
     const slug = roomName;
   
     const [pageData, setPageData] = useState(null);
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL; // "http://localhost:5001"
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL; 
 
   const [checkInDate, setCheckInDate] = useState(null)
   const [checkOutDate, setCheckOutDate] = useState(null)

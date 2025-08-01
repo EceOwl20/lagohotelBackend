@@ -118,7 +118,7 @@ export default function CarouselEdit({ data, setData, langs }) {
           <div className="flex items-center gap-4 mb-4">
             {item.image && (
               <img
-                src={`http://localhost:5001${item.image}`}
+                src={`${apiUrl}${item.image}`}
                 alt=""
                 className="w-[90px] h-[60px] object-cover rounded"
               />

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
 const emptyLangs = { tr: "", en: "", de: "", ru: "" };
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 const emptyQuickMenuItem = {
   title: { ...emptyLangs },
@@ -40,7 +41,7 @@ export default function Page() {
   useEffect(() => {
     const fetchFooter = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/footer");
+        const res = await fetch(`${apiUrl}/api/footer`);
         if (!res.ok) throw new Error("Footer getirilemedi");
         const json = await res.json();
         setFooter(json || defaultFooter);
@@ -164,7 +165,7 @@ const handleBottomLinkUrl = (idx, value) => {
     setError("");
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch("http://localhost:5001/api/footer", {
+      const res = await fetch(`${apiUrl}/api/footer`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

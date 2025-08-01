@@ -3,15 +3,17 @@
 const langs = ["tr", "en", "de", "ru"];
 
 export default function SectionBanner({ data, setData }) {
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
   // Görsel yükleme fonksiyonu
   const handleImageUpload = async (e, key) => {
     const file = e.target.files[0];
     if (!file) return;
     const formData = new FormData();
-    formData.append("image", file);
+    formData.append("image", file);  
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -132,7 +134,7 @@ export default function SectionBanner({ data, setData }) {
       />
       {data.banner?.backgroundImage && (
         <img
-          src={`http://localhost:5001${data.banner.backgroundImage}`}
+          src={`${apiUrl}${data.banner.backgroundImage}`}
           alt="Background"
           className="w-32 h-24 object-cover rounded mb-2"
         />

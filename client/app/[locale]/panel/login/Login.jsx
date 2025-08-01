@@ -10,6 +10,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState(""); // Şifre eklenecekse
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -17,7 +18,8 @@ export default function LoginForm() {
     setSuccess("");
 
     try {
-      const res = await fetch("http://localhost:5001/api/auth/login", {
+      //api/auth/login
+      const res = await fetch(`${apiUrl}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

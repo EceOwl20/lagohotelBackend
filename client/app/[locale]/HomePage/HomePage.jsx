@@ -13,11 +13,12 @@ import TwoAnimationImage from "./Components/TwoAnimationImage";
 
 const HomePage = () => {
   const [pageData, setPageData] = useState(null);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   useEffect(() => {
     const fetchPageData = async () => {
       try {
-        const res = await fetch("http://localhost:5001/api/pages/homepage");
+        const res = await fetch(`${apiUrl}/api/pages/homepage`);
         const json = await res.json();
         setPageData(json);
       } catch (err) {

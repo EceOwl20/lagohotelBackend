@@ -5,6 +5,7 @@ const dilAdlari = { tr: "Türkçe", en: "İngilizce", de: "Almanca", ru: "Rusça
 
 export default function DiscoverBackgroundEdit({ data, setData, langs }) {
   const [uploading, setUploading] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Görsel upload fonksiyonu
   const handleImageUpload = async (e) => {
@@ -14,7 +15,7 @@ export default function DiscoverBackgroundEdit({ data, setData, langs }) {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -40,7 +41,7 @@ export default function DiscoverBackgroundEdit({ data, setData, langs }) {
         <div className="flex items-center gap-4 mb-2">
           {data.discoverBackground?.image && (
             <img
-              src={`http://localhost:5001${data.discoverBackground.image}`}
+              src={`${apiUrl}${data.discoverBackground.image}`}
               alt="Arka Plan"
               className="w-[140px] h-[90px] object-cover rounded"
             />

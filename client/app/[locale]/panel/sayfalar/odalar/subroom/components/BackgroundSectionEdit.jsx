@@ -2,6 +2,7 @@
 import { useRef, useState } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function BackgroundSectionEdit({ data, setData }) {
   const bg = data.background || {
@@ -69,7 +70,7 @@ export default function BackgroundSectionEdit({ data, setData }) {
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -121,7 +122,7 @@ export default function BackgroundSectionEdit({ data, setData }) {
         {error && <p className="text-red-600">{error}</p>}
         {bg.image && (
           <img
-            src={`http://localhost:5001${bg.image}`}
+            src={`${apiUrl}${bg.image}`}
             alt="Background"
             className="w-32 h-24 object-cover rounded mt-2"
           />

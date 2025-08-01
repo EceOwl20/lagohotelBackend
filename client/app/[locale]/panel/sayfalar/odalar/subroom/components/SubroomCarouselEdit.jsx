@@ -5,7 +5,7 @@ export default function SubroomCarouselEdit({ data, setData }) {
   const [uploading, setUploading] = useState({});
 
 const items = Array.isArray(data.carousel) ? data.carousel : [];
-
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Resim yükleme fonksiyonu (her index için ayrı)
   const handleImageUpload = async (e, idx) => {
@@ -18,7 +18,7 @@ const items = Array.isArray(data.carousel) ? data.carousel : [];
     formData.append("image", file);
 
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -88,7 +88,7 @@ const items = Array.isArray(data.carousel) ? data.carousel : [];
             {url && (
               <div>
                 <img
-                  src={`http://localhost:5001${url}`}
+                  src={`${apiUrl}${url}`}
                   alt={`carousel-${idx}`}
                   className="w-32 h-20 object-cover rounded border"
                 />

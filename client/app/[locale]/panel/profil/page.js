@@ -12,6 +12,7 @@ export default function ProfilPage() {
   const [password, setPassword] = useState("");
   const [profileImage, setProfileImage] = useState("");
   const [uploading, setUploading] = useState(false);
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   const router = useRouter();
 
@@ -37,7 +38,7 @@ export default function ProfilPage() {
     const token = localStorage.getItem("token");
   
     try {
-      const res = await fetch(`http://localhost:5001/api/users/upload/${user._id}`, {
+      const res = await fetch(`${apiUrl}/api/users/upload/${user._id}`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -65,7 +66,7 @@ export default function ProfilPage() {
     const token = localStorage.getItem("token");
 
     try {
-      const res = await fetch(`http://localhost:5001/api/users/${user._id}`, {
+      const res = await fetch(`${apiUrl}/api/users/${user._id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -97,7 +98,7 @@ export default function ProfilPage() {
   
   {profileImage ? (
     <img
-      src={`http://localhost:5001${profileImage}`}
+      src={`${apiUrl}${profileImage}`}
       alt="Profil"
       className="w-24 h-24 rounded-full object-cover mb-2"
     />

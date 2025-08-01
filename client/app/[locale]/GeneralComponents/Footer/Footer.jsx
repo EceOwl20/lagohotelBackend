@@ -21,6 +21,7 @@ import {useLocale, useTranslations} from 'next-intl';
 export default function Footer() {
    const locale = useLocale();
    const [footerData, setFooterData] = useState(null);
+   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   
   const t = useTranslations('Footer');
   const [isRoomsOpen, setIsRoomsOpen] = useState(false);
@@ -29,7 +30,7 @@ export default function Footer() {
   useEffect(() => {
       const fetchPageData = async () => {
         try {
-          const res = await fetch("http://localhost:5001/api/footer");
+          const res = await fetch(`${apiUrl}/api/footer`);
           const json = await res.json();
           setFooterData(json);
         } catch (err) {

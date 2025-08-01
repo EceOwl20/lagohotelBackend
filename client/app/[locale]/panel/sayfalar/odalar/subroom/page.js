@@ -8,6 +8,7 @@ import RoomTourEdit from "./components/RoomTourEdit";
 import OtherOptionsEdit from "./components/OtherOptionsEdit";
 
 const langs = ["tr", "en", "de", "ru"];
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 export default function RoomPanelPage() {
   const [rooms, setRooms] = useState([]);
@@ -18,7 +19,7 @@ export default function RoomPanelPage() {
   // Oda listesini çek
   useEffect(() => {
     console.log("Fetching rooms..."); // DEBUG
-    fetch("http://localhost:5001/api/pages/rooms/subroom")
+    fetch(`${apiUrl}/api/pages/rooms/subroom`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched rooms:", data); // DEBUG
@@ -69,7 +70,7 @@ export default function RoomPanelPage() {
 
     try {
       const response = await fetch(
-        `http://localhost:5001/api/pages/rooms/subroom/${selectedSlug}`,
+        `${apiUrl}/api/pages/rooms/subroom/${selectedSlug}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

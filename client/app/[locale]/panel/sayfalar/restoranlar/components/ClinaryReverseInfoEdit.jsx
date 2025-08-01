@@ -5,6 +5,7 @@ const dilAdlari = { tr: "Türkçe", en: "İngilizce", de: "Almanca", ru: "Rusça
 
 export default function ClinaryReverseInfoEdit({ data, setData, langs }) {
   const [uploading, setUploading] = useState({ img1: false, img2: false });
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
   // Sol görsel upload
   const handleImageUpload = async (e, key) => {
@@ -14,7 +15,7 @@ export default function ClinaryReverseInfoEdit({ data, setData, langs }) {
     const formData = new FormData();
     formData.append("image", file);
     try {
-      const res = await fetch("http://localhost:5001/api/upload", {
+      const res = await fetch(`${apiUrl}/api/upload`, {
         method: "POST",
         body: formData,
       });
@@ -51,7 +52,7 @@ export default function ClinaryReverseInfoEdit({ data, setData, langs }) {
           {uploading.img1 && <span className="text-blue-500">Yükleniyor...</span>}
           {data.clinaryReverseInfo?.image1 && (
             <img
-              src={`http://localhost:5001${data.clinaryReverseInfo.image1}`}
+              src={`${apiUrl}${data.clinaryReverseInfo.image1}`}
               alt="Sol Görsel"
               className="w-28 h-20 object-cover border rounded"
             />
@@ -76,7 +77,7 @@ export default function ClinaryReverseInfoEdit({ data, setData, langs }) {
           {uploading.img2 && <span className="text-blue-500">Yükleniyor...</span>}
           {data.clinaryReverseInfo?.image2 && (
             <img
-              src={`http://localhost:5001${data.clinaryReverseInfo.image2}`}
+              src={`${apiUrl}${data.clinaryReverseInfo.image2}`}
               alt="Sağ Görsel"
               className="w-28 h-20 object-cover border rounded"
             />

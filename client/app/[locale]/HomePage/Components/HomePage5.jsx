@@ -44,7 +44,7 @@ export default function HomePage5({banner}) {
       className="relative w-full h-[246.39px] md:h-[335px] lg:h-[530px] 2xl:h-[50vh] bg-cover bg-start items-center justify-center"
       style={{
   backgroundImage: banner.backgroundImage
-    ? `url(http://localhost:5001${banner.backgroundImage})`
+    ? `url(${apiUrl}${banner.backgroundImage})`
     : undefined
 }}>
       {/* 
