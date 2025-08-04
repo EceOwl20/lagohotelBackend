@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import MultiImageUploadInput from "../../../components/MultiImageUploadInput";
 
 // images: dizi halinde, ekle-sil
 export default function SpaHeaderSectionEdit({ data, setData, langs, blockName }) {
@@ -50,6 +51,16 @@ const handleAddImage = async (e) => {
   });
 };
 
+
+  const handleImagesChange = (images) => {
+    setData({
+      ...data,
+      [blockName]: {
+        ...value,
+        images: images
+      }
+    });
+  };
 
 const moveImage = (fromIndex, toIndex) => {
   const imgs = [...(value.images || [])];
@@ -144,28 +155,13 @@ const moveImage = (fromIndex, toIndex) => {
           </div>
         ))}
       </div>
-      <div>
-        <label className="font-semibold">Galeri Görselleri</label>
-        <input
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleAddImage}
-          className="block my-2"
-        />
-        <div className="flex gap-2 flex-wrap">
-          {(value.images || []).map((img, idx) => (
-            <div key={idx} className="relative w-[120px] h-[80px]">
-              <img src={img} className="w-full h-full object-cover rounded" />
-              <button
-                className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded"
-                onClick={() => handleRemoveImage(idx)}
-                type="button"
-              >Sil</button>
+        <div className="mt-6">
+              <MultiImageUploadInput
+                value={value.images || []}
+                onChange={handleImagesChange}
+                label="Galeri Görselleri"
+              />
             </div>
-          ))}
-        </div>
-      </div>
     </div>
   );
 }
