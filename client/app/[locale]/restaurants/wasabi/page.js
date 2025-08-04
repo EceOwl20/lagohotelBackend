@@ -14,10 +14,6 @@ import img14 from "../fuego/images/SRF_2511.jpg"
 import img16 from "../fuego/images/SRF_2404_2.jpg"
 import ClinaryReverseInfo from '../components/ClinaryReverseInfo'
 import CuisinesCarousel from '../components/CuisinesCarousel'
-import wasabi from "../gustorestaurant/images/wasabi2.webp"
-import despina from "../images/despina.webp"
-import anatolia from "../images/anatolia.webp"
-import RoomTour from '@/app/[locale]/rooms/familyswimup/components/RoomTour'
 import DiscoverBackground from '../components/DiscoverBackground'
 import ContactSection2 from '@/app/[locale]/GeneralComponents/Contact/ContactSection2'
 import backgroundImg from "../images/Background.webp"

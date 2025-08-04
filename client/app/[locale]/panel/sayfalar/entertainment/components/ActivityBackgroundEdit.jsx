@@ -1,47 +1,9 @@
 "use client";
 import React, { useState } from "react";
+import MultiImageUploadInput from "../../../components/MultiImageUploadInput";
 
 export default function ActivityBackgroundEdit({ data, setData, langs }) {
   const value = data.activityBackground || {};
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [uploading, setUploading] = useState(false);
-
-  // Birden fazla dosya seçip upload edebilmek için multiple
-  const handleAddImages = async (e) => {
-    const files = Array.from(e.target.files || []);
-    if (!files.length) return;
-    setUploading(true);
-    const uploadedUrls = [];
-
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append("image", file);
-      try {
-        const res = await fetch(`${apiUrl}/api/upload`, {
-          method: "POST",
-          body: formData
-        });
-        const result = await res.json();
-        if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-        // backend result.imageUrl veya result.path
-        const url = result.imageUrl || result.path;
-        if (url) uploadedUrls.push(url);
-      } catch (err) {
-        console.error("Galerie upload hatası:", err);
-      }
-    }
-
-    setData({
-      ...data,
-      activityBackground: {
-        ...value,
-        images: [...(value.images || []), ...uploadedUrls]
-      }
-    });
-    setUploading(false);
-    // input'u temizle ki aynı dosyayı tekrar seçebil
-    e.target.value = "";
-  };
 
   const handleRemoveImage = (idx) => {
     setData({
@@ -59,6 +21,16 @@ export default function ActivityBackgroundEdit({ data, setData, langs }) {
       activityBackground: {
         ...value,
         [field]: { ...(value[field] || {}), [lang]: val }
+      }
+    });
+  };
+
+  const handleImagesChange = (images) => {
+    setData({
+      ...data,
+      activityBackground: {
+        ...value,
+        images: images
       }
     });
   };
@@ -102,37 +74,13 @@ export default function ActivityBackgroundEdit({ data, setData, langs }) {
         </div>
       ))}
 
-      <label className="block font-semibold mt-4 mb-2">Galeri Görselleri</label>
-      <input
-        type="file"
-        accept="image/*"
-        multiple
-        onChange={handleAddImages}
-        disabled={uploading}
-        className="block mb-3"
-      />
-      {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
-
-      <div className="flex gap-2 flex-wrap">
-        {(value.images || []).map((img, idx) => {
-          const src = img.startsWith("/") ? `${apiUrl}${img}` : img;
-          return (
-            <div key={idx} className="relative w-[120px] h-[80px]">
-              <img
-                src={src}
-                alt={`Galeri ${idx + 1}`}
-                className="w-full h-full object-cover rounded"
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveImage(idx)}
-                className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded"
-              >
-                Sil
-              </button>
-            </div>
-          );
-        })}
+      {/* Yeni Galeri Yükleme Bileşeni */}
+      <div className="mt-6">
+        <MultiImageUploadInput
+          value={value.images || []}
+          onChange={handleImagesChange}
+          label="Galeri Görselleri"
+        />
       </div>
     </div>
   );
