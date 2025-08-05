@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 const langs = ["tr", "en", "de", "ru"];
 
 export default function SectionAccommodation({ data, setData }) {
@@ -128,21 +129,20 @@ export default function SectionAccommodation({ data, setData }) {
             </div>
 
             {/* Dosya Yükleme Alanı */}
-            <label>Görsel Yükle</label>
-            <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => handleImageUpload(e, index)}
-              className="w-full border p-2 rounded mb-2"
-            />
-            {/* Önizleme */}
-            {room.image && (
-              <img
-                src={`${apiUrl}${room.image}`}
-                alt="Oda görseli"
-                className="w-[180px] h-[120px] object-cover rounded mb-2"
-              />
-            )}
+            <ImageUploadInput
+  label="Görsel Yükle"
+  value={room.image}
+  onChange={(url) => {
+    const updated = [...data.accommodation.rooms];
+    updated[index].image = url;
+    setData({
+      ...data,
+      accommodation: { ...data.accommodation, rooms: updated },
+    });
+  }}
+/>
+
+            
 
             {langs.map((lang) => (
               <div key={lang}>

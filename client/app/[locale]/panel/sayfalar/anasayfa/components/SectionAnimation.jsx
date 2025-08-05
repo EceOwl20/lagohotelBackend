@@ -1,5 +1,7 @@
 "use client";
 
+import ImageUploadInput from "../../../components/ImageUploadInput";
+
 export default function SectionAnimation({ data, setData }) {
   const langs = ["tr", "en", "de", "ru"];
    const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -28,6 +30,17 @@ export default function SectionAnimation({ data, setData }) {
     } catch (err) {
       alert("Yükleme hatası: " + err.message);
     }
+  };
+
+  // Görsel yüklenince URL'i güncelle
+  const handleImageChange = (key, url) => {
+    setData((prev) => ({
+      ...prev,
+      animationSection: {
+        ...prev.animationSection,
+        [key]: url,
+      },
+    }));
   };
 
   return (
@@ -151,35 +164,17 @@ export default function SectionAnimation({ data, setData }) {
       ))}
 
       {/* Görsel alanları */}
-      <label className="block">Sol Görsel Yükle</label>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => handleImageUpload(e, "imageLeft")}
-        className="mb-2"
+      <ImageUploadInput
+        label="Sol Görsel Yükle"
+        value={data.animationSection?.imageLeft}
+        onChange={(url) => handleImageChange("imageLeft", url)}
       />
-      {data.animationSection?.imageLeft && (
-        <img
-          src={`${apiUrl}${data.animationSection.imageLeft}`}
-          alt="Sol Görsel"
-          className="w-32 h-24 object-cover rounded mb-2"
-        />
-      )}
 
-      <label className="block">Sağ Görsel Yükle</label>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={(e) => handleImageUpload(e, "imageRight")}
-        className="mb-2"
+      <ImageUploadInput
+        label="Sağ Görsel Yükle"
+        value={data.animationSection?.imageRight}
+        onChange={(url) => handleImageChange("imageRight", url)}
       />
-      {data.animationSection?.imageRight && (
-        <img
-          src={`${apiUrl}${data.animationSection.imageRight}`}
-          alt="Sağ Görsel"
-          className="w-32 h-24 object-cover rounded mb-2"
-        />
-      )}
     </div>
   );
 }
