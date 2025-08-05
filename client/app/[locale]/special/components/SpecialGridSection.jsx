@@ -18,7 +18,7 @@ const SpecialGridSection = () => {
               .catch(console.error);
           }, [apiUrl]);
       
-  const conceptImages = (pageData?.types?.items || []).map(item => {
+  const conceptImages = (pageData?.gridItems?.items || []).map(item => {
     if (!item.image) return "";
     return item.image.startsWith("/")
       ? `${apiUrl}${item.image}`
@@ -161,14 +161,16 @@ const gridData = [
                 key={index}
                 className="flex-[0_0_auto] h-[390px] min-w-0 mr-[1.5%]"
               >
-                <div className="flex flex-col relative w-full items-start text-start justify-center gap-[15px] lg:gap-[20px] font-jost text-black ">
-                  <Image
+                <div className="flex flex-col relative w-full items-start text-start justify-center gap-[15px] lg:gap-[20px] font-jost text-black">
+                  <div className="flex w-auto h-[383px] lg:h-[400px] md:w-full object-cover">
+                    <Image
                     src={data.image}
                     alt={data.title}
                     height={400}
                     width={200}
-                     className="flex h-[383px] md:h-[400px] w-auto md:w-full"
+                    className="flex h-[383px] md:h-[400px] w-auto md:w-full"
                   />
+                  </div>
                   <div className="absolute inset-0 bg-black/40 z-[1]"></div>
                   <div className="absolute bottom-[30px] left-[30px] text-white z-20">
                   <span className="text-[12px] font-normal uppercase tracking-[0.48px] leading-[14px]">

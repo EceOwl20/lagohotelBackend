@@ -77,13 +77,13 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
             <input
               type="text"
               className="w-full border rounded p-2 mb-1"
-              value={value.subtitle?.[lang] || ""}
+              value={value.span?.[lang] || ""}
               onChange={(e) =>
                 setData({
                   ...data,
                   [blockName]: {
                     ...value,
-                    subtitle: { ...(value.subtitle || {}), [lang]: e.target.value },
+                    span: { ...(value.span || {}), [lang]: e.target.value },
                   },
                 })
               }
@@ -93,13 +93,13 @@ export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockNam
             <input
               type="text"
               className="w-full border rounded p-2 mb-1"
-              value={value.title?.[lang] || ""}
+              value={value.header?.[lang] || ""}
               onChange={(e) =>
                 setData({
                   ...data,
                   [blockName]: {
                     ...value,
-                    title: { ...(value.title || {}), [lang]: e.target.value },
+                    header: { ...(value.header || {}), [lang]: e.target.value },
                   },
                 })
               }
