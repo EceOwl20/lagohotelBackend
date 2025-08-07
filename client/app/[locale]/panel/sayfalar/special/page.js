@@ -33,7 +33,7 @@ export default function SpecialPanelPage() {
         body: JSON.stringify(data),
       });
       if (res.ok) setStatus("Kaydedildi!");
-      else setStatus("Kaydetme hatası!");
+      else setStatus("Kaydetme hatası!"); 
     } catch {
       setStatus("Kaydetme hatası!");
     }

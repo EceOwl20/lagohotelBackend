@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -162,27 +163,13 @@ export default function SpecialInfoEdit({ data, setData, langs }) {
         {["image1", "image2"].map((field) => (
           <div key={field}>
             <h6 className="font-semibold mb-2">{field}</h6>
-            <input
-              type="text"
-              className="border rounded w-full p-2 mb-2"
-              placeholder="Image URL"
-              value={info[field] || ""}
-              onChange={(e) => handleImageChange(field, e.target.value)}
-            />
-            <input
-              type="file"
-              accept="image/*"
-              className="mt-2"
-              onChange={(e) => handleImageUpload(e, field)}
-            />
-            {uploading[field] && <p className="text-blue-600 text-sm">Yükleniyor...</p>}
-            {info[field] && (
-              <img
-                src={info[field]}
-                alt={field}
-                className="mt-2 max-h-32 border rounded"
-              />
-            )}
+            <ImageUploadInput
+  value={info[field]}
+  onChange={(url) => handleImageChange(field, url)}
+  label={`Görsel (${field})`}
+  className="mb-4"
+/>
+
           </div>
         ))}
       </div>

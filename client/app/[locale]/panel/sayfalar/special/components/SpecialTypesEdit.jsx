@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -176,31 +177,12 @@ export default function SpecialTypesEdit({ data, setData, langs }) {
 
             <div>
               <h6 className="font-semibold mb-1">Image</h6>
-              <input
-                type="text"
-                className="border rounded w-full p-2 mb-2"
-                placeholder="Image URL"
-                value={item.image || ""}
-                onChange={(e) =>
-                  handleItemChange(index, "image", null, e.target.value)
-                }
-              />
-              <input
-                type="file"
-                accept="image/*"
-                className="mt-2"
-                onChange={(e) => handleImageUpload(e, index)}
-              />
-              {uploading[index] && (
-                <p className="text-sm text-blue-600 mt-1">Yükleniyor...</p>
-              )}
-              {item.image && (
-                <img
-                  src={item.image}
-                  alt="Preview"
-                  className="mt-2 max-h-32 rounded border"
-                />
-              )}
+             <ImageUploadInput
+  value={item.image}
+  onChange={(url) => handleItemChange(index, "image", null, url)}
+  label={`Item ${index + 1} - Görsel`}
+  className="mt-2"
+/>
             </div>
           </div>
         </div>

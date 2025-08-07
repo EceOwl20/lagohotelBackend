@@ -1,6 +1,7 @@
 // components/SpecialBannerEdit.jsx
 "use client";
 import { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function SpecialBannerEdit({ data, setData, langs }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -51,28 +52,20 @@ export default function SpecialBannerEdit({ data, setData, langs }) {
       <h2 className="text-[22px] font-semibold mb-4">Special Banner Düzenle</h2>
 
       {/* Görsel Upload */}
-      <label className="block mb-4 font-semibold">
-        Banner Görsel
-        <input
-          type="file"
-          accept="image/*"
-          className="mt-1 w-full"
-          onChange={handleImageUpload}
-          disabled={uploading}
-        />
-        {uploading && <p className="text-sm text-gray-500">Yükleniyor...</p>}
-        {banner.image && (
-          <img
-            src={
-              banner.image.startsWith("/")
-                ? `${apiUrl}${banner.image}`
-                : banner.image
-            }
-            alt="Banner Önizleme"
-            className="mt-2 h-32 object-cover border"
-          />
-        )}
-      </label>
+     <ImageUploadInput
+  value={banner.image}
+  onChange={(url) =>
+    setData({
+      ...data,
+      banner: {
+        ...data.banner,
+        image: url,
+      },
+    })
+  }
+  label="Banner Görsel"
+  className="mb-4"
+/>
 
       {/* Alt Başlıklar */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">

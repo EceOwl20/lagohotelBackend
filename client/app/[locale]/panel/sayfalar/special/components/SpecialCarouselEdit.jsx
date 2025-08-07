@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -111,39 +112,25 @@ export default function SpecialCarouselEdit({ data, setData, langs }) {
       </div>
 
       {(carousel.images || []).map((image, index) => (
-        <div key={index} className="border p-4 mb-4 rounded">
-          <div className="flex justify-between items-center mb-4">
-            <span>Image {index + 1}</span>
-            <button
-              className="px-3 py-1 bg-red-500 text-white rounded"
-              onClick={() => removeImage(index)}
-            >
-              Sil
-            </button>
-          </div>
-          <input
-            type="text"
-            className="border rounded w-full p-2 mb-2"
-            placeholder="Image URL"
-            value={image || ""}
-            onChange={(e) => handleImageChange(index, e.target.value)}
-          />
-          <input
-            type="file"
-            accept="image/*"
-            className="mt-2"
-            onChange={(e) => handleImageUpload(e, index)}
-          />
-          {uploading[index] && <p className="text-blue-600 text-sm">Yükleniyor...</p>}
-          {image && (
-            <img
-              src={image}
-              alt={`Carousel ${index}`}
-              className="mt-2 max-h-32 border rounded"
-            />
-          )}
-        </div>
-      ))}
+  <div key={index} className="border p-4 mb-4 rounded">
+    <div className="flex justify-between items-center mb-4">
+      <span>Image {index + 1}</span>
+      <button
+        className="px-3 py-1 bg-red-500 text-white rounded"
+        onClick={() => removeImage(index)}
+      >
+        Sil
+      </button>
+    </div>
+
+    <ImageUploadInput
+      value={image}
+      onChange={(url) => handleImageChange(index, url)}
+      label={`Image URL ${index + 1}`}
+    />
+  </div>
+))}
+
     </div>
   );
 }

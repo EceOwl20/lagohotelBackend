@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function MainBannerEdit({ data, setData }) {
   const value = data.mainBanner || {};
@@ -43,40 +44,19 @@ export default function MainBannerEdit({ data, setData }) {
       <h4 className="font-bold text-lg mb-2">Main Banner Görseli</h4>
 
       {/* 1) URL girişi */}
-      <label className="block font-semibold mb-1">Görsel URL</label>
-      <input
-        type="text"
-        placeholder="https://... veya /uploads/..."
-        value={value.image || ""}
-        onChange={e =>
-          setData({ ...data, mainBanner: { ...value, image: e.target.value } })
+      <ImageUploadInput
+        value={value.image}
+        onChange={(url) =>
+          setData({
+            ...data,
+            mainBanner: {
+              ...value,
+              image: url,
+            },
+          })
         }
-        className="w-full border p-2 rounded mb-4"
+        label="Banner Görsel"
       />
-
-      {/* 2) Dosya yükleme */}
-      <label className="block font-semibold mb-1">Veya Bilgisayardan Seç</label>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/*"
-        disabled={uploading}
-        onChange={handleUpload}
-        className="block mb-4"
-      />
-      {uploading && <p className="text-sm text-gray-500 mb-4">Yükleniyor…</p>}
-
-      {/* Önizleme */}
-      {value.image && (
-        <div>
-          <p className="font-semibold mb-1">Önizleme:</p>
-          <img
-            src={value.image.startsWith("/") ? `${apiUrl}${value.image}` : value.image}
-            alt="Banner Önizleme"
-            className="w-full max-w-sm rounded shadow"
-          />
-        </div>
-      )}
     </div>
   );
 }
