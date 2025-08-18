@@ -9,11 +9,14 @@ import { RxCross2 } from "react-icons/rx";
 import {useTranslations} from 'next-intl';
 
 // ModalPortal Componenti: Modal içeriği body içerisine taşır.
-const ModalPortal = ({ children, onClose }) => {
+const ModalPortal = ({ children, onClose, isOpen }) => {
   return ReactDOM.createPortal(
     <div
-      className="fixed top-0 left-0 h-screen w-screen z-[9999] flex items-center justify-center "
+      // mount hep var -> görünürlük sınıfla
+      className={`fixed top-0 left-0 h-screen w-screen z-[9999] flex items-center justify-center transition-opacity duration-200
+                  ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       onClick={onClose}
+      aria-hidden={!isOpen}
     >
       <div
         onClick={(e) => e.stopPropagation()}
@@ -55,19 +58,40 @@ const CookiePopup = () => {
     targeting: false,
   });
 
+useEffect(() => {
+  setHasMounted(true);              // artık render edebilir
+  const saved = loadPreferences();  // kayıt var mı?
+  setIsVisible(!saved);             // kayıt yoksa göster, varsa sakla
+}, []);
 
     // Sayfa yüklendiğinde tercihleri yükle
-    useEffect(() => {
-      setHasMounted(true);
-      const savedPreferences = loadPreferences();
-      if (savedPreferences) {
-        // Tercihler kaydedilmişse popup'ı gösterme
-        setIsVisible(false);
-      } else {
-        // Tercihler kaydedilmemişse popup'ı göster
-        setIsVisible(true);
-      }
-    }, []);
+   useEffect(() => {
+    if (!hasMounted) return;
+
+    const body = document.body;
+    const hadOverflowHidden = body.style.overflow === 'hidden';
+
+    if (isModalOpen) {
+      // scrollbar genişliği = viewport - içerik genişliği
+      const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+      body.style.overflow = 'hidden';
+      // mevcut body padding-right’ı koru
+      const currentPr = parseInt(window.getComputedStyle(body).paddingRight || '0', 10);
+      body.style.paddingRight = `${currentPr + scrollbarWidth}px`;
+    } else if (!isModalOpen && !hadOverflowHidden) {
+      body.style.overflow = '';
+      body.style.paddingRight = '';
+    } else {
+      // modal kapandı
+      body.style.overflow = '';
+      body.style.paddingRight = '';
+    }
+
+    return () => {
+      body.style.overflow = '';
+      body.style.paddingRight = '';
+    };
+  }, [isModalOpen, hasMounted]);
   
     // Tercihleri kaydet ve popup'ı kapat
     const handleConfirm = () => {
@@ -385,7 +409,7 @@ const CookiePopup = () => {
     </div>,
 
     <div className="flex flex-col h-full w-[96%] ml-[2%] sm:w-[95%] lg:w-[99%] text-start text-[#FBFBFB] overflow-y-scroll overflow-x-hidden z-[9999] font-jost thin-scrollbar">
-      <p className="text-[13px] font-normal leading-[19.5px] pr-[3.5%] lg:pr-[7.5%]">
+      <div className="text-[13px] font-normal leading-[19.5px] pr-[3.5%] lg:pr-[7.5%]">
         Veri Sorumlusunun Kimliği: Cebeci Global Turizm Ticaret Anonim Şirketi –
         Adres: (Sorgun mah. Titreyengöl mevkii No:26 Manavgat Antalya) ve
         bünyesinde bulunan Lago Hotel olarak, ulusal veri koruma kanunumuz 6698
@@ -482,7 +506,7 @@ const CookiePopup = () => {
         amacıyla zorunlu veri işleme gerekliliği olduğunda bu çerezler
         kullanılmaktadır. Web sitemizde kullanılan zorunlu çerezlerin
         sağlayıcıları ve kullanım amaçları aşağıda belirtilmiştir:
-        <table class="w-[90%] border-collapse my-[15px] text-[12px] overflow-x-scroll">
+        <table className="w-[90%] border-collapse my-[15px] text-[12px] overflow-x-scroll">
           <thead>
             <tr className="color-[#233038] border-[#fff]">
               <th className="border p-[2px] text-left leading-normal">
@@ -723,7 +747,7 @@ const CookiePopup = () => {
         gerekirse, bu bilgilerin korunması ve gizliliği önemlidir. Web sitemizde
         kullanılan pazarlama çerezlerinin sağlayıcıları ve kullanım amaçları
         aşağıda belirtilmiştir:
-        <table class="w-[90%] border-collapse my-[15px] text-[12px] overflow-x-scroll">
+        <table className="w-[90%] border-collapse my-[15px] text-[12px] overflow-x-scroll">
           <thead>
             <tr className="color-[#233038] border-[#fff]">
               <th className="border p-[2px] text-left leading-normal">
@@ -787,7 +811,7 @@ const CookiePopup = () => {
         veriler yurt dışındaki çerez sağlayıcılarıyla paylaşılabilir. Web
         sitemizde kullanılan analitik çerezler, sağlayıcıları ve kullanım
         amaçları aşağıda belirtilmiştir:
-        <table class="w-[90%] border-collapse my-[15px] text-[12px] overflow-x-scroll">
+        <table className="w-[90%] border-collapse my-[15px] text-[12px] overflow-x-scroll">
           <thead>
             <tr className="color-[#233038] border-[#fff]">
               <th className="border p-[2px] text-left leading-normal">
@@ -1014,7 +1038,7 @@ const CookiePopup = () => {
             </ol>
           </li>
         </ul>
-      </p>
+      </div>
     </div>,
 
     // second text
@@ -1098,12 +1122,14 @@ const CookiePopup = () => {
             </button>
 
             {isModalOpen && (
-              <ModalPortal onClose={handleModalToggle}>
+            <ModalPortal isOpen={isModalOpen} onClose={handleModalToggle}>
                 <div className="flex flex-col items-center justify-center gap-[15px] lg:gap-[39px]">
                   <div className="flex w-[90%] items-start justify-between lg:mt-[27px] lg:gap-[23px] mt-[10%] md:mt-[83px] lg:h-[39px] h-[52px]">
                     <Image
                       src={logosvg}
                       alt="Logo"
+                      width={62}
+                      height={46}
                       className="object-contain w-[62px] h-[46px] lg:h-[39px] lg:w-[52px] items-center justify-center"
                     />
                     <div className="hidden lg:flex flex-row w-[98%] md:w-[90%] lg:w-auto text-center items-center text-[16px] font-bold ml-[11%] lg:ml-0 gap-[23px] h-[29px]">

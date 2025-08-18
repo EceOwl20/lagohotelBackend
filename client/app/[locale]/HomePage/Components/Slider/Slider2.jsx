@@ -61,6 +61,8 @@ function Slide({ slide, marginClass }) {
         width={360}
         height={540}
         className="w-full h-full object-cover"
+         priority    //lazy yükleme kalkar, preload eklenir
+  fetchPriority="high" 
       />
       <div className="absolute flex flex-col text-white left-1/2 -translate-x-1/2 -translate-y-[10%] items-center justify-center w-[80%] lg:w-[50%] text-center top-[10%] gap-[10px] lg:gap-[23px]">
         <h4 className="text-[24px] md:text-[28px] lg:text-[30px] font-normal leading-[120%] lg:leading-[36px] -tracking-[0.66px] font-marcellus w-[100%]">{slide.title}</h4>
@@ -120,7 +122,7 @@ export default function Slider2({ slides }) {
   }, [emblaApi]);
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden" >
       <div ref={emblaRef} className="overflow-hidden w-full ml-[6.1%] md:ml-[4.3%] lg:w-[87.4%] lg:ml-[5.8%]">
         <div className="flex lg:h-[540px] w-auto">
           {slidesCombined.map((slide, index) => (

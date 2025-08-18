@@ -44,7 +44,7 @@ function Slide({ slide, marginClass, lang = "tr" }) {
   const imageSrc = slide.image || slide.src;
 
   return (
-    <div className={`relative shrink-0 flex justify-center items-center ${marginClass} flex-[0_0_auto]`}>
+    <div className={`relative shrink-0 flex justify-center items-center ${marginClass} flex-[0_0_auto] min-h-[400px]`}>
       {imageSrc ? (
         <Image
           src={imageSrc.startsWith("/") ? `${apiUrl}${imageSrc}` : imageSrc}
@@ -52,6 +52,8 @@ function Slide({ slide, marginClass, lang = "tr" }) {
           width={360}
           height={540}
           className="object-cover w-full h-full"
+           priority    // lazy yükleme kalkar, preload eklenir
+          fetchPriority="high" 
         />
       ) : (
         <div className="w-[360px] h-[540px] bg-gray-200 flex items-center justify-center text-sm text-gray-500">
@@ -150,7 +152,7 @@ export default function Slider1({ slides }) {
   }, [emblaApi]);
 
   return (
-    <section className="relative w-full overflow-hidden">
+    <section className="relative w-full overflow-hidden" >
       <div ref={emblaRef} className="overflow-hidden w-full lg:w-[87.4%] lg:ml-[5.8%]">
         <div className="flex md:h-[405px] lg:h-[540px] w-auto ">
           {slidesCombined.map((slide, index) => (
