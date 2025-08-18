@@ -1073,7 +1073,7 @@ useEffect(() => {
 
   return (
     isVisible && (
-      <div className="fixed flex z-[9999] bottom-0 bg-[rgba(29,29,27,0.70)] backdrop-blur-[10px] right-0 left-0 w-screen items-center justify-center">
+      <div className="fixed flex z-[9999] bottom-0 bg-[rgba(29,29,27,0.70)] backdrop-blur-[10px] right-0 left-0 w-screen items-center justify-center h-[217px] md:h-[153px] lg:h-[93px]">
         <div className="flex flex-col md:flex-row w-[94%] md:w-[99%] lg:w-[94%] xl:w-[80%] xl:max-w-[1270px] py-[25px] gap-[20px] font-montserrat text-center items-center justify-center text-[#FBFBFB] font-jost">
           <p className="md:hidden text-[13px] lg:text-[14px] leading-[130%] text-[#FBFBFB] font-normal font-jost text-center md:min-w-[39%] lg:w-[]">
             <span className="font-medium underline">{t("cookie")}</span>  {t("cookieText")}

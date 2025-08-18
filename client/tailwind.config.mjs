@@ -13,7 +13,7 @@ export default {
       },
       fontFamily: {
         jost: ['Jost', 'sans-serif'],
-        marcellus:['Marcellus','sans-serif'],
+        marcellus:['Marcellus','serif'],
         forum:['Forum','sans-serif']
       },
 

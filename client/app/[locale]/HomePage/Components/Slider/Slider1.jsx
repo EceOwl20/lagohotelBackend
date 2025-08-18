@@ -44,15 +44,30 @@ function Slide({ slide, marginClass, lang = "tr" }) {
   const imageSrc = slide.image || slide.src;
 
   return (
-    <div className={`relative shrink-0 flex justify-center items-center ${marginClass} flex-[0_0_auto] min-h-[400px]`}>
+   <div
+      className={`
+        relative
+        shrink-0
+        flex 
+        justify-center 
+        items-center
+        ${marginClass}
+        flex-[0_0_auto]
+         lg:min-h-[540px]
+         lg:w-[360px]
+         md:w-[270px] md:h-[405px]
+         h-[266px] w-[177.3px]
+        
+      `}
+    >
       {imageSrc ? (
         <Image
           src={imageSrc.startsWith("/") ? `${apiUrl}${imageSrc}` : imageSrc}
           alt={slide.title?.[lang] || "Slider Görseli"}
           width={360}
           height={540}
-          className="object-cover w-full h-full"
-           priority    // lazy yükleme kalkar, preload eklenir
+          className="lg:w-full lg:h-full md:w-[270px] md:h-[405px] h-[266px] w-[177.3px] object-cover"
+           priority    
           fetchPriority="high" 
         />
       ) : (
@@ -61,10 +76,14 @@ function Slide({ slide, marginClass, lang = "tr" }) {
         </div>
       )}
 
-<Link
-  href={`/${lang}${slide.link?.[lang] || ""}`}
-  className="absolute inset-0 flex items-center justify-center text-white text-[20px] md:text-[30px] lg:text-[40px] font-marcellus"
->
+ <Link
+          href={slide.link}
+          className=" absolute inset-0 flex items-center justify-center pb-4 z-50
+            text-white
+            text-[20px] md:text-[30px] lg:text-[40px] leading-[9.852px] -tracking-[0.44px] font-normal md:leading-[15px] lg:leading-[20px] md:-tracking-[0.66px] lg:-tracking-[0.88px]
+            font-marcellus transition
+          "
+        >
   {typeof slide.title === "object" ? slide.title?.[lang] : slide.title}
 </Link>
     </div>

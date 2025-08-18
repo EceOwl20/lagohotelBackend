@@ -48,7 +48,7 @@ export default function Reservation() {
         left-0 
         right-0
         w-screen 
-        h-auto 
+        h-[84px] 
         z-20 
         items-center 
         justify-center
