@@ -126,6 +126,7 @@ const OtherOptions = () => {
                     alt={room.title}
                     width={room.img.width}
                     height={room.img.height}
+                     loading="lazy"
                   />
                   <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
                     {room.description}

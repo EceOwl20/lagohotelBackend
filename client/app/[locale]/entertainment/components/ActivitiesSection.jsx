@@ -58,7 +58,7 @@ const ActivitiesSection = () => {
            <div className='flex flex-col md:flex-row  w-[87.79%] md:w-[91.4%] lg:w-[76.8%] gap-[20px] lg:gap-[30px] items-center justify-center '>
 
            <div className='flex flex-col  w-[300px] md:w-[538px] h-full relative'>
-           <Image src={image1} alt="daytime" width={daytime.width || 538} height={daytime.height || 600} className='w-full'/>
+           <Image src={image1}  loading="lazy" alt="daytime" width={daytime.width || 538} height={daytime.height || 600} className='w-full'/>
            <div className='flex flex-col absolute bottom-[38px] left-[35px] items-start justify-center text-start gap-[25px] pb-[10px] text-white '>
             <span className='text-[12px] font-normal uppercase  font-jost leading-normal tracking-[0.48px]'>{pageData.activitiesSection?.info1?.title?.[locale]}</span>
             <h4 className='font-marcellus text-[30px] font-normal capsizedText3 leading-[40px]' >{pageData.activitiesSection?.info1?.text?.[locale]}</h4>
@@ -66,7 +66,7 @@ const ActivitiesSection = () => {
            </div>
            
             <div className='flex flex-col w-[300px] md:w-[538px] h-full relative'>
-            <Image src={image2} alt="nighttime" width={nighttime.width || 538} height={nighttime.height || 600} className='w-full'/>
+            <Image src={image2}  loading="lazy" alt="nighttime" width={nighttime.width || 538} height={nighttime.height || 600} className='w-full'/>
            <div className='flex flex-col absolute bottom-[38px] left-[35px] items-start justify-center text-start gap-[15px] md:gap-[25px] pb-[10px] text-white '>
             <span className='text-[12px] font-normal uppercase  font-jost leading-normal tracking-[0.48px]'>{pageData.activitiesSection?.info2?.title?.[locale]}</span>
             <h4 className='font-marcellus text-[30px] font-normal leading-[120%] lg:capsizedText3 '>{pageData.activitiesSection?.info2?.text?.[locale]}</h4>

@@ -83,6 +83,7 @@ const EntertainmentTypesSection = () => {
                   height={300}        // dilediğiniz ölçüyü koyun
                   unoptimized         // remote resimler için
                   className="flex w-full object-cover"
+                   loading="lazy"
                 />
                 <div className="absolute flex flex-col items-start justify-center bg-white gap-[25px] font-jost text-black w-[90%] p-[20px] -bottom-44">
                   <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">

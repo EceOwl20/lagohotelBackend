@@ -57,6 +57,7 @@ const SubroomCarousel = ({images}) => {
                 className="w-auto h-full object-cover"
                 width={img.width || 300}
                 height={img.height || 200}
+                 loading="lazy"
               />
             </div>
           ))}
@@ -85,6 +86,7 @@ const SubroomCarousel = ({images}) => {
               className=" w-[90vw] h-[80vh] object-contain shadow-lg transition-transform duration-300 ease-in-out scale-100 hover:scale-105"
               width={selectedImage.width}
               height={selectedImage.height}
+               loading="lazy"
             />
           </div>
 

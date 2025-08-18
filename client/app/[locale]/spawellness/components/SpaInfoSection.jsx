@@ -24,6 +24,7 @@ const SpaInfoSection = ({img1,img2, texts=[],texts2=[],texts3=[]}) => {
               width={img2.width || 597}
               height={img2.height || 411}
               alt="spa"
+               loading="lazy"
               className="w-full"
             />
             <div className="absolute bottom-[35px] left-[35px] text-white font-jost gap-[24px]">
@@ -46,6 +47,7 @@ const SpaInfoSection = ({img1,img2, texts=[],texts2=[],texts3=[]}) => {
           width={img1.width || 462}
           height={img1.height || 682}
           alt="spa"
+           loading="lazy"
           className="flex w-full "
         />
          <div className="absolute top-[35px] left-[35px] text-white font-jost gap-[24px]">

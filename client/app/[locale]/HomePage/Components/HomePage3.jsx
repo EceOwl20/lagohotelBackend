@@ -61,6 +61,7 @@ export default function HomePage3({ accommodation }) {
                   alt={room.title?.[locale] || ""}
                   width={600}
                   height={400}
+                  loading="lazy"
                   sizes="100vw"
                   className="w-full h-[44vh] md:h-[498px] object-cover transition-transform duration-[1600ms] ease-out group-hover:scale-105 relative"
                 />

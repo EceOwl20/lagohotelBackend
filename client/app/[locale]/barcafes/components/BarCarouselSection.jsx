@@ -26,6 +26,7 @@ const Slide = ({ src, index }) => (
       unoptimized={true}  // remote host için
       style={{ objectPosition: "center" }}
       className="flex h-full w-full object-cover"
+       loading="lazy"
     />
   </div>
 );

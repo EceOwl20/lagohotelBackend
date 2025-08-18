@@ -55,6 +55,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[], buttonText}) => 
                   alt={pool.title}
                   width={349} 
                   height={233}
+                   loading="lazy"
                   className="object-cover w-full transition-opacity duration-300 group-hover:opacity-0 max-h-[233px]"
                 />
                   <Image
@@ -62,6 +63,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[], buttonText}) => 
                   alt={`${pool.title} hover`}
                   width={349}
                   height={233}
+                   loading="lazy"
                   className="object-cover w-full absolute top-0 left-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100  max-h-[233px]"
                 />
                 </div>
@@ -97,6 +99,7 @@ const Beach5 = ({span,header,text,poolItems, showLink,links=[], buttonText}) => 
                     alt={pool.title}
                     width={349}
                     height={233}
+                     loading="lazy"
                   />
                   <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
                     {pool.subtitle}

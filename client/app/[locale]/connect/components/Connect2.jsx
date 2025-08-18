@@ -106,6 +106,7 @@ const Connect2 = () => {
           height={image.height || 744}
           className="object-cover w-full min-h-[650px]"
           priority
+           loading="lazy"
         />
       </div>
 

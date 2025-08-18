@@ -60,6 +60,7 @@ function Slide({ slide, marginClass }) {
         alt={slide.title}
         width={360}
         height={540}
+         loading="lazy"
         className="lg:w-full lg:h-full md:w-[270px] md:h-[405px] h-[266px] w-[177.3px] object-cover"
       />
       

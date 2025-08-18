@@ -21,6 +21,7 @@ const MissionColumn = ({
       width={img.width || 604}
       alt="hotel"
       className="flex w-full"
+       loading="lazy"
     />
     <span className="text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">
       {spanText}

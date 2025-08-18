@@ -137,6 +137,30 @@ export default function PagesPanel() {
           </Link>
           </li>
 
+          <li>
+              <Link href="/panel/sayfalar/sertifikalar" className="text-blue-600 hover:underline">
+              📑 Sertifikalar
+          </Link>
+          </li>
+
+             <li>
+              <Link href="/panel/sayfalar/blog" className="text-blue-600 hover:underline">
+               Blog
+          </Link>
+          </li>
+
+                  <li>
+              <Link href="/panel/sayfalar/surdurulebilirlik" className="text-blue-600 hover:underline">
+               surdurulebilirlik
+          </Link>
+          </li>
+
+                    <li>
+              <Link href="/panel/sayfalar/politikalarimiz" className="text-blue-600 hover:underline">
+               Politikalarımız
+          </Link>
+          </li>
+
 
       </ul>
     </div>

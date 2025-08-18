@@ -30,6 +30,7 @@ const SpaTypesInfoSection = ({
           width={img.width || 533} 
           height={img.height || 434} 
           className="w-[100%] md:w-[49.5%]" 
+           loading="lazy"
         />
         <div className="flex flex-col items-start justify-center w-full md:w-[47%] text-black font-jost gap-[10px] md:gap-[25px] lg:gap-[35px] text-start">
           <span className="hidden md:flex text-[12px] font-medium leading-[14px] tracking-[0.48px] uppercase">

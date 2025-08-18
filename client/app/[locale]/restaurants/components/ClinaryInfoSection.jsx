@@ -75,6 +75,7 @@ const ClinaryInfoSection = ({
           <Image
             src={img2}
             alt="art"
+             loading="lazy"
             width={img2.width || 300}
             height={img2.height || 450}
             className={`${imgClasses} mb-[20px] lg:mb-0 ${
@@ -82,6 +83,7 @@ const ClinaryInfoSection = ({
             }`}
           />
           <Image
+           loading="lazy"
             src={img1}
             alt="art"
             width={img1.width || 300}

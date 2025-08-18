@@ -11,13 +11,14 @@ const CertificateSection1 = () => {
             alt='certificate'
             width={img.width}
             height={img.height}
+             loading="lazy"
             className='w-[100%] lg:w-auto max-h-[694px] object-cover shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl'
             />
           
 
             <div className='flex flex-col items-start justify-start w-[100%] lg:w-[35%] lg:max-w-[450px] gap-[10px] lg:gap-[25px] text-lagoBlack font-jost text-start'>
             <span className="text-[12px] font-medium leading-[14.026px] tracking-[0.481px] uppercase">
-             Lago hotel certificate
+              hotel certificate
           </span>
           <h2 className="text-[28px] md:text-[36px] lg:text-[48px] font-normal font-marcellus leading-normal lg:leading-[57.707px] capsizedText2 capitalize">
           Sustainable Tourism Verification

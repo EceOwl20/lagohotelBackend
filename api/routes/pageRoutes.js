@@ -19,6 +19,125 @@ const Subrestaurant = require("../models/subRestaurant");
 const BarCafe = require("../models/subbarcafes");
 const Special = require("../models/specialpage");
 const Gallery = require("../models/gallery");
+const Certificates = require("../models/certificatepage");
+const BlogNewsPage = require("../models/blogNewsPage");
+const SustainabilityPage = require("../models/sustainability");
+const OurPoliciesPage = require("../models/ourpolicies");
+
+// GET /api/pages/ourpolicies
+router.get("/ourpolicies", async (req, res) => {
+  try {
+    let doc = await OurPoliciesPage.findOne({ slug: "ourpolicies" }).lean();
+    if (!doc) {
+      doc = await OurPoliciesPage.create({ slug: "ourpolicies" });
+    }
+    res.json(doc);
+  } catch (err) {
+    console.error("GET /ourpolicies error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT /api/pages/ourpolicies
+router.put("/ourpolicies", async (req, res) => {
+  try {
+    const updated = await OurPoliciesPage.findOneAndUpdate(
+      { slug: "ourpolicies" },
+      req.body,
+      { new: true, upsert: true }
+    ).lean();
+    res.json(updated);
+  } catch (err) {
+    console.error("PUT /ourpolicies error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.get("/sustainability", async (req, res) => {
+  try {
+    let doc = await SustainabilityPage.findOne({ slug: "sustainability" }).lean();
+    if (!doc) {
+      // yoksa oluşturup dön
+      doc = await SustainabilityPage.create({ slug: "sustainability" });
+    }
+    res.json(doc);
+  } catch (err) {
+    console.error("GET /sustainability error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+router.put("/sustainability", async (req, res) => {
+  try {
+    // upsert ile güncelle/oluştur
+    const updated = await SustainabilityPage.findOneAndUpdate(
+      { slug: "sustainability" },
+      req.body,
+      { new: true, upsert: true }
+    ).lean();
+    res.json(updated);
+  } catch (err) {
+    console.error("PUT /sustainability error:", err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET
+router.get("/blognews", async (req, res) => {
+  try {
+    let doc = await BlogNewsPage.findOne({ slug: "blognews" });
+    if (!doc) {
+      doc = await BlogNewsPage.create({ slug: "blognews" });
+    }
+    res.json(doc);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT
+router.put("/blognews", async (req, res) => {
+  try {
+    const updated = await BlogNewsPage.findOneAndUpdate(
+      { slug: "blognews" },
+      req.body,
+      { new: true, upsert: true, runValidators: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
+// GET
+router.get("/certificate", async (req, res) => {
+  try {
+    let certificate = await GallCertificatesery.findOne({ slug: "certificate" });
+    if (!certificate) {
+      certificate = await Certificates.create({ slug: "certificate" });
+    }
+    res.json(certificate);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT (update)
+router.put("/certificate", async (req, res) => {
+  try {
+    const updated = await Certificates.findOneAndUpdate(
+      { slug: "certificate" },
+      req.body,
+      { new: true, upsert: true }
+    );
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 
 

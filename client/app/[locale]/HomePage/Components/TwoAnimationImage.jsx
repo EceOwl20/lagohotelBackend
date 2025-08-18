@@ -77,6 +77,7 @@ export default function TwoAnimationImage({ animationData }) {
               alt="Sağ görsel"
               width={300}
               height={450}
+              loading="lazy"
               className={`absolute bottom-[100px] right-[140px] md:bottom-[110px] md:right-[104px] lg:bottom-[105px] lg:right-[215px] z-10 w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
                 animate ? "-translate-y-3 opacity-100" : "-translate-y-8 opacity-0"
               }`}
@@ -89,6 +90,7 @@ export default function TwoAnimationImage({ animationData }) {
               alt="Sol görsel"
               width={300}
               height={450}
+              loading="lazy"
               className={`z-50 w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
                 animate ? "-translate-y-4 opacity-100" : "translate-y-4 opacity-0"
               }`}

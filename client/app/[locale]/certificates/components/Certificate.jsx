@@ -55,6 +55,7 @@ const Certificate = () => {
                   alt="certificate" 
                   width={image} 
                   height={image}
+                   loading="lazy"
                   className="object-cover shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl"
                 />
                 

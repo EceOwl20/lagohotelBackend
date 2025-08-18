@@ -86,8 +86,8 @@ const SpecialInfoSection = () => {
         </div>
 
       </div>
-      <Image src={katman1} width={katman1.width} height={katman1.height} className="hidden lg:flex absolute left-0 bottom-0" alt="sutun"/>
-      <Image src={katman2} width={katman2.width} height={katman2.height} className="hidden lg:flex absolute left-28 -bottom-8" alt="sutun2"/>
+      <Image src={katman1} width={katman1.width} height={katman1.height} className="hidden lg:flex absolute left-0 bottom-0" alt="sutun" loading="lazy"/>
+      <Image src={katman2} width={katman2.width} height={katman2.height} className="hidden lg:flex absolute left-28 -bottom-8" alt="sutun2" loading="lazy"/>
     </div>
   );
 };

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import mainImg from "../HomePage/Components/Images/GreenAndBlueFull2.webp";
 import Banner from '../ourpolicies/components/Banner';
 import AboutSection from './components/AboutSection';
-import WebRuleSection from './components/WebRuleSection ';
+import WebRuleSection from './components/WebRuleSection';
 
 const page = () => {
     const [activeTab, setActiveTab] = useState("hakkinda");

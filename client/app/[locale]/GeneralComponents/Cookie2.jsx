@@ -482,6 +482,7 @@ const Cookie2 = ({ isOpen, onClose }) => {
                     <Image
                       src={logosvg}
                       alt="Logo"
+                      
                       className="object-contain w-[62px] h-[46px] lg:h-[39px] lg:w-[52px] items-center justify-center"
                     />
                     <div className="hidden lg:flex flex-row w-[98%] md:w-[90%] lg:w-auto text-center items-center text-[16px] font-bold ml-[11%] lg:ml-0 gap-[23px] h-[29px]">

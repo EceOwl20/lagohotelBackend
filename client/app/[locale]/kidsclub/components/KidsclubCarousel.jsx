@@ -120,6 +120,7 @@ const KidsclubCarousel = () => {
               >
                 <Image
                   src={image}
+                   loading="lazy"
                   layout="contain"
                   width={360}
                   height={540}
@@ -153,6 +154,7 @@ const KidsclubCarousel = () => {
           <Image
             src={panda}
             alt="bamboo"
+             loading="lazy"
             width={81}
             height={110}
             className="absolute -bottom-4 transition-all duration-900"

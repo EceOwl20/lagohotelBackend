@@ -62,6 +62,8 @@ router.post("/video", uploadVideo.single("video"), (req, res) => {
 
 
 
+
+
 router.get("/list", (req, res) => {
   const dir = path.join(__dirname, "../public/uploads");
   fs.readdir(dir, (err, files) => {
@@ -71,5 +73,16 @@ router.get("/list", (req, res) => {
     res.json(images);
   });
 });
+
+router.get("/videos", (req, res) => {
+  const dir = path.join(__dirname, "../public/uploads/videos"); // ✅ düzeltildi
+  fs.readdir(dir, (err, files) => {
+    if (err) return res.status(500).json({ error: "Liste okunamadı" });
+    const videos = files.filter(f => /\.(mp4|mov|webm)$/i.test(f)); // ✅ sadece video
+    res.json({ videos }); // ✅ anahtar adı "videos" olmalı
+  });
+});
+
+
 
 module.exports = router;

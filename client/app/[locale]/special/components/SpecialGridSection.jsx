@@ -168,6 +168,7 @@ const gridData = [
                     alt={data.title}
                     height={400}
                     width={200}
+                     loading="lazy"
                     className="flex h-[383px] md:h-[400px] w-auto md:w-full"
                   />
                   </div>

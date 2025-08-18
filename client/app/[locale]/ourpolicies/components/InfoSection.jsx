@@ -48,6 +48,7 @@ const InfoSection = ({
             <div className="w-full md:w-[42.5%]">
               <Image 
                 src={img} 
+                 loading="lazy"
                 alt="indoor" 
                 width={img.width} 
                 height={img.height} 

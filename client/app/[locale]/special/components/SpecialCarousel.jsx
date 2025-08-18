@@ -74,6 +74,7 @@ const SpecialCarousel = () => {
                   width={200}
                   alt={`Slide ${index + 1}`}
                   objectPosition="center"
+                   loading="lazy"
                   className="flex h-[45vh]  md:h-[60vh] lg:h-full w-auto"
                 />
               </div>

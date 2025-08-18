@@ -66,6 +66,7 @@ export default function GeziRehberiPage() {
               alt={yer.baslik}
               width={600}
               height={400}
+               loading="lazy"
               className="rounded-xl w-full h-auto object-cover"
             />
           </div>

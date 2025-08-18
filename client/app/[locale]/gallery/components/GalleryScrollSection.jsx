@@ -418,7 +418,7 @@ if (!pageData) {
                   key={index}
                   onClick={() => openModal(imgSrc,index)}
                 >
-                  <Image src={imgSrc} alt="gallery" className="lg:w-[322px] h-full" width={320} height={400} />
+                  <Image src={imgSrc} alt="gallery"  loading="lazy" className="lg:w-[322px] h-full" width={320} height={400} />
                 </div>
               ))}
             </div>
@@ -432,7 +432,7 @@ if (!pageData) {
             onClick={() => setModalImage(null)} // Modal dışına tıklandığında kapanır
           >
             <div className="relative w-[80%] " onClick={(e) => e.stopPropagation()}>
-              <Image src={modalImage} alt="Enlarged gallery" className="w-full h-auto object-cover max-h-[890px]" width={320} height={800} />
+              <Image src={modalImage} alt="Enlarged gallery"  loading="lazy" className="w-full h-auto object-cover max-h-[890px]" width={320} height={800} />
               <button
                 className="absolute left-0 top-1/2 -translate-y-1/2 p-2 bg-gray-700 bg-opacity-50 hover:bg-opacity-75 text-white"
                 onClick={scrollPrev}
