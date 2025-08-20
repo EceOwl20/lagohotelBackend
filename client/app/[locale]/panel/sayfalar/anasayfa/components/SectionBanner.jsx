@@ -1,4 +1,3 @@
-"use client";
 
 const langs = ["tr", "en", "de", "ru"];
 

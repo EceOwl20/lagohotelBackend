@@ -66,6 +66,7 @@ function Slide({ slide, marginClass, lang = "tr" }) {
           alt={slide.title?.[lang] || "Slider Görseli"}
           width={360}
           height={540}
+           style={{ minHeight: '540px' }}
           className="lg:w-full lg:h-full md:w-[270px] md:h-[405px] h-[266px] w-[177.3px] object-cover"
            priority    
           fetchPriority="high" 

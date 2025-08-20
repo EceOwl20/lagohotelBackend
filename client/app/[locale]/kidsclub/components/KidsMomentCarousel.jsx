@@ -56,8 +56,8 @@ const KidsMomentCarousel = ({ images, header,showheader }) => {
                 <Image
                   src={img}
                   style={{ objectFit: "cover" }}
-                  width={img.width || 1000}
-                  height={img.height || 600}
+                  width={1000}
+                  height={600}
                    alt={`Slide ${index + 1}`}
                   objectPosition="center"
                   className="flex h-[35vh] lg:h-full md:min-h-[420px] md:h-[38vh] w-auto"

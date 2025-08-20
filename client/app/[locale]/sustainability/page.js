@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React from "react";
 import Banner from "../ourpolicies/components/Banner";
 import mainImg from "../HomePage/Components/Images/GreenAndBlueFull2.webp";

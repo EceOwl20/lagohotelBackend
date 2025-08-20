@@ -1,5 +1,4 @@
-"use client";
-import { useState } from "react";
+
 const langs = ["tr", "en", "de", "ru"];
 
 export default function SectionEssentials({ data, setData }) {

@@ -102,10 +102,9 @@ const Connect2 = () => {
         <Image
           src={imageBackground}
           alt="Resim"
-          width={image.width || 978}
-          height={image.height || 744}
+          width={978}
+          height={744}
           className="object-cover w-full min-h-[650px]"
-          priority
            loading="lazy"
         />
       </div>

@@ -1,4 +1,3 @@
-"use client";
 
 export default function SectionSlider({ data, setData }) {
   const languages = ["tr", "en", "de", "ru"];

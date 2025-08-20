@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function ActivitiesSectionEdit({ data, setData, langs }) {

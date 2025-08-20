@@ -21,9 +21,9 @@ const Slide = ({ src, index }) => (
     <Image
      src={src}
       alt={`Slide ${index + 1}`}
-      width={src.width || 533}
-      height={src.height || 434}
-      unoptimized={true}  // remote host için
+      width={533}
+      height={434}
+      unoptimized={true}  
       style={{ objectPosition: "center" }}
       className="flex h-full w-full object-cover"
        loading="lazy"

@@ -1,5 +1,3 @@
-"use client";
-
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function SectionAnimation({ data, setData }) {

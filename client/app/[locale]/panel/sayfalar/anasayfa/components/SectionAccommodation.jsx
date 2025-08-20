@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 import ImageUploadInput from "../../../components/ImageUploadInput";
 const langs = ["tr", "en", "de", "ru"];
 

@@ -143,8 +143,8 @@ const GallerySection = ({pageData}) => {
               <Image
                 key={`${loopIndex}-${index}`}
                 src={img}
-                height={img.height || 2781}
-                width={img.width || 790}
+                height={2781}
+                width={790}
                 alt="Minigallery"
                 loading="lazy"
                 className="xl:w-[100%] h-auto overflow-hidden"

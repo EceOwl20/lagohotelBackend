@@ -145,7 +145,8 @@ export default function HeaderWhite() {
            <Image 
               src={logosvg}
               alt="Logo"
-
+              width={62}
+              height={46}
               className="object-contain w-[62px] h-[46px] lg:w-[30%] lg:max-w-[300px] lg:h-auto items-center justify-center"
 
             /></Link>
@@ -242,6 +243,8 @@ export default function HeaderWhite() {
             <Image
               src={logosvg}
               alt="Logo"
+              width={62}
+              height={46}
               className="object-contain w-[62px] h-[46px] items-center justify-center"
             />
             <button

@@ -1,4 +1,3 @@
-"use client"
 import React from "react";
 import ClockSvg from "./svg/ClockSvg";
 import { useLocale, useTranslations } from 'next-intl';

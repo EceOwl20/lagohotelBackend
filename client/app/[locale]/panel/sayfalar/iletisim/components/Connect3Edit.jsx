@@ -1,4 +1,4 @@
-"use client";
+
 export default function Connect3Edit({ data, setData, langs }) {
   const value = data.connect3 || {};
   const handleLang = (field, lang, val) => {

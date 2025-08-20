@@ -82,8 +82,8 @@ const BeachClinary = ({
           <Image
             src={img2}
             alt="art"
-            width={img2.width || 300}
-            height={img2.height || 450}
+            width={300}
+            height={450}
              loading="lazy"
             className={`w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out mb-[20px] lg:mb-0 ${
               animate ? "translate-y-0 opacity-100" : "-translate-y-5 opacity-0"
@@ -92,8 +92,8 @@ const BeachClinary = ({
           <Image
             src={img1}
             alt="art"
-            width={img1.width || 300}
-            height={img1.height || 450}
+            width={300}
+            height={450}
              loading="lazy"
             className={`absolute top-[80px] left-[126px] md:top-[208px] md:left-[135px] lg:top-[105px] lg:left-[215px] w-[175px] h-[260px] md:w-[186.60px] md:h-[279.91px] lg:w-[300px] lg:h-[450px] transition-all duration-1000 ease-in-out ${
               animate ? "-translate-y-0 opacity-100" : "translate-y-5 opacity-0"

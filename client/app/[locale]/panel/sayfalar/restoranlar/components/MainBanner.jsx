@@ -1,5 +1,3 @@
-"use client";
-import { useEffect, useState } from "react";
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function MainBannerEdit({ data, setData, langs }) {

@@ -1,4 +1,4 @@
-"use client";
+
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function MissionVisionSectionEdit({ data, setData, langs }) {

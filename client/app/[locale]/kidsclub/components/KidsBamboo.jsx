@@ -98,8 +98,8 @@ const club3 = clubs[2];
           <Image
             src={bamboo}
             alt="bamboo"
-            width={bamboo.width || 633}
-            height={bamboo.height || 188}
+            width={633}
+            height={188}
             className="lg:w-[59%] flex"
           />
           <div className="flex flex-col gap-[17px] items-start justify-center text-start lg:w-[39%]">
@@ -177,8 +177,8 @@ const club3 = clubs[2];
                   <Image
                     src={club.image}
                     alt={club.title || "Kulüp Kartı Görseli"}
-                    width={club.image.width || 349.97}
-                    height={club.image.height || 510}
+                    width={349.97}
+                    height={510}
                      className="flex h-[383px] md:h-[400px] w-auto md:w-full"
                   />
                   <div className="absolute inset-0 bg-black/40 z-[1]"></div>

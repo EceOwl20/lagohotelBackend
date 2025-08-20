@@ -17,8 +17,8 @@ const MissionColumn = ({
   <div className="flex flex-col w-full md:w-[49%] items-start justify-center text-start gap-[15px] lg:gap-[25px] font-jost text-black">
     <Image
       src={img}
-      height={img.height || 604}
-      width={img.width || 604}
+      height={604}
+      width={604}
       alt="hotel"
       className="flex w-full"
        loading="lazy"

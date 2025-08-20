@@ -1,4 +1,4 @@
-"use client";
+
 export default function KidsIconsEdit({ data, setData, langs }) {
   const iconsSection = data.iconsSection || {};
 

@@ -28,8 +28,8 @@ const SpaTypesInfoSection = ({
         <Image 
           src={img} 
           alt="indoor" 
-          width={img.width || 533} 
-          height={img.height || 434} 
+          width={533} 
+          height={434} 
           className="w-[100%] md:w-[49.5%]" 
            loading="lazy"
         />

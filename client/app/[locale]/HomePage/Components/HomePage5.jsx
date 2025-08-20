@@ -1,5 +1,3 @@
-"use client"
-
 import React from "react"
 import GreenAndBlueFull from "./Images/GreenAndBlueFull2.webp"
 import Link from "next/link"

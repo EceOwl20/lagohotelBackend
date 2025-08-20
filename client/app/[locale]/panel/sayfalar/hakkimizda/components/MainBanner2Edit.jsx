@@ -1,5 +1,4 @@
-// app/.../MainBanner2Edit.jsx
-"use client";
+
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
 export default function MainBanner2Edit({ data, setData, langs }) {

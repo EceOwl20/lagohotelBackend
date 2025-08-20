@@ -1,5 +1,3 @@
-"use client";
-import { useState } from "react";
 
 const langs = ["tr", "en", "de", "ru"];
 
