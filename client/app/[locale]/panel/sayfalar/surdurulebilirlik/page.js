@@ -16,7 +16,7 @@ function updateIn(obj, path, updater) {
     const next = arr.slice();
     next[head] = updateIn(arr[head], rest, updater);
     return next;
-    } else {
+  } else {
     const src = obj && typeof obj === "object" ? obj : {};
     const next = { ...src };
     next[head] = updateIn(src[head], rest, updater);
@@ -31,28 +31,24 @@ export default function Page() {
   const [data, setData] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  // tek noktadan güncelleme
   const setByPath = useCallback((path, value) => {
     setData(prev => updateIn(prev ?? {}, path, () => value));
   }, []);
-  const setLangField = useCallback((basePath, lang, value) => {
-    setData(prev => updateIn(prev ?? {}, [...basePath, lang], () => value));
-  }, []);
 
-  // load
   useEffect(() => {
     fetch(`${apiUrl}/api/pages/sustainability`)
       .then(r => r.json())
       .then(json => setData(json))
-      .catch(() => setData({
-        slug: "sustainability",
-        banner: { image: "", subtitle: {}, title: {} },
-        documentUrl: "",
-        places: []
-      }));
+      .catch(() =>
+        setData({
+          slug: "sustainability",
+          banner: { image: "", subtitle: {}, title: {} },
+          documentUrl: "",
+          places: []
+        })
+      );
   }, []);
 
-  // save
   const handleSave = async () => {
     try {
       setSaving(true);
@@ -72,38 +68,51 @@ export default function Page() {
 
   if (!data) return <p className="p-4">Yükleniyor…</p>;
 
-  // küçük yardımcı: çok dilli input grubu
-  const LangInputs = ({ label, basePath, as = "input", rows = 3 }) => (
-    <div className="mb-4">
-      <h4 className="font-semibold mb-2">{label}</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {langs.map(lang => {
-          const obj = getIn(data, basePath) || {};
-          const val = obj[lang] ?? "";
-          const onChange = (v) => setLangField(basePath, lang, v);
-          return as === "textarea" ? (
-            <textarea
-              key={lang}
-              rows={rows}
-              className="border rounded p-2 w-full"
-              placeholder={`${label} (${lang.toUpperCase()})`}
-              value={val}
-              onChange={(e) => onChange(e.target.value)}
-            />
-          ) : (
-            <input
-              key={lang}
-              type="text"
-              className="border rounded p-2 w-full"
-              placeholder={`${label} (${lang.toUpperCase()})`}
-              value={val}
-              onChange={(e) => onChange(e.target.value)}
-            />
-          );
-        })}
+  // --- Uncontrolled dil input’ları (blur’da kaydeder) ---
+  const LangInputs = ({ label, basePath, as = "input", rows = 3 }) => {
+    const current = getIn(data, basePath) || {};
+    return (
+      <div className="mb-4">
+        <h4 className="font-semibold mb-2">{label}</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {langs.map((lang) => {
+            const val = current[lang] ?? "";
+            const placeholder = `${label} (${lang.toUpperCase()})`;
+
+            const handleBlur = (e) => {
+              const v = e.target.value;
+              setData((prev) =>
+                updateIn(prev ?? {}, basePath, (obj) => ({
+                  ...(obj || {}),
+                  [lang]: v
+                }))
+              );
+            };
+
+            return as === "textarea" ? (
+              <textarea
+                key={lang}
+                rows={rows}
+                className="border rounded p-2 w-full"
+                placeholder={placeholder}
+                defaultValue={val}
+                onBlur={handleBlur}
+              />
+            ) : (
+              <input
+                key={lang}
+                type="text"
+                className="border rounded p-2 w-full"
+                placeholder={placeholder}
+                defaultValue={val}
+                onBlur={handleBlur}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -115,12 +124,12 @@ export default function Page() {
           <label className="block font-semibold mb-1">Banner Görseli</label>
           <ImageUploadInput
             value={data.banner?.image || ""}
-            onChange={(val) => setByPath(["banner","image"], val)}
+            onChange={(val) => setByPath(["banner", "image"], val)}
           />
         </div>
 
-        <LangInputs label="Alt Başlık" basePath={["banner","subtitle"]} />
-        <LangInputs label="Başlık"     basePath={["banner","title"]} />
+        <LangInputs label="Alt Başlık" basePath={["banner", "subtitle"]} />
+        <LangInputs label="Başlık" basePath={["banner", "title"]} />
       </section>
 
       {/* DOKÜMAN LİNKİ */}
@@ -129,6 +138,7 @@ export default function Page() {
         <p className="text-sm text-gray-600 mb-2">
           Dosya URL’si: (örn. <code>/documents/SürdürülebilirlikRaporu2024-2025.pptx</code> veya tam URL)
         </p>
+        {/* Burada controlled tutmak sorun çıkarmaz; tek input */}
         <input
           type="text"
           className="border rounded p-2 w-full"
@@ -146,7 +156,7 @@ export default function Page() {
             type="button"
             className="px-3 py-2 rounded bg-green-600 text-white"
             onClick={() =>
-              setData(prev =>
+              setData((prev) =>
                 updateIn(prev ?? { places: [] }, ["places"], (list) => [
                   ...(Array.isArray(list) ? list : []),
                   { image: "", title: {}, text: {}, distance: "" }
@@ -159,8 +169,8 @@ export default function Page() {
         </div>
 
         {(data.places || []).map((item, idx) => {
-          const imgFull = item.image?.startsWith("/")
-            ? `${apiUrl}${item.image}` : item.image || "";
+          const imgFull =
+            item.image?.startsWith("/") ? `${apiUrl}${item.image}` : item.image || "";
 
           return (
             <div key={idx} className="border rounded p-3 mb-4">
@@ -169,7 +179,7 @@ export default function Page() {
                 <button
                   className="text-red-600"
                   onClick={() =>
-                    setData(prev =>
+                    setData((prev) =>
                       updateIn(prev, ["places"], (list) =>
                         (list || []).filter((_, i) => i !== idx)
                       )
@@ -186,7 +196,7 @@ export default function Page() {
                 <ImageUploadInput
                   value={item.image || ""}
                   onChange={(val) =>
-                    setData(prev =>
+                    setData((prev) =>
                       updateIn(prev, ["places", idx, "image"], () => val)
                     )
                   }
@@ -200,20 +210,25 @@ export default function Page() {
                 )}
               </div>
 
-              {/* Çok dilli başlık & metin */}
+              {/* Çok dilli başlık & metin (uncontrolled) */}
               <LangInputs label="Başlık" basePath={["places", idx, "title"]} />
-              <LangInputs label="Metin"  basePath={["places", idx, "text"]} as="textarea" rows={3} />
+              <LangInputs
+                label="Metin"
+                basePath={["places", idx, "text"]}
+                as="textarea"
+                rows={3}
+              />
 
-              {/* Mesafe */}
+              {/* Mesafe (uncontrolled: blur’da kaydediyoruz) */}
               <div className="mt-2">
                 <label className="block font-semibold mb-1">Mesafe</label>
                 <input
                   type="text"
                   className="border rounded p-2 w-full"
                   placeholder='örn. "5 km"'
-                  value={item.distance || ""}
-                  onChange={(e) =>
-                    setData(prev =>
+                  defaultValue={item.distance || ""}
+                  onBlur={(e) =>
+                    setData((prev) =>
                       updateIn(prev, ["places", idx, "distance"], () => e.target.value)
                     )
                   }

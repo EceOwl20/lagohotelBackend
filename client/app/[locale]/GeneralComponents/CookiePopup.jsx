@@ -1109,7 +1109,7 @@ useEffect(() => {
 
             <button
               onClick={handleModalToggle}
-              className="text-[13px] lg:text-[14px] leading-normal font-medium uppercase items-center justify-center text-center border-[#FBFBFB] border-[0.867px] whitespace-nowrap py-[10px] px-[20px] cursor-pointer col-span-2 "
+              className="text-[13px] lg:text-[14px] leading-normal font-medium uppercase items-center justify-center text-center border-[#FBFBFB] border-[0.867px] whitespace-nowrap py-[10px] px-[20px] cursor-pointer col-span-2 w-[257px]"
             >
               {t("manage")}
             </button>
