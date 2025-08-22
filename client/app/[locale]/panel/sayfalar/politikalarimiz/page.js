@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import ImageUploadInput from "../../components/ImageUploadInput";
 
 const langs = ["tr", "en", "de", "ru"];
@@ -25,46 +25,58 @@ export default function Page() {
       );
   }, []);
 
-  // ---- helpers (immutably update)
-  const setLangField = (pathArray, lang, value) => {
+  // ---- helpers
+  const getIn = useCallback((obj, path) => {
+    return path.reduce((acc, k) => (acc == null ? acc : acc[k]), obj);
+  }, []);
+
+  const setLangField = useCallback((pathArray, lang, value) => {
     setData((prev) => {
-      const next = structuredClone(prev);
+      const next = structuredClone(prev ?? {});
       let t = next;
-      for (let i = 0; i < pathArray.length; i++) t = t[pathArray[i]];
+      for (let i = 0; i < pathArray.length; i++) t = t[pathArray[i]] ?? (t[pathArray[i]] = {});
       t[lang] = value;
       return next;
     });
-  };
+  }, []);
 
-  const setField = (pathArray, value) => {
+  const setField = useCallback((pathArray, value) => {
     setData((prev) => {
-      const next = structuredClone(prev);
+      const next = structuredClone(prev ?? {});
       let t = next;
-      for (let i = 0; i < pathArray.length - 1; i++) t = t[pathArray[i]];
+      for (let i = 0; i < pathArray.length - 1; i++) {
+        const k = pathArray[i];
+        t[k] = t[k] ?? (Number.isInteger(pathArray[i + 1]) ? [] : {});
+        t = t[k];
+      }
       t[pathArray[pathArray.length - 1]] = value;
       return next;
     });
-  };
+  }, []);
 
-  const pushToArray = (pathArray, item) => {
+  const pushToArray = useCallback((pathArray, item) => {
     setData((prev) => {
-      const next = structuredClone(prev);
+      const next = structuredClone(prev ?? {});
       let arr = next;
-      for (let i = 0; i < pathArray.length; i++) arr = arr[pathArray[i]];
+      for (let i = 0; i < pathArray.length; i++) {
+        const k = pathArray[i];
+        if (arr[k] == null) arr[k] = [];
+        arr = arr[k];
+      }
       arr.push(item);
       return next;
     });
-  };
+  }, []);
 
-  const removeFromArray = (pathArray, idx) => {
+  const removeFromArray = useCallback((pathArray, idx) => {
     setData((prev) => {
-      const next = structuredClone(prev);
+      const next = structuredClone(prev ?? {});
       let arr = next;
       for (let i = 0; i < pathArray.length; i++) arr = arr[pathArray[i]];
       arr.splice(idx, 1);
       return next;
     });
-  };
+  }, []);
 
   // ---- save
   const handleSave = async () => {
@@ -86,38 +98,41 @@ export default function Page() {
 
   if (!data) return <p className="p-4">Yükleniyor…</p>;
 
-  // ---- UI helpers
-  const LangInputs = ({ label, basePath, as = "input", rows = 3 }) => (
-    <div className="mb-4">
-      <h4 className="font-semibold mb-2">{label}</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {langs.map((lang) => {
-          const val =
-            basePath.reduce((o, k) => (o ? o[k] : undefined), data)?.[lang] || "";
-          const onChange = (v) => setLangField(basePath, lang, v);
-          return as === "textarea" ? (
-            <textarea
-              key={lang}
-              rows={rows}
-              className="border rounded p-2 w-full"
-              placeholder={`${label} (${lang.toUpperCase()})`}
-              value={val}
-              onChange={(e) => onChange(e.target.value)}
-            />
-          ) : (
-            <input
-              key={lang}
-              type="text"
-              className="border rounded p-2 w-full"
-              placeholder={`${label} (${lang.toUpperCase()})`}
-              value={val}
-              onChange={(e) => onChange(e.target.value)}
-            />
-          );
-        })}
+  // ---- UI helpers (UNCONTROLLED + onBlur)
+  const LangInputs = ({ label, basePath, as = "input", rows = 3 }) => {
+    const obj = getIn(data, basePath) || {};
+    return (
+      <div className="mb-4">
+        <h4 className="font-semibold mb-2">{label}</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {langs.map((lang) => {
+            const defaultVal = obj[lang] ?? "";
+            const handleBlur = (e) => setLangField(basePath, lang, e.target.value);
+
+            return as === "textarea" ? (
+              <textarea
+                key={lang}
+                rows={rows}
+                className="border rounded p-2 w-full"
+                placeholder={`${label} (${lang.toUpperCase()})`}
+                defaultValue={defaultVal}
+                onBlur={handleBlur}
+              />
+            ) : (
+              <input
+                key={lang}
+                type="text"
+                className="border rounded p-2 w-full"
+                placeholder={`${label} (${lang.toUpperCase()})`}
+                defaultValue={defaultVal}
+                onBlur={handleBlur}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-8 max-w-[1000px] mx-auto p-4">
@@ -141,7 +156,9 @@ export default function Page() {
           <h2 className="text-lg font-bold">Sürdürülebilirlik Politikası Metni</h2>
           <button
             className="px-3 py-2 bg-green-600 text-white rounded"
-            onClick={() => pushToArray(["sustainabilityPolicy", "paragraphs"], { text: {} })}
+            onClick={() =>
+              pushToArray(["sustainabilityPolicy", "paragraphs"], { text: {} })
+            }
           >
             + Paragraf Ekle
           </button>
@@ -153,7 +170,9 @@ export default function Page() {
               <strong>Paragraf #{idx + 1}</strong>
               <button
                 className="text-red-600"
-                onClick={() => removeFromArray(["sustainabilityPolicy", "paragraphs"], idx)}
+                onClick={() =>
+                  removeFromArray(["sustainabilityPolicy", "paragraphs"], idx)
+                }
               >
                 Sil
               </button>
@@ -168,7 +187,7 @@ export default function Page() {
         ))}
       </section>
 
-      {/* POLİTİKA / BİLGİ BLOKLARI (InfoSection) */}
+      {/* POLİTİKA / BİLGİ BLOKLARI */}
       <section className="p-4 border rounded bg-white">
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-lg font-bold">Politika / Bilgi Blokları</h2>
@@ -216,7 +235,9 @@ export default function Page() {
                   <input
                     type="checkbox"
                     checked={!!it.isImageLeft}
-                    onChange={(e) => setField(["infoBlocks", idx, "isImageLeft"], e.target.checked)}
+                    onChange={(e) =>
+                      setField(["infoBlocks", idx, "isImageLeft"], e.target.checked)
+                    }
                   />
                   Görsel Solda
                 </label>
@@ -225,15 +246,27 @@ export default function Page() {
 
             <LangInputs label="Span" basePath={["infoBlocks", idx, "span"]} />
             <LangInputs label="Başlık" basePath={["infoBlocks", idx, "title"]} />
-            <LangInputs label="Metin" basePath={["infoBlocks", idx, "text"]} as="textarea" rows={3} />
-            <LangInputs label="Metin 2" basePath={["infoBlocks", idx, "text2"]} as="textarea" rows={3} />
+            <LangInputs
+              label="Metin"
+              basePath={["infoBlocks", idx, "text"]}
+              as="textarea"
+              rows={3}
+            />
+            <LangInputs
+              label="Metin 2"
+              basePath={["infoBlocks", idx, "text2"]}
+              as="textarea"
+              rows={3}
+            />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <label className="flex items-center gap-2">
                 <input
                   type="checkbox"
                   checked={!!it.showLink}
-                  onChange={(e) => setField(["infoBlocks", idx, "showLink"], e.target.checked)}
+                  onChange={(e) =>
+                    setField(["infoBlocks", idx, "showLink"], e.target.checked)
+                  }
                 />
                 Link Göster
               </label>
@@ -241,8 +274,8 @@ export default function Page() {
                 type="text"
                 className="border rounded p-2"
                 placeholder="/ornek-sayfa veya https://..."
-                value={it.link || ""}
-                onChange={(e) => setField(["infoBlocks", idx, "link"], e.target.value)}
+                defaultValue={it.link || ""}
+                onBlur={(e) => setField(["infoBlocks", idx, "link"], e.target.value)}
               />
             </div>
           </div>
@@ -280,8 +313,8 @@ export default function Page() {
               type="text"
               className="border rounded p-2 w-full mb-2"
               placeholder="/documents/xxx.pptx veya https://..."
-              value={tr.href || ""}
-              onChange={(e) => setField(["trainings", idx, "href"], e.target.value)}
+              defaultValue={tr.href || ""}
+              onBlur={(e) => setField(["trainings", idx, "href"], e.target.value)}
             />
           </div>
         ))}

@@ -6,7 +6,6 @@ const langs = ["tr", "en", "de", "ru"];
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 // ---- IMMUTABLE HELPER’LAR
-// path: (string|number)[]
 function updateIn(obj, path, updater) {
   if (path.length === 0) return updater(obj);
 
@@ -15,12 +14,12 @@ function updateIn(obj, path, updater) {
 
   if (isIndex) {
     const arr = Array.isArray(obj) ? obj : [];
-    const next = arr.slice(); // sığ kopya
+    const next = arr.slice();
     next[head] = updateIn(arr[head], rest, updater);
     return next;
   } else {
     const src = obj && typeof obj === "object" ? obj : {};
-    const next = { ...src }; // sığ kopya
+    const next = { ...src };
     next[head] = updateIn(src[head], rest, updater);
     return next;
   }
@@ -34,24 +33,37 @@ export default function Page() {
   const [data, setData] = useState(null);
   const [saving, setSaving] = useState(false);
 
-  // tek noktadan güvenli güncelleme:
   const setByPath = useCallback((path, value) => {
     setData(prev => updateIn(prev ?? {}, path, () => value));
   }, []);
 
-  const setLangField = useCallback((basePath, lang, value) => {
-    setData(prev => updateIn(prev ?? {}, [...basePath, lang], () => value));
-  }, []);
-
-  // ---- load
   useEffect(() => {
     fetch(`${apiUrl}/api/pages/blognews`)
       .then(res => res.json())
       .then(json => setData(json))
-      .catch(() => setData({ slug: "blognews" }));
+      .catch(() =>
+        setData({
+          slug: "blognews",
+          banner: { image: "", subtitle: {}, title: {} },
+          section: {
+            leftImg: "",
+            rightImg: "",
+            subtitle: {},
+            title: {},
+            text: {},
+            secsubtitle1: {},
+            sectitle1: {},
+            sectext1: {},
+            secsubtitle2: {},
+            sectitle2: {},
+            sectext2: {}
+          },
+          newsItems: [],
+          buttonText: {}
+        })
+      );
   }, []);
 
-  // ---- save
   const handleSave = async () => {
     try {
       setSaving(true);
@@ -69,41 +81,53 @@ export default function Page() {
     }
   };
 
-  if (!data) return <p>Yükleniyor…</p>;
+  if (!data) return <p className="p-4">Yükleniyor…</p>;
 
-  // UI helpers
-  const LangInputs = ({ label, basePath, as = "input", rows = 3, placeholderPrefix = "" }) => (
-    <div className="mb-4">
-      <h4 className="font-semibold mb-2">{label}</h4>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-        {langs.map(lang => {
-          const currentObj = getIn(data, basePath) || {};
-          const val = currentObj[lang] ?? "";
-          const onChange = (v) => setLangField(basePath, lang, v);
+  // --- Uncontrolled dil input’ları (blur’da kaydet) ---
+  const LangInputs = ({ label, basePath, as = "input", rows = 3, placeholderPrefix = "" }) => {
+    const currentObj = getIn(data, basePath) || {};
+    return (
+      <div className="mb-4">
+        <h4 className="font-semibold mb-2">{label}</h4>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {langs.map((lang) => {
+            const val = currentObj[lang] ?? "";
+            const placeholder = `${placeholderPrefix}${label} (${lang.toUpperCase()})`;
 
-          return as === "textarea" ? (
-            <textarea
-              key={lang}
-              rows={rows}
-              className="border rounded p-2 w-full"
-              placeholder={`${placeholderPrefix}${label} (${lang.toUpperCase()})`}
-              value={val}
-              onChange={(e) => onChange(e.target.value)}
-            />
-          ) : (
-            <input
-              key={lang}
-              type="text"
-              className="border rounded p-2 w-full"
-              placeholder={`${placeholderPrefix}${label} (${lang.toUpperCase()})`}
-              value={val}
-              onChange={(e) => onChange(e.target.value)}
-            />
-          );
-        })}
+            const handleBlur = (e) => {
+              const v = e.target.value;
+              setData((prev) =>
+                updateIn(prev ?? {}, basePath, (obj) => ({
+                  ...(obj || {}),
+                  [lang]: v
+                }))
+              );
+            };
+
+            return as === "textarea" ? (
+              <textarea
+                key={lang}
+                rows={rows}
+                className="border rounded p-2 w-full"
+                placeholder={placeholder}
+                defaultValue={val}
+                onBlur={handleBlur}
+              />
+            ) : (
+              <input
+                key={lang}
+                type="text"
+                className="border rounded p-2 w-full"
+                placeholder={placeholder}
+                defaultValue={val}
+                onBlur={handleBlur}
+              />
+            );
+          })}
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="space-y-8">
@@ -121,7 +145,7 @@ export default function Page() {
         <LangInputs label="Başlık" basePath={["banner", "title"]} />
       </section>
 
-      {/* SECTION (Mission/Vision alanı gibi) */}
+      {/* SECTION */}
       <section className="p-4 border rounded bg-white">
         <h2 className="text-lg font-bold mb-4">Bilgi Bölümü</h2>
 
@@ -167,7 +191,7 @@ export default function Page() {
             type="button"
             className="px-3 py-2 rounded bg-green-600 text-white"
             onClick={() =>
-              setData(prev =>
+              setData((prev) =>
                 updateIn(prev ?? { newsItems: [] }, ["newsItems"], (list) => [
                   ...(Array.isArray(list) ? list : []),
                   { image: "", subtitle: {}, title: {}, description: {}, link: "" }
@@ -186,7 +210,7 @@ export default function Page() {
               <button
                 className="text-red-600"
                 onClick={() =>
-                  setData(prev =>
+                  setData((prev) =>
                     updateIn(prev, ["newsItems"], (list) =>
                       (list || []).filter((_, i) => i !== idx)
                     )
@@ -202,28 +226,33 @@ export default function Page() {
               <ImageUploadInput
                 value={item.image || ""}
                 onChange={(val) =>
-                  setData(prev =>
+                  setData((prev) =>
                     updateIn(prev, ["newsItems", idx, "image"], () => val)
                   )
                 }
               />
             </div>
 
-            {/* Çok dilli alanlar */}
+            {/* Çok dilli alanlar (uncontrolled) */}
             <LangInputs label="Alt Başlık" basePath={["newsItems", idx, "subtitle"]} />
             <LangInputs label="Başlık" basePath={["newsItems", idx, "title"]} />
-            <LangInputs label="Açıklama" basePath={["newsItems", idx, "description"]} as="textarea" rows={3} />
+            <LangInputs
+              label="Açıklama"
+              basePath={["newsItems", idx, "description"]}
+              as="textarea"
+              rows={3}
+            />
 
-            {/* Link */}
+            {/* Link: uncontrolled + blur */}
             <div className="mt-2">
               <label className="block font-semibold mb-1">Link</label>
               <input
                 type="text"
                 className="border rounded p-2 w-full"
                 placeholder="/ornek-sayfa veya https://..."
-                value={item.link || ""}
-                onChange={(e) =>
-                  setData(prev =>
+                defaultValue={item.link || ""}
+                onBlur={(e) =>
+                  setData((prev) =>
                     updateIn(prev, ["newsItems", idx, "link"], () => e.target.value)
                   )
                 }
