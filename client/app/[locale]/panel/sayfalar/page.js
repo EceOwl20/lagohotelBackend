@@ -1,168 +1,59 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 
+const links = [
+  { href: "/panel/sayfalar/anasayfa", label: "🏠 Anasayfa" },
+  { href: "/panel/sayfalar/header", label: "⛩️ Header" },
+  { href: "/panel/sayfalar/footer", label: "🌵 Footer" },
+  { href: "/panel/sayfalar/odalar", label: "🏘️ Odalar" },
+  { href: "/panel/sayfalar/restoranlar", label: "🍔 Restoranlar" },
+  { href: "/panel/sayfalar/barkafeler", label: "🍻 Bar ve ☕️ kafeler" },
+  { href: "/panel/sayfalar/sahilhavuz", label: "🌊 Sahil ve Havuzlar" },
+  { href: "/panel/sayfalar/kidsclub", label: "🎡 Kids" },
+  { href: "/panel/sayfalar/spa", label: "🧖🏼‍♀️ Spa" },
+  { href: "/panel/sayfalar/entertainment", label: "🎆 Entertainment" },
+  { href: "/panel/sayfalar/iletisim", label: "☎️ İletisim" },
+  { href: "/panel/sayfalar/fitness", label: "🚴🏼‍♂️ Fitness" },
+  { href: "/panel/sayfalar/hakkimizda", label: "📜 Hakkımızda" },
+  { href: "/panel/sayfalar/odalar/subroom", label: "🛏️ Yeni subroom page" },
+  { href: "/panel/sayfalar/contactSection", label: "📠 Contact section 2" },
+  { href: "/panel/sayfalar/otheroptions", label: "⚙️ Other options" },
+  { href: "/panel/sayfalar/roomfeatures", label: "🛏️ 🛌 Room features" },
+  { href: "/panel/sayfalar/restoranlar/subrestaurants", label: "🍝 SubRestaurants" },
+  { href: "/panel/sayfalar/barkafeler/subbarcafes", label: "☕️🍰 Sub BarCafes" },
+  { href: "/panel/sayfalar/special", label: "🌠 Özel günler Special" },
+  { href: "/panel/sayfalar/galeri", label: "🏞️ Galeri" },
+  { href: "/panel/sayfalar/sertifikalar", label: "📑 Sertifikalar" },
+  { href: "/panel/sayfalar/blog", label: "🐚 Blog" },
+  { href: "/panel/sayfalar/surdurulebilirlik", label: "🌿 Sürdürülebilirlik" },
+  { href: "/panel/sayfalar/politikalarimiz", label: "📔 Politikalarımız" },
+  { href: "/panel/sayfalar/cerezler", label: "🍪 Çerezler" },
+];
+
 export default function PagesPanel() {
- const [roomSlugs, setRoomSlugs] = useState([]);
-
   return (
-    <div className="p-6 space-y-4 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold">📄 Sayfalar Yönetimi</h1>
-      <p>Buradan sitenizin sayfa içeriklerini düzenleyebilirsiniz.</p>
+    <div className="p-6 max-w-6xl mx-auto">
+      <h1 className="text-3xl font-bold mb-2">📄 Sayfalar Yönetimi</h1>
+      <p className="text-gray-600 mb-8">
+        Buradan sitenizin sayfa içeriklerini düzenleyebilirsiniz.
+      </p>
 
-      <ul className="flex flex-col list-disc pl-6 space-y-4">
-        <li>
-          <Link href="/panel/sayfalar/anasayfa" className="text-blue-600 hover:underline">
-            🏠 Anasayfa
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {links.map((item, i) => (
+          <Link
+            key={i}
+            href={item.href}
+            className="flex items-center gap-3 p-4 rounded-xl border bg-white shadow-sm 
+                       hover:shadow-md hover:border-blue-500 transition-all duration-200"
+          >
+            <span className="text-xl">{item.label.split(" ")[0]}</span>
+            <span className="text-gray-800 font-medium">
+              {item.label.replace(/^[^\s]+/, "").trim()}
+            </span>
           </Link>
-        </li>
-          <li>
-              <Link href="/panel/sayfalar/header" className="text-blue-600 hover:underline">
-            ⛩️ Header 
-          </Link>
-          </li> 
-
-          <li>
-              <Link href="/panel/sayfalar/footer" className="text-blue-600 hover:underline">
-            🌵 Footer 
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/odalar" className="text-blue-600 hover:underline">
-            🏘️ Odalar 
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/restoranlar" className="text-blue-600 hover:underline">
-            🍔 Restoranlar 
-          </Link>
-          </li>
-
-           <li>
-              <Link href="/panel/sayfalar/barkafeler" className="text-blue-600 hover:underline">
-            🍻 Bar ve ☕️ kafeler 
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/sahilhavuz" className="text-blue-600 hover:underline">
-              🌊 Sahil ve Havuzlar
-          </Link>
-          </li>
-
-            <li>
-              <Link href="/panel/sayfalar/kidsclub" className="text-blue-600 hover:underline">
-              🎡 Kids
-          </Link>
-          </li>
-
-            <li>
-              <Link href="/panel/sayfalar/spa" className="text-blue-600 hover:underline">
-              🧖🏼‍♀️ Spa
-          </Link>
-          </li>
-
-             <li>
-              <Link href="/panel/sayfalar/entertainment" className="text-blue-600 hover:underline">
-              🎆 Entertainment
-          </Link>
-          </li>
-
-             <li>
-              <Link href="/panel/sayfalar/iletisim" className="text-blue-600 hover:underline">
-              ☎️ İletisim
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/fitness" className="text-blue-600 hover:underline">
-              🚴🏼‍♂️ Fitness
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/hakkimizda" className="text-blue-600 hover:underline">
-              📜 Hakkımızda
-          </Link>
-          </li>
-
-               <li>
-              <Link href="/panel/sayfalar/odalar/subroom" className="text-blue-600 hover:underline">
-              🛏️ Yeni subroom page
-          </Link>
-          </li>
-
-            <li>
-              <Link href="/panel/sayfalar/contactSection" className="text-blue-600 hover:underline">
-              📠 Contact section 2
-          </Link>
-          </li>
-
-
-            <li>
-              <Link href="/panel/sayfalar/otheroptions" className="text-blue-600 hover:underline">
-              ⚙️ Other options
-          </Link>
-          </li>
-
-             <li>
-              <Link href="/panel/sayfalar/roomfeatures" className="text-blue-600 hover:underline">
-              🛏️ 🛌 Room features
-          </Link>
-          </li>
-
-           <li>
-              <Link href="/panel/sayfalar/restoranlar/subrestaurants" className="text-blue-600 hover:underline">
-              🍝 SubRestaurants
-          </Link>
-          </li>
-
-           <li>
-              <Link href="/panel/sayfalar/barkafeler/subbarcafes" className="text-blue-600 hover:underline">
-              ☕️🍰 Sub BarCafes
-          </Link>
-          </li>
-
-              <li>
-              <Link href="/panel/sayfalar/special" className="text-blue-600 hover:underline">
-              🌠 Özel günler Special
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/galeri" className="text-blue-600 hover:underline">
-              🏞️ Galeri
-          </Link>
-          </li>
-
-          <li>
-              <Link href="/panel/sayfalar/sertifikalar" className="text-blue-600 hover:underline">
-              📑 Sertifikalar
-          </Link>
-          </li>
-
-             <li>
-              <Link href="/panel/sayfalar/blog" className="text-blue-600 hover:underline">
-               Blog
-          </Link>
-          </li>
-
-                  <li>
-              <Link href="/panel/sayfalar/surdurulebilirlik" className="text-blue-600 hover:underline">
-               surdurulebilirlik
-          </Link>
-          </li>
-
-                    <li>
-              <Link href="/panel/sayfalar/politikalarimiz" className="text-blue-600 hover:underline">
-               Politikalarımız
-          </Link>
-          </li>
-
-
-      </ul>
+        ))}
+      </div>
     </div>
   );
 }

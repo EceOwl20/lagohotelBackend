@@ -1,20 +1,26 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import Sidebar from "./components/SideBar.jsx";
+import Sidebar from "./components/SideBar";
+import TopBar from "./components/TopBar";
 
 export default function PanelClient({ children }) {
   const pathname = usePathname();
 
-  // orijinal mantık korunuyor
-  const hideSidebar = pathname.includes("/panel/login");
+  // Login sayfasında hem sidebar hem topbar gizli
+  const hideChrome = pathname.includes("/panel/login");
 
   return (
-    <div className="flex">
-      {!hideSidebar && <Sidebar />}
-      <main className={`flex-1 p-6 ${hideSidebar ? "w-full" : ""}`}>
-        {children}
-      </main>
+    <div className="flex min-h-screen bg-gray-50">
+      {!hideChrome && <Sidebar />}
+
+      <div className="flex-1 flex flex-col">
+        {!hideChrome && <TopBar />}
+
+        <main className="flex-1 p-6 bg-black/10">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

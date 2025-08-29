@@ -1,28 +1,49 @@
-"use client"
-import React from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import Banner from "../ourpolicies/components/Banner";
-import mainImg from "../HomePage/Components/Images/GreenAndBlueFull2.webp";
-import mainImg2 from "../gallery/images/genel/img-01.jpg";
-import Link from "next/link";
-import Image from "next/image";
 import ExploreManavgat from "./components/ExploreManavgat";
+import { useLocale } from 'next-intl';
 
-const page = () => {
+export default function Page() {
+  const locale = useLocale();
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [pageData, setPageData] = useState(null);
+
+  useEffect(() => {
+    fetch(`${apiUrl}/api/pages/sustainability`)
+      .then(r => r.json())
+      .then(json => setPageData(json))
+      .catch(console.error);
+  }, [apiUrl]);
+
+  if (!pageData) return <p className="p-10">Yükleniyor…</p>;
+
+  // Güvenli banner URL hesaplama
+  const bannerSrc = (() => {
+    const p = pageData?.banner?.image || "";
+    if (!p) return "";
+    // p tam URL ise direkt dön
+    try { return new URL(p).href; } catch (_) {}
+    // relative ise apiUrl ile birleştir
+    return p.startsWith("/") ? `${apiUrl}${p}` : p;
+  })();
+
+  const href = "/documents/SürdürülebilirlikRaporu2024-2025.pptx";
+
   const handleClick = (e) => {
     e.preventDefault();
     if (window.confirm("Sunumu indirmek istediğinize emin misiniz?")) {
-      // Yeni sekmede download başlat
       window.open(href, "_blank");
-      // Veya aynı pencerede başlatmak için:
-      // window.location.href = href
     }
   };
 
   return (
-    <div className="flex flex-col w-screen min-h-screen items-center justify-start">
-      <Banner img={mainImg2} span="" header="Sustainability" />
+    <div className="flex flex-col max-w-screen min-h-screen items-center justify-start">
+      {/* Prop adından emin değilsek hepsini verelim */}
+      <Banner img={bannerSrc} image={bannerSrc} src={bannerSrc} span="" header="Sustainability" />
+
       <a
-        href="/documents/SürdürülebilirlikRaporu2024-2025.pptx"
+        href={href}
         onClick={handleClick}
         target="_blank"
         rel="noopener noreferrer"
@@ -30,9 +51,8 @@ const page = () => {
       >
         Sürdürülebilirlik Raporu 2024-2025
       </a>
-      <ExploreManavgat/>
+
+      <ExploreManavgat />
     </div>
   );
-};
-
-export default page;
+}

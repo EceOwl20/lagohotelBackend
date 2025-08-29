@@ -23,6 +23,35 @@ const Certificates = require("../models/certificatepage");
 const BlogNewsPage = require("../models/blogNewsPage");
 const SustainabilityPage = require("../models/sustainability");
 const OurPoliciesPage = require("../models/ourpolicies");
+const CookiePage = require("../models/cookiepage.js");
+
+// GET -> sayfa getir
+router.get("/cookies", async (req, res) => {
+  try {
+    let page = await CookiePage.findOne({ slug: "cookies" });
+    if (!page) {
+      page = await CookiePage.create({ slug: "cookies" });
+    }
+    res.json(page);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// PUT -> güncelle
+router.put("/cookies", async (req, res) => {
+  try {
+    const body = req.body;
+    let page = await CookiePage.findOneAndUpdate(
+      { slug: "cookies" },
+      body,
+      { new: true, upsert: true }
+    );
+    res.json(page);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // GET /api/pages/ourpolicies
 router.get("/ourpolicies", async (req, res) => {
