@@ -34,7 +34,7 @@ const links = [
 export default function PagesPanel() {
   return (
     <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold mb-2">📄 Sayfalar Yönetimi</h1>
+      <h1 className="text-2xl font-bold mb-2">📄 Sayfalar Yönetimi</h1>
       <p className="text-gray-600 mb-8">
         Buradan sitenizin sayfa içeriklerini düzenleyebilirsiniz.
       </p>
@@ -44,8 +44,8 @@ export default function PagesPanel() {
           <Link
             key={i}
             href={item.href}
-            className="flex items-center gap-3 p-4 rounded-xl border bg-white shadow-sm 
-                       hover:shadow-md hover:border-blue-500 transition-all duration-200"
+            className="flex items-center gap-3 p-4 rounded-xl border-[2px] bg-white shadow-sm 
+                       hover:shadow-md hover:border-lagoBlack2 transition-all duration-200"
           >
             <span className="text-xl">{item.label.split(" ")[0]}</span>
             <span className="text-gray-800 font-medium">

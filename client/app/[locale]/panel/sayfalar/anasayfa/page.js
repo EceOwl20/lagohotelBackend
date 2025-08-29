@@ -72,7 +72,7 @@ export default function HomePageEdit() {
   if (!data) return <p className="p-6">Yükleniyor...</p>;
 
   return (
-    <div className="p-6 max-w-6xl mx-auto space-y-6">
+    <div className="p-6 max-w-7xl mx-auto space-y-6">
       <h1 className="text-2xl font-bold mb-4">Anasayfa Düzenle</h1>
 
       <form onSubmit={handleSubmit} className="space-y-8">

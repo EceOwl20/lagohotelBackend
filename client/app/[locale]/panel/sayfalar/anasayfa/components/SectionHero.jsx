@@ -124,8 +124,10 @@ useEffect(() => {
   return (
     <div className="border p-4 rounded bg-white space-y-6">
       <h2 className="text-xl font-bold">🎬 Hero Video (Arka Plan)</h2>
-      {renderVideoField("videoDesktop", "Video (Desktop)")}
+      <div className="flex gap-4 bg-lagoGray2/10 p-2">
+          {renderVideoField("videoDesktop", "Video (Desktop)")}
       {renderVideoField("videoMobile", "Video (Mobile)")}
+      </div>
     </div>
   );
 }
