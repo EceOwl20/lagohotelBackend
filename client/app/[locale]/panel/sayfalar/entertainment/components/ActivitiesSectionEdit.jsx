@@ -1,127 +1,164 @@
+"use client";
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
-export default function ActivitiesSectionEdit({ data, setData, langs }) {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const section = data.activitiesSection || {};
+export default function ActivitiesSectionEdit({
+  data,
+  setData,
+  activeLang = "tr", // TopBar’dan gelen aktif dil (spa sayfalarındaki gibi)
+}) {
+  const section = data?.activitiesSection || {};
 
-  const handleFieldChange = (key, lang, val) => {
-    setData({
-      ...data,
-      activitiesSection: {
-        ...section,
-        [key]: { ...section[key], [lang]: val },
-      },
+  /* ---------------- helpers (immutable updates) ---------------- */
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.activitiesSection || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), activitiesSection: { ...cur, ...next } };
     });
-  };
 
-  const handleInfoChange = (infoKey, field, lang, val) => {
-    setData({
-      ...data,
-      activitiesSection: {
-        ...section,
-        [infoKey]: {
-          ...section[infoKey],
-          [field]: { ...section[infoKey]?.[field], [lang]: val },
+  // Genel alanlar: subtitle / title / text -> sadece aktif dil
+  const setField = (field, value) =>
+    update((cur) => ({
+      [field]: { ...(cur?.[field] || {}), [activeLang]: value },
+    }));
+
+  // Info1 & Info2: title / text -> sadece aktif dil
+  const setInfoField = (infoKey, field, value) =>
+    update((cur) => ({
+      [infoKey]: {
+        ...(cur?.[infoKey] || {}),
+        [field]: {
+          ...((cur?.[infoKey] && cur[infoKey][field]) || {}),
+          [activeLang]: value,
         },
       },
-    });
-  };
+    }));
 
-  const handleImageChange = (field, value) => {
-    setData({
-      ...data,
-      activitiesSection: {
-        ...section,
-        [field]: value,
-      },
-    });
-  };
+  // Görseller
+  const setImage = (field, url) => update({ [field]: url });
 
+  /* ------------------------- UI ------------------------- */
   return (
-    <div className="mb-8 bg-gray-50 rounded p-4">
-      <h4 className="font-bold text-lg mb-4">Aktiviteler Bölümü</h4>
-
-      {/* ——— Çok Dilli Metinler ——— */}
-      {["subtitle", "title", "text"].map((key) => (
-        <div key={key} className="mb-4">
-          <h5 className="font-semibold mb-2">
-            {key.charAt(0).toUpperCase() + key.slice(1)}
-          </h5>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {langs.map((lang) => (
-              <div key={lang} className="flex flex-col">
-                <label className="text-sm mb-1">{lang.toUpperCase()}</label>
-                {key === "text" ? (
-                  <textarea
-                    className="border p-2 rounded"
-                    value={section.text?.[lang] || ""}
-                    onChange={(e) =>
-                      handleFieldChange("text", lang, e.target.value)
-                    }
-                  />
-                ) : (
-                  <input
-                    type="text"
-                    className="border p-2 rounded"
-                    value={section[key]?.[lang] || ""}
-                    onChange={(e) =>
-                      handleFieldChange(key, lang, e.target.value)
-                    }
-                  />
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
-      ))}
-
-      {/* ——— Görseller ——— */}
-      <div className="mb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
-        {["image1", "image2"].map((field) => (
-          <div key={field} className="flex flex-col">
-            <label className="font-semibold mb-1">{field.toUpperCase()}</label>
-            <ImageUploadInput
-              value={section[field] || ""}
-              onChange={(url) => handleImageChange(field, url)}
-              label={field}
-            />
-          </div>
-        ))}
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h2 className="text-lg font-semibold">🎭 Aktiviteler Bölümü</h2>
       </div>
 
-      {/* ——— Info1 & Info2 Bölümleri ——— */}
-      {["info1", "info2"].map((infoKey) => (
-        <div key={infoKey} className="mb-6">
-          <h5 className="font-semibold mb-2">
-            {infoKey === "info1" ? "Bilgi 1" : "Bilgi 2"}
-          </h5>
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
-            {langs.map((lang) => (
-              <div key={lang} className="flex flex-col">
-                <label className="text-xs mb-1">{lang.toUpperCase()}</label>
-                <input
-                  type="text"
-                  className="border p-2 rounded"
-                  placeholder={`Başlık (${lang})`}
-                  value={section[infoKey]?.title?.[lang] || ""}
-                  onChange={(e) =>
-                    handleInfoChange(infoKey, "title", lang, e.target.value)
-                  }
-                />
-                <textarea
-                  rows={2}
-                  className="border p-2 rounded mt-2"
-                  placeholder={`Metin (${lang})`}
-                  value={section[infoKey]?.text?.[lang] || ""}
-                  onChange={(e) =>
-                    handleInfoChange(infoKey, "text", lang, e.target.value)
-                  }
+      <div className="p-4 space-y-8">
+        {/* Genel metinler (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Genel Metinler ({activeLang.toUpperCase()})
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <FieldText
+              label="Alt Başlık"
+              value={section?.subtitle?.[activeLang] || ""}
+              onChange={(v) => setField("subtitle", v)}
+            />
+            <FieldText
+              label="Başlık"
+              value={section?.title?.[activeLang] || ""}
+              onChange={(v) => setField("title", v)}
+            />
+            <FieldArea
+              label="Açıklama"
+              rows={2}
+              value={section?.text?.[activeLang] || ""}
+              onChange={(v) => setField("text", v)}
+            />
+          </div>
+        </div>
+
+        {/* Görseller */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">Görseller</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {["image1", "image2"].map((field) => (
+              <div key={field} className="space-y-2">
+                <label className="block text-sm font-medium">
+                  {field.toUpperCase()}
+                </label>
+                <ImageUploadInput
+                  value={section?.[field] || ""}
+                  onChange={(url) => setImage(field, url)}
+                  label={field}
                 />
               </div>
             ))}
           </div>
         </div>
-      ))}
+
+        {/* Info 1 */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Bilgi 1 ({activeLang.toUpperCase()})
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FieldText
+              label="Başlık"
+              value={section?.info1?.title?.[activeLang] || ""}
+              onChange={(v) => setInfoField("info1", "title", v)}
+            />
+            <FieldArea
+              label="Metin"
+              rows={3}
+              value={section?.info1?.text?.[activeLang] || ""}
+              onChange={(v) => setInfoField("info1", "text", v)}
+            />
+          </div>
+        </div>
+
+        {/* Info 2 */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Bilgi 2 ({activeLang.toUpperCase()})
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FieldText
+              label="Başlık"
+              value={section?.info2?.title?.[activeLang] || ""}
+              onChange={(v) => setInfoField("info2", "title", v)}
+            />
+            <FieldArea
+              label="Metin"
+              rows={3}
+              value={section?.info2?.text?.[activeLang] || ""}
+              onChange={(v) => setInfoField("info2", "text", v)}
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ------------- küçük input bileşenleri ------------- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function FieldArea({ label, value, onChange, rows = 3 }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <textarea
+        rows={rows}
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }

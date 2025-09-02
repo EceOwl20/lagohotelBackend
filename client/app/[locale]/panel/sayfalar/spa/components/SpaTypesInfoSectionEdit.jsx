@@ -1,164 +1,154 @@
+// app/[locale]/panel/sayfalar/spa/components/SpaReverseEdit.jsx
 "use client";
-import { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
-export default function SpaTypesInfoSectionEdit({ data, setData, langs, blockName }) {
-  const value = data[blockName] || {};
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [uploading, setUploading] = useState(false);
+export default function SpaReverseEdit({
+  data,
+  setData,
+  blockName = "spaReverse",
+  activeLang = "tr",
+}) {
+  const section = data?.[blockName] || {};
+  const LBL = activeLang.toUpperCase();
 
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const imageUrl = result.imageUrl || result.path;
-      setData({
-        ...data,
-        [blockName]: {
-          ...value,
-          img: imageUrl,
-          
-        },
-      });
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const handleBooleanChange = (field) => (e) => {
-    setData({
-      ...data,
-      [blockName]: {
-        ...value,
-        [field]: e.target.checked,
-      },
+  /* ---------- helpers (immutable updates) ---------- */
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.[blockName] || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), [blockName]: { ...cur, ...next } };
     });
-  };
 
+  const setI18n = (field, value) =>
+    update((cur) => ({
+      [field]: { ...(cur?.[field] || {}), [activeLang]: value },
+    }));
+
+  const setBool = (field, checked) => update({ [field]: !!checked });
+
+  /* -------------------- UI -------------------- */
   return (
-    <div className="mb-8 bg-gray-50 rounded p-4">
-      <h4 className="font-bold text-lg mb-2">Spa/Fitness Reverse Alanı</h4>
-
-      {/* Görsel dosya yükleme */}
-      <label className="block font-semibold mb-1">Görsel</label>
-      <div className="flex items-center gap-4 mb-4">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          disabled={uploading}
-          className="border p-2 rounded"
-        />
-        {uploading && <span className="text-blue-600">Yükleniyor…</span>}
-        {value.img && (
-          <img
-            src={value.img.startsWith("/") ? `${apiUrl}${value.img}` : value.img}
-            alt="Preview"
-            className="h-20 w-32 object-cover rounded border"
-          />
-        )}
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent flex items-center justify-between">
+        <h2 className="text-lg font-semibold">🧖 Spa Reverse Bölümü</h2>
+        <span className="text-xs px-2 py-1 rounded bg-black text-white">
+          Aktif Dil: {LBL}
+        </span>
       </div>
 
-      {/* Çok dilli alt başlık, başlık, açıklama */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        {langs.map((lang) => (
-          <div key={lang}>
-            <label className="font-semibold">Alt Başlık ({lang.toUpperCase()})</label>
-            <input
-              type="text"
-              className="w-full border rounded p-2 mb-1"
-              value={value.span?.[lang] || ""}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  [blockName]: {
-                    ...value,
-                    span: { ...(value.span || {}), [lang]: e.target.value },
-                  },
-                })
-              }
+      <div className="p-4 space-y-8">
+        {/* Görsel + Ayarlar */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Sol: Görsel */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Görsel</label>
+            <ImageUploadInput
+              value={section?.img || ""}
+              onChange={(url) => update({ img: url })}
             />
-
-            <label className="font-semibold">Başlık ({lang.toUpperCase()})</label>
-            <input
-              type="text"
-              className="w-full border rounded p-2 mb-1"
-              value={value.header?.[lang] || ""}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  [blockName]: {
-                    ...value,
-                    header: { ...(value.header || {}), [lang]: e.target.value },
-                  },
-                })
-              }
-            />
-
-            <label className="font-semibold">Açıklama ({lang.toUpperCase()})</label>
-            <textarea
-              className="w-full border rounded p-2"
-              value={value.text?.[lang] || ""}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                  [blockName]: {
-                    ...value,
-                    text: { ...(value.text || {}), [lang]: e.target.value },
-                  },
-                })
-              }
-            />
-
-            <label className="font-semibold">Buton Metni ({lang.toUpperCase()})</label>
-            <input
-              type="text"
-              className="w-full border rounded p-2"
-              value={value.buttonText?.[lang] || ""}
-              onChange={(e) =>
-                setData({
-                  ...data,
-                   [blockName]: {
-                    ...value,
-                    buttonText: { ...value.buttonText, [lang]: e.target.value },
-                  },
-                })
-              }
-            />
-            
           </div>
-        ))}
-      </div>
 
-      {/* Yeni eklenen boolean alanlar */}
-      <div className="flex items-center gap-6 mt-4">
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={!!value.isImageLeft}
-            onChange={handleBooleanChange("isImageLeft")}
+          {/* Sağ: Boolean / Link */}
+          <div className="rounded-xl ring-1 ring-black/5 p-4 h-fit space-y-4">
+            <h3 className="font-semibold">Ayarlar</h3>
+
+            <label className="inline-flex items-center gap-3">
+              <input
+                type="checkbox"
+                className="accent-black"
+                checked={!!section?.isImageLeft}
+                onChange={(e) => setBool("isImageLeft", e.target.checked)}
+              />
+              Resmi solda göster
+            </label>
+
+            <label className="inline-flex items-center gap-3">
+              <input
+                type="checkbox"
+                className="accent-black"
+                checked={!!section?.showLink}
+                onChange={(e) => setBool("showLink", e.target.checked)}
+              />
+              Link göster
+            </label>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">Link URL</label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={section?.linkUrl || ""}
+                onChange={(e) => update({ linkUrl: e.target.value })}
+                placeholder="https://..."
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Metinler (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4 space-y-4">
+          <h3 className="font-semibold">Metinler ({LBL})</h3>
+
+          <FieldText
+            label={`Alt Başlık (${LBL})`}
+            value={section?.span?.[activeLang] || ""}
+            onChange={(v) => setI18n("span", v)}
           />
-          Resmi Solda Göster
-        </label>
-        <label className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={!!value.showLink}
-            onChange={handleBooleanChange("showLink")}
+
+          <FieldText
+            label={`Başlık (${LBL})`}
+            value={section?.header?.[activeLang] || ""}
+            onChange={(v) => setI18n("header", v)}
           />
-          Link Göster
-        </label>
+
+          <FieldArea
+            label={`Açıklama (${LBL})`}
+            rows={3}
+            value={section?.text?.[activeLang] || ""}
+            onChange={(v) => setI18n("text", v)}
+          />
+
+          <FieldText
+            label={`Buton Metni (${LBL})`}
+            value={section?.buttonText?.[activeLang] || ""}
+            onChange={(v) => setI18n("buttonText", v)}
+          />
+
+          <p className="text-xs text-gray-500">
+            Diğer dilleri düzenlemek için TopBar’dan dili değiştirin.
+          </p>
+        </div>
       </div>
+    </section>
+  );
+}
+
+/* ---- küçük input bileşenleri ---- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function FieldArea({ label, value, onChange, rows = 3 }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <textarea
+        rows={rows}
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }

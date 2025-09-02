@@ -1,13 +1,20 @@
+// app/[locale]/panel/sayfalar/kidsclub/components/KidsclubCarouselEdit.jsx
 "use client";
-import { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 
-export default function KidsclubCarouselEdit({ data, setData, langs }) {
-  const carousel = data.kidsClubCarousel || {};
+export default function KidsclubCarouselEdit({ data, setData, activeLang = "tr" }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // ---------- Embla ----------
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false, dragFree: true });
+  const carousel = data?.kidsClubCarousel || {};
+  const slides = Array.isArray(carousel?.slides) ? carousel.slides : [];
+
+  /* ============ Embla ============ */
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: false,
+    dragFree: true,
+    align: "start",
+  });
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [scrollSnaps, setScrollSnaps] = useState([]);
 
@@ -27,78 +34,95 @@ export default function KidsclubCarouselEdit({ data, setData, langs }) {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
   const scrollTo = useCallback((i) => emblaApi && emblaApi.scrollTo(i), [emblaApi]);
 
-  // ---------- Genel alanlar ----------
-  const handleGeneralChange = (field, lang, value) => {
-    setData({
-      ...data,
+  /* ============ Helpers ============ */
+  const setGeneralField = (field, value) =>
+    setData((prev) => ({
+      ...prev,
       kidsClubCarousel: {
-        ...carousel,
-        [field]: { ...(carousel[field] || {}), [lang]: value },
+        ...(prev?.kidsClubCarousel || {}),
+        [field]: {
+          ...((prev?.kidsClubCarousel && prev.kidsClubCarousel[field]) || {}),
+          [activeLang]: value,
+        },
       },
-    });
-  };
+    }));
 
-  // ---------- Slide ekle/sil ----------
-  const handleAdd = () => {
-    setData({
-      ...data,
+  const setSlides = (updater) =>
+    setData((prev) => ({
+      ...prev,
       kidsClubCarousel: {
-        ...carousel,
-        slides: [
-          ...(carousel.slides || []),
-          { image: "", header: { tr: "", en: "", de: "", ru: "" } },
-        ],
+        ...(prev?.kidsClubCarousel || {}),
+        slides:
+          typeof updater === "function"
+            ? updater(prev?.kidsClubCarousel?.slides || [])
+            : updater,
       },
+    }));
+
+  const addSlide = () => {
+    setSlides((arr) => [
+      ...arr,
+      { image: "", header: { tr: "", en: "", de: "", ru: "" } },
+    ]);
+    // sona kaydır
+    setTimeout(() => {
+      if (!emblaApi) return;
+      const last = slides?.length || 0;
+      emblaApi.scrollTo(last);
+    }, 0);
+  };
+
+  const removeSlide = (idx) => setSlides((arr) => arr.filter((_, i) => i !== idx));
+
+  const setSlideText = (idx, value) =>
+    setSlides((arr) => {
+      const next = [...arr];
+      const cur = next[idx] || {};
+      next[idx] = {
+        ...cur,
+        header: {
+          ...(cur.header || {}),
+          [activeLang]: value,
+        },
+      };
+      return next;
     });
-    // yeni eklenen kartı en sona kaydır
-    setTimeout(() => scrollTo((carousel.slides?.length || 0)), 0);
-  };
 
-  const handleRemove = (i) => {
-    setData({
-      ...data,
-      kidsClubCarousel: {
-        ...carousel,
-        slides: (carousel.slides || []).filter((_, idx) => idx !== i),
-      },
+  const setSlideImage = (idx, url) =>
+    setSlides((arr) => {
+      const next = [...arr];
+      next[idx] = { ...(next[idx] || {}), image: url };
+      return next;
     });
-  };
 
-  // ---------- Slide içi ----------
-  const handleSlideTextChange = (key, lang, value, idx) => {
-    const slides = [...(carousel.slides || [])];
-    slides[idx][key][lang] = value;
-    setData({ ...data, kidsClubCarousel: { ...carousel, slides } });
-  };
+  const toSrc = (p) => (p ? (p.startsWith("/") ? `${apiUrl}${p}` : p) : "");
 
-  // ---------- Upload ----------
+  /* ============ Upload ============ */
   const [uploading, setUploading] = useState({});
-  const uploadImage = async (e, idx) => {
-    const file = e.target.files?.[0];
+  const uploadImage = async (idx, file) => {
     if (!file) return;
     setUploading((u) => ({ ...u, [idx]: true }));
-    const formData = new FormData();
-    formData.append("image", file);
     try {
-      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const imageUrl = result.imageUrl || result.path;
-
-      const slides = [...(carousel.slides || [])];
-      slides[idx].image = imageUrl;
-      setData({ ...data, kidsClubCarousel: { ...carousel, slides } });
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
+      const form = new FormData();
+      form.append("image", file);
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Yükleme başarısız");
+      const url = json.imageUrl || json.path;
+      if (url) setSlideImage(idx, url);
+    } catch (e) {
+      alert(e?.message || "Yükleme hatası");
     } finally {
       setUploading((u) => ({ ...u, [idx]: false }));
     }
   };
 
+  /* ============ UI ============ */
   return (
-    <section className="bg-gray-100 rounded-md p-4 mb-6">
-      <div className="flex items-center justify-between gap-3 mb-4">
-        <h3 className="font-bold text-xl">Kids Club Carousel</h3>
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent flex items-center justify-between gap-3">
+        <h3 className="text-lg font-semibold">🧒 Kids Club Carousel</h3>
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -118,150 +142,164 @@ export default function KidsclubCarouselEdit({ data, setData, langs }) {
           </button>
           <button
             type="button"
+            onClick={addSlide}
             className="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700"
-            onClick={handleAdd}
           >
             + Slide Ekle
           </button>
         </div>
       </div>
 
-      {/* Subtitle */}
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Alt Başlıklar</label>
-        <div className="flex gap-2 flex-wrap">
-          {langs.map((lang) => (
-            <input
-              key={lang}
-              placeholder={`Alt Başlık (${lang.toUpperCase()})`}
-              className="border p-2 rounded w-[180px]"
-              value={carousel.subtitle?.[lang] || ""}
-              onChange={(e) => handleGeneralChange("subtitle", lang, e.target.value)}
-            />
-          ))}
-        </div>
-      </div>
+      {/* body */}
+      <div className="p-4 space-y-6">
+        <p className="text-sm text-gray-600">
+          Aktif dil: <span className="font-medium">{activeLang.toUpperCase()}</span>
+        </p>
 
-      {/* Title */}
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Başlıklar</label>
-        <div className="flex gap-2 flex-wrap">
-          {langs.map((lang) => (
+        {/* Genel alanlar – tek dil */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Alt Başlık ({activeLang.toUpperCase()})
+            </label>
             <input
-              key={lang}
-              placeholder={`Başlık (${lang.toUpperCase()})`}
-              className="border p-2 rounded w-[180px]"
-              value={carousel.title?.[lang] || ""}
-              onChange={(e) => handleGeneralChange("title", lang, e.target.value)}
+              type="text"
+              value={carousel?.subtitle?.[activeLang] || ""}
+              onChange={(e) => setGeneralField("subtitle", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
             />
-          ))}
-        </div>
-      </div>
+          </div>
 
-      {/* Text */}
-      <div className="mb-6">
-        <label className="block font-semibold mb-1">Açıklama</label>
-        <div className="flex gap-2 flex-wrap">
-          {langs.map((lang) => (
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Başlık ({activeLang.toUpperCase()})
+            </label>
+            <input
+              type="text"
+              value={carousel?.title?.[activeLang] || ""}
+              onChange={(e) => setGeneralField("title", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Açıklama ({activeLang.toUpperCase()})
+            </label>
             <textarea
-              key={lang}
-              placeholder={`Açıklama (${lang.toUpperCase()})`}
-              className="border p-2 rounded w-[180px] min-h-[64px]"
-              value={carousel.text?.[lang] || ""}
-              onChange={(e) => handleGeneralChange("text", lang, e.target.value)}
+              rows={2}
+              value={carousel?.text?.[activeLang] || ""}
+              onChange={(e) => setGeneralField("text", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
             />
-          ))}
+          </div>
         </div>
-      </div>
 
-      {/* Slides - Embla Viewport */}
-      <div className="relative">
-        <div ref={emblaRef} className="overflow-hidden">
-          <div className="flex gap-4">
-            {(carousel.slides || []).map((slide, idx) => (
-              <div
-                key={idx}
-                className="
-                  shrink-0
-                  basis-[85%] sm:basis-[70%] md:basis-[48%] lg:basis-[32%]
-                "
-              >
-                <div className="border rounded-xl p-3 bg-white h-full flex flex-col">
-                  <div className="flex justify-between items-center mb-2">
-                    <strong>Slide #{idx + 1}</strong>
-                    <button
-                      type="button"
-                      className="px-2 py-1 bg-red-500 text-white rounded"
-                      onClick={() => handleRemove(idx)}
-                    >
-                      Sil
-                    </button>
-                  </div>
+        {/* Slides - Embla */}
+        <div className="relative">
+          <div ref={emblaRef} className="overflow-hidden">
+            <div className="flex gap-4">
+              {slides.map((slide, idx) => {
+                const imgSrc = toSrc(slide.image);
+                return (
+                  <div
+                    key={idx}
+                    className="shrink-0 basis-[85%] sm:basis-[70%] md:basis-[48%] lg:basis-[32%]"
+                  >
+                    <div className="h-full flex flex-col rounded-xl ring-1 ring-black/5 bg-white p-3">
+                      <div className="flex items-center justify-between mb-2">
+                        <strong>Slide #{idx + 1}</strong>
+                        <button
+                          type="button"
+                          onClick={() => removeSlide(idx)}
+                          className="px-2 py-1 rounded bg-red-600 text-white text-sm hover:bg-red-700"
+                        >
+                          Sil
+                        </button>
+                      </div>
 
-                  {/* Görsel Yükle */}
-                  <div className="mb-3">
-                    <label className="block text-sm font-semibold mb-1">Görsel Yükle</label>
-                    <div className="flex items-center gap-4">
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => uploadImage(e, idx)}
-                        disabled={uploading[idx]}
-                      />
-                      {uploading[idx] && <span className="text-blue-500">Yükleniyor…</span>}
-                    </div>
-                    {slide.image && (
-                      <img
-                        src={
-                          slide.image.startsWith("/")
-                            ? `${apiUrl}${slide.image}`
-                            : slide.image
-                        }
-                        alt={`Slide ${idx + 1}`}
-                        className="w-full h-40 object-cover rounded border mt-2"
-                      />
-                    )}
-                  </div>
+                      {/* Görsel */}
+                      <div className="space-y-3">
+                        <label className="block text-sm font-semibold">Görsel</label>
+                        <div className="aspect-[16/10] w-full overflow-hidden rounded-lg ring-1 ring-black/10 bg-gray-50">
+                          {imgSrc ? (
+                            <img
+                              src={imgSrc}
+                              alt={`Slide ${idx + 1}`}
+                              className="h-full w-full object-cover"
+                            />
+                          ) : (
+                            <div className="h-full w-full grid place-items-center text-gray-400 text-sm">
+                              Görsel yok
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <label className="inline-flex items-center px-3 py-2 rounded-md bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+                            Dosya Seç
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              disabled={!!uploading[idx]}
+                              onChange={(e) => uploadImage(idx, e.target.files?.[0] || null)}
+                            />
+                          </label>
+                          <button
+                            type="button"
+                            className="px-3 py-2 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+                            onClick={() => setSlideImage(idx, "")}
+                          >
+                            Kaldır
+                          </button>
+                          {uploading[idx] && (
+                            <span className="text-sm text-blue-600">Yükleniyor…</span>
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          value={slide.image || ""}
+                          onChange={(e) => setSlideImage(idx, e.target.value)}
+                          placeholder="/uploads/... veya tam URL"
+                          className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                        />
+                      </div>
 
-                  {/* Başlıklar */}
-                  <div className="grid grid-cols-1 gap-3">
-                    {langs.map((lang) => (
-                      <div key={lang}>
-                        <label className="text-xs block mb-1">
-                          Başlık ({lang.toUpperCase()})
+                      {/* Başlık (aktif dil) */}
+                      <div className="mt-4">
+                        <label className="block text-sm font-medium mb-1">
+                          Başlık ({activeLang.toUpperCase()})
                         </label>
                         <input
                           type="text"
-                          className="w-full border p-2 rounded"
-                          value={slide.header?.[lang] || ""}
-                          onChange={(e) =>
-                            handleSlideTextChange("header", lang, e.target.value, idx)
-                          }
+                          value={slide?.header?.[activeLang] || ""}
+                          onChange={(e) => setSlideText(idx, e.target.value)}
+                          className="w-full rounded-md border border-gray-300 px-3 py-2"
                         />
                       </div>
-                    ))}
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                );
+              })}
+            </div>
           </div>
-        </div>
 
         {/* Dots */}
-        {scrollSnaps.length > 1 && (
-          <div className="flex items-center justify-center gap-2 mt-3">
-            {scrollSnaps.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => scrollTo(i)}
-                className={`w-2.5 h-2.5 rounded-full ${
-                  i === selectedIndex ? "bg-blue-600" : "bg-gray-300"
-                }`}
-                aria-label={`Slide ${i + 1}`}
-              />
-            ))}
-          </div>
-        )}
+          {scrollSnaps.length > 1 && (
+            <div className="flex items-center justify-center gap-2 mt-3">
+              {scrollSnaps.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => scrollTo(i)}
+                  className={`w-2.5 h-2.5 rounded-full ${
+                    i === selectedIndex ? "bg-blue-600" : "bg-gray-300"
+                  }`}
+                  aria-label={`Slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

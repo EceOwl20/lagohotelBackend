@@ -1,175 +1,202 @@
-
-import React from "react";
+// app/[locale]/panel/sayfalar/entertainment/components/EntertainmentTypesEdit.jsx
+"use client";
 import ImageUploadInput from "../../../components/ImageUploadInput";
 
-export default function EntertainmentTypesEdit({ data, setData, langs }) {
-  const ent = data.entertainmentTypes || {
-    subtitle: {}, title: {}, text: {}, activities: []
-  };
-  const activities = Array.isArray(ent.activities) ? ent.activities : [];
+export default function EntertainmentTypesEdit({
+  data,
+  setData,
+  activeLang = "tr", // TopBar’dan gelen aktif dil (SPA’daki gibi)
+}) {
+  const section = data?.entertainmentTypes || {};
+  const activities = Array.isArray(section?.activities) ? section.activities : [];
 
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-
-  const updateMainField = (field, lang, value) => {
-    const updated = {
-      ...ent,
-      [field]: { ...ent[field], [lang]: value }
-    };
-    setData({ ...data, entertainmentTypes: updated });
-  };
-
-  const addActivity = () => {
-    const empty = {
-      image: "",
-      title: {}, category: {}, description: {}, link: ""
-    };
-    langs.forEach(lang => {
-      empty.title[lang] = "";
-      empty.category[lang] = "";
-      empty.description[lang] = "";
+  /* ---------------- helpers (immutable updates) ---------------- */
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.entertainmentTypes || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), entertainmentTypes: { ...cur, ...next } };
     });
-    setData({
-      ...data,
-      entertainmentTypes: {
-        ...ent,
-        activities: [...activities, empty]
-      }
+
+  // Genel alanlar: subtitle / title / text -> sadece aktif dil
+  const setGeneral = (field, value) =>
+    update((cur) => ({
+      [field]: { ...(cur?.[field] || {}), [activeLang]: value },
+    }));
+
+  // Aktiviteler
+  const addActivity = () =>
+    update((cur) => ({
+      activities: [
+        ...(cur?.activities || []),
+        { image: "", title: {}, category: {}, description: {}, link: "" },
+      ],
+    }));
+
+  const removeActivity = (idx) =>
+    update((cur) => ({
+      activities: (cur?.activities || []).filter((_, i) => i !== idx),
+    }));
+
+  const setActivityField = (idx, field, value) =>
+    update((cur) => {
+      const list = [...(cur?.activities || [])];
+      const item = list[idx] || {};
+      list[idx] = {
+        ...item,
+        [field]: { ...(item[field] || {}), [activeLang]: value },
+      };
+      return { activities: list };
     });
-  };
 
-  const removeActivity = idx => {
-    setData({
-      ...data,
-      entertainmentTypes: {
-        ...ent,
-        activities: activities.filter((_, i) => i !== idx)
-      }
+  const setActivityImage = (idx, url) =>
+    update((cur) => {
+      const list = [...(cur?.activities || [])];
+      const item = list[idx] || {};
+      list[idx] = { ...item, image: url };
+      return { activities: list };
     });
-  };
 
-  const updateActivityLang = (idx, field, lang, value) => {
-    const updated = activities.map((act, i) =>
-      i === idx
-        ? { ...act, [field]: { ...(act[field] || {}), [lang]: value } }
-        : act
-    );
-    setData({ ...data, entertainmentTypes: { ...ent, activities: updated } });
-  };
+  const setActivityLink = (idx, url) =>
+    update((cur) => {
+      const list = [...(cur?.activities || [])];
+      const item = list[idx] || {};
+      list[idx] = { ...item, link: url };
+      return { activities: list };
+    });
 
-  const updateActivityLink = (idx, value) => {
-    const updated = activities.map((act, i) =>
-      i === idx ? { ...act, link: value } : act
-    );
-    setData({ ...data, entertainmentTypes: { ...ent, activities: updated } });
-  };
-
-  const updateImage = (idx, value) => {
-    const updated = activities.map((act, i) =>
-      i === idx ? { ...act, image: value } : act
-    );
-    setData({ ...data, entertainmentTypes: { ...ent, activities: updated } });
-  };
-
+  /* ------------------------- UI ------------------------- */
   return (
-    <div className="mb-8 bg-gray-50 rounded p-6 space-y-6">
-      <h4 className="font-bold text-xl">Eğlence Tipleri Bölümü</h4>
-
-      {["subtitle", "title", "text"].map(field => (
-        <div key={field}>
-          <h5 className="font-semibold mb-2">
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-          </h5>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-            {langs.map(lang => (
-              field === "text" ? (
-                <textarea
-                  key={lang}
-                  rows={2}
-                  placeholder={`${field} (${lang.toUpperCase()})`}
-                  value={ent[field]?.[lang] || ""}
-                  onChange={e => updateMainField(field, lang, e.target.value)}
-                  className="border p-2 rounded"
-                />
-              ) : (
-                <input
-                  key={lang}
-                  type="text"
-                  placeholder={`${field} (${lang.toUpperCase()})`}
-                  value={ent[field]?.[lang] || ""}
-                  onChange={e => updateMainField(field, lang, e.target.value)}
-                  className="border p-2 rounded"
-                />
-              )
-            ))}
-          </div>
-        </div>
-      ))}
-
-      <div className="flex justify-end">
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent flex items-center justify-between">
+        <h2 className="text-lg font-semibold">🎪 Eğlence Tipleri</h2>
         <button
           type="button"
           onClick={addActivity}
-          className="px-4 py-2 bg-green-600 text-white rounded"
+          className="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700"
         >
           + Aktivite Kartı Ekle
         </button>
       </div>
 
-      {activities.map((act, idx) => (
-        <div key={idx} className="border rounded p-4 bg-white space-y-4">
-          <div className="flex justify-between items-center">
-            <strong>Kart #{idx + 1}</strong>
-            <button
-              type="button"
-              onClick={() => removeActivity(idx)}
-              className="text-red-600 hover:underline"
-            >
-              Sil
-            </button>
-          </div>
-
-          <div>
-            <label className="block font-semibold mb-1">Resim Yükle</label>
-            <ImageUploadInput
-              value={act.image || ""}
-              onChange={(val) => updateImage(idx, val)}
-              apiPath="/api/upload"
-              previewHeight={64}
+      <div className="p-4 space-y-8">
+        {/* Genel metinler (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Genel Metinler ({activeLang.toUpperCase()})
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <FieldText
+              label="Alt Başlık"
+              value={section?.subtitle?.[activeLang] || ""}
+              onChange={(v) => setGeneral("subtitle", v)}
+            />
+            <FieldText
+              label="Başlık"
+              value={section?.title?.[activeLang] || ""}
+              onChange={(v) => setGeneral("title", v)}
+            />
+            <FieldArea
+              label="Açıklama"
+              rows={2}
+              value={section?.text?.[activeLang] || ""}
+              onChange={(v) => setGeneral("text", v)}
             />
           </div>
+        </div>
 
-          {["title", "category", "description"].map(field => (
-            <div key={field}>
-              <label className="block font-semibold mb-1">
-                {field.charAt(0).toUpperCase() + field.slice(1)}
-              </label>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2">
-                {langs.map(lang => (
-                  <input
-                    key={lang}
-                    type="text"
-                    placeholder={`${field} (${lang.toUpperCase()})`}
-                    value={act[field]?.[lang] || ""}
-                    onChange={e => updateActivityLang(idx, field, lang, e.target.value)}
-                    className="border p-2 rounded"
+        {/* Aktivite Kartları */}
+        <div className="space-y-6">
+          {activities.map((act, idx) => (
+            <div key={idx} className="rounded-xl ring-1 ring-black/10 bg-white p-4">
+              {/* Kart üst çubuk */}
+              <div className="flex items-center justify-between mb-4">
+                <strong>Aktivite #{idx + 1}</strong>
+                <button
+                  type="button"
+                  onClick={() => removeActivity(idx)}
+                  className="px-3 py-1.5 rounded-md bg-red-600 text-white hover:bg-red-700"
+                >
+                  Sil
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
+                {/* Sol: Görsel */}
+                <div className="space-y-2">
+                  <label className="block text-sm font-medium">Kart Görseli</label>
+                  <ImageUploadInput
+                    value={act.image || ""}
+                    onChange={(url) => setActivityImage(idx, url)}
+                    label="Resim Yükle"
                   />
-                ))}
+                </div>
+
+                {/* Sağ: Metinler (aktif dil) */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <FieldText
+                    label={`Başlık (${activeLang.toUpperCase()})`}
+                    value={act?.title?.[activeLang] || ""}
+                    onChange={(v) => setActivityField(idx, "title", v)}
+                  />
+                  <FieldText
+                    label={`Kategori (${activeLang.toUpperCase()})`}
+                    value={act?.category?.[activeLang] || ""}
+                    onChange={(v) => setActivityField(idx, "category", v)}
+                  />
+                  <FieldArea
+                    label={`Açıklama (${activeLang.toUpperCase()})`}
+                    rows={3}
+                    value={act?.description?.[activeLang] || ""}
+                    onChange={(v) => setActivityField(idx, "description", v)}
+                  />
+                  <FieldText
+                    label="Link"
+                    value={act?.link || ""}
+                    onChange={(v) => setActivityLink(idx, v)}
+                  />
+                </div>
               </div>
             </div>
           ))}
 
-          <div>
-            <label className="block font-semibold mb-1">Link</label>
-            <input
-              type="text"
-              placeholder="https://..."
-              value={act.link || ""}
-              onChange={e => updateActivityLink(idx, e.target.value)}
-              className="w-full border p-2 rounded"
-            />
-          </div>
+          {activities.length === 0 && (
+            <div className="rounded-xl ring-1 ring-black/10 bg-gray-50 p-6 text-center text-gray-600">
+              Henüz aktivite kartı yok. “+ Aktivite Kartı Ekle” ile başlayın.
+            </div>
+          )}
         </div>
-      ))}
+      </div>
+    </section>
+  );
+}
+
+/* ------------- küçük input bileşenleri ------------- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function FieldArea({ label, value, onChange, rows = 3 }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <textarea
+        rows={rows}
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }
