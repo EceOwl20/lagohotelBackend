@@ -1,216 +1,244 @@
+// components/BarCarouselEdit.jsx
 "use client";
 import { useState } from "react";
 
-const langs = [
-  { key: "tr", label: "Türkçe" },
-  { key: "en", label: "İngilizce" },
-  { key: "de", label: "Almanca" },
-  { key: "ru", label: "Rusça" }
-];
-
-export default function BarCarouselEdit({ data, setData }) {
-  const [uploading, setUploading] = useState(false);
-  const images = data.barCarousel?.images || [];
-  const lists  = data.barCarousel?.lists  || [];
-
+export default function BarCarouselEdit({ data, setData, activeLang = "tr" }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [uploading, setUploading] = useState(false);
 
-  // ————— Image Upload —————
-  const handleUpload = async e => {
+  const bar = data.barCarousel || {};
+  const images = Array.isArray(bar.images) ? bar.images : [];
+  const lists  = Array.isArray(bar.lists)  ? bar.lists  : [];
+
+  // ---- helpers ----
+  const setLangField = (field, val) =>
+    setData(prev => ({
+      ...prev,
+      barCarousel: {
+        ...(prev.barCarousel || {}),
+        [field]: { ...(prev.barCarousel?.[field] || {}), [activeLang]: val },
+      },
+    }));
+
+  const addList = () =>
+    setData(prev => ({
+      ...prev,
+      barCarousel: {
+        ...(prev.barCarousel || {}),
+        lists: [...(prev.barCarousel?.lists || []), { [activeLang]: "" }],
+      },
+    }));
+
+  const removeList = (idx) =>
+    setData(prev => ({
+      ...prev,
+      barCarousel: {
+        ...(prev.barCarousel || {}),
+        lists: (prev.barCarousel?.lists || []).filter((_, i) => i !== idx),
+      },
+    }));
+
+  const handleListChange = (idx, val) =>
+    setData(prev => {
+      const cur = prev.barCarousel?.lists || [];
+      const upd = cur.map((it, i) => (i === idx ? { ...it, [activeLang]: val } : it));
+      return { ...prev, barCarousel: { ...(prev.barCarousel || {}), lists: upd } };
+    });
+
+  const setGlobalLink = (val) =>
+    setData(prev => ({
+      ...prev,
+      barCarousel: { ...(prev.barCarousel || {}), link: val },
+    }));
+
+  // ---- images ----
+  const handleUpload = async (e) => {
     const files = Array.from(e.target.files || []);
     if (!files.length) return;
     setUploading(true);
-    const uploaded = [];
-    for (const file of files) {
-      const formData = new FormData();
-      formData.append("image", file);
-      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
-      const result = await res.json();
-      if (res.ok && result.imageUrl) uploaded.push(result.imageUrl);
+    try {
+      const uploaded = [];
+      for (const file of files) {
+        const fd = new FormData();
+        fd.append("image", file);
+        const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: fd });
+        const json = await res.json();
+        if (res.ok && (json.imageUrl || json.path)) uploaded.push(json.imageUrl || json.path);
+      }
+      if (uploaded.length) {
+        setData(prev => ({
+          ...prev,
+          barCarousel: {
+            ...(prev.barCarousel || {}),
+            images: [...(prev.barCarousel?.images || []), ...uploaded],
+          },
+        }));
+      }
+    } finally {
+      setUploading(false);
+      e.target.value = "";
     }
-    setData({
-      ...data,
-      barCarousel: {
-        ...data.barCarousel,
-        images: [...images, ...uploaded]
-      }
-    });
-    setUploading(false);
-  };
-  const removeImg = idx => setData({
-    ...data,
-    barCarousel: {
-      ...data.barCarousel,
-      images: images.filter((_, i) => i !== idx)
-    }
-  });
-
-  // ————— Lang Fields —————
-  const handleLangChange = (field, lang, value) =>
-    setData({
-      ...data,
-      barCarousel: {
-        ...data.barCarousel,
-        [field]: { ...(data.barCarousel?.[field] || {}), [lang]: value }
-      }
-    });
-
-  // ————— Lists Logic —————
-  const makeEmptyListItem = () =>
-    langs.reduce((obj, { key }) => {
-      obj[key] = "";
-      return obj;
-    }, {});
-
-  const addList = () => {
-    setData({
-      ...data,
-      barCarousel: {
-        ...data.barCarousel,
-        lists: [...lists, makeEmptyListItem()]
-      }
-    });
   };
 
-  const removeList = idx => {
-    setData({
-      ...data,
+  const removeImg = (idx) =>
+    setData(prev => ({
+      ...prev,
       barCarousel: {
-        ...data.barCarousel,
-        lists: lists.filter((_, i) => i !== idx)
-      }
-    });
-  };
-
-  const handleListChange = (idx, lang, value) => {
-    const updated = lists.map((item, i) =>
-      i === idx ? { ...item, [lang]: value } : item
-    );
-    setData({
-      ...data,
-      barCarousel: {
-        ...data.barCarousel,
-        lists: updated
-      }
-    });
-  };
-
-   const handleGlobalLinkChange = value =>
-    setData({
-      ...data,
-      barCarousel: {
-        ...data.barCarousel,
-        link: value
-      }
-    });
+        ...(prev.barCarousel || {}),
+        images: (prev.barCarousel?.images || []).filter((_, i) => i !== idx),
+      },
+    }));
 
   return (
-    <div className="mb-8">
-      <h3 className="font-bold text-lg mb-2">Bar Carousel</h3>
-
-      {/* Images */}
-      <label className="font-semibold">Resimler</label>
-      <input type="file" accept="image/*" multiple onChange={handleUpload} disabled={uploading} />
-      <div className="flex gap-2 flex-wrap mt-2 mb-4">
-        {images.map((img, idx) => (
-          <div key={idx} className="relative">
-            <img
-              src={`${apiUrl}${img}`}
-              alt=""
-              className="w-[80px] h-[60px] object-cover rounded"
-            />
-            <button
-              type="button"
-              className="absolute top-1 right-1 bg-red-500 text-white rounded-full px-2"
-              onClick={() => removeImg(idx)}
-            >
-              X
-            </button>
-          </div>
-        ))}
+    <section className="rounded-xl bg-white ring-1 ring-black/5 shadow-sm overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h3 className="text-[22px] font-semibold">Bar Carousel</h3>
+        <span className="text-sm text-gray-500">
+          Aktif dil: <strong>{activeLang.toUpperCase()}</strong>
+        </span>
       </div>
 
-      {/* Subtitle, Title, Text, ButtonText */}
-      {["subtitle", "title", "text", "buttonText"].map(field => (
-        <div className="mb-2" key={field}>
-          <label className="block font-semibold mt-2 mb-1">
-            {field === "buttonText" ? "Buton Metni" : field.charAt(0).toUpperCase() + field.slice(1)}
-          </label>
-          <div className="flex flex-wrap gap-2">
-            {langs.map(({ key, label }) =>
-              field === "text" ? (
-                <textarea
-                  key={key}
-                  placeholder={label}
-                  value={data.barCarousel?.[field]?.[key] || ""}
-                  onChange={e => handleLangChange(field, key, e.target.value)}
-                  className="border rounded p-2 w-[180px] min-h-[50px]"
-                />
-              ) : (
-                <input
-                  key={key}
-                  placeholder={label}
-                  value={data.barCarousel?.[field]?.[key] || ""}
-                  onChange={e => handleLangChange(field, key, e.target.value)}
-                  className="border rounded p-2 w-[180px]"
-                />
-              )
-            )}
+      <div className="p-4 space-y-6">
+        {/* IMAGES */}
+        <div className="space-y-3">
+          <label className="block text-sm font-medium">Resimler</label>
+
+          <div className="flex items-center gap-3">
+            <label className="inline-flex items-center px-3 py-2 rounded-lg bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+              Dosya Seç (çoklu)
+              <input
+                type="file"
+                accept="image/*"
+                multiple
+                onChange={handleUpload}
+                disabled={uploading}
+                className="hidden"
+              />
+            </label>
+            {uploading && <span className="text-sm text-blue-600">Yükleniyor…</span>}
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+            {images.map((img, idx) => {
+              const src = img?.startsWith("/") ? `${apiUrl}${img}` : img;
+              return (
+                <div key={idx} className="relative group rounded-md overflow-hidden ring-1 ring-black/10 bg-white">
+                  <img src={src} alt="" className="w-full h-28 object-cover" />
+                  <button
+                    type="button"
+                    onClick={() => removeImg(idx)}
+                    className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition
+                               px-2 py-1 text-xs rounded bg-red-600 text-white"
+                  >
+                    Kaldır
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
-      ))}
 
-      {/* ————— Lists Section ————— */}
-      <div className="mt-6">
-        <h4 className="font-semibold mb-2">Liste Maddeleri</h4>
-        {lists.map((item, idx) => (
-          <div key={idx} className="border rounded p-3 mb-4 bg-white">
-            <div className="flex justify-between items-center mb-2">
-              <span className="font-semibold">Madde #{idx + 1}</span>
-              <button
-                type="button"
-                className="text-red-600 hover:underline"
-                onClick={() => removeList(idx)}
-              >
-                Sil
-              </button>
-            </div>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {langs.map(({ key, label }) => (
-                <div key={key}>
-                  <label className="block text-sm mb-1">{label}</label>
-                  <input
-                    type="text"
-                    className="w-full border rounded p-2"
-                    placeholder={`Liste ${idx + 1} (${key.toUpperCase()})`}
-                    value={item[key]}
-                    onChange={e => handleListChange(idx, key, e.target.value)}
-                  />
-                </div>
-              ))}
-            </div>
+        {/* FIELDS (activeLang) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Alt Başlık ({activeLang.toUpperCase()})
+            </label>
+            <input
+              type="text"
+              value={bar.subtitle?.[activeLang] || ""}
+              onChange={(e) => setLangField("subtitle", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
+            />
           </div>
-        ))}
-        <button
-          type="button"
-          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-          onClick={addList}
-        >
-          Madde Ekle
-        </button>
 
-        {/* Global Link */}
-        <div className="mt-4">
-          <label className="block font-semibold mb-1">Ortak Link</label>
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Başlık ({activeLang.toUpperCase()})
+            </label>
+            <input
+              type="text"
+              value={bar.title?.[activeLang] || ""}
+              onChange={(e) => setLangField("title", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
+            />
+          </div>
+
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium mb-1">
+              Açıklama ({activeLang.toUpperCase()})
+            </label>
+            <textarea
+              rows={3}
+              value={bar.text?.[activeLang] || ""}
+              onChange={(e) => setLangField("text", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Buton Metni ({activeLang.toUpperCase()})
+            </label>
+            <input
+              type="text"
+              value={bar.buttonText?.[activeLang] || ""}
+              onChange={(e) => setLangField("buttonText", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
+            />
+          </div>
+        </div>
+
+        {/* LISTS */}
+        <div className="pt-2">
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="font-semibold">Liste Maddeleri</h4>
+            <button
+              type="button"
+              onClick={addList}
+              className="inline-flex items-center gap-1 rounded-lg bg-green-600 text-white px-3 py-1.5 text-sm hover:bg-green-700"
+            >
+              + Madde Ekle
+            </button>
+          </div>
+
+          {lists.map((item, idx) => (
+            <div key={idx} className="rounded-lg bg-gray-50 p-3 ring-1 ring-black/10 mb-3">
+              <div className="flex items-center justify-between mb-2">
+                <span className="font-medium">Madde #{idx + 1}</span>
+                <button
+                  type="button"
+                  onClick={() => removeList(idx)}
+                  className="text-sm px-3 py-1.5 rounded-md bg-red-600 text-white hover:bg-red-700"
+                >
+                  Sil
+                </button>
+              </div>
+              <label className="block text-sm font-medium mb-1">
+                Metin ({activeLang.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                value={item?.[activeLang] || ""}
+                onChange={(e) => handleListChange(idx, e.target.value)}
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+              />
+            </div>
+          ))}
+        </div>
+
+        {/* GLOBAL LINK */}
+        <div>
+          <label className="block text-sm font-medium mb-1">Ortak Link</label>
           <input
             type="text"
-            className="w-full border rounded p-2"
-            placeholder="link"
-            value={data.barCarousel?.link || ""}
-            onChange={e => handleGlobalLinkChange(e.target.value)}
+            value={bar.link || ""}
+            onChange={(e) => setGlobalLink(e.target.value)}
+            className="w-full rounded-md border border-gray-300 px-3 py-2"
+            placeholder="https://..."
           />
         </div>
       </div>
-    </div>
+    </section>
   );
 }

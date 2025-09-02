@@ -1,179 +1,298 @@
+// app/[locale]/panel/sayfalar/sahilhavuz/components/PoolListEdit.jsx
 "use client";
 import { useState } from "react";
 
-export default function PoolListEdit({ data, setData, langs }) {
-  const section = data.poolListSection || { subtitle: {}, title: {}, text: {} };
-  const arr = data.poolList || [];
-  const [uploading, setUploading] = useState([]);
+export default function PoolListEdit({ data, setData, activeLang = "tr" }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // poolListSection çokdilli alan güncelleme
-  const handleSectionChange = (field, lang, value) => {
-    const updatedSection = {
-      ...section,
-      [field]: { ...(section[field] || {}), [lang]: value },
-    };
-    setData({ ...data, poolListSection: updatedSection });
-  };
+  const section = data?.poolListSection || {}; // { subtitle: {}, title: {}, text: {} }
+  const items = Array.isArray(data?.poolList) ? data.poolList : [];
 
-  // havuz resmi/hover yükleme
-  const uploadImage = async (e, idx, type) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading((v) => ({ ...v, [`${idx}-${type}`]: true }));
-    const formData = new FormData();
-    formData.append("image", file);
-    const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
-    const result = await res.json();
-    if (res.ok && result.imageUrl) {
-      const updated = [...arr];
-      updated[idx][type] = result.imageUrl;
-      setData({ ...data, poolList: updated });
-    }
-    setUploading((v) => ({ ...v, [`${idx}-${type}`]: false }));
-  };
+  const [uploading, setUploading] = useState({}); // { "0-image": true, "1-hoverImage": true }
 
-  // havuz metin alanları güncelleme
-  const handleChange = (idx, field, lang, value) => {
-    const updated = [...arr];
-    updated[idx][field] = { ...(updated[idx][field] || {}), [lang]: value };
-    setData({ ...data, poolList: updated });
-  };
+  /* -------- helpers (functional updates) -------- */
+  const setSectionField = (field, value) =>
+    setData(prev => ({
+      ...prev,
+      poolListSection: {
+        ...(prev?.poolListSection || {}),
+        [field]: {
+          ...((prev?.poolListSection && prev.poolListSection[field]) || {}),
+          [activeLang]: value,
+        },
+      },
+    }));
+
+  const setItems = (updater) =>
+    setData(prev => ({
+      ...prev,
+      poolList: typeof updater === "function" ? updater(prev?.poolList || []) : updater,
+    }));
 
   const addPool = () =>
-    setData({
-      ...data,
-      poolList: [...arr, { image: "", hoverImage: "", subtitle: {}, title: {}, description: {} }],
-    });
+    setItems(arr => [
+      ...arr,
+      { image: "", hoverImage: "", subtitle: {}, title: {}, description: {} },
+    ]);
+
   const removePool = (idx) =>
-    setData({ ...data, poolList: arr.filter((_, i) => i !== idx) });
+    setItems(arr => arr.filter((_, i) => i !== idx));
 
+  const setItemField = (idx, field, value) =>
+    setItems(arr => {
+      const next = [...arr];
+      const cur = next[idx] || {};
+      next[idx] = {
+        ...cur,
+        [field]: { ...(cur[field] || {}), [activeLang]: value },
+      };
+      return next;
+    });
+
+  const setItemImage = (idx, key, value) =>
+    setItems(arr => {
+      const next = [...arr];
+      next[idx] = { ...(next[idx] || {}), [key]: value };
+      return next;
+    });
+
+  const uploadImage = async (idx, key, file) => {
+    if (!file) return;
+    const ukey = `${idx}-${key}`;
+    setUploading(u => ({ ...u, [ukey]: true }));
+    try {
+      const form = new FormData();
+      form.append("image", file);
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Yükleme başarısız");
+      const url = json.imageUrl || json.path;
+      if (url) setItemImage(idx, key, url);
+    } catch (e) {
+      alert(e.message);
+    } finally {
+      setUploading(u => ({ ...u, [ukey]: false }));
+    }
+  };
+
+  const toSrc = (p) => (p ? (p.startsWith("/") ? `${apiUrl}${p}` : p) : "");
+
+  /* -------------------- UI -------------------- */
   return (
-    <div className="mb-8">
-      <h3 className="font-bold text-lg mb-4">Havuz Listesi Bölümü</h3>
-
-      {/* Genel poolListSection */}
-      <div className="mb-6 p-4 bg-gray-100 rounded">
-        <h4 className="font-semibold mb-2">Liste Başlık & Açıklama</h4>
-        {["subtitle", "title", "text"].map((field) => (
-          <div className="mb-4" key={field}>
-            <label className="block font-medium mb-1">{field.charAt(0).toUpperCase() + field.slice(1)}</label>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {langs.map(({ key, label }) => (
-                <div key={key} className="flex flex-col">
-                  <span className="text-xs text-gray-600 mb-1">{label}</span>
-                  {field === "text" ? (
-                    <textarea
-                      rows={2}
-                      className="border p-2 rounded"
-                      value={section[field]?.[key] || ""}
-                      onChange={(e) => handleSectionChange(field, key, e.target.value)}
-                    />
-                  ) : (
-                    <input
-                      type="text"
-                      className="border p-2 rounded"
-                      value={section[field]?.[key] || ""}
-                      onChange={(e) => handleSectionChange(field, key, e.target.value)}
-                    />
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h2 className="text-lg font-semibold">🏖️ Havuz Listesi</h2>
       </div>
 
-      <h3 className="font-bold text-lg mb-2">Havuz Kartları</h3>
-      <button
-        type="button"
-        className="mb-3 px-4 py-1 bg-green-600 text-white rounded"
-        onClick={addPool}
-      >
-        + Havuz Ekle
-      </button>
+      <div className="p-4 space-y-8">
+        {/* Üst bölüm (liste başlık & açıklama) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">Liste Başlık & Açıklama</h3>
 
-      {arr.map((item, idx) => (
-        <div key={idx} className="border rounded p-3 mb-4 bg-gray-50">
-          <div className="flex justify-between mb-2">
-            <strong>Havuz #{idx + 1}</strong>
-            <button
-              type="button"
-              className="px-3 py-1 bg-red-500 text-white rounded"
-              onClick={() => removePool(idx)}
-            >
-              Sil
-            </button>
-          </div>
-
-          {/* Görsel */}
-          <label className="block font-semibold mb-1">Görsel</label>
-          <div className="flex items-center gap-4 mb-2">
-            {item.image && (
-              <img
-                src={`${apiUrl}${item.image}`}
-                alt=""
-                className="w-[90px] h-[60px] object-cover rounded"
-              />
-            )}
+          {/* Alt Başlık */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">
+              Alt Başlık ({activeLang.toUpperCase()})
+            </label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => uploadImage(e, idx, "image")}
-              disabled={uploading[`${idx}-image`]}
+              type="text"
+              value={section?.subtitle?.[activeLang] || ""}
+              onChange={(e) => setSectionField("subtitle", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
             />
-            {uploading[`${idx}-image`] && <span className="text-blue-500">Yükleniyor...</span>}
           </div>
 
-          {/* Hover Görsel */}
-          <label className="block font-semibold mb-1">Hover Görsel</label>
-          <div className="flex items-center gap-4 mb-4">
-            {item.hoverImage && (
-              <img
-                src={`${apiUrl}${item.hoverImage}`}
-                alt=""
-                className="w-[90px] h-[60px] object-cover rounded"
-              />
-            )}
+          {/* Başlık */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-1">
+              Başlık ({activeLang.toUpperCase()})
+            </label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => uploadImage(e, idx, "hoverImage")}
-              disabled={uploading[`${idx}-hoverImage`]}
+              type="text"
+              value={section?.title?.[activeLang] || ""}
+              onChange={(e) => setSectionField("title", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
             />
-            {uploading[`${idx}-hoverImage`] && <span className="text-blue-500">Yükleniyor...</span>}
           </div>
 
-          {/* Çokdilli metinler */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {langs.map(({ key, label }) => (
-              <div key={key} className="bg-white rounded p-2">
-                <label className="text-xs block mb-1">{label} Alt Başlık</label>
-                <input
-                  type="text"
-                  className="w-full border p-1 rounded mb-1"
-                  value={item.subtitle?.[key] || ""}
-                  onChange={(e) => handleChange(idx, "subtitle", key, e.target.value)}
-                />
-                <label className="text-xs block mb-1">{label} Başlık</label>
-                <input
-                  type="text"
-                  className="w-full border p-1 rounded mb-1"
-                  value={item.title?.[key] || ""}
-                  onChange={(e) => handleChange(idx, "title", key, e.target.value)}
-                />
-                <label className="text-xs block mb-1">{label} Açıklama</label>
-                <textarea
-                  rows={2}
-                  className="w-full border p-1 rounded"
-                  value={item.description?.[key] || ""}
-                  onChange={(e) => handleChange(idx, "description", key, e.target.value)}
-                />
-              </div>
-            ))}
+          {/* Açıklama */}
+          <div>
+            <label className="block text-sm font-medium mb-1">
+              Açıklama ({activeLang.toUpperCase()})
+            </label>
+            <textarea
+              rows={3}
+              value={section?.text?.[activeLang] || ""}
+              onChange={(e) => setSectionField("text", e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-3 py-2"
+            />
           </div>
         </div>
-      ))}
-    </div>
+
+        {/* Havuz kartları */}
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold">Havuz Kartları</h3>
+          <button
+            type="button"
+            onClick={addPool}
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 text-white px-4 py-2 hover:bg-green-700"
+          >
+            + Havuz Ekle
+          </button>
+        </div>
+
+        {items.map((item, idx) => {
+          const imgSrc = toSrc(item.image);
+          const hoverSrc = toSrc(item.hoverImage);
+
+          return (
+            <div key={idx} className="rounded-xl ring-1 ring-black/5 overflow-hidden">
+              {/* kart header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+                <div className="font-medium">Havuz #{idx + 1}</div>
+                <button
+                  type="button"
+                  onClick={() => removePool(idx)}
+                  className="px-3 py-1.5 text-sm rounded-md bg-red-600 text-white hover:bg-red-700"
+                >
+                  Sil
+                </button>
+              </div>
+
+              {/* kart body */}
+              <div className="p-4 grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-6">
+                {/* Sol: Görseller */}
+                <div className="space-y-6">
+                  {/* Ana Görsel */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium">Görsel</label>
+                    <div className="aspect-[3/2] w-full overflow-hidden rounded-lg ring-1 ring-black/10 bg-gray-50">
+                      {imgSrc ? (
+                        <img src={imgSrc} alt="" className="h-full w-full object-cover" />
+                      ) : (
+                        <div className="h-full w-full grid place-items-center text-gray-400 text-sm">
+                          Görsel yok
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <label className="inline-flex items-center px-3 py-2 rounded-md bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+                        Dosya Seç
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          disabled={!!uploading[`${idx}-image`]}
+                          onChange={(e) => uploadImage(idx, "image", e.target.files?.[0] || null)}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        className="px-3 py-2 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+                        onClick={() => setItemImage(idx, "image", "")}
+                      >
+                        Kaldır
+                      </button>
+                      {uploading[`${idx}-image`] && (
+                        <span className="text-sm text-blue-600">Yükleniyor…</span>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      value={item.image || ""}
+                      onChange={(e) => setItemImage(idx, "image", e.target.value)}
+                      placeholder="/uploads/... veya tam URL"
+                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                    />
+                  </div>
+
+                  {/* Hover Görsel */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium">Hover Görsel</label>
+                    <div className="aspect-[3/2] w-full overflow-hidden rounded-lg ring-1 ring-black/10 bg-gray-50">
+                      {hoverSrc ? (
+                        <img src={hoverSrc} alt="" className="h-full w-full object-cover" />
+                      ) : (
+                        <div className="h-full w-full grid place-items-center text-gray-400 text-sm">
+                          Görsel yok
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <label className="inline-flex items-center px-3 py-2 rounded-md bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+                        Dosya Seç
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          disabled={!!uploading[`${idx}-hoverImage`]}
+                          onChange={(e) => uploadImage(idx, "hoverImage", e.target.files?.[0] || null)}
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        className="px-3 py-2 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+                        onClick={() => setItemImage(idx, "hoverImage", "")}
+                      >
+                        Kaldır
+                      </button>
+                      {uploading[`${idx}-hoverImage`] && (
+                        <span className="text-sm text-blue-600">Yükleniyor…</span>
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      value={item.hoverImage || ""}
+                      onChange={(e) => setItemImage(idx, "hoverImage", e.target.value)}
+                      placeholder="/uploads/... veya tam URL"
+                      className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+                    />
+                  </div>
+                </div>
+
+                {/* Sağ: Aktif dil metinleri */}
+                <div className="space-y-5">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Alt Başlık ({activeLang.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={item?.subtitle?.[activeLang] || ""}
+                      onChange={(e) => setItemField(idx, "subtitle", e.target.value)}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Başlık ({activeLang.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={item?.title?.[activeLang] || ""}
+                      onChange={(e) => setItemField(idx, "title", e.target.value)}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Açıklama ({activeLang.toUpperCase()})
+                    </label>
+                    <textarea
+                      rows={4}
+                      value={item?.description?.[activeLang] || ""}
+                      onChange={(e) => setItemField(idx, "description", e.target.value)}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </section>
   );
 }

@@ -1,227 +1,313 @@
+// app/[locale]/panel/sayfalar/kidsclub/components/KidsBambooEdit.jsx
 "use client";
 import { useState } from "react";
 
-const clubDefault = {
-  image: "",
-  ageGroup: { tr: "", en: "", de: "", ru: "" },
-  title: { tr: "", en: "", de: "", ru: "" },
-  description: { tr: "", en: "", de: "", ru: "" }
-};
-
-export default function KidsBambooEdit({ data, setData, langs }) {
-  const value = data.kidsBamboo || {};
-  const [uploading, setUploading] = useState({}); // { section: bool, [idx]: bool }
+export default function KidsBambooEdit({ data, setData, activeLang = "tr" }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-  // Bölüm seviyesi görsel yükleme
-  const handleSectionImageUpload = async (e) => {
-    const file = e.target.files?.[0];
+  const section = data?.kidsBamboo || {};
+  const clubs = Array.isArray(section.clubData) ? section.clubData : [];
+
+  const [uploading, setUploading] = useState({ section: false }); // {section:true, "0":true}
+
+  /* ---------------- utils ---------------- */
+  const toSrc = (p) => (p ? (p.startsWith("/") ? `${apiUrl}${p}` : p) : "");
+
+  const setSection = (updater) =>
+    setData((prev) => ({
+      ...prev,
+      kidsBamboo:
+        typeof updater === "function" ? updater(prev?.kidsBamboo || {}) : updater,
+    }));
+
+  const setClubs = (updater) =>
+    setSection((s) => ({
+      ...s,
+      clubData: typeof updater === "function" ? updater(s?.clubData || []) : updater,
+    }));
+
+  /* ----------- image uploads ----------- */
+  const uploadSectionImage = async (file) => {
     if (!file) return;
-    setUploading(prev => ({ ...prev, section: true }));
-    const formData = new FormData();
-    formData.append("image", file);
+    setUploading((u) => ({ ...u, section: true }));
     try {
-      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const imageUrl = result.imageUrl || result.path;
-      setData(prev => ({
-        ...prev,
-        kidsBamboo: {
-          ...prev.kidsBamboo,
-          image: imageUrl
-        }
-      }));
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
+      const form = new FormData();
+      form.append("image", file);
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Yükleme başarısız");
+      const url = json.imageUrl || json.path;
+      if (url) setSection((s) => ({ ...s, image: url }));
+    } catch (e) {
+      alert(e.message);
     } finally {
-      setUploading(prev => ({ ...prev, section: false }));
+      setUploading((u) => ({ ...u, section: false }));
     }
   };
 
-  // Kulüp kartı görsel upload handler (item-level)
-  const handleImageUpload = async (e, idx) => {
-    const file = e.target.files?.[0];
+  const uploadClubImage = async (idx, file) => {
     if (!file) return;
-    setUploading(prev => ({ ...prev, [idx]: true }));
-    const formData = new FormData();
-    formData.append("image", file);
+    setUploading((u) => ({ ...u, [idx]: true }));
     try {
-      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const imageUrl = result.imageUrl || result.path;
-      const arr = [...(value.clubData || [])];
-      arr[idx].image = imageUrl;
-      setData(prev => ({
-        ...prev,
-        kidsBamboo: {
-          ...prev.kidsBamboo,
-          clubData: arr
-        }
-      }));
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
+      const form = new FormData();
+      form.append("image", file);
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Yükleme başarısız");
+      const url = json.imageUrl || json.path;
+      if (url)
+        setClubs((arr) => {
+          const next = [...arr];
+          next[idx] = { ...(next[idx] || {}), image: url };
+          return next;
+        });
+    } catch (e) {
+      alert(e.message);
     } finally {
-      setUploading(prev => ({ ...prev, [idx]: false }));
+      setUploading((u) => ({ ...u, [idx]: false }));
     }
   };
 
-  // Genel multi-lang alan değişimi
-  const handleChange = (path, val) => {
-    const keys = path.split(".");
-    setData(prev => {
-      const updated = { ...prev };
-      let ref = updated.kidsBamboo = { ...prev.kidsBamboo };
-      for (let i = 0; i < keys.length - 1; i++) {
-        ref[keys[i]] = { ...(ref[keys[i]] || {}) };
-        ref = ref[keys[i]];
-      }
-      ref[keys.at(-1)] = val;
-      return updated;
+  /* ----------- section fields (multilang) ----------- */
+  const setSectionField = (field, value) =>
+    setSection((s) => ({
+      ...s,
+      [field]: { ...(s?.[field] || {}), [activeLang]: value },
+    }));
+
+  /* ----------- clubs (array) ----------- */
+  const addClub = () =>
+    setClubs((arr) => [...arr, { image: "", ageGroup: {}, title: {}, description: {} }]);
+
+  const removeClub = (idx) =>
+    setClubs((arr) => arr.filter((_, i) => i !== idx));
+
+  const setClubField = (idx, field, value) =>
+    setClubs((arr) => {
+      const next = [...arr];
+      const cur = next[idx] || {};
+      next[idx] = {
+        ...cur,
+        [field]: { ...(cur[field] || {}), [activeLang]: value },
+      };
+      return next;
     });
-  };
 
-  // Kulüp kartı ekle/sil
-  const handleClubAdd = () => {
-    setData(prev => ({
-      ...prev,
-      kidsBamboo: {
-        ...prev.kidsBamboo,
-        clubData: [...(prev.kidsBamboo.clubData || []), { ...clubDefault }]
-      }
-    }));
-  };
-  const handleClubRemove = i => {
-    setData(prev => ({
-      ...prev,
-      kidsBamboo: {
-        ...prev.kidsBamboo,
-        clubData: prev.kidsBamboo.clubData.filter((_, idx) => idx !== i)
-      }
-    }));
-  };
+  const setClubImage = (idx, value) =>
+    setClubs((arr) => {
+      const next = [...arr];
+      next[idx] = { ...(next[idx] || {}), image: value };
+      return next;
+    });
+
+  /* -------------------- UI -------------------- */
+  const sectionImg = toSrc(section.image);
 
   return (
-    <section className="bg-gray-100 rounded-md p-4 mb-6">
-      <h3 className="font-bold text-xl mb-2">Kids Bamboo</h3>
-
-      {/* Bölüm seviyesi tek görsel */}
-      <div className="mb-6">
-        <label className="block font-semibold mb-1">Bölüm Görseli</label>
-        <div className="flex items-center gap-4">
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleSectionImageUpload}
-            disabled={uploading.section}
-            className="border p-2 rounded"
-          />
-          {uploading.section && <span className="text-blue-600">Yükleniyor…</span>}
-          {value.image && (
-            <img
-              src={value.image.startsWith("/") ? `${apiUrl}${value.image}` : value.image}
-              alt="Section"
-              className="h-20 w-32 object-cover rounded border"
-            />
-          )}
-        </div>
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h2 className="text-lg font-semibold">🎋 Kids Bamboo</h2>
       </div>
 
-      {/* Çokdilli metin alanları (subtitle, title, text, span, note) */}
-      {["subtitle", "title", "text", "span", "note"].map(key => (
-        <div key={key} className="mb-4">
-          <label className="block font-semibold mb-1">
-            {key.charAt(0).toUpperCase() + key.slice(1)}
-          </label>
-          <div className="flex flex-col md:flex-row gap-2">
-            {langs.map(lang => (
-              <input
-                key={lang}
-                placeholder={lang.toUpperCase()}
-                className="border p-2 rounded w-full"
-                value={value?.[key]?.[lang] || ""}
-                onChange={e => handleChange(`${key}.${lang}`, e.target.value)}
-              />
+      {/* body */}
+      <div className="p-4 space-y-8">
+        {/* Section image + fields */}
+        <div className="grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
+          {/* left: section image */}
+          <div className="space-y-3">
+            <label className="block text-sm font-medium">Bölüm Görseli</label>
+            <div className="aspect-[16/10] w-full overflow-hidden rounded-lg ring-1 ring-black/10 bg-gray-50">
+              {sectionImg ? (
+                <img src={sectionImg} alt="Section" className="h-full w-full object-cover" />
+              ) : (
+                <div className="h-full w-full grid place-items-center text-gray-400 text-sm">
+                  Görsel yok
+                </div>
+              )}
+            </div>
+            <div className="flex items-center gap-3">
+              <label className="inline-flex items-center px-3 py-2 rounded-md bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+                Dosya Seç
+                <input
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  disabled={!!uploading.section}
+                  onChange={(e) => uploadSectionImage(e.target.files?.[0] || null)}
+                />
+              </label>
+              <button
+                type="button"
+                className="px-3 py-2 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+                onClick={() => setSection((s) => ({ ...s, image: "" }))}
+              >
+                Kaldır
+              </button>
+              {uploading.section && (
+                <span className="text-sm text-blue-600">Yükleniyor…</span>
+              )}
+            </div>
+            <input
+              type="text"
+              value={section.image || ""}
+              onChange={(e) => setSection((s) => ({ ...s, image: e.target.value }))}
+              placeholder="/uploads/... veya tam URL"
+              className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+            />
+          </div>
+
+          {/* right: active language fields */}
+          <div className="space-y-4">
+            {/* Alt başlık, başlık, açıklama, span, not */}
+            {[
+              { key: "subtitle", label: "Alt Başlık" },
+              { key: "title", label: "Başlık" },
+              { key: "text", label: "Açıklama", multiline: true },
+              { key: "span", label: "Vurgu (Span)" },
+              { key: "note", label: "Not" },
+            ].map(({ key, label, multiline }) => (
+              <div key={key}>
+                <label className="block text-sm font-medium mb-1">
+                  {label} ({activeLang.toUpperCase()})
+                </label>
+                {multiline ? (
+                  <textarea
+                    rows={3}
+                    value={section?.[key]?.[activeLang] || ""}
+                    onChange={(e) => setSectionField(key, e.target.value)}
+                    className="w-full rounded-md border border-gray-300 px-3 py-2"
+                  />
+                ) : (
+                  <input
+                    type="text"
+                    value={section?.[key]?.[activeLang] || ""}
+                    onChange={(e) => setSectionField(key, e.target.value)}
+                    className="w-full rounded-md border border-gray-300 px-3 py-2"
+                  />
+                )}
+              </div>
             ))}
           </div>
         </div>
-      ))}
 
-      {/* Kulüp Kartları */}
-      <h4 className="font-semibold text-lg mt-6 mb-2">Kulüp Kartları</h4>
-      {(value.clubData || []).map((club, idx) => (
-        <div key={idx} className="border p-4 rounded mb-4 bg-white">
+        {/* Clubs header + add */}
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold">Kulüp Kartları</h3>
           <button
-            className="text-red-600 hover:underline text-sm mb-2"
-            onClick={() => handleClubRemove(idx)}
+            type="button"
+            onClick={addClub}
+            className="inline-flex items-center gap-2 rounded-lg bg-green-600 text-white px-4 py-2 hover:bg-green-700"
           >
-            Kaldır
+            + Kulüp Kartı Ekle
           </button>
+        </div>
 
-          {/* Kart Görseli */}
-          <div className="mb-3">
-            <label className="block font-semibold mb-1">Görsel</label>
-            <div className="flex items-center gap-4">
-              <input
-                type="file"
-                accept="image/*"
-                onChange={e => handleImageUpload(e, idx)}
-                disabled={uploading[idx]}
-                className="border p-2 rounded"
-              />
-              {uploading[idx] && <span className="text-blue-600">Yükleniyor…</span>}
-              {club.image && (
-                <img
-                  src={
-                    club.image.startsWith("/")
-                      ? `${apiUrl}${club.image}`
-                      : club.image
-                  }
-                  alt="Kulüp"
-                  className="h-16 w-24 object-cover rounded border"
-                />
-              )}
-            </div>
-          </div>
+        {/* Club cards */}
+        {clubs.map((club, idx) => {
+          const img = toSrc(club.image);
+          return (
+            <div key={idx} className="rounded-xl ring-1 ring-black/5 overflow-hidden">
+              {/* card header */}
+              <div className="flex items-center justify-between px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+                <div className="font-medium">Kulüp #{idx + 1}</div>
+                <button
+                  type="button"
+                  onClick={() => removeClub(idx)}
+                  className="px-3 py-1.5 text-sm rounded-md bg-red-600 text-white hover:bg-red-700"
+                >
+                  Sil
+                </button>
+              </div>
 
-          {/* Kart çokdilli alanlar */}
-          {["ageGroup", "title", "description"].map(key => (
-            <div key={key} className="mb-3">
-              <label className="block font-semibold mb-1">{key}</label>
-              <div className="flex gap-2">
-                {langs.map(lang => (
+              {/* card body */}
+              <div className="p-4 grid grid-cols-1 lg:grid-cols-[360px_1fr] gap-6">
+                {/* left: image */}
+                <div className="space-y-3">
+                  <label className="block text-sm font-medium">Görsel</label>
+                  <div className="aspect-[16/10] w-full overflow-hidden rounded-lg ring-1 ring-black/10 bg-gray-50">
+                    {img ? (
+                      <img src={img} alt="" className="h-full w-full object-cover" />
+                    ) : (
+                      <div className="h-full w-full grid place-items-center text-gray-400 text-sm">
+                        Görsel yok
+                      </div>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <label className="inline-flex items-center px-3 py-2 rounded-md bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+                      Dosya Seç
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        disabled={!!uploading[idx]}
+                        onChange={(e) => uploadClubImage(idx, e.target.files?.[0] || null)}
+                      />
+                    </label>
+                    <button
+                      type="button"
+                      className="px-3 py-2 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+                      onClick={() => setClubImage(idx, "")}
+                    >
+                      Kaldır
+                    </button>
+                    {uploading[idx] && (
+                      <span className="text-sm text-blue-600">Yükleniyor…</span>
+                    )}
+                  </div>
                   <input
-                    key={lang}
-                    placeholder={lang.toUpperCase()}
-                    className="border p-2 rounded w-full"
-                    value={club[key]?.[lang] || ""}
-                    onChange={e => {
-                      const arr = [...(value.clubData || [])];
-                      arr[idx][key][lang] = e.target.value;
-                      setData(prev => ({
-                        ...prev,
-                        kidsBamboo: {
-                          ...prev.kidsBamboo,
-                          clubData: arr
-                        }
-                      }));
-                    }}
+                    type="text"
+                    value={club.image || ""}
+                    onChange={(e) => setClubImage(idx, e.target.value)}
+                    placeholder="/uploads/... veya tam URL"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
                   />
-                ))}
+                </div>
+
+                {/* right: fields for activeLang */}
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Yaş Grubu ({activeLang.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={club?.ageGroup?.[activeLang] || ""}
+                      onChange={(e) => setClubField(idx, "ageGroup", e.target.value)}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Başlık ({activeLang.toUpperCase()})
+                    </label>
+                    <input
+                      type="text"
+                      value={club?.title?.[activeLang] || ""}
+                      onChange={(e) => setClubField(idx, "title", e.target.value)}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium mb-1">
+                      Açıklama ({activeLang.toUpperCase()})
+                    </label>
+                    <textarea
+                      rows={3}
+                      value={club?.description?.[activeLang] || ""}
+                      onChange={(e) => setClubField(idx, "description", e.target.value)}
+                      className="w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
-          ))}
-        </div>
-      ))}
-
-      <button
-        type="button"
-        className="px-4 py-2 bg-green-600 text-white rounded"
-        onClick={handleClubAdd}
-      >
-        + Kulüp Kartı Ekle
-      </button>
+          );
+        })}
+      </div>
     </section>
   );
 }

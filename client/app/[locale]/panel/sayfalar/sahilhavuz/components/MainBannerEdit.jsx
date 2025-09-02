@@ -1,190 +1,238 @@
+// app/[locale]/panel/sayfalar/sahilhavuz/components/MainBannerEdit.jsx
 "use client";
 import { useState } from "react";
 
-// Diller
-const langList = [
-  { key: "tr", label: "Türkçe" },
-  { key: "en", label: "İngilizce" },
-  { key: "de", label: "Almanca" },
-  { key: "ru", label: "Rusça" },
-];
-
-export default function MainBannerEdit({ data, setData }) {
+export default function MainBannerEdit({ data, setData, activeLang = "tr" }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  const [uploading, setUploading] = useState({}); // {"desktop.girlImage": true}
 
-  const [uploading, setUploading] = useState({});
-  // Upload helper
-  const handleImageUpload = async (e, field, device = "desktop") => {
-    const file = e.target.files?.[0];
+  // ---- helpers ----
+  const asSrc = (p) => (p ? (p.startsWith("/") ? `${apiUrl}${p}` : p) : "");
+  const get = (obj, path, def = "") =>
+    path.split(".").reduce((o, k) => (o && k in o ? o[k] : undefined), obj) ?? def;
+
+  const setImageUrl = (device, field, value) =>
+    setData((prev) => ({
+      ...prev,
+      mainBanner: {
+        ...prev?.mainBanner,
+        [device]: { ...(prev?.mainBanner?.[device] || {}), [field]: value },
+      },
+    }));
+
+  const uploadImage = async (file, device, field) => {
     if (!file) return;
-    setUploading(prev => ({ ...prev, [field]: true }));
-    const formData = new FormData();
-    formData.append("image", file);
-   const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: formData });
-    const result = await res.json();
-    if (res.ok && result.imageUrl) {
-      setData({
-        ...data,
-        mainBanner: {
-          ...data.mainBanner,
-          [device]: {
-            ...((data.mainBanner && data.mainBanner[device]) || {}),
-            [field]: result.imageUrl,
-          },
-        },
-      });
+    const key = `${device}.${field}`;
+    setUploading((u) => ({ ...u, [key]: true }));
+    try {
+      const form = new FormData();
+      form.append("image", file);
+      const res = await fetch(`${apiUrl}/api/upload`, { method: "POST", body: form });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json?.error || "Yükleme başarısız");
+      const url = json.imageUrl || json.path;
+      if (url) setImageUrl(device, field, url);
+    } catch (e) {
+      alert(e.message);
+    } finally {
+      setUploading((u) => ({ ...u, [key]: false }));
     }
-    setUploading(prev => ({ ...prev, [field]: false }));
   };
 
-  // Diller için inputları tek blokta göster
-  const renderLangInputs = (label, key, multiline = false, device = "desktop") => (
-    <div className="mb-4">
-      <label className="block font-semibold mb-1">{label}</label>
-      <div className="flex flex-wrap gap-2">
-        {langList.map(({ key: lang, label: langLabel }) =>
-          multiline ? (
-            <textarea
-              key={lang}
-              placeholder={`${label} (${langLabel})`}
-              value={data.mainBanner?.[device]?.[key]?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  mainBanner: {
-                    ...data.mainBanner,
-                    [device]: {
-                      ...((data.mainBanner && data.mainBanner[device]) || {}),
-                      [key]: {
-                        ...(data.mainBanner?.[device]?.[key] || {}),
-                        [lang]: e.target.value,
-                      },
-                    },
-                  },
-                })
-              }
-              rows={2}
-              className="w-[190px] border p-2 rounded mb-1"
-            />
-          ) : (
+  const clearImage = (device, field) => setImageUrl(device, field, "");
+
+  const setLangField = (device, field, value) =>
+    setData((prev) => ({
+      ...prev,
+      mainBanner: {
+        ...prev?.mainBanner,
+        [device]: {
+          ...(prev?.mainBanner?.[device] || {}),
+          [field]: {
+            ...(prev?.mainBanner?.[device]?.[field] || {}),
+            [activeLang]: value,
+          },
+        },
+      },
+    }));
+
+  // ---- small UI part: uploader row ----
+  const UploadRow = ({ device, field, label, contain = false }) => {
+    const key = `${device}.${field}`;
+    const raw = get(data?.mainBanner, `${device}.${field}`, "");
+    const src = asSrc(raw);
+    return (
+      <div className="space-y-2">
+        <label className="block text-sm font-medium">{label}</label>
+        <div className="flex items-center gap-3">
+          <label className="inline-flex items-center px-3 py-2 rounded-md bg-black text-white text-sm cursor-pointer hover:bg-black/90">
+            Dosya Seç
             <input
-              key={lang}
-              type="text"
-              placeholder={`${label} (${langLabel})`}
-              value={data.mainBanner?.[device]?.[key]?.[lang] || ""}
-              onChange={e =>
-                setData({
-                  ...data,
-                  mainBanner: {
-                    ...data.mainBanner,
-                    [device]: {
-                      ...((data.mainBanner && data.mainBanner[device]) || {}),
-                      [key]: {
-                        ...(data.mainBanner?.[device]?.[key] || {}),
-                        [lang]: e.target.value,
-                      },
-                    },
-                  },
-                })
-              }
-              className="w-[190px] border p-2 rounded mb-1"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              disabled={!!uploading[key]}
+              onChange={(e) => uploadImage(e.target.files?.[0], device, field)}
             />
-          )
-        )}
-      </div>
-    </div>
-  );
+          </label>
+          <button
+            type="button"
+            className="px-3 py-2 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+            onClick={() => clearImage(device, field)}
+          >
+            Kaldır
+          </button>
+          {uploading[key] && <span className="text-sm text-blue-600">Yükleniyor…</span>}
+        </div>
 
+        <div className="grid grid-cols-[180px_1fr] gap-3 items-start">
+          <div className="aspect-[16/10] w-[180px] overflow-hidden rounded-lg ring-1 ring-black/10 bg-gray-50">
+            {src ? (
+              <img
+                src={src}
+                alt={label}
+                className={`h-full w-full ${contain ? "object-contain p-1" : "object-cover"}`}
+              />
+            ) : (
+              <div className="h-full w-full grid place-items-center text-gray-400 text-xs">
+                Önizleme yok
+              </div>
+            )}
+          </div>
+          <input
+            type="text"
+            value={raw}
+            onChange={(e) => setImageUrl(device, field, e.target.value)}
+            placeholder="/uploads/... veya tam URL"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm"
+          />
+        </div>
+      </div>
+    );
+  };
+
+  // ---- render ----
   return (
-    <div className="mb-8 border rounded bg-gray-100 p-6">
-      <h3 className="font-bold text-2xl mb-3">Ana Banner (Desktop)</h3>
-      {/* Kız Görseli */}
-      <label className="block font-semibold">Kız Görseli (background)</label>
-      <div className="flex items-center gap-4 mb-2">
-        {data.mainBanner?.desktop?.girlImage && (
-          <img
-            src={`${apiUrl}${data.mainBanner.desktop.girlImage}`}
-            alt="Girl"
-            className="w-[120px] h-[80px] object-cover rounded"
-          />
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={e => handleImageUpload(e, "girlImage", "desktop")}
-          disabled={uploading.girlImage}
-        />
-        {uploading.girlImage && <span className="text-blue-500">Yükleniyor...</span>}
+    <section className="space-y-6">
+      {/* DESKTOP */}
+      <div className="rounded-2xl border bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+          <h2 className="text-lg font-semibold">🏖️ Ana Banner — Desktop</h2>
+        </div>
+
+        <div className="p-4 grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6">
+          {/* Left: image stack */}
+          <div className="space-y-5">
+            <UploadRow device="desktop" field="girlImage" label="Kız Görseli (Background)" />
+            <UploadRow device="desktop" field="textImage" label="Yazı Görseli (Beach & Pools)" contain />
+            <UploadRow device="desktop" field="waveImage" label="Dalga Görseli" contain />
+          </div>
+
+          {/* Right: text fields (activeLang) */}
+          <div className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Alt Başlık ({activeLang.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `desktop.subtitle.${activeLang}`)}
+                onChange={(e) => setLangField("desktop", "subtitle", e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Başlık ({activeLang.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `desktop.title.${activeLang}`)}
+                onChange={(e) => setLangField("desktop", "title", e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Açıklama ({activeLang.toUpperCase()})
+              </label>
+              <textarea
+                rows={4}
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `desktop.text.${activeLang}`)}
+                onChange={(e) => setLangField("desktop", "text", e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Buton Metni ({activeLang.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `desktop.buttonText.${activeLang}`)}
+                onChange={(e) => setLangField("desktop", "buttonText", e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
-      {/* Yazı Görseli */}
-      <label className="block font-semibold">Yazı Görseli (Beach & Pools)</label>
-      <div className="flex items-center gap-4 mb-2">
-        {data.mainBanner?.desktop?.textImage && (
-          <img
-            src={`${apiUrl}${data.mainBanner.desktop.textImage}`}
-            alt="Yazı"
-            className="w-[120px] h-[80px] object-contain rounded"
-          />
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={e => handleImageUpload(e, "textImage", "desktop")}
-          disabled={uploading.textImage}
-        />
-        {uploading.textImage && <span className="text-blue-500">Yükleniyor...</span>}
-      </div>
+      {/* MOBILE */}
+      <div className="rounded-2xl border bg-white overflow-hidden">
+        <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+          <h2 className="text-lg font-semibold">📱 Ana Banner — Mobil</h2>
+        </div>
 
-      {/* Dalga Görseli */}
-      <label className="block font-semibold">Dalga Görseli</label>
-      <div className="flex items-center gap-4 mb-2">
-        {data.mainBanner?.desktop?.waveImage && (
-          <img
-            src={`${apiUrl}${data.mainBanner.desktop.waveImage}`}
-            alt="Dalga"
-            className="w-[120px] h-[80px] object-contain rounded"
-          />
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={e => handleImageUpload(e, "waveImage", "desktop")}
-          disabled={uploading.waveImage}
-        />
-        {uploading.waveImage && <span className="text-blue-500">Yükleniyor...</span>}
-      </div>
+        <div className="p-4 grid grid-cols-1 lg:grid-cols-[340px_1fr] gap-6">
+          {/* Left */}
+          <div className="space-y-5">
+            <UploadRow device="mobile" field="bgImage" label="Mobil Arka Plan Görseli" />
+          </div>
 
-      {/* Yazılar - diller */}
-      {renderLangInputs("Alt Başlık", "subtitle", false, "desktop")}
-      {renderLangInputs("Başlık", "title", false, "desktop")}
-      {renderLangInputs("Açıklama", "text", true, "desktop")}
-      {renderLangInputs("Buton Metni", "buttonText", false, "desktop")}
+          {/* Right */}
+          <div className="space-y-5">
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Alt Başlık ({activeLang.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `mobile.subtitle.${activeLang}`)}
+                onChange={(e) => setLangField("mobile", "subtitle", e.target.value)}
+              />
+            </div>
 
-      {/* MOBİL */}
-      <h3 className="font-bold text-2xl mb-3 mt-6">Ana Banner (Mobil)</h3>
-      {/* Mobil arka plan görseli */}
-      <label className="block font-semibold">Mobil Arka Plan Görseli</label>
-      <div className="flex items-center gap-4 mb-2">
-        {data.mainBanner?.mobile?.bgImage && (
-          <img
-            src={`${apiUrl}${data.mainBanner.mobile.bgImage}`}
-            alt="Mobile BG"
-            className="w-[120px] h-[80px] object-cover rounded"
-          />
-        )}
-        <input
-          type="file"
-          accept="image/*"
-          onChange={e => handleImageUpload(e, "bgImage", "mobile")}
-          disabled={uploading.bgImage}
-        />
-        {uploading.bgImage && <span className="text-blue-500">Yükleniyor...</span>}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Başlık (MobileTitle) ({activeLang.toUpperCase()})
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `mobile.mobileTitle.${activeLang}`)}
+                onChange={(e) => setLangField("mobile", "mobileTitle", e.target.value)}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Açıklama ({activeLang.toUpperCase()})
+              </label>
+              <textarea
+                rows={4}
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                value={get(data?.mainBanner, `mobile.text.${activeLang}`)}
+                onChange={(e) => setLangField("mobile", "text", e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
-      {/* Mobil yazılar */}
-      {renderLangInputs("Alt Başlık", "subtitle", false, "mobile")}
-      {renderLangInputs("Başlık (MobileTitle)", "mobileTitle", false, "mobile")}
-      {renderLangInputs("Açıklama", "text", true, "mobile")}
-    </div>
+    </section>
   );
 }
