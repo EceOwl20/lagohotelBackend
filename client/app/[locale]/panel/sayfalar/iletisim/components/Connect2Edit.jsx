@@ -1,102 +1,126 @@
+// app/[locale]/panel/sayfalar/connect/components/Connect2Edit.jsx
 "use client";
-import { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
 
-export default function Connect2Edit({ data, setData, langs }) {
-  const value = data.connect2 || {};
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const [uploading, setUploading] = useState(false);
+export default function Connect2Edit({
+  data,
+  setData,
+  activeLang = "tr", // TopBar'dan gelen aktif dil
+}) {
+  const section = data?.connect2 || {};
 
-  // Görsel yükleme handler
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const imageUrl = result.imageUrl || result.url;
-      setData({
-        ...data,
-        connect2: { ...value, image: imageUrl },
-      });
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  // Çokdilli alan güncelleme helper
-  const handleLang = (field, lang, val) => {
-    setData({
-      ...data,
-      connect2: {
-        ...value,
-        [field]: { ...(value[field] || {}), [lang]: val },
-      },
+  /* ---------------- helpers (immutable updates) ---------------- */
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.connect2 || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), connect2: { ...cur, ...next } };
     });
-  };
 
+  // Çok dilli alan: sadece aktif dil
+  const setField = (field, value) =>
+    update((cur) => ({
+      [field]: { ...(cur?.[field] || {}), [activeLang]: value },
+    }));
+
+  // Görsel
+  const setImage = (url) => update({ image: url });
+
+  /* ------------------------------ UI ------------------------------ */
   return (
-    <div className="mb-8 p-4 rounded bg-gray-50">
-      <h3 className="font-bold text-lg mb-4">Bölüm 2 (İletişim Formu)</h3>
-
-      {/* Form arka plan görseli */}
-      <label className="block font-semibold mb-1">Form Arka Plan Görseli</label>
-      <div className="flex items-center gap-3 mb-6">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          disabled={uploading}
-          className="border p-2 rounded"
-        />
-        {uploading && <span className="text-blue-600">Yükleniyor…</span>}
-        {value.image && (
-          <img
-            src={
-              value.image.startsWith("/")
-                ? `${apiUrl}${value.image}`
-                : value.image
-            }
-            alt="Form Arka Plan"
-            className="h-12 w-12 object-cover rounded border"
-          />
-        )}
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h2 className="text-lg font-semibold">📝 Bölüm 2 — İletişim Formu</h2>
       </div>
 
-      {/* Çokdilli metin alanları */}
-      {[
-        ["formTitle", "Form Başlığı"],
-        ["formText",  "Form Açıklaması"],
-        ["policyText", "Gizlilik Politikası Metni"],
-        ["nameLabel", "İsim Etiketi"],
-        ["emailLabel", "E-posta Etiketi"],
-        ["message",   "Mesaj Alanı Etiketi"],
-        ["buttonText","Buton Metni"],
-      ].map(([field, label]) => (
-        <div key={field} className="mb-6">
-          <label className="block font-semibold mb-1">{label}</label>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {langs.map((lang) => (
-              <input
-                key={lang}
-                type="text"
-                placeholder={`${label} (${lang.toUpperCase()})`}
-                value={value[field]?.[lang] || ""}
-                onChange={(e) => handleLang(field, lang, e.target.value)}
-                className="border rounded p-2 w-full"
-              />
-            ))}
+      <div className="p-4 space-y-8">
+        {/* Form arka plan görseli */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">Form Arka Plan Görseli</h3>
+          <ImageUploadInput
+            value={section?.image || ""}
+            onChange={setImage}
+            label="Görsel Yükle"
+          />
+        </div>
+
+        {/* Form metinleri (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Form Metinleri ({activeLang.toUpperCase()})
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <FieldText
+              label="Form Başlığı"
+              value={section?.formTitle?.[activeLang] || ""}
+              onChange={(v) => setField("formTitle", v)}
+            />
+            <FieldText
+              label="İsim Etiketi"
+              value={section?.nameLabel?.[activeLang] || ""}
+              onChange={(v) => setField("nameLabel", v)}
+            />
+            <FieldText
+              label="E-posta Etiketi"
+              value={section?.emailLabel?.[activeLang] || ""}
+              onChange={(v) => setField("emailLabel", v)}
+            />
+            <FieldText
+              label="Mesaj Alanı Etiketi"
+              value={section?.message?.[activeLang] || ""}
+              onChange={(v) => setField("message", v)}
+            />
+            <FieldText
+              label="Buton Metni"
+              value={section?.buttonText?.[activeLang] || ""}
+              onChange={(v) => setField("buttonText", v)}
+            />
+            <FieldArea
+              label="Form Açıklaması"
+              rows={3}
+              value={section?.formText?.[activeLang] || ""}
+              onChange={(v) => setField("formText", v)}
+            />
+            <FieldArea
+              label="Gizlilik Politikası Metni"
+              rows={3}
+              value={section?.policyText?.[activeLang] || ""}
+              onChange={(v) => setField("policyText", v)}
+            />
           </div>
         </div>
-      ))}
+      </div>
+    </section>
+  );
+}
+
+/* ---------------- küçük input bileşenleri ---------------- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function FieldArea({ label, value, onChange, rows = 3 }) {
+  return (
+    <div className="md:col-span-3">
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <textarea
+        rows={rows}
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }

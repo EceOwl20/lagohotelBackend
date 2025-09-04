@@ -12,12 +12,6 @@ export default function SpaInfoSectionEdit({
 }) {
   const section = data?.[blockName] || {};
 
-  // normalize lang keys
-  const LANG_KEYS = useMemo(
-    () => (langs || []).map((l) => (typeof l === "string" ? l : l.key)),
-    [langs]
-  );
-
   /* ------------ helpers (immutable updates) ------------ */
   const update = (updater) =>
     setData((prev) => {
@@ -47,12 +41,12 @@ export default function SpaInfoSectionEdit({
   // Sağ overlay listeleri
   const lists = Array.isArray(section?.right?.lists) ? section.right.lists : [];
   const addList = () =>
-    update((cur) => {
-      const empty = LANG_KEYS.reduce((o, k) => ({ ...o, [k]: "" }), {});
-      return {
-        right: { ...(cur?.right || {}), lists: [...(cur?.right?.lists || []), empty] },
-      };
-    });
+    update((cur) => ({
+      right: {
+        ...(cur?.right || {}),
+        lists: [...(cur?.right?.lists || []), { [activeLang]: "" }],
+      },
+    }));
 
   const removeList = (i) =>
     update((cur) => ({
@@ -70,16 +64,16 @@ export default function SpaInfoSectionEdit({
     });
 
   /* ---------- MultiImageUploadInput ile img1 & img2 ---------- */
-  // MultiImageUploadInput'tan gelen dizi: [sol, sağ]
+  // MultiImageUploadInput’a boş string göndermemek için filtrele
   const imagesValue = useMemo(
-    () => [section?.img1 || "", section?.img2 || ""],
+    () => [section?.img1, section?.img2].filter(Boolean),
     [section?.img1, section?.img2]
   );
 
-  const handleImagesChange = (arr) => {
-    // 0 => img1 (Sol), 1 => img2 (Sağ). Fazlası varsa göz ardı ediyoruz.
-    const [img1 = "", img2 = ""] = arr;
-    update({ img1, img2 });
+  const handleImagesChange = (arr = []) => {
+    // Sadece ilk iki görseli kullan
+    const [img1, img2] = arr.filter(Boolean);
+    update({ img1: img1 || "", img2: img2 || "" });
   };
 
   /* -------------------- UI -------------------- */
@@ -96,12 +90,12 @@ export default function SpaInfoSectionEdit({
           <div className="flex items-center justify-between mb-2">
             <h3 className="font-semibold">Arka Plan Görselleri</h3>
             <span className="text-xs text-gray-500">
-              #1 = Sol Görsel, #2 = Sağ Görsel (sırayı MultiImageUploadInput üzerinden ayarlayın)
+              #1 = Sol Görsel, #2 = Sağ Görsel (sırayı galeriden ayarlayın)
             </span>
           </div>
 
           <MultiImageUploadInput
-            value={imagesValue}
+            value={imagesValue}            
             onChange={handleImagesChange}
             label="Sol & Sağ Görseller"
           />

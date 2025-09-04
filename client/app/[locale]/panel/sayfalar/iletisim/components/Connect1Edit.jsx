@@ -1,120 +1,209 @@
+// app/[locale]/panel/sayfalar/connect/components/Connect1Edit.jsx
 "use client";
-import { useState } from "react";
+import ImageUploadInput from "../../../components/ImageUploadInput";
+import { useMemo } from "react";
 
-export default function Connect1Edit({ data, setData, langs }) {
-  const value = data.connect1 || {};
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+export default function Connect1Edit({
+  data,
+  setData,
+  activeLang = "tr", // TopBar'dan gelen aktif dil
+}) {
+  const section = data?.connect1 || {};
 
-  // Görsel yükleme handler
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("image", file);
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData
-      });
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Yükleme başarısız");
-      const imageUrl = result.imageUrl || result.url;
-      setData({ 
-        ...data, 
-        connect1: { ...value, image: imageUrl } 
-      });
-    } catch (err) {
-      alert("Yükleme hatası: " + err.message);
-    }
-  };
-
-  // Çok dilli alan güncelleme helper
-  const handleLang = (field, lang, val) => {
-    setData({
-      ...data,
-      connect1: {
-        ...value,
-        [field]: { ...(value[field] || {}), [lang]: val }
-      }
+  /* ---------------- helpers (immutable updates) ---------------- */
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.connect1 || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), connect1: { ...cur, ...next } };
     });
-  };
 
-  // Düz array güncelleme helper
-  const handleArrayField = (field, raw) => {
-    const arr = raw.split(",").map(s => s.trim()).filter(s => s);
-    setData({
-      ...data,
-      connect1: {
-        ...value,
-        [field]: arr
-      }
+  // Çok dilli alanlar: subtitle / title / addressLabel / address / phoneLabel / emailLabel
+  const setField = (field, value) =>
+    update((cur) => ({
+      [field]: { ...(cur?.[field] || {}), [activeLang]: value },
+    }));
+
+  // Görsel
+  const setImage = (url) => update({ image: url });
+
+  // Dizi alanları (telefonlar / e-postalar)
+  const phones = useMemo(() => Array.isArray(section?.phones) ? section.phones : [], [section?.phones]);
+  const emails = useMemo(() => Array.isArray(section?.emails) ? section.emails : [], [section?.emails]);
+
+  const addItem = (field) =>
+    update((cur) => ({ [field]: [...(cur?.[field] || []), ""] }));
+
+  const removeItem = (field, idx) =>
+    update((cur) => ({ [field]: (cur?.[field] || []).filter((_, i) => i !== idx) }));
+
+  const setItem = (field, idx, value) =>
+    update((cur) => {
+      const list = [...(cur?.[field] || [])];
+      list[idx] = value;
+      return { [field]: list };
     });
-  };
 
+  /* ------------------------------ UI ------------------------------ */
   return (
-    <div className="mb-8 p-4 rounded bg-gray-50">
-      <h3 className="font-bold text-lg mb-4">Connect1 Bölümü</h3>
-
-      {/* Görsel */}
-      <label className="block font-semibold mb-2">Görsel</label>
-      <div className="flex items-center gap-3 mb-6">
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          className="border p-2 rounded"
-        />
-        {value.image && (
-          <img
-            src={value.image.startsWith("/") ? `${apiUrl}${value.image}` : value.image}
-            alt="Connect1 Görsel"
-            className="h-12 w-12 object-cover rounded border"
-          />
-        )}
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h2 className="text-lg font-semibold">📮 Connect 1</h2>
       </div>
 
-      {/* Çok Dilli Alanlar */}
-      {["subtitle","title","addressLabel","address","phoneLabel","emailLabel"].map(field => (
-        <div key={field} className="mb-6">
-          <label className="block font-semibold mb-2">
-            {field.charAt(0).toUpperCase() + field.slice(1)}
-          </label>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-            {langs.map(lang => (
-              <input
-                key={lang}
-                type="text"
-                placeholder={`${field} (${lang.toUpperCase()})`}
-                value={value[field]?.[lang] || ""}
-                onChange={e => handleLang(field, lang, e.target.value)}
-                className="border rounded p-2 w-full"
-              />
-            ))}
+      <div className="p-4 space-y-8">
+        {/* Görsel */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">Görsel</h3>
+          <ImageUploadInput value={section?.image || ""} onChange={setImage} label="Kapak Görseli" />
+        </div>
+
+        {/* Genel metinler (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Genel Metinler ({activeLang.toUpperCase()})
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <FieldText
+              label="Alt Başlık"
+              value={section?.subtitle?.[activeLang] || ""}
+              onChange={(v) => setField("subtitle", v)}
+            />
+            <FieldText
+              label="Başlık"
+              value={section?.title?.[activeLang] || ""}
+              onChange={(v) => setField("title", v)}
+            />
+            <FieldText
+              label="Adres Etiket"
+              value={section?.addressLabel?.[activeLang] || ""}
+              onChange={(v) => setField("addressLabel", v)}
+            />
+            <FieldArea
+              label="Adres"
+              rows={3}
+              value={section?.address?.[activeLang] || ""}
+              onChange={(v) => setField("address", v)}
+            />
+            <FieldText
+              label="Telefon Etiket"
+              value={section?.phoneLabel?.[activeLang] || ""}
+              onChange={(v) => setField("phoneLabel", v)}
+            />
+            <FieldText
+              label="E-posta Etiket"
+              value={section?.emailLabel?.[activeLang] || ""}
+              onChange={(v) => setField("emailLabel", v)}
+            />
           </div>
         </div>
-      ))}
 
-      {/* Telefonlar */}
-      <div className="mb-4">
-        <label className="block font-semibold mb-1">Telefonlar (virgülle ayırınız)</label>
-        <input
-          type="text"
-          value={(value.phones || []).join(", ")}
-          onChange={e => handleArrayField("phones", e.target.value)}
-          className="w-full border p-2 rounded"
-        />
-      </div>
+        {/* Telefonlar */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold">Telefonlar</h3>
+            <button
+              type="button"
+              onClick={() => addItem("phones")}
+              className="inline-flex items-center gap-2 rounded-lg bg-green-600 text-white px-4 py-2 hover:bg-green-700"
+            >
+              + Telefon Ekle
+            </button>
+          </div>
 
-      {/* E-mailler */}
-      <div>
-        <label className="block font-semibold mb-1">E-mailler (virgülle ayırınız)</label>
-        <input
-          type="text"
-          value={(value.emails || []).join(", ")}
-          onChange={e => handleArrayField("emails", e.target.value)}
-          className="w-full border p-2 rounded"
-        />
+          {phones.length === 0 && (
+            <p className="text-sm text-gray-500">Henüz telefon yok. “+ Telefon Ekle” ile başlayın.</p>
+          )}
+
+          {phones.map((ph, i) => (
+            <div key={i} className="rounded-lg ring-1 ring-black/10 p-3 flex gap-3 items-start bg-white">
+              <span className="shrink-0 w-6 text-center font-medium mt-2">{i + 1}.</span>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder="+90 242 000 00 00"
+                value={ph}
+                onChange={(e) => setItem("phones", i, e.target.value)}
+              />
+              <button
+                type="button"
+                className="shrink-0 px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                onClick={() => removeItem("phones", i)}
+              >
+                Sil
+              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* E-postalar */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold">E-postalar</h3>
+            <button
+              type="button"
+              onClick={() => addItem("emails")}
+              className="inline-flex items-center gap-2 rounded-lg bg-green-600 text-white px-4 py-2 hover:bg-green-700"
+            >
+              + E-posta Ekle
+            </button>
+          </div>
+
+          {emails.length === 0 && (
+            <p className="text-sm text-gray-500">Henüz e-posta yok. “+ E-posta Ekle” ile başlayın.</p>
+          )}
+
+          {emails.map((em, i) => (
+            <div key={i} className="rounded-lg ring-1 ring-black/10 p-3 flex gap-3 items-start bg-white">
+              <span className="shrink-0 w-6 text-center font-medium mt-2">{i + 1}.</span>
+              <input
+                type="email"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder="info@hotel.com"
+                value={em}
+                onChange={(e) => setItem("emails", i, e.target.value)}
+              />
+              <button
+                type="button"
+                className="shrink-0 px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                onClick={() => removeItem("emails", i)}
+              >
+                Sil
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
+    </section>
+  );
+}
+
+/* ---------------- küçük input bileşenleri ---------------- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function FieldArea({ label, value, onChange, rows = 3 }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <textarea
+        rows={rows}
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }
