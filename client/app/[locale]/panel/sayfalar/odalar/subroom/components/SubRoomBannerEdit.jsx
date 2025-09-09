@@ -1,177 +1,206 @@
+// app/[locale]/panel/sayfalar/rooms/components/SubRoomBannerEdit.jsx
 "use client";
-import { useRef, useState } from "react";
 
-const langs = ["tr", "en", "de", "ru"];
+import { useMemo } from "react";
+import ImageUploadInput from "../../../../components/ImageUploadInput";
 
-export default function SubRoomBannerEdit({ data, setData, langs }) {
-  const banner = data.banner || {};
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState("");
+export default function SubRoomBannerEdit({
+  data,
+  setData,
+  activeLang = "tr",                 // ✅ TopBar’dan gelen aktif dil
+  langs = ["tr", "en", "de", "ru"], // string veya {key,label}
+}) {
+  const banner = data?.banner || {};
 
-  // Çoklu dil için nesne şablonu
-  const emptyLangs = langs.reduce((acc, lang) => ({ ...acc, [lang]: "" }), {});
-   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+  // lang keylerini normalize et
+  const LANG_KEYS = useMemo(
+    () => (langs || []).map((l) => (typeof l === "string" ? l : l.key)),
+    [langs]
+  );
 
-  // texts alanı hazır yoksa boş diziye çekelim
-  const texts = Array.isArray(banner.texts) && banner.texts.length > 0
-    ? banner.texts
-    : [{ ...emptyLangs }];
-
-  const handleChange = (field, langOrValue, value, idx) => {
-    if (field === "title" || field === "subtitle") {
-      setData({
-        ...data,
-        banner: {
-          ...banner,
-          [field]: { ...(banner[field] || {}), [langOrValue]: value }
-        }
-      });
-    } else if (field === "texts") {
-      // texts: idx'li şekilde
-      const newTexts = [...texts];
-      newTexts[idx][langOrValue] = value;
-      setData({
-        ...data,
-        banner: { ...banner, texts: newTexts }
-      });
-    } else {
-      setData({
-        ...data,
-        banner: { ...banner, [field]: value }
-      });
-    }
-  };
-
-  const handleAddText = () => {
-    setData({
-      ...data,
-      banner: { ...banner, texts: [...texts, { ...emptyLangs }] }
+  // immutable update helper
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.banner || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), banner: { ...cur, ...next } };
     });
-  };
 
-  const handleRemoveText = (idx) => {
-    const newTexts = texts.filter((_, i) => i !== idx);
-    setData({
-      ...data,
-      banner: { ...banner, texts: newTexts }
+  // texts için boş satır şablonu
+  const emptyLangsRow = useMemo(
+    () => LANG_KEYS.reduce((acc, k) => ({ ...acc, [k]: "" }), {}),
+    [LANG_KEYS]
+  );
+
+  // texts güvenli dizi
+  const texts =
+    Array.isArray(banner?.texts) && banner.texts.length > 0
+      ? banner.texts
+      : [emptyLangsRow];
+
+  /* --------- alan setter’ları (aktif dil) --------- */
+  const setTitle = (value) =>
+    update((cur) => ({
+      title: { ...(cur?.title || {}), [activeLang]: value },
+    }));
+
+  const setSubtitle = (value) =>
+    update((cur) => ({
+      subtitle: { ...(cur?.subtitle || {}), [activeLang]: value },
+    }));
+
+  // texts[i][activeLang]
+  const setTextRow = (idx, value) =>
+    update((cur) => {
+      const list = Array.isArray(cur?.texts) ? [...cur.texts] : [emptyLangsRow];
+      const row = { ...(list[idx] || emptyLangsRow) };
+      row[activeLang] = value;
+      list[idx] = row;
+      return { texts: list };
     });
-  };
 
-  // Dosya yükleme fonksiyonu
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    setError("");
-    const formData = new FormData();
-    formData.append("image", file);
+  const addTextRow = () =>
+    update((cur) => ({
+      texts: [...(cur?.texts || []), emptyLangsRow],
+    }));
 
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const result = await res.json();
-      if (!res.ok || !result.imageUrl) throw new Error(result.error || "Yükleme başarısız");
-      // Backend imageUrl'i /uploads/... olarak döndürmeli.
-      setData({
-        ...data,
-        banner: { ...banner, image: result.imageUrl }
-      });
-    } catch (err) {
-      setError("Resim yüklenemedi! " + (err?.message || ""));
-    } finally {
-      setUploading(false);
-    }
-  };
+  const removeTextRow = (idx) =>
+    update((cur) => ({
+      texts: (cur?.texts || []).filter((_, i) => i !== idx),
+    }));
+
+  // baby checkbox
+  const toggleBaby = (checked) => update({ baby: !!checked });
 
   return (
-    <div className="border p-4 rounded bg-white mb-8 ">
-      <h3 className="font-bold mb-3">Banner</h3>
-
-      <label className="block mb-2 font-semibold">Resim Yükle</label>
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageUpload}
-        disabled={uploading}
-      />
-      {uploading && <p className="text-blue-600">Yükleniyor...</p>}
-      {banner.image && (
-        <img
-          src={`${apiUrl}${banner.image}`}
-          alt="Banner"
-          className="w-32 h-24 object-cover rounded my-2"
-        />
-      )}
-      {error && <p className="text-red-600">{error}</p>}
-
-      {/* Çoklu dil: başlık */}
-      {langs.map(lang => (
-        <div key={`title-${lang}`} className="mb-2">
-          <input
-            className="border p-2 w-full"
-            placeholder={`Başlık (${lang})`}
-            value={banner.title?.[lang] || ""}
-            onChange={e => handleChange("title", lang, e.target.value)}
-          />
-        </div>
-      ))}
-
-      {/* Çoklu dil: subtitle */}
-      {langs.map(lang => (
-        <div key={`subtitle-${lang}`} className="mb-2">
-          <input
-            className="border p-2 w-full"
-            placeholder={`SubTitle (${lang})`}
-            value={banner.subtitle?.[lang] || ""}
-            onChange={e => handleChange("subtitle", lang, e.target.value)}
-          />
-        </div>
-      ))}
-
-      {/* Çoklu dil: Texts array */}
-      <div className="mb-2">
-        <label className="block font-bold mb-1">Açıklama Metinleri</label>
-        {texts.map((textObj, idx) => (
-          <div key={idx} className="flex gap-2 items-center mb-2">
-            {langs.map(lang => (
-              <input
-                key={lang}
-                className="border p-2 flex-1"
-                placeholder={`Text (${lang})`}
-                value={textObj?.[lang] || ""}
-                onChange={e => handleChange("texts", lang, e.target.value, idx)}
-              />
-            ))}
-            {texts.length > 1 && (
-              <button
-                className="ml-2 text-red-500"
-                type="button"
-                onClick={() => handleRemoveText(idx)}
-              >
-                Sil
-              </button>
-            )}
-          </div>
-        ))}
-        <button
-          type="button"
-          className="text-blue-600 underline mt-1"
-          onClick={handleAddText}
-        >
-          + Yeni Metin Ekle
-        </button>
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent flex items-center justify-between">
+        <h2 className="text-lg font-semibold">🪧 Oda Banner</h2>
+        <span className="text-xs text-gray-500">
+          Aktif Dil: <strong>{activeLang.toUpperCase()}</strong>
+        </span>
       </div>
 
-      <label className="flex items-center gap-2 mt-2">
-        <input
-          type="checkbox"
-          checked={!!banner.baby}
-          onChange={e => handleChange("baby", null, e.target.checked)}
-        />
-        Bebekli Oda mı?
-      </label>
-    </div>
+      <div className="p-4 space-y-8">
+        {/* Görsel */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">Banner Görseli</h3>
+          <ImageUploadInput
+            value={banner?.image || ""}
+            onChange={(url) => update({ image: url })}
+            label="Görsel Yükle"
+          />
+          {banner?.image && (
+            <div className="mt-2">
+              <button
+                type="button"
+                className="px-3 py-1.5 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+                onClick={() => update({ image: "" })}
+              >
+                Görseli Kaldır
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Başlıklar (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">
+            Başlıklar ({activeLang.toUpperCase()})
+          </h3>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Title */}
+            <div>
+              <label className="block text-sm font-medium mb-1">Başlık (title)</label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder={`Title (${activeLang.toUpperCase()})`}
+                value={banner?.title?.[activeLang] || ""}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+            </div>
+
+            {/* Subtitle */}
+            <div>
+              <label className="block text-sm font-medium mb-1">
+                Alt Başlık (subtitle)
+              </label>
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder={`Subtitle (${activeLang.toUpperCase()})`}
+                value={banner?.subtitle?.[activeLang] || ""}
+                onChange={(e) => setSubtitle(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Açıklama metinleri listesi (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4 space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold">
+              Açıklama Metinleri ({activeLang.toUpperCase()})
+            </h3>
+            <button
+              type="button"
+              onClick={addTextRow}
+              className="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            >
+              + Metin Satırı Ekle
+            </button>
+          </div>
+
+          {texts.map((row, idx) => (
+            <div
+              key={idx}
+              className="rounded-lg ring-1 ring-black/10 p-3 bg-white space-y-2"
+            >
+              <div className="flex items-center justify-between">
+                <strong>Satır #{idx + 1}</strong>
+                {texts.length > 1 && (
+                  <button
+                    type="button"
+                    onClick={() => removeTextRow(idx)}
+                    className="px-3 py-1.5 rounded-md bg-red-600 text-white hover:bg-red-700"
+                  >
+                    Sil
+                  </button>
+                )}
+              </div>
+
+              <input
+                type="text"
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder={`Text (${activeLang.toUpperCase()})`}
+                value={row?.[activeLang] || ""}
+                onChange={(e) => setTextRow(idx, e.target.value)}
+              />
+            </div>
+          ))}
+
+          {texts.length === 0 && (
+            <p className="text-sm text-gray-500">
+              Henüz metin yok. “+ Metin Satırı Ekle” ile başlayın.
+            </p>
+          )}
+        </div>
+
+        {/* Baby checkbox */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <label className="inline-flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={!!banner?.baby}
+              onChange={(e) => toggleBaby(e.target.checked)}
+            />
+            <span className="text-sm">Bebekli Oda mı?</span>
+          </label>
+        </div>
+      </div>
+    </section>
   );
 }

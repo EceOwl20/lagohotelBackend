@@ -1,190 +1,186 @@
+// app/[locale]/panel/sayfalar/rooms/components/BackgroundSectionEdit.jsx
 "use client";
-import { useRef, useState } from "react";
 
-const langs = ["tr", "en", "de", "ru"];
-const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+import { useMemo } from "react";
+import ImageUploadInput from "../../../../components/ImageUploadInput";
 
-export default function BackgroundSectionEdit({ data, setData }) {
-  const bg = data.background || {
-    subtitle: { tr: "", en: "", de: "", ru: "" },
-    title: { tr: "", en: "", de: "", ru: "" },
-    texts: [
-      { tr: "", en: "", de: "", ru: "" },
-      { tr: "", en: "", de: "", ru: "" },
-      { tr: "", en: "", de: "", ru: "" }
-    ],
-    link: "",
-    image: ""
-  };
-  
-  const [uploading, setUploading] = useState(false);
-  const [error, setError] = useState("");
+export default function BackgroundSectionEdit({
+  data,
+  setData,
+  langs = ["tr", "en", "de", "ru"],
+  activeLang = "tr",
+}) {
+  const section = data?.background || {};
 
-  const handleChange = (field, value, idx, lang) => {
-    if (field === "image" || field === "link") {
-      // Direkt field güncellemesi
-      setData({
-        ...data,
-        background: {
-          ...bg,
-          [field]: value
-        }
-      });
-    } else if (field === "subtitle" || field === "title") {
-      // Dil bazlı güncelleme
-      setData({
-        ...data,
-        background: {
-          ...bg,
-          [field]: {
-            ...bg[field],
-            [lang]: value
-          }
-        }
-      });
-    } else if (field === "texts") {
-      // Array içindeki dil bazlı güncelleme
-      const newTexts = [...bg.texts];
-      newTexts[idx] = {
-        ...newTexts[idx],
-        [lang]: value
-      };
-      setData({
-        ...data,
-        background: {
-          ...bg,
-          texts: newTexts
-        }
-      });
-    }
+  /* --------------- helpers --------------- */
+  const update = (updater) =>
+    setData((prev) => {
+      const cur = prev?.background || {};
+      const next = typeof updater === "function" ? updater(cur) : updater;
+      return { ...(prev || {}), background: { ...cur, ...next } };
+    });
+
+  const LANG_KEYS = useMemo(
+    () => (langs || []).map((l) => (typeof l === "string" ? l : l.key)),
+    [langs]
+  );
+
+  // subtitle / title -> sadece aktif dil
+  const setLangField = (field, value) =>
+    update((cur) => ({
+      [field]: { ...(cur?.[field] || {}), [activeLang]: value },
+    }));
+
+  // texts (paragraflar) -> sadece aktif dil
+  const texts = Array.isArray(section?.texts) ? section.texts : [];
+  const ensureRow = (arr, i) => {
+    const next = [...arr];
+    while (next.length <= i) next.push({});
+    return next;
   };
 
-  // Resim yükleme fonksiyonu - DEBUG VERSİYONU
-  const handleImageUpload = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    
-    setUploading(true);
-    setError("");
-    const formData = new FormData();
-    formData.append("image", file);
+  const setTextRow = (idx, value) =>
+    update((cur) => {
+      const list = ensureRow(cur?.texts || [], idx);
+      const row = { ...(list[idx] || {}) };
+      row[activeLang] = value;
+      list[idx] = row;
+      return { texts: list };
+    });
 
-    try {
-      const res = await fetch(`${apiUrl}/api/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      const result = await res.json();
-      
-      console.log("Upload response:", result); // DEBUG
-      
-      if (!res.ok || !result.imageUrl) {
-        throw new Error(result.error || "Yükleme başarısız");
-      }
-      
-      console.log("Before state update - current bg:", bg); // DEBUG
-      
-      // Direkt state güncelleme - handleChange yerine
-      const newData = {
-        ...data,
-        background: {
-          ...bg,
-          image: result.imageUrl
-        }
-      };
-      
-      console.log("New data to set:", newData); // DEBUG
-      setData(newData);
-      
-      console.log("State updated successfully"); // DEBUG
-      
-    } catch (err) {
-      console.error("Upload error:", err); // DEBUG
-      setError("Resim yüklenemedi! " + (err?.message || ""));
-    } finally {
-      setUploading(false);
-    }
-  };
+  const addTextRow = () =>
+    update((cur) => ({
+      texts: [...(cur?.texts || []), {}],
+    }));
 
+  const removeTextRow = (idx) =>
+    update((cur) => ({
+      texts: (cur?.texts || []).filter((_, i) => i !== idx),
+    }));
+
+  // tekil alanlar
+  const setImage = (url) => update({ image: url });
+  const setLink = (url) => update({ link: url });
+
+  /* --------------- UI --------------- */
   return (
-    <div className="border p-4 rounded bg-white mb-8">
-      <h3 className="font-bold text-lg mb-4">Background Section</h3>
-      
-      <div className="mb-3">
-        <label className="font-semibold block mb-1">Görsel</label>
-        <input
-          type="file"
-          accept="image/*"
-          onChange={handleImageUpload}
-          disabled={uploading}
-        />
-        {uploading && <p className="text-blue-600">Yükleniyor...</p>}
-        {error && <p className="text-red-600">{error}</p>}
-        {bg.image && (
-          <img
-            src={`${apiUrl}${bg.image}`}
-            alt="Background"
-            className="w-32 h-24 object-cover rounded mt-2"
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent">
+        <h2 className="text-lg font-semibold">🌄 Background Section</h2>
+      </div>
+
+      <div className="p-4 space-y-8">
+        {/* Görsel */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">Arka Plan Görseli</h3>
+          <ImageUploadInput
+            value={section?.image || ""}
+            onChange={setImage}
+            label="Görsel Yükle"
           />
-        )}
-      </div>
-
-      {/* subtitle alanları */}
-      <div className="mb-3">
-        <label className="font-semibold block mb-1">subtitle</label>
-        <div className="grid grid-cols-2 gap-2">
-          {langs.map(lang => (
-            <input
-              key={lang}
-              className="border p-2"
-              placeholder={`subtitle (${lang})`}
-              value={bg.subtitle?.[lang] || ""}
-              onChange={e => handleChange("subtitle", e.target.value, null, lang)}
-            />
-          ))}
+          {!!section?.image && (
+            <div className="mt-2">
+              <button
+                type="button"
+                onClick={() => setImage("")}
+                className="px-3 py-1.5 rounded-md text-sm ring-1 ring-black/10 hover:bg-black/5"
+              >
+                Görseli Kaldır
+              </button>
+            </div>
+          )}
         </div>
-      </div>
 
-      {/* title alanları */}
-      <div className="mb-3">
-        <label className="font-semibold block mb-1">title</label>
-        <div className="grid grid-cols-2 gap-2">
-          {langs.map(lang => (
-            <input
-              key={lang}
-              className="border p-2"
-              placeholder={`title (${lang})`}
-              value={bg.title?.[lang] || ""}
-              onChange={e => handleChange("title", e.target.value, null, lang)}
+        {/* Başlıklar (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-4">
+            Başlıklar ({activeLang.toUpperCase()})
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FieldText
+              label="Alt Başlık (subtitle)"
+              value={section?.subtitle?.[activeLang] || ""}
+              onChange={(v) => setLangField("subtitle", v)}
             />
-          ))}
-        </div>
-      </div>
-
-      {/* Texts alanları */}
-      <div className="mb-3">
-        <label className="font-semibold block mb-1">Açıklama Paragrafları</label>
-        {bg.texts.map((text, i) => (
-          <div key={i} className="grid grid-cols-2 gap-2 mb-2">
-            {langs.map(lang => (
-              <input
-                key={lang}
-                className="border p-2"
-                placeholder={`Açıklama ${i + 1} (${lang})`}
-                value={text?.[lang] || ""}
-                onChange={e => handleChange("texts", e.target.value, i, lang)}
-              />
-            ))}
+            <FieldText
+              label="Başlık (title)"
+              value={section?.title?.[activeLang] || ""}
+              onChange={(v) => setLangField("title", v)}
+            />
           </div>
-        ))}
-      </div>
+        </div>
 
-      {/* Link alanı */}
+        {/* Paragraflar (aktif dil) */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4 space-y-4">
+          <div className="flex items-center justify-between">
+            <h3 className="font-semibold">
+              Açıklama Paragrafları ({activeLang.toUpperCase()})
+            </h3>
+            <button
+              type="button"
+              onClick={addTextRow}
+              className="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700"
+            >
+              + Paragraf Ekle
+            </button>
+          </div>
+
+          {(texts.length ? texts : [{}]).map((row, i) => (
+            <div
+              key={i}
+              className="rounded-lg ring-1 ring-black/10 p-3 bg-white flex gap-3 items-start"
+            >
+              <span className="shrink-0 w-6 text-center font-medium mt-2">
+                {i + 1}.
+              </span>
+              <textarea
+                rows={3}
+                className="w-full rounded-md border border-gray-300 px-3 py-2"
+                placeholder={`Paragraf ${i + 1} (${activeLang.toUpperCase()})`}
+                value={row?.[activeLang] || ""}
+                onChange={(e) => setTextRow(i, e.target.value)}
+              />
+              {texts.length > 1 && (
+                <button
+                  type="button"
+                  onClick={() => removeTextRow(i)}
+                  className="shrink-0 px-3 py-2 rounded-md bg-red-600 text-white hover:bg-red-700"
+                  aria-label={`Paragraf ${i + 1} sil`}
+                >
+                  Sil
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* Link */}
+        <div className="rounded-xl ring-1 ring-black/5 p-4">
+          <h3 className="font-semibold mb-3">Link</h3>
+          <input
+            type="text"
+            className="w-full rounded-md border border-gray-300 px-3 py-2"
+            placeholder="https://…"
+            value={section?.link || ""}
+            onChange={(e) => setLink(e.target.value)}
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---- küçük input bileşeni ---- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
       <input
-        className="border p-2 w-full"
-        placeholder="Link"
-        value={bg.link || ""}
-        onChange={e => handleChange("link", e.target.value)}
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
       />
     </div>
   );

@@ -1,131 +1,151 @@
+// app/[locale]/panel/sayfalar/rooms/components/RoomTourEdit.jsx
+"use client";
 
-const langs = ["tr", "en", "de", "ru"];
+export default function RoomTourEdit({
+  data,
+  setData,
+  activeLang = "tr",
+}) {
+  const tours = Array.isArray(data?.tours) ? data.tours : [];
 
-export default function RoomTourEdit({ data, setData }) {
-  // Eğer tours yoksa en az bir boş nesneyle başlat
-  const tours = data.tours?.length
-    ? data.tours
-    : [
-        {
-          subtitle: { tr: "", en: "", de: "", ru: "" },
-          title: { tr: "", en: "", de: "", ru: "" },
-          text: { tr: "", en: "", de: "", ru: "" },
-          link: ""
-        }
-      ];
-
-  // Her field için controlled update
-  const handleChange = (field, value, idx, lang) => {
-    const newTours = [...tours];
-    if (field === "link") {
-      newTours[idx][field] = value;
-    } else {
-      newTours[idx][field][lang] = value;
-    }
-    setData({
-      ...data,
-      tours: newTours
+  /* ---------- helpers (immutable updates) ---------- */
+  const setTours = (producer) =>
+    setData((prev) => {
+      const curList = Array.isArray(prev?.tours) ? prev.tours : [];
+      const nextList =
+        typeof producer === "function" ? producer(curList) : producer;
+      return { ...(prev || {}), tours: nextList };
     });
-  };
 
-  // Yeni tur ekle
-  const handleAdd = () => {
-    setData({
-      ...data,
-      tours: [
-        ...tours,
-        {
-          subtitle: { tr: "", en: "", de: "", ru: "" },
-          title: { tr: "", en: "", de: "", ru: "" },
-          text: { tr: "", en: "", de: "", ru: "" },
-          link: ""
-        }
-      ]
+  const emptyTour = () => ({
+    subtitle: {},
+    title: {},
+    text: {},
+    link: "",
+  });
+
+  const addTour = () => setTours((list) => [...list, emptyTour()]);
+
+  const removeTour = (idx) =>
+    setTours((list) => list.filter((_, i) => i !== idx));
+
+  const setTourField = (idx, field, value) =>
+    setTours((list) => {
+      const next = [...list];
+      const item = next[idx] || emptyTour();
+      next[idx] = {
+        ...item,
+        [field]: {
+          ...(item[field] || {}),
+          [activeLang]: value,
+        },
+      };
+      return next;
     });
-  };
 
-  // Tur sil
-  const handleDelete = (idx) => {
-    setData({
-      ...data,
-      tours: tours.filter((_, i) => i !== idx)
+  const setTourLink = (idx, url) =>
+    setTours((list) => {
+      const next = [...list];
+      const item = next[idx] || emptyTour();
+      next[idx] = { ...item, link: url };
+      return next;
     });
-  };
 
+  /* ---------------------- UI ---------------------- */
   return (
-    <div className="border p-4 rounded bg-white mb-8">
-      <h3 className="font-bold text-lg mb-4">Room Tours</h3>
-      {tours.map((tour, idx) => (
-        <div key={idx} className="border-b pb-4 mb-4">
-          {/* subtitle alanları */}
-          <div className="mb-3">
-            <label className="font-semibold block mb-1">subtitle</label>
-            <div className="grid grid-cols-2 gap-2">
-              {langs.map(lang => (
-                <input
-                  key={lang}
-                  className="border p-2"
-                  placeholder={`subtitle (${lang})`}
-                  value={tour.subtitle?.[lang] || ""}
-                  onChange={e => handleChange("subtitle", e.target.value, idx, lang)}
-                />
-              ))}
-            </div>
+    <section className="rounded-2xl border bg-white overflow-hidden">
+      {/* Header */}
+      <div className="px-4 py-3 border-b bg-gradient-to-r from-black/5 to-transparent flex items-center justify-between">
+        <h2 className="text-lg font-semibold">🎥 Room Tours</h2>
+        <button
+          type="button"
+          onClick={addTour}
+          className="px-3 py-1.5 rounded-lg bg-green-600 text-white hover:bg-green-700"
+        >
+          + Yeni Tour Ekle
+        </button>
+      </div>
+
+      <div className="p-4 space-y-6">
+        {tours.length === 0 && (
+          <div className="rounded-xl ring-1 ring-black/10 bg-gray-50 p-6 text-center text-gray-600">
+            Henüz tour yok. “+ Yeni Tour Ekle” ile başlayın.
           </div>
-          {/* title alanları */}
-          <div className="mb-3">
-            <label className="font-semibold block mb-1">title</label>
-            <div className="grid grid-cols-2 gap-2">
-              {langs.map(lang => (
-                <input
-                  key={lang}
-                  className="border p-2"
-                  placeholder={`title (${lang})`}
-                  value={tour.title?.[lang] || ""}
-                  onChange={e => handleChange("title", e.target.value, idx, lang)}
-                />
-              ))}
-            </div>
-          </div>
-          {/* text alanları */}
-          <div className="mb-3">
-            <label className="font-semibold block mb-1">text</label>
-            <div className="grid grid-cols-2 gap-2">
-              {langs.map(lang => (
-                <input
-                  key={lang}
-                  className="border p-2"
-                  placeholder={`text (${lang})`}
-                  value={tour.text?.[lang] || ""}
-                  onChange={e => handleChange("text", e.target.value, idx, lang)}
-                />
-              ))}
-            </div>
-          </div>
-          {/* link alanı */}
-          <input
-            className="border p-2 w-full"
-            placeholder="Tour Link"
-            value={tour.link || ""}
-            onChange={e => handleChange("link", e.target.value, idx)}
-          />
-          {/* Sil butonu */}
-          <button
-            className="text-red-600 mt-2"
-            type="button"
-            onClick={() => handleDelete(idx)}
+        )}
+
+        {tours.map((tour, idx) => (
+          <div
+            key={idx}
+            className="rounded-xl ring-1 ring-black/10 bg-white p-4 space-y-4"
           >
-            Sil
-          </button>
-        </div>
-      ))}
-      <button
-        className="mt-2 px-4 py-1 border rounded"
-        type="button"
-        onClick={handleAdd}
-      >
-        + Yeni Tour Ekle
-      </button>
+            {/* Kart üst çubuk */}
+            <div className="flex items-center justify-between">
+              <strong>Tour #{idx + 1}</strong>
+              <button
+                type="button"
+                onClick={() => removeTour(idx)}
+                className="px-3 py-1.5 rounded-md bg-red-600 text-white hover:bg-red-700"
+              >
+                Sil
+              </button>
+            </div>
+
+            {/* Metinler (aktif dil) */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FieldText
+                label={`Alt Başlık (subtitle) — ${activeLang.toUpperCase()}`}
+                value={tour?.subtitle?.[activeLang] || ""}
+                onChange={(v) => setTourField(idx, "subtitle", v)}
+              />
+              <FieldText
+                label={`Başlık (title) — ${activeLang.toUpperCase()}`}
+                value={tour?.title?.[activeLang] || ""}
+                onChange={(v) => setTourField(idx, "title", v)}
+              />
+              <FieldArea
+                label={`Açıklama (text) — ${activeLang.toUpperCase()}`}
+                rows={3}
+                value={tour?.text?.[activeLang] || ""}
+                onChange={(v) => setTourField(idx, "text", v)}
+              />
+              <FieldText
+                label="Tour Link"
+                value={tour?.link || ""}
+                onChange={(v) => setTourLink(idx, v)}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+/* ------- küçük input bileşenleri ------- */
+function FieldText({ label, value, onChange }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <input
+        type="text"
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
+    </div>
+  );
+}
+
+function FieldArea({ label, value, onChange, rows = 3 }) {
+  return (
+    <div>
+      <label className="block text-sm font-medium mb-1">{label}</label>
+      <textarea
+        rows={rows}
+        className="w-full rounded-md border border-gray-300 px-3 py-2"
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+      />
     </div>
   );
 }
